@@ -1,0 +1,7 @@
+package pkgEnum;
+
+public enum GameType {
+	
+	HCCOUNT(), ANIMALMATCHING(), WATERSAMPLING(), SIDESCROLLER(), LEADERBOARD(), MAINSCREEN();
+
+}
