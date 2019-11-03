@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import pkgEnum.GameState;
+import pkgEnum.GameType;
 import pkgMGView.*;
 import pkgMover.Mover;
 import javafx.scene.Scene;
@@ -45,6 +46,7 @@ public class View {
 	private GraphicsContext gc;
 	private int canvasWidth = 1280;
 	private int canvasHeight = 768;
+	private GameType gameType;
 	
 	public View(Stage theStage) {		
 	    this.root = new Group();
@@ -79,6 +81,17 @@ public class View {
 	
 	public MouseEvent getMouseEvent() {
 		return currGame.getMouseEvent();
+	}
+	
+	/**
+	 * Returns the gameType ENUM that is currently being used in the view
+	 * 
+	 * @return GameType the GameType that the view is currently showing
+	 * 
+	 * added by HM 11/3
+	 */
+	public GameType getGameType() {
+		return this.gameType;
 	}
 	
 }
