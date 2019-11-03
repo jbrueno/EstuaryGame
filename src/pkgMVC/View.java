@@ -52,6 +52,7 @@ public class View {
 	    this.root = new Group();
         this.scene = new Scene(root);
         theStage.setScene(scene);
+        this.gameType = GameType.MAINSCREEN;
 
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
         root.getChildren().add(canvas); 
@@ -86,9 +87,9 @@ public class View {
 	/**
 	 * Returns the gameType ENUM that is currently being used in the view
 	 * 
+	 * @author HM
 	 * @return GameType the GameType that the view is currently showing
 	 * 
-	 * added by HM 11/3
 	 */
 	public GameType getGameType() {
 		return this.gameType;
