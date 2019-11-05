@@ -32,15 +32,14 @@ public class Controller extends Application{
 	
 	@Override
 	public void start(Stage theStage) {
-		view = new View(theStage);
+	//	view = new View(theStage);
 		model = new Model();
 		
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
-
-				//model.update(view.getGameType(), view.getMouseEvent());
-				view.update(new ArrayList<Mover>(), GameState.INPROGRESS);
 				
+				model.update();
+			//	view.update(new ArrayList<Mover>(), GameState.INPROGRESS);
 				
 				try {
 					Thread.sleep(100);

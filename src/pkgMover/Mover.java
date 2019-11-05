@@ -2,15 +2,15 @@ package pkgMover;
 
 import pkgEnum.Direction;
 
-public abstract class Mover {
-	private double y;
-	private double x;
-	private int imageWidth;
-	private int imageHeight;
-	private double xIncr;
-	private double yIncr;
-	private Direction d;
-	private String species;
+public  class Mover {
+	public double y;
+	public double x;
+	public int imageWidth;
+	public int imageHeight;
+	public double xIncr;
+	public double yIncr;
+	public Direction d;
+	public String species;
 	
 	
 	public double getY() {
