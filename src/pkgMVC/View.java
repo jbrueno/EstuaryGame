@@ -65,7 +65,6 @@ public class View {
 	public void update(ArrayList<Mover> ms, GameState gs) {
 		currGame.update(ms, gs);
 		updateView();
-		
 	}
 	
 	private void createMinigameViews() {

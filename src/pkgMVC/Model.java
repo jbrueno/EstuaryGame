@@ -1,19 +1,22 @@
 package pkgMVC;
 import pkgEnum.Direction;
-import pkgMG.Minigame;
+
+import pkgMG.MinigameModel;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**The Model class for an MVC design.
+/**The Model class for the MVC design pattern
  * 
  * @author Ryan Peters
  *
  */
 public class Model {
-	private ArrayList<Minigame> minigames;
-	private Minigame currGame;
+	private ArrayList<MinigameModel> minigames;
+	private MinigameModel currGame;
+	
+	// added comment
 	
 	
 	public Model() {
