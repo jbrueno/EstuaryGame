@@ -113,6 +113,13 @@ public class MainScreenView extends MinigameView {
 		b.setMaxSize(btnSize* 2, btnSize * 2);
 	}
 
+	
+	/**
+	 * Draws all necessary images to the Mainscreen. Currently just background while in alpha
+	 * 
+	 * @author Ryan Peters
+	 * @see loadImage()
+	 */
 	@Override
 	void draw() {
 		gc.drawImage(loadImage("backgrounds","background_MainScreen.png"), 0, 0, backgroundWidth, backgroundHeight);
