@@ -7,8 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class Minigame {
 	
-	
-	//Hello again minigame
+
 
 	GameType currGame;
 	int score;
