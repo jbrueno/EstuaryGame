@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 import pkgEnum.GameState;
 import java.util.ArrayList;
 
+//beans
+
+
+
 
 import javafx.animation.AnimationTimer;
 
