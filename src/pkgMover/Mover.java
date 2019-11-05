@@ -45,6 +45,7 @@ public abstract class Mover {
 		return this.species;
 	}
 	
+	//
 	public String toString() {
 		return species + " " + "x: " + x + ", y: " + y;
 	}
