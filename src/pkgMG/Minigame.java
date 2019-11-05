@@ -22,4 +22,7 @@ public abstract class Minigame {
 	public GameType getGameType() {
 		return this.currGame;
 	}
+	
+	
+	//continual testing forevre !
 }
