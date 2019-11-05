@@ -7,8 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class Minigame {
 	
-	
-	//Hello again minigame
+
 
 	GameType currGame;
 	int score;
@@ -25,4 +24,7 @@ public abstract class Minigame {
 	
 	
 	//continual testing forevre !
+	
+	
+	//comment comment ccomment
 }

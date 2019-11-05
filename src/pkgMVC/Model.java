@@ -15,6 +15,8 @@ public class Model {
 	private ArrayList<Minigame> minigames;
 	private Minigame currGame;
 	
+	// added comment
+	
 	
 	public Model() {
 	}

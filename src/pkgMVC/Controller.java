@@ -5,13 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgEnum.GameState;
-
 import java.util.ArrayList;
-
-//import com.sun.javafx.scene.SceneEventDispatcher;
-// YAYYY
-// 2nd comment
-//3rd
 
 
 import javafx.animation.AnimationTimer;
