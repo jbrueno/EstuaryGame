@@ -5,5 +5,5 @@ public enum GameState {
 	
 
 	
-	START(), INPROGRESS(), FINISHED(), BONUS();
+	START, INPROGRESS, FINISHED, BONUS, WS_COLLECT, WS_TEMP, WS_PH;
 }
