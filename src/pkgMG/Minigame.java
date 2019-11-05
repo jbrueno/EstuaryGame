@@ -9,6 +9,9 @@ public abstract class Minigame {
 	
 	//this is a comment I added in branch!
 	
+	//THIS IS A COMMENT I MADE IN A BRANCH
+	
+	
 
 	GameType currGame;
 	int score;
