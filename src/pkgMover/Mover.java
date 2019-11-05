@@ -45,6 +45,12 @@ public abstract class Mover {
 		return this.species;
 	}
 	
+	public String toString() {
+		return species + " " + "x: " + x + ", y: " + y;
+	}
+	
+	
+	
 	/**
 	 * Moves the mover towards the given x & y coordinates on the background.
 	 * 
