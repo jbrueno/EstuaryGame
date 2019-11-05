@@ -5,7 +5,7 @@ import pkgMover.Mover;
 import pkgEnum.GameState;
 import javafx.scene.input.MouseEvent;
 
-public abstract class Minigame {
+public abstract class MinigameModel {
 	
 
 
