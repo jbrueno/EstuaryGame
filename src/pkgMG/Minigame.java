@@ -6,6 +6,9 @@ import pkgEnum.GameState;
 import javafx.scene.input.MouseEvent;
 
 public abstract class Minigame {
+	
+	//this is a comment I added in branch!
+	
 
 	GameType currGame;
 	int score;
