@@ -1,6 +1,6 @@
 package pkgMVC;
 import pkgEnum.Direction;
-
+import pkgMG.HSCModel;
 import pkgMG.MinigameModel;
 
 import java.awt.event.KeyEvent;
@@ -20,11 +20,13 @@ public class Model {
 	
 	
 	public Model() {
+		HSCModel CRABBS = new HSCModel();
+		currGame=CRABBS;
 	}
 	
 
 	public void update() {
-		
+		currGame.update();
 	}	
 	
 }

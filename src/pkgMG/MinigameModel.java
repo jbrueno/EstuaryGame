@@ -19,6 +19,7 @@ public abstract class MinigameModel {
 	GameState gs = GameState.START;
 	
 	abstract void update(MouseEvent me);
+	public abstract void update();
 	abstract void handleBorderCollision(Mover m);
 	
 	
