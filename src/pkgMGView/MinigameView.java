@@ -33,12 +33,12 @@ public abstract class MinigameView {
 	abstract void importImages();
 	
 	public Image loadImage(String pkgName, String imageName) {
-		Image img = new Image(pkgName + "\\" + imageName);
+		Image img = new Image(pkgName + "/" + imageName);
 		return img;
 	}
 	
 	public Image loadImage(String pkgName, String imageName, Mover m) {
-		Image img = new Image(pkgName + "\\" + imageName + "_" + m.toString());
+		Image img = new Image(pkgName + "/" + imageName + "_" + m.toString());
 		return img;
 	}
 	

@@ -7,11 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class Minigame {
 	
-	//this is a comment I added in branch!
-	
-	//THIS IS A COMMENT I MADE IN A BRANCH
-	
-	
+
 
 	GameType currGame;
 	int score;
@@ -25,4 +21,7 @@ public abstract class Minigame {
 	public GameType getGameType() {
 		return this.currGame;
 	}
+	
+	
+	//continual testing forevre !
 }
