@@ -15,8 +15,7 @@ public class SCModel extends MinigameModel{
 	int terrapinWidth;
 	int terrapinHeight;
 	Terrapin terry = new Terrapin();
-	ArrayList<Mover> obstacles = new ArrayList<Mover>();
-	ArrayList<Mover> food = new ArrayList<Mover>();
+	ArrayList<Mover> items =  new ArrayList<Mover>();
 	double waterThreshold;
 	final long startNanoTime = System.nanoTime();
 	GameState gameState;
@@ -35,6 +34,7 @@ public class SCModel extends MinigameModel{
 		this.terrapinWidth = tw;
 		this.waterThreshold = wt;
 		gameState = GameState.START;
+		score = 0;
 	}
 
 	@Override
@@ -52,15 +52,31 @@ public class SCModel extends MinigameModel{
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
 		
-		for (Mover m : obstacles) {
+		for (Mover m : items) {
+			m.x += m.xIncr;
 			if (terry.x >= m.x - m.imageWidth && terry.x <= m.x + m.imageWidth) {
 				if (m.species.equals("seaweed")) {
-					
+					terry.xIncr --;
+					System.out.println("hit seaweed, slowed down")
+				} else if (m.species.equals("trash")) {
+					terry.xIncr--;
+					score = score - 50;
+					System.out.println("hit trash, lost points and slowed down")
+				} else if (m.species.equals("food")) {
+					terry.xIncr++;
+					score = score + 100;
+					System.out.println("yummy, food!");
 				}
 			}
 		}
 		
+	}
+	
+	public void addItem(Mover m) {
+		m.xIncr = -1;
+		m.yIncr = 0;
 		
+		items.add(m);
 		
 	}
 
