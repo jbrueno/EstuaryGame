@@ -47,7 +47,7 @@ public class View {
 	private GraphicsContext gc;
 	private int canvasWidth = 1280;
 	private int canvasHeight = 768;
-	private Game gameType;
+	private Game game;
 	
 	
 	public View(Stage theStage) {		
@@ -97,7 +97,7 @@ public class View {
 		mgvs.add(new LeaderboardView(gc, root, scene));
 		
 		currGame = mgvs.get(0); //default start for Game
-        this.gameType = Game.MAINSCREEN;
+        this.game = Game.MAINSCREEN;
 	}
 	
 	/** 
@@ -132,14 +132,14 @@ public class View {
 	 * 
 	 */
 	public Game getGame() {
-		Game game = currGame.getGame();
-		System.out.println(game + " " + currGame.getGame());
-		if (currGame.getGame() != game) {//loading new game
+		Game g = currGame.getGame();
+		System.out.println(g + " " + currGame.getGame());
+		if (currGame.getGame() != g) {//loading new game
 			System.out.println("clearing");
 			currGame.clearFX();
 		}
-		currGame = retrieveMGV(game);
-		return game;
+		currGame = retrieveMGV(g);
+		return g;
 	}
 	
 	/**

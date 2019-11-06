@@ -38,9 +38,6 @@ public class MainScreenView extends MinigameView {
 		importImages();
 	}
 	
-	
-
-
 	@Override
 	void startTimer(int ms) {
 		// TODO Auto-generated method stub
