@@ -12,6 +12,10 @@ public class Mover {
 	public Direction d;
 	public String species;
 	
+	public Mover(String s) {
+		this.species = s;
+	}
+	
 	
 	public double getY() {
 		return y;

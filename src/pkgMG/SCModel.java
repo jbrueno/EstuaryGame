@@ -80,6 +80,11 @@ public class SCModel extends MinigameModel{
 	public void addItem(Mover m) {
 		m.xIncr = -1;
 		m.yIncr = 0;
+		m.x = canvasWidth;
+		if (m.species.equals("seaweed") || m.species.equals("food")) {
+			
+		}
+	
 		
 		items.add(m);
 		
