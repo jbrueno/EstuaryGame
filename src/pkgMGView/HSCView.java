@@ -60,13 +60,14 @@ public class HSCView extends MinigameView{
 		for (DataNode dn : dns) {
 			Mover m = (Mover) dn;
 			draw(m);
+			System.out.println("drawing");
 		}
 	}
 
 	@Override
 	void importImages() {
-		fHSC = new Image("Mover/FemaleHSC.png");
-		mHSC = new Image("Mover/MaleHSC.png");
+		fHSC = new Image("Mover/FemaleHSC.gif");
+		mHSC = new Image("Mover/MaleHSC.gif");
 	}
 	
 }

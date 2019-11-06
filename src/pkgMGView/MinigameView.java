@@ -37,15 +37,19 @@ public abstract class MinigameView {
 	abstract void draw(ArrayList<DataNode> dns);
 	abstract void importImages();
 	
+	
+	// need to find a way to differentiate whether image is .png or .gif
+	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {
-		Image img = new Image(pkgName + "/" + m.getValue() + ".png");
+		Image img = new Image(pkgName + "/" + m.getValue() + ".gif"); // changed from .png to .gif
 		return img;
 	}
 	
 	public Image loadImage(String pkgName, String imgName) {
-		Image img = new Image(pkgName + "/" + imgName + ".png");
+		Image img = new Image(pkgName + "/" + imgName + ".gif");
 		return img;
 	}
+
 	
 	
 	public double getAngle(Direction d) {

@@ -1,9 +1,9 @@
 package pkgMover;
 
 public class FemaleHSC extends Mover{
-	int imageHeight = 50;
-	int imageWidth = 50;
+	int imageHeight = 200; // unable to use in constructor unfortunately ?
+	int imageWidth = 136; // ^
 	public FemaleHSC(int x, int y, int xIncr, int yIncr) {
-		super(x, y, 648, 442, xIncr, yIncr, "FemaleHSC");
+		super(x, y, 200, 136, xIncr, yIncr, "FemaleHSC");
 	}
 }
