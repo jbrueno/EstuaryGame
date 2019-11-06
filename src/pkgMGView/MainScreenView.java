@@ -25,7 +25,7 @@ public class MainScreenView extends MinigameView {
 	private int btnSize = 45;
 	
 	public MainScreenView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = Game.MAINSCREEN;
+		this.g = Game.MAINSCREEN;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -61,20 +61,20 @@ public class MainScreenView extends MinigameView {
     	});
 		
 		btnSC.setOnAction(e -> {
-			gt = Game.SIDESCROLLER;
+			g = Game.SIDESCROLLER;
 		});
 		
 		btnHCC.setOnAction(e -> {
 			System.out.println("clicked");
-			gt = Game.HSCCOUNT;
+			g = Game.HSCCOUNT;
 		});
 		
 		btnAM.setOnAction(e -> {
-			gt = Game.ANIMALMATCHING;
+			g = Game.ANIMALMATCHING;
 		});
 		
 		btnWS.setOnAction(e -> {
-			gt = Game.WATERSAMPLING;
+			g = Game.WATERSAMPLING;
 		});
 		
 	}
@@ -152,8 +152,8 @@ public class MainScreenView extends MinigameView {
 	
 	@Override
 	public Game getGame() {
-		Game gtTemp = gt;
-		gt = Game.MAINSCREEN;
+		Game gtTemp = g;
+		g = Game.MAINSCREEN;
 		System.out.println(gtTemp);
 		return gtTemp;
 	}

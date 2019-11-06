@@ -98,6 +98,8 @@ public class View {
 	 * 
 	 */
 	public Game getGame() {
+		Game g = currGame.getGame();
+		if ()
 		return currGame.getGame();
 	}
 	

@@ -25,7 +25,7 @@ public abstract class MinigameView {
 	GraphicsContext gc;
 	Group root;
 	Scene scene;
-	Game gt;
+	Game g;
 	
 	public abstract void update(ArrayList<DataNode> dns, GameState gs);
 	abstract void startTimer(int ms);
@@ -91,6 +91,6 @@ public abstract class MinigameView {
 	}
 	
 	public Game getGame() {
-		return this.gt;
+		return this.g;
 	}
 }

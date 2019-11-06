@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class HSCView extends MinigameView{
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = Game.HSCCOUNT;
+		this.g = Game.HSCCOUNT;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
