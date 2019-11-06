@@ -31,7 +31,7 @@ public class Model {
 	private MinigameModel currGame;	
 	
 	/**
-	 * Constructor that creates the list of MinigameModels <code>minigames</code>
+	 * Constructor that creates the list of MinigameModels <code>minigames</code>.
 	 * 
 	 * @author Ryan Peters
 	 * @see createModels()
