@@ -16,7 +16,10 @@ public class HSCModel extends MinigameModel{
 	
 	/**
 	 * Adds 20 horshoecrabs (10 male/10 female) to the DataNode list <code>dns</code> located in the abstract
-	 * class <code>MinigameModel</code> with random x,y starting location and 
+	 * class <code>MinigameModel</code> with random x,y starting location and random xIncr,yIncr within constricted ranges
+	 * 
+	 * @author Ryan Peters
+	 * 
 	 */
 	private void createHSCrabs() {
 		for (int i = 0; i < 10; i++) {
@@ -45,7 +48,6 @@ public class HSCModel extends MinigameModel{
 		}
 		
 		//later handle click from mouseevent; maybe have crabs scatter from the light slowly
-		
 	}
 	
 

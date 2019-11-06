@@ -49,11 +49,11 @@ public class View {
 	private int canvasHeight = 768;
 	private Game gameType;
 	
+	
 	public View(Stage theStage) {		
 	    this.root = new Group();
         this.scene = new Scene(root);
         theStage.setScene(scene);
-        this.gameType = Game.MAINSCREEN;
 
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
         root.getChildren().add(canvas); 
@@ -63,11 +63,29 @@ public class View {
 		createViews();
 	}
 	
+	/**
+	 * Main function for View that takes <code>dns</code> and <code>gs</code> from the Model and updates accordingly.
+	 * Passes both parameters in to <code>currGame</code>'s update() method
+	 * 
+	 * @author Ryan Peters
+	 * @param dns
+	 * @param gs
+	 * @see MinigameView.update()
+	 */
 	public void update(ArrayList<DataNode> dns, GameState gs) {
 		currGame.update(dns, gs);
-		updateView();
+		updateView(); //unsure if necessary for now; will see once 2 Views can be used
+		System.out.println(currGame.getGame()); //testing current Game
 	}
 	
+	/**
+	 * Initializes and creates the attribute <code>mgvs</code>, a list of MinigameViews, to be indexed by Game.ordinal() in order to load 
+	 * the correct MinigameView.
+	 * <p>
+	 * By default, sets the <code>currGame</code> to MainScreenView since that is the first MinigameView to be loaded on start.
+	 * 
+	 * @author Ryan Peters
+	 */
 	private void createViews() {
 		mgvs = new ArrayList<MinigameView>();
 		
@@ -78,9 +96,20 @@ public class View {
 		mgvs.add(new WSView(gc, root, scene));
 		mgvs.add(new LeaderboardView(gc, root, scene));
 		
-		currGame = mgvs.get(0);		
+		currGame = mgvs.get(0); //default start for Game
+        this.gameType = Game.MAINSCREEN;
 	}
 	
+	/** 
+	 * (If necessary) Returns root and scene from the currGame in order to update View's root and scene
+	 * so that it may be drawn properly to theStage (which originates from Controller)
+	 * <<p>
+	 * Possibly, may not needed or need to be handled elsewhere to
+	 * 
+	 * @author Ryan Peters
+	 * @see MinigameView.getRoot()
+	 * @see MinigameView.getScene()
+	 */
 	private void updateView() {
 		root = currGame.getRoot();
 		scene = currGame.getScene();
@@ -91,20 +120,31 @@ public class View {
 	}
 	
 	/**
-	 * Returns the gameType ENUM that is currently being used in the view
+	 * Returns the currGame determined by the current MinigameView. Since MinigameView's can change the Game
+	 * (MainScreenView by Minigame Buttons, other MinigameViews by Return/Exit/Next/etc Button), it needs to update 
+	 * <code>currGame</code> so that it is the correct MinigameView in case it has been changed
 	 * 
-	 * @author HM
+	 * @author Ryan Peters
 	 * @return GameType the GameType that the view is currently showing
+	 * @see retrieveMGV()
+	 * @see getGame()
 	 * 
 	 */
 	public Game getGame() {
 		Game g = currGame.getGame();
-		System.out.println("HERE  " + g + " " + g.ordinal());
-		currGame = mgvs.get(g.ordinal());
-		System.out.println("THERE  " + currGame.getGame());
+		currGame = retrieveMGV(g);
 		return g;
 	}
 	
+	/**
+	 * Returns the correct MinigameView from the list of MinigameViews <code>mgvs</code> ordered by the natural order of the
+	 * Game Enum
+	 * 
+	 * @author Ryan Peters
+	 * @param g
+	 * @return	MinigameView	MGV at position of the Game enum parameter
+	 * @see	Game
+	 */
 	public MinigameView retrieveMGV(Game g) {
 		return mgvs.get(g.ordinal());
 	}

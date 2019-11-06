@@ -65,7 +65,6 @@ public class MainScreenView extends MinigameView {
 		});
 		
 		btnHCC.setOnAction(e -> {
-			System.out.println("clicked");
 			g = Game.HSCCOUNT;
 		});
 		
@@ -142,9 +141,8 @@ public class MainScreenView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
-		//ms should always be empty since the main screen has no moving objects
 		if (gs == GameState.FINISHED) {
-			//loadLeaderboard
+			g = Game.LEADERBOARD;
 		} else {
 			draw();
 		}

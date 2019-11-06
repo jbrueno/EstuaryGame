@@ -56,11 +56,4 @@ public class AMView extends MinigameView{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public Game getGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

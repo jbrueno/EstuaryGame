@@ -58,10 +58,4 @@ public class WSView extends MinigameView{
 		
 	}
 
-	@Override
-	public Game getGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }
