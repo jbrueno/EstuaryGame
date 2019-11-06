@@ -141,4 +141,5 @@ public class MainScreenView extends MinigameView {
 	void importImages() {
 		background = loadImage("backgrounds","background_MainScreen.png");
 	}
+
 }

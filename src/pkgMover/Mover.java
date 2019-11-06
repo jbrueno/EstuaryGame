@@ -2,7 +2,7 @@ package pkgMover;
 
 import pkgEnum.Direction;
 
-public  class Mover {
+public class Mover {
 	public double y;
 	public double x;
 	public int imageWidth;
@@ -50,6 +50,44 @@ public  class Mover {
 		return species + " " + "x: " + x + ", y: " + y;
 	}
 	
+	
+	/**
+	 * moves object in a straight line in the direction that it is facing
+	 * 
+	 * @author AG
+	 * 
+	 */
+	public void move() {
+		switch(d) {
+			case NORTH: y-=yIncr;
+					break;
+			case NORTHEAST: x+=xIncr;	
+					y-=yIncr;
+					break;
+					
+			case EAST: x+=xIncr;
+					break;
+					
+			case SOUTHEAST: x+=xIncr;
+					y+=yIncr;
+					break;
+					
+			case SOUTH: y+=yIncr;
+					break;
+					
+			case SOUTHWEST: x-=xIncr;
+					y+=yIncr;
+					break;
+					
+			case WEST: x-=xIncr;
+					break;
+					
+			case NORTHWEST: x-=xIncr;
+					y-=yIncr;
+					break;
+			}
+		}
+			
 	
 	
 	/**

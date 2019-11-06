@@ -22,7 +22,6 @@ public abstract class MinigameModel {
 	public abstract void update();
 	abstract void handleBorderCollision(Mover m);
 	
-	
 	public GameType getGameType() {
 		return this.currGame;
 	}
