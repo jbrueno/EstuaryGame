@@ -8,7 +8,7 @@ import pkgEnum.GameType;
 import pkgMover.Mover;
 
 public class HSCView extends MinigameView {
-	public Image HSCImage;
+	public Image Terrapin;
 	
 	
 	@Override
@@ -42,7 +42,7 @@ public class HSCView extends MinigameView {
 
 	@Override
 	void importImages() {
-		HSCImage = loadImage("animals", "hcrab");
+		
 	}
 
 

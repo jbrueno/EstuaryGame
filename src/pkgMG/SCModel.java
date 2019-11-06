@@ -9,6 +9,10 @@ import pkgMover.Terrapin;
 
 public class SCModel extends MinigameModel{
 	
+	int canvasWidth;
+	int canvasHeight;
+	int terrapinWidth;
+	int terrapinHeight;
 	Terrapin terry = new Terrapin();
 	ArrayList<Mover> obstacles = new ArrayList<Mover>();
 	ArrayList<Mover> food = new ArrayList<Mover>();
@@ -19,21 +23,13 @@ public class SCModel extends MinigameModel{
 	 *  and the water Y threshold Terry needs to breather
 	 *  @author HM
 	 * 
-	 * @param terryx  the starting x location of the terrapin
-	 * @param terryy  the starting y location of the terrapin
-	 * @param o	      the starting ArrayList<Mover> of obstacles that
-	 * 					first appear on-screen
-	 * @param f		  the starting ArrayList<Mover> of food (including power-ups) that first appear
-	 * 					on-screen
-	 * @param waterY  the y-coordinate threshold that the Terrapin must pass in order to breathe
 	 */
-	public SCModel(double terryx, double terryy, ArrayList<Mover> o, ArrayList<Mover> f, 
-					double waterY){
-		terry.x = terryx;
-		terry.y = terryy;
-		this.obstacles = o;
-		this.food = f;
-		this.waterThreshold = waterY;
+	public SCModel(int cw, int ch, int tw, int th, double wt){
+		this.canvasHeight = ch;
+		this.canvasWidth = cw;
+		this.terrapinHeight = th;
+		this.terrapinWidth = tw;
+		this.waterThreshold = wt;
 	}
 
 	@Override
