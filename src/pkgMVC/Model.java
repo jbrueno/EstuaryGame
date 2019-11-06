@@ -64,12 +64,12 @@ public class Model {
 	private void createModels() {
 		minigames = new ArrayList<MinigameModel>();
 		
-		minigames.add(new MainScreenView());
-		minigames.add(new AMView());
-		minigames.add(new HSCView());
-		minigames.add(new SCView(gc, root, scene));
-		minigames.add(new WSView(gc, root, scene));
-		minigames.add(new LeaderboardView(gc, root, scene));
+		minigames.add(new MainScreenModel());
+		minigames.add(new AMModel());
+		minigames.add(new HSCModel());
+		minigames.add(new SCModel());
+		minigames.add(new WSModel());
+		minigames.add(new LeaderboardModel());
 		
 		currGame = minigames.get(0);	
 	}
