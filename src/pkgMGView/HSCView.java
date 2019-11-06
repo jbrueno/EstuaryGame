@@ -32,11 +32,7 @@ public class HSCView extends MinigameView{
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
 		if (gs == GameState.INPROGRESS) {
-			for (DataNode d : dns) {
-				Mover m = (Mover) d;
-				System.out.println("drawing");
-				draw(m);
-			}
+			draw(dns);
 		}
 	}
 
@@ -60,6 +56,7 @@ public class HSCView extends MinigameView{
 
 	@Override
 	void draw(ArrayList<DataNode> dns) {
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		for (DataNode dn : dns) {
 			Mover m = (Mover) dn;
 			draw(m);

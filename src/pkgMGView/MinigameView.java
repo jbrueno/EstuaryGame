@@ -3,7 +3,9 @@ package pkgMGView;
 //test
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -96,6 +98,16 @@ public abstract class MinigameView {
 		return this.g;
 	}
 	
+	/**
+	 * Clears the current FX being displayed.
+	 * <p> 
+	 * GC is wiped and root is cleared of all children (Buttons, etc) which includes canvas to which gc draws upon.
+	 * This is handled in <code>View</code> class under <code>getGame()</code>
+	 * 
+	 * @author Ryan Peters
+	 * @see View
+	 * @see View.getGame()
+	 */
 	public void clearFX() {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		root.getChildren().clear();

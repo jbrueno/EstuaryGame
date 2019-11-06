@@ -42,20 +42,23 @@ public class View {
 	private MinigameView currGame;
 	int score;
 	
+	private Stage stage;
 	private Scene scene;
 	private Group root;
 	private GraphicsContext gc;
 	private int canvasWidth = 1280;
 	private int canvasHeight = 768;
 	private Game game;
+	private Canvas canvas;
 	
 	
-	public View(Stage theStage) {		
+	public View(Stage theStage) {	
+		this.stage = theStage;
 	    this.root = new Group();
         this.scene = new Scene(root);
-        theStage.setScene(scene);
+        stage.setScene(scene);
 
-        Canvas canvas = new Canvas(canvasWidth, canvasHeight);
+        canvas = new Canvas(canvasWidth, canvasHeight);
         root.getChildren().add(canvas); 
         
         gc = canvas.getGraphicsContext2D();
@@ -73,9 +76,9 @@ public class View {
 	 * @see MinigameView.update()
 	 */
 	public void update(ArrayList<DataNode> dns, GameState gs) {
-		currGame.update(dns, gs);
-		updateView(); //unsure if necessary for now; will see once 2 Views can be used
 		System.out.println(currGame.getGame()); //testing current Game
+		currGame.update(dns, gs);
+		
 	}
 	
 	/**
@@ -124,6 +127,9 @@ public class View {
 	 * Returns the currGame determined by the current MinigameView. Since MinigameView's can change the Game
 	 * (MainScreenView by Minigame Buttons, other MinigameViews by Return/Exit/Next/etc Button), it needs to update 
 	 * <code>currGame</code> so that it is the correct MinigameView in case it has been changed
+	 * <p>
+	 * By clearing the children of the root, we clear canvas and the GraphicsContext can no longer draw to the stage.
+	 * Therefore, we must add canvas back to root as a child.
 	 * 
 	 * @author Ryan Peters
 	 * @return GameType the GameType that the view is currently showing
@@ -133,10 +139,9 @@ public class View {
 	 */
 	public Game getGame() {
 		Game g = currGame.getGame();
-		System.out.println(g + " " + currGame.getGame());
-		if (currGame.getGame() != g) {//loading new game
-			System.out.println("clearing");
+		if (currGame.getGame() != g) {//loading new game (since getGame() resets the Game attribute if different)
 			currGame.clearFX();
+			root.getChildren().add(canvas);
 		}
 		currGame = retrieveMGV(g);
 		return g;
@@ -153,6 +158,7 @@ public class View {
 	 */
 	public MinigameView retrieveMGV(Game g) {
 		return mgvs.get(g.ordinal());
-	}
+	}	
+	
 	
 }
