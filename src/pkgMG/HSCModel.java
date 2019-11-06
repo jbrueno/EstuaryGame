@@ -46,7 +46,7 @@ public class HSCModel extends MinigameModel{
 			Mover m = (Mover) dn;
 			m.move();
 		}
-		
+		System.out.println(dns);
 		//later handle click from mouseevent; maybe have crabs scatter from the light slowly
 	}
 	

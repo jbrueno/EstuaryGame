@@ -9,7 +9,6 @@ public abstract class Mover extends DataNode{
 	private int imageHeight;
 	private double xIncr;
 	private double yIncr;
-	private Direction d;
 	private String value;
 	
 	
@@ -79,10 +78,6 @@ public abstract class Mover extends DataNode{
 		this.yIncr = i;
 	}
 	
-	public Direction getD() {
-		return d;
-	}
-	
 	
 	/**
 	 * Updates x,y by their relative speeds for background movers who always move (ie aren't user-controlled)
@@ -105,6 +100,10 @@ public abstract class Mover extends DataNode{
 	public void move(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public String toString() {
+		return getValue() + ": " + x + " " + y; 
 	}
 	
 	
