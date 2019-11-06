@@ -16,11 +16,11 @@ public class ViewTest {
 	 * @author HM
 	 */
 	@Test
-	public void getGameType_Test() {
+	public void getGame_Test() {
 		Stage s = new Stage();
 		View v = new View(s);
 		
-		assertEquals(v.getGameType(), Game.MAINSCREEN);
+		assertEquals(v.getGame(), Game.MAINSCREEN);
 	}
 
 }
