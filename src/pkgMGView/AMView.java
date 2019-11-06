@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class AMView extends MinigameView{
 
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.ANIMALMATCHING;
+		g = Game.ANIMALMATCHING;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;

@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class LeaderboardView extends MinigameView{
 
 	public LeaderboardView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.MAINSCREEN;
+		g = Game.LEADERBOARD;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;

@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class HSCView extends MinigameView{
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.HSCCOUNT;
+		g = Game.HSCCOUNT;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -22,6 +22,8 @@ public class HSCView extends MinigameView{
 
 		importImages();
 	}
+	
+	
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
 		// TODO Auto-generated method stub
@@ -57,11 +59,7 @@ public class HSCView extends MinigameView{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public Game getGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
 }

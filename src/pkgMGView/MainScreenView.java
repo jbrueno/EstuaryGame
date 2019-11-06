@@ -25,7 +25,7 @@ public class MainScreenView extends MinigameView {
 	private int btnSize = 45;
 	
 	public MainScreenView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.MAINSCREEN;
+		g = Game.MAINSCREEN;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -150,11 +150,15 @@ public class MainScreenView extends MinigameView {
 		}
 	}
 	
+	
+	/**
+	 * MainScreen Buttons can cause a switch between games. In this case, we want to send this new Game Enum
+	 * to View in <code>getGame()</code> but then reset it so that MainScreen can be loaded again in the future.
+	 */
 	@Override
 	public Game getGame() {
 		Game gtTemp = g;
 		g = Game.MAINSCREEN;
-		System.out.println(gtTemp);
 		return gtTemp;
 	}
 }

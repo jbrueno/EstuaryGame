@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class SCView extends MinigameView{
 
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.SIDESCROLLER;
+		g = Game.SIDESCROLLER;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;

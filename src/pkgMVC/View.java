@@ -99,8 +99,14 @@ public class View {
 	 */
 	public Game getGame() {
 		Game g = currGame.getGame();
-		if ()
-		return currGame.getGame();
+		System.out.println("HERE  " + g + " " + g.ordinal());
+		currGame = mgvs.get(g.ordinal());
+		System.out.println("THERE  " + currGame.getGame());
+		return g;
+	}
+	
+	public MinigameView retrieveMGV(Game g) {
+		return mgvs.get(g.ordinal());
 	}
 	
 }

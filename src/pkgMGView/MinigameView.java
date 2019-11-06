@@ -27,6 +27,7 @@ public abstract class MinigameView {
 	Scene scene;
 	Game g;
 	
+	
 	public abstract void update(ArrayList<DataNode> dns, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();

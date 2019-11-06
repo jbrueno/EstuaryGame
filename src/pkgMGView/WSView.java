@@ -12,7 +12,7 @@ import pkgMover.DataNode;
 public class WSView extends MinigameView{
 
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
-		this.g = Game.WATERSAMPLING;
+		g = Game.WATERSAMPLING;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
