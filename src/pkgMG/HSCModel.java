@@ -23,12 +23,12 @@ public class HSCModel extends MinigameModel{
 	 */
 	private void createHSCrabs() {
 		for (int i = 0; i < 10; i++) {
-			dns.add(new MaleHSC(r.nextInt() % backgroundWidth, r.nextInt() % backgroundHeight,
+			dns.add(new MaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
 		}
 		
 		for (int i = 0; i < 10; i++) {
-			dns.add(new FemaleHSC(r.nextInt() % backgroundWidth, r.nextInt() % backgroundHeight,
+			dns.add(new FemaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
 		}
 	}

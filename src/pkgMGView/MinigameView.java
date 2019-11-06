@@ -32,18 +32,19 @@ public abstract class MinigameView {
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
-	abstract void draw();
+	abstract void draw(ArrayList<DataNode> dns);
 	abstract void importImages();
 	
-	public Image loadImage(String pkgName, String imageName) {
-		Image img = new Image(pkgName + "/" + imageName);
+	public Image loadImage(String pkgName, Mover m) {
+		Image img = new Image(pkgName + "/" + m.getValue() + ".png");
 		return img;
 	}
 	
-	public Image loadImage(String pkgName, String imageName, Mover m) {
-		Image img = new Image(pkgName + "/" + imageName + "_" + m.toString());
+	public Image loadImage(String pkgName, String imgName) {
+		Image img = new Image(pkgName + "/" + imgName + ".png");
 		return img;
 	}
+	
 	
 	public double getAngle(Direction d) {
 		double angle = 0;
@@ -93,5 +94,19 @@ public abstract class MinigameView {
 	
 	public Game getGame() {
 		return this.g;
+	}
+	
+	public void clearFX() {
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		root.getChildren().clear();
+	}
+	
+	public void draw(Mover m) {
+		gc.drawImage(loadImage("Mover", m.getValue()),
+				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+	}
+	
+	public GraphicsContext getGC() {
+		return this.gc;
 	}
 }

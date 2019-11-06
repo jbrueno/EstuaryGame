@@ -43,8 +43,6 @@ public class Controller extends Application{
 				model.update(view.getGame(), view.getMouseEvent());
 				view.update(model.getDataNodes(), GameState.INPROGRESS);
 				
-				
-				
 				try {
 					Thread.sleep(100);
 				} catch (Exception e) {

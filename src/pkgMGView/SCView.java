@@ -46,7 +46,7 @@ public class SCView extends MinigameView{
 	}
 
 	@Override
-	void draw() {
+	void draw(ArrayList<DataNode> dns) {
 		// TODO Auto-generated method stub
 		
 	}

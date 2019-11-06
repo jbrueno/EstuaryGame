@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
+import pkgMover.Mover;
 
 public class HSCView extends MinigameView{
+	
+	Image fHSC;
+	Image mHSC;
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
 		g = Game.HSCCOUNT;
@@ -26,8 +31,13 @@ public class HSCView extends MinigameView{
 	
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
-		// TODO Auto-generated method stub
-		
+		if (gs == GameState.INPROGRESS) {
+			for (DataNode d : dns) {
+				Mover m = (Mover) d;
+				System.out.println("drawing");
+				draw(m);
+			}
+		}
 	}
 
 	@Override
@@ -49,17 +59,17 @@ public class HSCView extends MinigameView{
 	}
 
 	@Override
-	void draw() {
-		// TODO Auto-generated method stub
-		
+	void draw(ArrayList<DataNode> dns) {
+		for (DataNode dn : dns) {
+			Mover m = (Mover) dn;
+			draw(m);
+		}
 	}
 
 	@Override
 	void importImages() {
-		// TODO Auto-generated method stub
-		
+		fHSC = new Image("Mover/FemaleHSC.png");
+		mHSC = new Image("Mover/MaleHSC.png");
 	}
 	
-	
-
 }

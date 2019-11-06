@@ -113,6 +113,7 @@ public class View {
 	private void updateView() {
 		root = currGame.getRoot();
 		scene = currGame.getScene();
+		gc = currGame.getGC();
 	}
 	
 	public MouseEvent getMouseEvent() {
@@ -131,9 +132,14 @@ public class View {
 	 * 
 	 */
 	public Game getGame() {
-		Game g = currGame.getGame();
-		currGame = retrieveMGV(g);
-		return g;
+		Game game = currGame.getGame();
+		System.out.println(game + " " + currGame.getGame());
+		if (currGame.getGame() != game) {//loading new game
+			System.out.println("clearing");
+			currGame.clearFX();
+		}
+		currGame = retrieveMGV(game);
+		return game;
 	}
 	
 	/**

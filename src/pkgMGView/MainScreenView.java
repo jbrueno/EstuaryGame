@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import pkgEnum.Direction;
@@ -120,8 +121,9 @@ public class MainScreenView extends MinigameView {
 	 * @see loadImage()
 	 */
 	@Override
-	void draw() {
-		gc.drawImage(loadImage("backgrounds","background_MainScreen.png"), 0, 0, backgroundWidth, backgroundHeight);
+	void draw(ArrayList<DataNode> dns) {
+		//dns is always empty; don't do anything with it
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 	}
 	
 	/**
@@ -133,10 +135,8 @@ public class MainScreenView extends MinigameView {
 	 */
 	@Override 
 	void importImages() {
-		background = loadImage("backgrounds","background_MainScreen.png");
+		background = new Image("backgrounds/MainScreen.png");
 	}
-
-
 
 
 	@Override
@@ -144,7 +144,7 @@ public class MainScreenView extends MinigameView {
 		if (gs == GameState.FINISHED) {
 			g = Game.LEADERBOARD;
 		} else {
-			draw();
+			draw(dns);
 		}
 	}
 	
