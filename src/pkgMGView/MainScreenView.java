@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMover.DataNode;
 import pkgMover.Mover;
 
@@ -25,7 +25,7 @@ public class MainScreenView extends MinigameView {
 	private int btnSize = 45;
 	
 	public MainScreenView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = GameType.MAINSCREEN;
+		this.gt = Game.MAINSCREEN;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -61,20 +61,20 @@ public class MainScreenView extends MinigameView {
     	});
 		
 		btnSC.setOnAction(e -> {
-			gt = GameType.SIDESCROLLER;
+			gt = Game.SIDESCROLLER;
 		});
 		
 		btnHCC.setOnAction(e -> {
 			System.out.println("clicked");
-			gt = GameType.HSCCOUNT;
+			gt = Game.HSCCOUNT;
 		});
 		
 		btnAM.setOnAction(e -> {
-			gt = GameType.ANIMALMATCHING;
+			gt = Game.ANIMALMATCHING;
 		});
 		
 		btnWS.setOnAction(e -> {
-			gt = GameType.WATERSAMPLING;
+			gt = Game.WATERSAMPLING;
 		});
 		
 	}
@@ -151,9 +151,9 @@ public class MainScreenView extends MinigameView {
 	}
 	
 	@Override
-	public GameType getGameType() {
-		GameType gtTemp = gt;
-		gt = GameType.MAINSCREEN;
+	public Game getGame() {
+		Game gtTemp = gt;
+		gt = Game.MAINSCREEN;
 		System.out.println(gtTemp);
 		return gtTemp;
 	}

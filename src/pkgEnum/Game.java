@@ -1,6 +1,6 @@
 package pkgEnum;
 
-public enum GameType {
+public enum Game {
 	MAINSCREEN, ANIMALMATCHING, HSCCOUNT, WATERSAMPLING, SIDESCROLLER, LEADERBOARD;
 
 }

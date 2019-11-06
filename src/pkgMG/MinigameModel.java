@@ -1,6 +1,6 @@
 package pkgMG;
 
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMover.Mover;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
@@ -18,7 +18,7 @@ public abstract class MinigameModel {
 	 * 
 	 */
 
-	GameType currGame;
+	Game currGame;
 	int score;
 	int totalTime;
 	GameState gs = GameState.START;
@@ -56,7 +56,7 @@ public abstract class MinigameModel {
 	
 	
 	
-	public GameType getGameType() {
+	public Game getGameType() {
 		return this.currGame;
 	}
 	

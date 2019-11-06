@@ -1,6 +1,6 @@
 package pkgMVC;
 import pkgEnum.Direction;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMG.*;
 import pkgMGView.AMView;
 import pkgMGView.HSCView;
@@ -35,9 +35,8 @@ public class Model {
 	}
 	
 
-	public void update(GameType gt, MouseEvent me) {
-		System.out.println(gt + " " + currGame.getGameType());
-		if (gt != GameType.MAINSCREEN) {
+	public void update(Game gt, MouseEvent me) {
+		if (gt != Game.MAINSCREEN) {
 			if (!isCurrGame(gt)) {
 				//currGame = minigames.get(gt.ordinal());
 				currGame = minigames.get(0);
@@ -50,14 +49,11 @@ public class Model {
 		
 	}	
 	
-	private boolean isCurrGame(GameType gt) {
+	private boolean isCurrGame(Game gt) {
 		return currGame.getGameType() == gt;
 	}
 	
 	public ArrayList<DataNode> getDataNodes() {
-		if (currGame.getGameType() == GameType.MAINSCREEN) {
-			return new ArrayList<DataNode>();
-		}
 		return currGame.getDataNodes();
 	}
 	

@@ -38,10 +38,12 @@ public class Controller extends Application{
 		
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
-				System.out.println(view.getGameType());
+				System.out.println(view.getGame());
 
-				model.update(view.getGameType(), view.getMouseEvent());
+				model.update(view.getGame(), view.getMouseEvent());
 				view.update(model.getDataNodes(), GameState.INPROGRESS);
+				
+				
 				
 				try {
 					Thread.sleep(100);

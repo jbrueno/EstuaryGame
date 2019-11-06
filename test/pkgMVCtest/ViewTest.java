@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import javafx.stage.Stage;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMVC.View;
 
 public class ViewTest {
@@ -20,7 +20,7 @@ public class ViewTest {
 		Stage s = new Stage();
 		View v = new View(s);
 		
-		assertEquals(v.getGameType(), GameType.MAINSCREEN);
+		assertEquals(v.getGameType(), Game.MAINSCREEN);
 	}
 
 }

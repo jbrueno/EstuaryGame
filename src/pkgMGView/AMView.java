@@ -6,13 +6,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import pkgEnum.GameState;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMover.DataNode;
 
 public class AMView extends MinigameView{
 
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = GameType.ANIMALMATCHING;
+		this.gt = Game.ANIMALMATCHING;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -58,7 +58,7 @@ public class AMView extends MinigameView{
 	}
 
 	@Override
-	public GameType getGameType() {
+	public Game getGame() {
 		// TODO Auto-generated method stub
 		return null;
 	}

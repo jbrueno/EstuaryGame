@@ -6,13 +6,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import pkgEnum.GameState;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMover.DataNode;
 
 public class LeaderboardView extends MinigameView{
 
 	public LeaderboardView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = GameType.MAINSCREEN;
+		this.gt = Game.MAINSCREEN;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;

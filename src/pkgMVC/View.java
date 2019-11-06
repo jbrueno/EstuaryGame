@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import pkgEnum.GameState;
-import pkgEnum.GameType;
+import pkgEnum.Game;
 import pkgMGView.*;
 import pkgMover.DataNode;
 import pkgMover.Mover;
@@ -47,13 +47,13 @@ public class View {
 	private GraphicsContext gc;
 	private int canvasWidth = 1280;
 	private int canvasHeight = 768;
-	private GameType gameType;
+	private Game gameType;
 	
 	public View(Stage theStage) {		
 	    this.root = new Group();
         this.scene = new Scene(root);
         theStage.setScene(scene);
-        this.gameType = GameType.MAINSCREEN;
+        this.gameType = Game.MAINSCREEN;
 
         Canvas canvas = new Canvas(canvasWidth, canvasHeight);
         root.getChildren().add(canvas); 
@@ -97,8 +97,8 @@ public class View {
 	 * @return GameType the GameType that the view is currently showing
 	 * 
 	 */
-	public GameType getGameType() {
-		return currGame.getGameType();
+	public Game getGame() {
+		return currGame.getGame();
 	}
 	
 }
