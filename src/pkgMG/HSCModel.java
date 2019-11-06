@@ -68,7 +68,7 @@ public class HSCModel extends MinigameModel{
 		}
 		
 		public String toString() {
-			return species + " " + sex + " " + x + " " + y;
+			return species + " " + sex + " x: " + x + ", y: " + y;
 			
 		}
 	}
