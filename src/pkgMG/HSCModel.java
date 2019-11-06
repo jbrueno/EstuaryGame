@@ -58,8 +58,8 @@ public class HSCModel extends MinigameModel{
 		public String sex;
 		
 		public HSC(String sex, int x, int y, Direction d) {
+			super("crab");
 			this.sex=sex;
-			species = "crab";
 			this.x = x;
 			this.y = y;
 			this.d = d;

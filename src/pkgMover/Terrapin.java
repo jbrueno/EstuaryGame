@@ -5,7 +5,7 @@ public class Terrapin extends Mover {
 	public double airAmount;
 	
 	public Terrapin() {
-		this.species = "Terrapin";
+		super("Terrapin");
 		this.airAmount = 100;
 		this.xIncr = 0;
 		this.yIncr = 10;
