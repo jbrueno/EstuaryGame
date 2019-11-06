@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.GameType;
+import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public abstract class MinigameView {
@@ -26,7 +27,7 @@ public abstract class MinigameView {
 	Scene scene;
 	GameType gt;
 	
-	abstract public void update(ArrayList<Mover> ms, GameState gs);
+	public abstract void update(ArrayList<DataNode> dns, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
@@ -89,4 +90,7 @@ public abstract class MinigameView {
 		return me;
 	}
 	
+	public GameType getGameType() {
+		return this.gt;
+	}
 }

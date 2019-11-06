@@ -9,18 +9,19 @@ import pkgEnum.GameState;
 import pkgEnum.GameType;
 import pkgMover.DataNode;
 
-public class AMView extends MinigameView{
+public class WSView extends MinigameView{
 
-	public AMView(GraphicsContext gc, Group root, Scene scene) {
-		this.gt = GameType.ANIMALMATCHING;
+	public WSView(GraphicsContext gc, Group root, Scene scene) {
+		this.gt = GameType.WATERSAMPLING;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-		
+
+       
     	setUpListeners();
+
 		importImages();
 	}
-	
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
 		// TODO Auto-generated method stub
@@ -62,5 +63,5 @@ public class AMView extends MinigameView{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

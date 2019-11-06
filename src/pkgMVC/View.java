@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import pkgEnum.GameState;
 import pkgEnum.GameType;
 import pkgMGView.*;
+import pkgMover.DataNode;
 import pkgMover.Mover;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -59,18 +60,24 @@ public class View {
         
         gc = canvas.getGraphicsContext2D();
         
-		createMinigameViews();
+		createViews();
 	}
 	
-	public void update(ArrayList<Mover> ms, GameState gs) {
-		currGame.update(ms, gs);
+	public void update(ArrayList<DataNode> dns, GameState gs) {
+		currGame.update(dns, gs);
 		updateView();
 	}
 	
-	private void createMinigameViews() {
+	private void createViews() {
 		mgvs = new ArrayList<MinigameView>();
 		
 		mgvs.add(new MainScreenView(gc, root, scene));
+		mgvs.add(new AMView(gc, root, scene));
+		mgvs.add(new HSCView(gc, root, scene));
+		mgvs.add(new SCView(gc, root, scene));
+		mgvs.add(new WSView(gc, root, scene));
+		mgvs.add(new LeaderboardView(gc, root, scene));
+		
 		currGame = mgvs.get(0);		
 	}
 	
@@ -91,7 +98,7 @@ public class View {
 	 * 
 	 */
 	public GameType getGameType() {
-		return this.gameType;
+		return currGame.getGameType();
 	}
 	
 }

@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.GameType;
+import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class MainScreenView extends MinigameView {
@@ -36,14 +37,7 @@ public class MainScreenView extends MinigameView {
 		importImages();
 	}
 	
-	public void update(ArrayList<Mover> ms, GameState gs) {
-		//ms should always be empty since the main screen has no moving objects
-		if (gs == GameState.FINISHED) {
-			//loadLeaderboard
-		} else {
-			draw();
-		}
-	}
+	
 
 
 	@Override
@@ -71,7 +65,8 @@ public class MainScreenView extends MinigameView {
 		});
 		
 		btnHCC.setOnAction(e -> {
-			gt = GameType.HCCOUNT;
+			System.out.println("clicked");
+			gt = GameType.HSCCOUNT;
 		});
 		
 		btnAM.setOnAction(e -> {
@@ -85,16 +80,16 @@ public class MainScreenView extends MinigameView {
 	}
 	
 	private void setUpButtons() {
-		btnSC = new Button();
+		btnSC = new Button("Side Scroller");
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
-		btnHCC = new Button();
+		btnHCC = new Button("Horseshoe Crab Count");
 		formatCircleButton(btnHCC, 417.0, 587.0);
 		
-		btnAM = new Button();
+		btnAM = new Button("Animal Matching");
 		formatCircleButton(btnAM, 852.0, 202.0);
 		
-		btnWS = new Button();
+		btnWS = new Button("Water Sampling");
 		formatCircleButton(btnWS, 498.0, 85.0);
 		
 		root.getChildren().add(btnSC);
@@ -140,5 +135,26 @@ public class MainScreenView extends MinigameView {
 	@Override 
 	void importImages() {
 		background = loadImage("backgrounds","background_MainScreen.png");
+	}
+
+
+
+
+	@Override
+	public void update(ArrayList<DataNode> dns, GameState gs) {
+		//ms should always be empty since the main screen has no moving objects
+		if (gs == GameState.FINISHED) {
+			//loadLeaderboard
+		} else {
+			draw();
+		}
+	}
+	
+	@Override
+	public GameType getGameType() {
+		GameType gtTemp = gt;
+		gt = GameType.MAINSCREEN;
+		System.out.println(gtTemp);
+		return gtTemp;
 	}
 }
