@@ -4,29 +4,22 @@ import java.util.ArrayList;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Direction;
+import pkgEnum.GameType;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel{
+	private final GameType gameType = GameType.HCCOUNT;
 	ArrayList<Mover> crabs;
 
 	public HSCModel() {
-		System.out.println("HSCmodel");
+		System.out.println("HSCmodel constructor");
 		this.createCrabs();
 	}
 	
 	public void update() {
 		for (Mover c : crabs) {
-			switch(c.d) {
-			case EAST: c.x+=c.xIncr;
-						break;
-			case SOUTHEAST: c.x += c.xIncr;
-							c.y += c.yIncr;
-							break;
-			case SOUTH: c.y+= c.yIncr;
-						break;
-				
+			c.move();
 			}	
-		}
 		System.out.println(crabs);
 	}
 	
