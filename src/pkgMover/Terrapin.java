@@ -1,9 +1,8 @@
 package pkgMover;
 
-public class Terrapin {
+public class Terrapin extends Mover {
 	
 	double airAmount;
-	private String species;
 	
 	public Terrapin() {
 		this.species = "Terrapin";
