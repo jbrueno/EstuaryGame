@@ -1,10 +1,12 @@
 package pkgMG;
 
 import javafx.scene.input.MouseEvent;
+import pkgEnum.Game;
 
 public class SCModel extends MinigameModel{
 	
 	public SCModel() {
+		g = Game.SIDESCROLLER;
 		
 	}
 

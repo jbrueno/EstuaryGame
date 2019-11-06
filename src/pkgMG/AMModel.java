@@ -1,11 +1,12 @@
 package pkgMG;
 
 import javafx.scene.input.MouseEvent;
+import pkgEnum.Game;
 
 public class AMModel extends MinigameModel {
 	
 	public AMModel() {
-		
+		g = Game.ANIMALMATCHING;
 	}
 
 

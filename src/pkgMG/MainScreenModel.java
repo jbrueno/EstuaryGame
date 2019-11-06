@@ -3,12 +3,14 @@ package pkgMG;
 import java.util.ArrayList;
 
 import javafx.scene.input.MouseEvent;
+import pkgEnum.Game;
 import pkgMover.DataNode;
 
 public class MainScreenModel extends MinigameModel{
 	
 	public MainScreenModel() {
 		dns = new ArrayList<DataNode>();
+		g = Game.MAINSCREEN;
 	}
 
 	@Override
@@ -16,5 +18,6 @@ public class MainScreenModel extends MinigameModel{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

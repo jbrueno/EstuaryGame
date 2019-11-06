@@ -35,22 +35,22 @@ public class Model {
 	}
 	
 
-	public void update(Game gt, MouseEvent me) {
-		if (gt != Game.MAINSCREEN) {
-			if (!isCurrGame(gt)) {
-				//currGame = minigames.get(gt.ordinal());
+	public void update(Game g, MouseEvent me) {
+		if (!isCurrGame(g)) {
+			currGame = minigames.get(g.ordinal());
+		}
+		if (g != Game.MAINSCREEN) {
+			if (!isCurrGame(g)) {
+				//currGame = minigames.get(g.ordinal());
 				currGame = minigames.get(0);
 			}
 			
 			currGame.update(me);
 		}
-		
-		
-		
 	}	
 	
-	private boolean isCurrGame(Game gt) {
-		return currGame.getGameType() == gt;
+	private boolean isCurrGame(Game g) {
+		return currGame.getGame() == g;
 	}
 	
 	public ArrayList<DataNode> getDataNodes() {

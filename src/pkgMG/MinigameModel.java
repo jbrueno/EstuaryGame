@@ -17,8 +17,8 @@ public abstract class MinigameModel {
 	 *  to the models of all of the different views
 	 * 
 	 */
-
-	Game currGame;
+	
+	Game g;
 	int score;
 	int totalTime;
 	GameState gs = GameState.START;
@@ -55,13 +55,12 @@ public abstract class MinigameModel {
 	}
 	
 	
-	
-	public Game getGameType() {
-		return this.currGame;
-	}
-	
 	public ArrayList<DataNode> getDataNodes() {
 		return this.dns;
+	}
+	
+	public Game getGame() {
+		return g;
 	}
 	
 	
