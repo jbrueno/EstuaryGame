@@ -54,19 +54,24 @@ public class SCModel extends MinigameModel{
 		
 		for (Mover m : items) {
 			m.x += m.xIncr;
+			
 			if (terry.x >= m.x - m.imageWidth && terry.x <= m.x + m.imageWidth) {
 				if (m.species.equals("seaweed")) {
 					terry.xIncr --;
-					System.out.println("hit seaweed, slowed down")
+					System.out.println("hit seaweed, slowed down");
 				} else if (m.species.equals("trash")) {
 					terry.xIncr--;
 					score = score - 50;
-					System.out.println("hit trash, lost points and slowed down")
+					System.out.println("hit trash, lost points and slowed down");
 				} else if (m.species.equals("food")) {
 					terry.xIncr++;
 					score = score + 100;
 					System.out.println("yummy, food!");
 				}
+			}
+			
+			if (m.x < 0) {
+				items.remove(m);
 			}
 		}
 		
