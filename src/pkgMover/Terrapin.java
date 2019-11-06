@@ -2,11 +2,13 @@ package pkgMover;
 
 public class Terrapin extends Mover {
 	
-	double airAmount;
+	public double airAmount;
 	
 	public Terrapin() {
 		this.species = "Terrapin";
 		this.airAmount = 100;
+		this.xIncr = 0;
+		this.yIncr = 10;
 	}
 	
 	/**
