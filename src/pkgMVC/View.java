@@ -103,22 +103,6 @@ public class View {
         this.game = Game.MAINSCREEN;
 	}
 	
-	/** 
-	 * (If necessary) Returns root and scene from the currGame in order to update View's root and scene
-	 * so that it may be drawn properly to theStage (which originates from Controller)
-	 * <<p>
-	 * Possibly, may not needed or need to be handled elsewhere to
-	 * 
-	 * @author Ryan Peters
-	 * @see MinigameView.getRoot()
-	 * @see MinigameView.getScene()
-	 */
-	private void updateView() {
-		root = currGame.getRoot();
-		scene = currGame.getScene();
-		gc = currGame.getGC();
-	}
-	
 	public MouseEvent getMouseEvent() {
 		return currGame.getMouseEvent();
 	}
