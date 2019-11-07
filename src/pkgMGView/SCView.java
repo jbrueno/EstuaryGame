@@ -2,6 +2,7 @@ package pkgMGView;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
 import pkgEnum.GameState;
 import pkgMover.Mover;
 
@@ -20,8 +21,14 @@ public class SCView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<Mover> ms, GameState gs) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	public void update(double turtleX, double turtleY, ArrayList<Mover> movers) {
+		terryX = turtleX;
+		terryY = turtleY;
+		
+			
 	}
 
 	@Override
@@ -53,6 +60,7 @@ public class SCView extends MinigameView {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 	
 

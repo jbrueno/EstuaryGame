@@ -39,7 +39,8 @@ public class SCModel extends MinigameModel{
 
 	@Override
 	void update(MouseEvent me) {
-		
+		me.getSceneY();
+		me.getSceneX();
 		
 	}
 
@@ -48,7 +49,7 @@ public class SCModel extends MinigameModel{
 		if (terry.y >= waterThreshold) {
 			terry.breathe();
 		} else {
-			terry.airAmount =- 0.1;
+			terry.airAmount = terry.airAmount - 0.5;
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
 		
