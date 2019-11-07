@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -14,6 +15,7 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
+	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		g = Game.WATERSAMPLING;
@@ -21,13 +23,15 @@ public class WSView extends MinigameView{
 		this.scene = scene;
 		this.gc = gc;
 
-       
-    	setUpListeners();
-
 		importImages();
 	}
+	
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
+		if (!areButtonsMade) {
+			setUpListeners();
+			areButtonsMade = true;
+		}
 		if (gs == GameState.INPROGRESS) {
 			draw(dns);
 		}
@@ -47,7 +51,13 @@ public class WSView extends MinigameView{
 
 	@Override
 	void setUpListeners() {
-		// TODO Auto-generated method stub
+		btnReturn = new Button("Return");
+		btnReturn.setLayoutX(0);
+		btnReturn.setLayoutY(0);
+		btnReturn.setOnAction(e -> {
+			g = Game.MAINSCREEN;
+		});
+		root.getChildren().add(btnReturn);
 		
 	}
 
@@ -66,6 +76,13 @@ public class WSView extends MinigameView{
 	void importImages() {
 		background= new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.gif");
+	}
+	
+	@Override
+	public Game getGame() {
+		Game gtTemp = g;
+		g = Game.WATERSAMPLING;
+		return gtTemp;
 	}
 
 }
