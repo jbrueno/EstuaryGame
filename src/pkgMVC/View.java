@@ -99,7 +99,8 @@ public class View {
 		mgvs.add(new WSView(gc, root, scene));
 		mgvs.add(new LeaderboardView(gc, root, scene));
 		
-		currGame = mgvs.get(0); //default start for Game
+		//default start for Game
+		currGame = mgvs.get(0); 
         this.game = Game.MAINSCREEN;
 	}
 	

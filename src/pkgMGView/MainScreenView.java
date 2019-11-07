@@ -20,7 +20,7 @@ import pkgMover.Mover;
 public class MainScreenView extends MinigameView {
 	
 	private Button btnSC; //sidescroller
-	private Button btnHCC; //horseshoe crab count
+	private Button btnHSCC; //horseshoe crab count
 	private Button btnAM; //animal matching
 	private Button btnWS; //water sampling 
 	private int btnSize = 45;
@@ -58,7 +58,7 @@ public class MainScreenView extends MinigameView {
 			g = Game.SIDESCROLLER;
 		});
 		
-		btnHCC.setOnAction(e -> {
+		btnHSCC.setOnAction(e -> {
 			g = Game.HSCCOUNT;
 		});
 		
@@ -76,8 +76,8 @@ public class MainScreenView extends MinigameView {
 		btnSC = new Button("Side Scroller");
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
-		btnHCC = new Button("Horseshoe Crab Count");
-		formatCircleButton(btnHCC, 417.0, 587.0);
+		btnHSCC = new Button("Horseshoe Crab Count");
+		formatCircleButton(btnHSCC, 417.0, 587.0);
 		
 		btnAM = new Button("Animal Matching");
 		formatCircleButton(btnAM, 852.0, 202.0);
@@ -86,10 +86,9 @@ public class MainScreenView extends MinigameView {
 		formatCircleButton(btnWS, 498.0, 85.0);
 		
 		root.getChildren().add(btnSC);
-		root.getChildren().add(btnHCC);
+		root.getChildren().add(btnHSCC);
 		root.getChildren().add(btnAM);
 		root.getChildren().add(btnWS);
-		
 	}
 	
 	/**

@@ -66,16 +66,16 @@ public abstract class Mover extends DataNode{
 		return xIncr;
 	}
 	
-	public void setXIncr(int i) {
-		this.xIncr = i;
+	public void setXIncr(double d) {
+		this.xIncr = d;
 	}
 
 	public double getYIncr() {
 		return yIncr;
 	}
 	
-	public void setYIncr(int i) {
-		this.yIncr = i;
+	public void setYIncr(double d) {
+		this.yIncr = d;
 	}
 	
 	
