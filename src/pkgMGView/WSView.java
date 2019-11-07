@@ -69,7 +69,6 @@ public class WSView extends MinigameView{
 		for (DataNode dn : dns) {
 			Mover m = (Mover) dn;
 			draw(m);
-			System.out.println("drawing");
 		}
 	}
 

@@ -10,6 +10,10 @@ public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
 	Mover fullBottle;
+
+	
+	int waterLevel = 450;
+	int maxDepth = 800;
 	boolean filled = false;
 	
 	public WSModel() {
@@ -55,4 +59,6 @@ public class WSModel extends MinigameModel{
 		}
 		return false;
 	}
+	
+	
 }
