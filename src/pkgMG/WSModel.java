@@ -10,10 +10,11 @@ public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
 	Mover fullBottle;
+
 	
 	int waterLevel = 450;
 	int maxDepth = 800;
-	boolean fill = false;
+	boolean filled = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
@@ -33,7 +34,7 @@ public class WSModel extends MinigameModel{
 		Bottle.move();
 		System.out.println("y: "+Bottle.getY());
 		if(Bottle.getY() >= backgroundHeight/2) {
-			fill=true;
+			filled = true;
 		}
 		
 		if(checkFill()) {
@@ -49,7 +50,7 @@ public class WSModel extends MinigameModel{
 	 * @return boolean true if bottle is full
 	 */
 	public boolean checkFill() {
-		if (fill==true) {
+		if (filled) {
 			if(!dns.contains(fullBottle)) {
 				dns.remove(Bottle);
 				dns.add(fullBottle);

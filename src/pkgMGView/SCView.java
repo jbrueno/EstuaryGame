@@ -5,26 +5,33 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import pkgEnum.GameState;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.DataNode;
+import pkgMover.Mover;
 
-public class SCView extends MinigameView{
-
+public class SCView extends MinigameView {
+	
+	Button btnReturn;
+	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		g = Game.SIDESCROLLER;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
 
-    	setUpListeners();
-
 		importImages();
 	}
+	
+
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
-		// TODO Auto-generated method stub
-		
+		if (!areButtonsMade) {
+			setUpListeners();
+			areButtonsMade = true;
+		}
 	}
 
 	@Override
@@ -41,6 +48,18 @@ public class SCView extends MinigameView{
 
 	@Override
 	void setUpListeners() {
+		btnReturn = new Button("Return");
+		btnReturn.setLayoutX(0);
+		btnReturn.setLayoutY(0);
+		btnReturn.setOnAction(e -> {
+			g = Game.MAINSCREEN;
+		});
+		root.getChildren().add(btnReturn);
+		
+	}
+
+	@Override
+	void importImages() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -50,10 +69,11 @@ public class SCView extends MinigameView{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	void importImages() {
-		// TODO Auto-generated method stub
-		
+	public Game getGame() {
+		Game gtTemp = g;
+		g = Game.SIDESCROLLER;
+		return gtTemp;
 	}
 }
