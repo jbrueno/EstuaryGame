@@ -28,7 +28,8 @@ public class AMView extends MinigameView{
 	
 	
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.ANIMALMATCHING;
+		super(Game.ANIMALMATCHING);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -71,13 +72,7 @@ public class AMView extends MinigameView{
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
-			g = Game.MAINSCREEN;
-			root.getChildren().remove(btnHint);
-			root.getChildren().remove(btnTurtle);
-			root.getChildren().remove(btnDeer);
-			root.getChildren().remove(btnMussel);
-			root.getChildren().remove(btnCrab);
-			root.getChildren().remove(btnClam);
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
 		
@@ -156,12 +151,5 @@ public class AMView extends MinigameView{
 	@Override
 	void importImages() {
 		turtle = new Image("/Mover/bogturtle_left_0.gif");
-	}
-	
-	@Override
-	public Game getGame() {
-		Game gtTemp = g;
-		g = Game.ANIMALMATCHING;
-		return gtTemp;
 	}
 }

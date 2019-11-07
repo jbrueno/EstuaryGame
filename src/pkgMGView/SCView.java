@@ -15,9 +15,11 @@ import pkgMover.Mover;
 public class SCView extends MinigameView {
 	
 	Button btnReturn;
+	final Game theGame = Game.SIDESCROLLER;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.SIDESCROLLER;
+		super(Game.SIDESCROLLER);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -52,7 +54,7 @@ public class SCView extends MinigameView {
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
-			g = Game.MAINSCREEN;
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
 		
@@ -68,12 +70,5 @@ public class SCView extends MinigameView {
 	void draw(ArrayList<DataNode> dns) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public Game getGame() {
-		Game gtTemp = g;
-		g = Game.SIDESCROLLER;
-		return gtTemp;
 	}
 }

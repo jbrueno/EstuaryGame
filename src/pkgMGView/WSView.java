@@ -18,7 +18,8 @@ public class WSView extends MinigameView{
 	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.WATERSAMPLING;
+		super(Game.WATERSAMPLING);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -55,7 +56,7 @@ public class WSView extends MinigameView{
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
-			g = Game.MAINSCREEN;
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
 		
@@ -77,12 +78,4 @@ public class WSView extends MinigameView{
 		background= new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.gif");
 	}
-	
-	@Override
-	public Game getGame() {
-		Game gtTemp = g;
-		g = Game.WATERSAMPLING;
-		return gtTemp;
-	}
-
 }

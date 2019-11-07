@@ -28,7 +28,8 @@ public abstract class MinigameView {
 	GraphicsContext gc;
 	Group root;
 	Scene scene;
-	Game g;
+	Game game;
+	Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
 	
 	
@@ -38,6 +39,10 @@ public abstract class MinigameView {
 	abstract void setUpListeners();
 	abstract void draw(ArrayList<DataNode> dns);
 	abstract void importImages();
+	
+	public MinigameView(Game theGame) {
+		this.theGame = theGame;
+	}
 	
 	
 	// need to find a way to differentiate whether image is .png or .gif
@@ -100,10 +105,6 @@ public abstract class MinigameView {
 		return me;
 	}
 	
-	public Game getGame() {
-		return this.g;
-	}
-	
 	/**
 	 * Clears the current FX being displayed.
 	 * <p> 
@@ -127,5 +128,18 @@ public abstract class MinigameView {
 	
 	public GraphicsContext getGC() {
 		return this.gc;
+	}
+	
+	public Game getTheGame() {
+		return theGame;
+	}
+	
+	public void resetGameAttribute() {
+		game = theGame;
+	}
+	
+	public Game getGame() {
+		System.out.println(theGame + " " + game);
+		return this.game;
 	}
 }
