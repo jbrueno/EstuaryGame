@@ -24,7 +24,6 @@ public class AMView extends MinigameView{
 	Button btnClam;
 	String guessingThis = "Turtle";
 	boolean turtleDrawn = false;
-	boolean buttonsMade = false;
 	boolean questionAsked = false;
 	
 	
@@ -42,9 +41,9 @@ public class AMView extends MinigameView{
 			System.out.println("Which one is the turtle?");
 			questionAsked = true;
 		}
-		if (!buttonsMade) {
+		if (!areButtonsMade) {
 			setUpListeners();
-			buttonsMade = true;
+			areButtonsMade = true;
 		}
 		if (gs == GameState.INPROGRESS) {
 			draw(dns);
@@ -157,5 +156,12 @@ public class AMView extends MinigameView{
 	@Override
 	void importImages() {
 		turtle = new Image("/Mover/bogturtle_left_0.gif");
+	}
+	
+	@Override
+	public Game getGame() {
+		Game gtTemp = g;
+		g = Game.ANIMALMATCHING;
+		return gtTemp;
 	}
 }
