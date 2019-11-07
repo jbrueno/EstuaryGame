@@ -95,5 +95,16 @@ public class SCModel extends MinigameModel{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public double getTerrapinX() {
+		return terry.x;
+	}
+	
+	public double getTerrapinY() {
+		return terry.y;
+	}
+	
+	
+	
 
 }
