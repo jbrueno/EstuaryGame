@@ -134,12 +134,12 @@ public class MainScreenView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
-		System.out.println(gc.getCanvas());
 		if (!areButtonsMade) {
 			setUpButtons();
 			setUpListeners();
 			areButtonsMade = true;
 		}
+		
 		if (gs == GameState.FINISHED) {
 			g = Game.LEADERBOARD;
 		} else {

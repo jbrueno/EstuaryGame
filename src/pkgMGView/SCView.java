@@ -17,7 +17,7 @@ public class SCView extends MinigameView {
 	Button btnReturn;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.HSCCOUNT;
+		g = Game.SIDESCROLLER;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -68,5 +68,12 @@ public class SCView extends MinigameView {
 	void draw(ArrayList<DataNode> dns) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Game getGame() {
+		Game gtTemp = g;
+		g = Game.SIDESCROLLER;
+		return gtTemp;
 	}
 }

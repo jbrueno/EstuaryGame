@@ -27,7 +27,7 @@ public class SCModel extends MinigameModel{
 		g = Game.SIDESCROLLER;
 		terry = new Terrapin(backgroundWidth/2, backgroundHeight/2, 2, 0);
 		
-		gameState = GameState.START;
+		gameState = GameState.INPROGRESS;
 		score = 0;
 	}
 
