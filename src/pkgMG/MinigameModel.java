@@ -27,6 +27,7 @@ public abstract class MinigameModel {
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	Random r = new Random();
 	
+<<<<<<< HEAD
 	public abstract void update(MouseEvent me);
 	
 	/**
@@ -53,7 +54,13 @@ public abstract class MinigameModel {
 			m.setY(backgroundHeight - my/2);
 		}
 	}
+=======
+	abstract void update(MouseEvent me);
+	public abstract void update();
+	abstract void handleBorderCollision(Mover m);
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	
+<<<<<<< HEAD
 	
 	public ArrayList<DataNode> getDataNodes() {
 		return this.dns;
@@ -61,6 +68,10 @@ public abstract class MinigameModel {
 	
 	public Game getGame() {
 		return g;
+=======
+	public GameType getGameType() {
+		return this.currGame;
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}
 	
 	

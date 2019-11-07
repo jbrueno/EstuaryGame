@@ -20,6 +20,7 @@ public class WSModel extends MinigameModel{
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
 		Bottle= new Bottle(600,50,200,200,0,10,"Bottle");
+<<<<<<< HEAD
 		fullBottle=new Bottle(600, backgroundHeight/2, 200, 200, 0, -8, "fullBottle");
 		dns.add(Bottle);
 	}
@@ -45,6 +46,24 @@ public class WSModel extends MinigameModel{
 	 * 
 	 * @return boolean true if bottle is full
 	 */
+=======
+		fullBottle=new Bottle(600, 350, 200, 200, 0, -8, "fullBottle");
+		dns.add(Bottle);
+	}
+	
+	@Override
+	public void update(MouseEvent me) {
+		Bottle.move();
+		if(Bottle.getY() == 450) {
+			fill=true;
+		}
+		
+		if(checkFill()) {
+		fullBottle.move();
+		}
+	}
+	
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	public boolean checkFill() {
 		if (fill==true) {
 			if(!dns.contains(fullBottle)) {

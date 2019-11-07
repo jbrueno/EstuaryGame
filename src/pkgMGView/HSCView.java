@@ -1,6 +1,53 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+
+import javafx.scene.image.Image;
+import pkgEnum.GameState;
+import pkgEnum.GameType;
+import pkgMover.Mover;
+
+public class HSCView extends MinigameView {
+	public Image Terrapin;
+	
+	
+	@Override
+	public void update(ArrayList<Mover> ms, GameState gs) {
+		
+	}
+
+	@Override
+	void startTimer(int ms) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void stopTimer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void setUpListeners() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void importImages() {
+		
+	}
+
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 
 import javafx.scene.Group;
 import javafx.scene.Scene;

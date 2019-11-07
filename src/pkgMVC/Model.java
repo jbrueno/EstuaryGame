@@ -1,5 +1,6 @@
 package pkgMVC;
 import pkgEnum.Direction;
+<<<<<<< HEAD
 import pkgEnum.Game;
 import pkgMG.*;
 import pkgMGView.AMView;
@@ -10,6 +11,11 @@ import pkgMGView.MinigameView;
 import pkgMGView.SCView;
 import pkgMGView.WSView;
 import pkgMover.DataNode;
+=======
+import pkgMG.HSCModel;
+import pkgMG.MinigameModel;
+import pkgMG.SCModel;
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,18 +34,39 @@ import javafx.scene.input.MouseEvent;
  */
 public class Model {
 	private ArrayList<MinigameModel> minigames;
+<<<<<<< HEAD
 	private MinigameModel currGame;	
+=======
+	private MinigameModel currGame;
+    int canvasWidth;
+    int canvasHeight;
 	
+	
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
+	
+<<<<<<< HEAD
 	/**
 	 * Constructor that creates the list of MinigameModels <code>minigames</code>.
 	 * 
 	 * @author Ryan Peters
 	 * @see createModels()
 	 */
+=======
+	// added comment
+	
+	
+	
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	public Model() {
+<<<<<<< HEAD
 		createModels();
+=======
+		SCModel SC = new SCModel(1300, 800, 0, 0, 1000);
+		currGame = SC;
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param g
@@ -50,6 +77,11 @@ public class Model {
 			currGame = minigames.get(g.ordinal());
 		}
 		currGame.update(me);
+=======
+
+	public void update() {
+		currGame.update();
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}	
 	
 	/**
