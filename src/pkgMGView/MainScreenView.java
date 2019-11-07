@@ -31,10 +31,6 @@ public class MainScreenView extends MinigameView {
 		this.scene = scene;
 		this.gc = gc;
 
-       
-    	setUpButtons(); 
-    	setUpListeners();
-
 		importImages();
 	}
 	
@@ -140,6 +136,11 @@ public class MainScreenView extends MinigameView {
 	@Override
 	public void update(ArrayList<DataNode> dns, GameState gs) {
 		System.out.println(gc.getCanvas());
+		if (!areButtonsMade) {
+			setUpButtons();
+			setUpListeners();
+			areButtonsMade = true;
+		}
 		if (gs == GameState.FINISHED) {
 			g = Game.LEADERBOARD;
 		} else {

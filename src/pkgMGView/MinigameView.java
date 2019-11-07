@@ -28,6 +28,7 @@ public abstract class MinigameView {
 	Group root;
 	Scene scene;
 	Game g;
+	boolean areButtonsMade = false;
 	
 	
 	public abstract void update(ArrayList<DataNode> dns, GameState gs);
@@ -115,6 +116,7 @@ public abstract class MinigameView {
 	public void clearFX() {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		root.getChildren().clear();
+		areButtonsMade = false;
 	}
 	
 	public void draw(Mover m) {
