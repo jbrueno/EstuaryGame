@@ -124,7 +124,8 @@ public class View {
 	 */
 	public Game getGame() {
 		Game g = currGame.getGame();
-		if (currGame.getGame() != g) {//loading new game (since getGame() resets the Game attribute if different)
+		if (g != currGame.getTheGame()) {//input (button press) determined new game needs to be loaded
+			currGame.resetGameAttribute();
 			currGame.clearFX();
 			root.getChildren().add(canvas);
 		}
