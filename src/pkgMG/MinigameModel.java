@@ -22,8 +22,8 @@ public abstract class MinigameModel {
 	int score;
 	int totalTime;
 	GameState gs = GameState.START;
-	final int backgroundHeight = 1280;
-	final int backgroundWidth = 768;
+	final int backgroundHeight = 768;
+	final int backgroundWidth = 1280;
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	Random r = new Random();
 	
