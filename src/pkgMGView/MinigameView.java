@@ -29,7 +29,7 @@ public abstract class MinigameView {
 	Group root;
 	Scene scene;
 	Game game;
-	Game theGame; //final in each subclass
+	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
 	
 	
@@ -139,7 +139,6 @@ public abstract class MinigameView {
 	}
 	
 	public Game getGame() {
-		System.out.println(theGame + " " + game);
 		return this.game;
 	}
 }

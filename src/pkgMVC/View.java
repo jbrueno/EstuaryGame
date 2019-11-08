@@ -128,8 +128,8 @@ public class View {
 			currGame.resetGameAttribute();
 			currGame.clearFX();
 			root.getChildren().add(canvas);
+			currGame = retrieveMGV(g);
 		}
-		currGame = retrieveMGV(g);
 		return g;
 	}
 	

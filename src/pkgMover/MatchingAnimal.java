@@ -11,7 +11,6 @@ public class MatchingAnimal extends Mover {
 		super(x, y, imageWidth, imageHeight, 0, 0, value);
 		this.name = name; // name of species
 		this.clue = clue; // hint for user to better chances
-		// TODO Auto-generated constructor stub
 	}
 
 	

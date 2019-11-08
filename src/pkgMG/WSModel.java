@@ -10,7 +10,9 @@ public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
 	Mover fullBottle;
-
+	final int bottleImageWidth = 200;
+	final int bottleImageHeight = 200;
+	
 	
 	int waterLevel = 450;
 	int maxDepth = 800;
@@ -23,8 +25,8 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-		Bottle= new Bottle(600,50,200,200,0,10,"Bottle");
-		fullBottle=new Bottle(600, backgroundHeight/2, 200, 200, 0, -8, "fullBottle");
+		Bottle= new Bottle(600,50,0,10,"Bottle");
+		fullBottle=new Bottle(600, backgroundHeight/2, 0, -8, "fullBottle");
 		dns.add(Bottle);
 	}
 	
@@ -59,6 +61,12 @@ public class WSModel extends MinigameModel{
 		}
 		return false;
 	}
+	
+	class Bottle extends Mover {
+		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
+			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		}
+ 	}
 	
 	
 }
