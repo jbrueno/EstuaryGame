@@ -33,18 +33,22 @@ public abstract class MinigameView {
 	boolean areButtonsMade = false;
 	
 	
-	public abstract void update(ArrayList<DataNode> dns, GameState gs);
+	public abstract void update(ArrayList<Mover> movers, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
-	abstract void draw(ArrayList<DataNode> dns);
+	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
+<<<<<<< HEAD
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
 	}
 	
 	
+=======
+	 
+>>>>>>> branch 'Ryan' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {
@@ -52,12 +56,17 @@ public abstract class MinigameView {
 		return img;
 	}
 	
+	/*
 	public Image loadImage(String pkgName, String imgName) {
 		Image img = new Image(pkgName + "/" + imgName + ".gif");
 		return img;
 	}
-
+	 */
 	
+	public Image loadImage(Mover m) {
+		Image img = new Image("Mover/" + m.getValue() + ".gif"); 
+		return img;
+	}
 	
 	public double getAngle(Direction d) {
 		double angle = 0;
@@ -120,9 +129,15 @@ public abstract class MinigameView {
 		root.getChildren().clear();
 		areButtonsMade = false;
 	}
-	
+	/*
 	public void draw(Mover m) {
 		gc.drawImage(loadImage("Mover", m.getValue()),
+				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+	}
+	*/
+	
+	public void draw(Mover m) {
+		gc.drawImage(loadImage(m),
 				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
 	}
 	

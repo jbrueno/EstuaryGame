@@ -3,8 +3,8 @@ package pkgMG;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgMover.DataNode;
-import pkgMover.FemaleHSC;
-import pkgMover.MaleHSC;
+//import pkgMover.FemaleHSC;
+//import pkgMover.MaleHSC;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel{
@@ -23,12 +23,12 @@ public class HSCModel extends MinigameModel{
 	 */
 	private void createHSCrabs() {
 		for (int i = 0; i < 10; i++) {
-			dns.add(new MaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
+			movers.add(new MaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
 		}
 		
 		for (int i = 0; i < 10; i++) {
-			dns.add(new FemaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
+			movers.add(new FemaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
 		}
 	}
@@ -42,13 +42,28 @@ public class HSCModel extends MinigameModel{
 	 */
 	@Override
 	public void update(MouseEvent me) {
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m: movers) {
 			m.move();
 		}
-		System.out.println(dns);
+		System.out.println(movers); 
 		//later handle click from mouseevent; maybe have crabs scatter from the light slowly
+	}
+	
+	//TODO combine HSCs, add boolean value tagged
+	public class FemaleHSC extends Mover{
+		public FemaleHSC(int x, int y, int xIncr, int yIncr) {
+			super(x, y, 200, 136, xIncr, yIncr, "FemaleHSC");
+		}
+	}
+	
+	
+	public class MaleHSC extends Mover{
+		public MaleHSC(int x, int y, int xIncr, int yIncr) {
+			super(x, y, 200, 136, xIncr, yIncr, "MaleHSC");
+		}
 	}
 	
 
 }
+
+

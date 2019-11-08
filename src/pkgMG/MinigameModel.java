@@ -17,14 +17,14 @@ public abstract class MinigameModel {
 	 *  to the models of all of the different views
 	 * 
 	 */
-	
+	   
 	Game g;
 	int score;
 	int totalTime;
 	GameState gs = GameState.START;
 	final int backgroundHeight = 768;
 	final int backgroundWidth = 1280;
-	ArrayList<DataNode> dns = new ArrayList<DataNode>();
+	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
 	
 	public abstract void update(MouseEvent me);
@@ -55,8 +55,8 @@ public abstract class MinigameModel {
 	}
 	
 	
-	public ArrayList<DataNode> getDataNodes() {
-		return this.dns;
+	public ArrayList<Mover> getMovers() {
+		return this.movers;
 	}
 	
 	public Game getGame() {

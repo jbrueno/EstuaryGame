@@ -12,7 +12,7 @@ public class MatchingAnimal extends Mover {
 		this.name = name; // name of species
 		this.clue = clue; // hint for user to better chances
 	}
-
+ 
 	
 	public String toString() {
 		return name + ": " + super.getX() + ", " + super.getY();

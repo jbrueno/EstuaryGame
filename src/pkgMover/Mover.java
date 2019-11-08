@@ -2,7 +2,7 @@ package pkgMover;
 
 import pkgEnum.Direction;
 
-public abstract class Mover extends DataNode{
+public abstract class Mover/* extends DataNode*/{
 	private double y;
 	private double x;
 	private int imageWidth;
@@ -11,7 +11,7 @@ public abstract class Mover extends DataNode{
 	private double yIncr;
 	private String value;
 	
-	
+	 
 	/**
 	 * Mover constructor that takes in an x,y for position; imageWidth/Height for collision detection;
 	 * and xIncr,yIncr for speed control. <code>value</code> is passed to constructor for <code>DataNode</code>
@@ -28,7 +28,7 @@ public abstract class Mover extends DataNode{
 	 * @param value			String relating to the subclass's name for image lookup later in MinigameViews
 	 */
 	public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-		super(value);
+		this.value=value;
 		this.x = x;
 		this.y = y;
 		this.imageWidth = imageWidth;
@@ -100,6 +100,10 @@ public abstract class Mover extends DataNode{
 	public void move(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public String getValue() {
+		return value;
 	}
 	
 	public String toString() {

@@ -25,16 +25,16 @@ public class WSView extends MinigameView{
 		this.gc = gc;
 
 		importImages();
-	}
+	} 
 	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 		}
 		if (gs == GameState.INPROGRESS) {
-			draw(dns);
+			draw(movers);
 		}
 	}
 
@@ -63,11 +63,10 @@ public class WSView extends MinigameView{
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m : movers) {
 			draw(m);
 		}
 	}
