@@ -24,15 +24,9 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-<<<<<<< HEAD
 		Bottle= new Bottle(600,50,0,10,"Bottle");
 		fullBottle=new Bottle(600, backgroundHeight/2, 0, -8, "fullBottle");
-		dns.add(Bottle);
-=======
-		Bottle= new Bottle(600,50,200,200,0,10,"Bottle");
-		fullBottle=new Bottle(600, backgroundHeight/2, 200, 200, 0, -8, "fullBottle");
 		movers.add(Bottle);
->>>>>>> branch 'Ryan' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}
 	
 	@Override
@@ -66,28 +60,17 @@ public class WSModel extends MinigameModel{
 		}
 		return false;
 	}
-	 
-	public class Bottle extends Mover{
-
-		public Bottle(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
-		}
-	}
 	
-<<<<<<< HEAD
 	class Bottle extends Mover {
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
  	}
 	
-	
-=======
 	public class PHStrip extends Mover{
 
 		public PHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
 	}
->>>>>>> branch 'Ryan' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 }

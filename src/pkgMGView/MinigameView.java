@@ -40,15 +40,10 @@ public abstract class MinigameView {
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
-<<<<<<< HEAD
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
-	}
-	
-	
-=======
-	 
->>>>>>> branch 'Ryan' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
+	} 
+
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {

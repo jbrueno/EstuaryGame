@@ -38,11 +38,8 @@ public class Controller extends Application{
 		
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
-<<<<<<< HEAD
-=======
+				
 			//	System.out.println(view.getGame());
- 
->>>>>>> branch 'Ryan' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 				model.update(view.getGame(), view.getMouseEvent());
 				view.update(model.getMovers(), GameState.INPROGRESS);
 				
