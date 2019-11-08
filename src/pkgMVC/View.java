@@ -75,9 +75,9 @@ public class View {
 	 * @param gs
 	 * @see MinigameView.update()
 	 */
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 	//	System.out.println(currGame.getGame()); //testing current Game
-		currGame.update(dns, gs);
+		currGame.update(movers, gs);
 		
 	}
 	

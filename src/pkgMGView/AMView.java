@@ -36,7 +36,7 @@ public class AMView extends MinigameView{
 	}
 	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if(!questionAsked) {
 			System.out.println("Which one is the turtle?");
 			questionAsked = true;
@@ -46,7 +46,7 @@ public class AMView extends MinigameView{
 			areButtonsMade = true;
 		}
 		if (gs == GameState.INPROGRESS) {
-			draw(dns);
+			draw(movers);
 		}
 	}
 	
@@ -142,10 +142,9 @@ public class AMView extends MinigameView{
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m : movers) {
 			draw(m);
 		}
 	}

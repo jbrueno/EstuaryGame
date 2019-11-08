@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgMover.DataNode;
+import pkgMover.Mover;
 
 public class MainScreenModel extends MinigameModel{
 	
 	public MainScreenModel() {
-		dns = new ArrayList<DataNode>();
+		movers = new ArrayList<Mover>();
 		g = Game.MAINSCREEN;
 	}
 

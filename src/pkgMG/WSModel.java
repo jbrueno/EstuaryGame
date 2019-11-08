@@ -3,7 +3,6 @@ package pkgMG;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
-import pkgMover.Bottle;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
@@ -25,7 +24,7 @@ public class WSModel extends MinigameModel{
 	public void addObjects() {
 		Bottle= new Bottle(600,50,200,200,0,10,"Bottle");
 		fullBottle=new Bottle(600, backgroundHeight/2, 200, 200, 0, -8, "fullBottle");
-		dns.add(Bottle);
+		movers.add(Bottle);
 	}
 	
 	@Override
@@ -51,14 +50,26 @@ public class WSModel extends MinigameModel{
 	 */
 	public boolean checkFill() {
 		if (filled) {
-			if(!dns.contains(fullBottle)) {
-				dns.remove(Bottle);
-				dns.add(fullBottle);
+			if(!movers.contains(fullBottle)) {
+				movers.remove(Bottle);
+				movers.add(fullBottle);
 			}
 			return true;
 		}
 		return false;
 	}
 	
+	public class Bottle extends Mover{
+
+		public Bottle(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
+		}
+	}
 	
+	public class PHStrip extends Mover{
+
+		public PHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
+		}
+	}
 }

@@ -41,7 +41,7 @@ public class Controller extends Application{
 			//	System.out.println(view.getGame());
 
 				model.update(view.getGame(), view.getMouseEvent());
-				view.update(model.getDataNodes(), GameState.INPROGRESS);
+				view.update(model.getMovers(), GameState.INPROGRESS);
 				
 				try {
 					Thread.sleep(100);

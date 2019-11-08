@@ -113,7 +113,7 @@ public class MainScreenView extends MinigameView {
 	 * @see loadImage()
 	 */
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		//dns is always empty; don't do anything with it
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
@@ -133,7 +133,7 @@ public class MainScreenView extends MinigameView {
 
 
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpButtons();
 			setUpListeners();
@@ -143,7 +143,7 @@ public class MainScreenView extends MinigameView {
 		if (gs == GameState.FINISHED) {
 			g = Game.LEADERBOARD;
 		} else {
-			draw(dns);
+			draw(movers);
 		}
 	}
 	

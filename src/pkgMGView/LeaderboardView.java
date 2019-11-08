@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
+import pkgMover.Mover;
 
 public class LeaderboardView extends MinigameView{
 
@@ -23,7 +24,7 @@ public class LeaderboardView extends MinigameView{
 	}
 	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -47,13 +48,13 @@ public class LeaderboardView extends MinigameView{
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void importImages() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void importImages() {
+	void draw(ArrayList<Mover> movers) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -27,7 +27,7 @@ public class SCView extends MinigameView {
 	
 
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
@@ -65,7 +65,7 @@ public class SCView extends MinigameView {
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -10,6 +10,7 @@ import pkgMGView.MinigameView;
 import pkgMGView.SCView;
 import pkgMGView.WSView;
 import pkgMover.DataNode;
+import pkgMover.Mover;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -70,8 +71,8 @@ public class Model {
 	 * @return
 	 * @see MinigameModel.getDataNodes()
 	 */
-	public ArrayList<DataNode> getDataNodes() {
-		return currGame.getDataNodes();
+	public ArrayList<Mover> getMovers() {
+		return currGame.getMovers();
 	}
 	
 	/**
