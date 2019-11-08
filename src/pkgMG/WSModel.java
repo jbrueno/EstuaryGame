@@ -58,7 +58,7 @@ public class WSModel extends MinigameModel{
 		}
 		return false;
 	}
-	
+	 
 	public class Bottle extends Mover{
 
 		public Bottle(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {

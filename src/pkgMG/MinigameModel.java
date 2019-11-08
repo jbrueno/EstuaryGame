@@ -17,7 +17,7 @@ public abstract class MinigameModel {
 	 *  to the models of all of the different views
 	 * 
 	 */
-	
+	 
 	Game g;
 	int score;
 	int totalTime;

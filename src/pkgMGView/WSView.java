@@ -24,7 +24,7 @@ public class WSView extends MinigameView{
 		this.gc = gc;
 
 		importImages();
-	}
+	} 
 	
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs) {

@@ -16,7 +16,7 @@ public class SCModel extends MinigameModel{
 	private final double waterThreshold = 100;
 	final long startNanoTime = System.nanoTime();
 	GameState gameState;
-	
+	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
 	 *  and the water Y threshold Terry needs to breather

@@ -150,7 +150,7 @@ public class AMView extends MinigameView{
 	}
 	
 	
-	
+	 
 
 	@Override
 	void importImages() {

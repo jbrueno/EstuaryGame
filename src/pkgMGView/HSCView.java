@@ -76,7 +76,7 @@ public class HSCView extends MinigameView{
 		fHSC = new Image("Mover/FemaleHSC.gif");
 		mHSC = new Image("Mover/MaleHSC.gif");
 	}
-	
+	 
 	/**
 	 * MainScreen Buttons can cause a switch between games. In this case, we want to send this new Game Enum
 	 * to View in <code>getGame()</code> but then reset it so that MainScreen can be loaded again in the future.

@@ -11,7 +11,7 @@ public abstract class Mover/* extends DataNode*/{
 	private double yIncr;
 	private String value;
 	
-	
+	 
 	/**
 	 * Mover constructor that takes in an x,y for position; imageWidth/Height for collision detection;
 	 * and xIncr,yIncr for speed control. <code>value</code> is passed to constructor for <code>DataNode</code>

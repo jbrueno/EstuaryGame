@@ -39,7 +39,7 @@ public class MainScreenView extends MinigameView {
 		// TODO Auto-generated method stub
 		
 	}
-
+ 
 	@Override
 	void stopTimer() {
 		// TODO Auto-generated method stub

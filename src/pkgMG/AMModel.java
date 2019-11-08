@@ -11,7 +11,7 @@ import pkgEnum.Game;
 
 public class AMModel extends MinigameModel {
 	
-	ArrayList<Mover> animals = new ArrayList<>();
+	ArrayList<Mover> animals = new ArrayList<>(); 
 	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;

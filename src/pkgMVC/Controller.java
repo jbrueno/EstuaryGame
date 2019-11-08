@@ -39,7 +39,7 @@ public class Controller extends Application{
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
 			//	System.out.println(view.getGame());
-
+ 
 				model.update(view.getGame(), view.getMouseEvent());
 				view.update(model.getMovers(), GameState.INPROGRESS);
 				

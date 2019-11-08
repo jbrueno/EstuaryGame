@@ -13,7 +13,7 @@ public class MatchingAnimal extends Mover {
 		this.clue = clue; // hint for user to better chances
 		// TODO Auto-generated constructor stub
 	}
-
+ 
 	
 	public String toString() {
 		return name + ": " + super.getX() + ", " + super.getY();

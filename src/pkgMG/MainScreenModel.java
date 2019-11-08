@@ -12,7 +12,7 @@ public class MainScreenModel extends MinigameModel{
 	public MainScreenModel() {
 		movers = new ArrayList<Mover>();
 		g = Game.MAINSCREEN;
-	}
+	} 
 
 	@Override
 	public void update(MouseEvent me) {

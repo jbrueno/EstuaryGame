@@ -39,7 +39,7 @@ public abstract class MinigameView {
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
-	
+	 
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {

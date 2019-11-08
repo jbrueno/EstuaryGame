@@ -67,7 +67,7 @@ public class SCView extends MinigameView {
 	@Override
 	void draw(ArrayList<Mover> movers) {
 		// TODO Auto-generated method stub
-		
+		 
 	}
 	
 	@Override

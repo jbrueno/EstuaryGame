@@ -26,7 +26,7 @@ public class LeaderboardView extends MinigameView{
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs) {
 		// TODO Auto-generated method stub
-		
+		 
 	}
 
 	@Override
