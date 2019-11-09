@@ -66,7 +66,7 @@ public class WSModel extends MinigameModel{
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
  	}
-	
+	 
 	public class PHStrip extends Mover{
 
 		public PHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
