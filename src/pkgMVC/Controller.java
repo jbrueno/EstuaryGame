@@ -16,6 +16,7 @@ import javafx.animation.AnimationTimer;
 
 import pkgMG.*;
 import pkgMover.Mover;
+
 /**Controller for a MVC Design
  * 
  * @author Ryan Peters
@@ -38,8 +39,9 @@ public class Controller extends Application{
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
 				
-				model.update();
-				view.update(new ArrayList<Mover>(), GameState.INPROGRESS);
+			//	System.out.println(view.getGame());
+				model.update(view.getGame(), view.getMouseEvent());
+				view.update(model.getMovers(), GameState.INPROGRESS);
 				
 				try {
 					Thread.sleep(100);

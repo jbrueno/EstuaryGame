@@ -4,22 +4,19 @@ public class Terrapin extends Mover {
 	
 	public double airAmount;
 	
-	public Terrapin() {
-		super("Terrapin");
+	public Terrapin(int x, int y, int xIncr, int yIncr) {
+		super(x, y, 200, 200, xIncr, yIncr,"Terrapin");
 		this.airAmount = 100;
-		this.xIncr = 0;
-		this.yIncr = 10;
 	}
 	
 	/**
-	 * breathe resets the air that is held by the Terrapin to full. Is
+	 * breathe() resets the air that is held by the Terrapin to full. Is
 	 * called whenever the Terrapin is above a certain height
 	 * 
 	 *  @author HM
 	 */
 	public void breathe() {
-		this.airAmount = 100;
+		airAmount = 100;
 		System.out.println("breath taken");
 	}
-
 }

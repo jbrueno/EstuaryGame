@@ -2,27 +2,56 @@ package pkgMover;
 
 import pkgEnum.Direction;
 
-public class Mover {
-	public double y;
-	public double x;
-	public int imageWidth;
-	public int imageHeight;
-	public double xIncr;
-	public double yIncr;
-	public Direction d;
-	public String species;
+public abstract class Mover/* extends DataNode*/{
+	private double y;
+	private double x;
+	private int imageWidth;
+	private int imageHeight;
+	private double xIncr;
+	private double yIncr;
+	private String value;
 	
-	public Mover(String s) {
-		this.species = s;
+	 
+	/**
+	 * Mover constructor that takes in an x,y for position; imageWidth/Height for collision detection;
+	 * and xIncr,yIncr for speed control. <code>value</code> is passed to constructor for <code>DataNode</code>
+	 * to be set as the <code>value</code> attribute.
+	 * 
+	 * @author Ryan Peters
+	 * 
+	 * @param x				x-coordinate
+	 * @param y				y-coordinate
+	 * @param imageWidth	corresponding image width; relative x-boundary to consider
+	 * @param imageHeight	corresponding iamge height; relative y-boundary to consider
+	 * @param xIncr			speed for x movement
+	 * @param yIncr			speed for y movement
+	 * @param value			String relating to the subclass's name for image lookup later in MinigameViews
+	 */
+	public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+		this.value=value;
+		this.x = x;
+		this.y = y;
+		this.imageWidth = imageWidth;
+		this.imageHeight = imageHeight;
+		this.xIncr = xIncr;
+		this.yIncr = yIncr;
 	}
 	
 	
 	public double getY() {
 		return y;
 	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
 
 	public double getX() {
 		return x;
+	}
+	
+	public void setX(double x) {
+		this.x = x;
 	}
 
 	public int getImageWidth() {
@@ -36,76 +65,53 @@ public class Mover {
 	public double getxIncr() {
 		return xIncr;
 	}
+	
+	public void setXIncr(double d) {
+		this.xIncr = d;
+	}
 
-	public double getyIncr() {
+	public double getYIncr() {
 		return yIncr;
 	}
 	
-	public Direction getD() {
-		return d;
-	}
-	
-	public String getSpecies() {
-		return this.species;
-	}
-	
-	//
-	public String toString() {
-		return species + " " + "x: " + x + ", y: " + y;
+	public void setYIncr(double d) {
+		this.yIncr = d;
 	}
 	
 	
 	/**
-	 * moves object in a straight line in the direction that it is facing
+	 * Updates x,y by their relative speeds for background movers who always move (ie aren't user-controlled)
 	 * 
-	 * @author AG
-	 * 
+	 * @author Ryan Peters
 	 */
 	public void move() {
-		switch(d) {
-			case NORTH: y-=yIncr;
-					break;
-			case NORTHEAST: x+=xIncr;	
-					y-=yIncr;
-					break;
-					
-			case EAST: x+=xIncr;
-					break;
-					
-			case SOUTHEAST: x+=xIncr;
-					y+=yIncr;
-					break;
-					
-			case SOUTH: y+=yIncr;
-					break;
-					
-			case SOUTHWEST: x-=xIncr;
-					y+=yIncr;
-					break;
-					
-			case WEST: x-=xIncr;
-					break;
-					
-			case NORTHWEST: x-=xIncr;
-					y-=yIncr;
-					break;
-			}
-		}
-			
-	
+		x += xIncr;
+		y += yIncr;
+	}
 	
 	/**
-	 * Moves to the x and y locations
+	 * Sets x,y to the parameters.
+	 * Used for having an object "stick" to the mouse.
 	 * 
-	 * @author HM
-	 * 
-	 * @param new_x the double value of the desired x location
-	 * @param new_y the double value of the desired y location
+	 * @author Ryan Peters
+	 * @param x	x-coordinate for the Mover to go to
+	 * @param y	y-coordinate for the Mover to go to
 	 */
-	public void setXY(double newx, double newy) {
-		this.x = newx;
-		this.y = newy;
+	public void move(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
+	
+	public String getValue() {
+		return value;
+	}
+	
+	public String toString() {
+		return getValue() + ": " + x + " " + y; 
+	}
+	
+	
+	
 	
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -14,22 +15,26 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
+	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.WATERSAMPLING;
+		super(Game.WATERSAMPLING);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
 
-       
-    	setUpListeners();
-
 		importImages();
-	}
+	} 
+	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
+		if (!areButtonsMade) {
+			setUpListeners();
+			areButtonsMade = true;
+		}
 		if (gs == GameState.INPROGRESS) {
-			draw(dns);
+			draw(movers);
 		}
 	}
 
@@ -47,18 +52,22 @@ public class WSView extends MinigameView{
 
 	@Override
 	void setUpListeners() {
-		// TODO Auto-generated method stub
+		btnReturn = new Button("Return");
+		btnReturn.setLayoutX(0);
+		btnReturn.setLayoutY(0);
+		btnReturn.setOnAction(e -> {
+			game = Game.MAINSCREEN;
+		});
+		root.getChildren().add(btnReturn);
 		
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m : movers) {
 			draw(m);
-			System.out.println("drawing");
 		}
 	}
 
@@ -67,5 +76,4 @@ public class WSView extends MinigameView{
 		background= new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.gif");
 	}
-
 }

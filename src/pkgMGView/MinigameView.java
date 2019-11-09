@@ -3,15 +3,19 @@ package pkgMGView;
 //test
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
-import pkgEnum.GameType;
+import pkgEnum.Game;
+import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public abstract class MinigameView {
@@ -24,22 +28,38 @@ public abstract class MinigameView {
 	GraphicsContext gc;
 	Group root;
 	Scene scene;
-	GameType gt;
+	Game game;
+	final Game theGame; //final in each subclass
+	boolean areButtonsMade = false;
 	
-	abstract public void update(ArrayList<Mover> ms, GameState gs);
+	
+	public abstract void update(ArrayList<Mover> movers, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
-	abstract void draw();
+	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
-	public Image loadImage(String pkgName, String imageName) {
-		Image img = new Image(pkgName + "/" + imageName);
+	public MinigameView(Game theGame) {
+		this.theGame = theGame;
+	} 
+
+	// need to find a way to differentiate whether image is .png or .gif
+	// only movers are .gif at the moment so it has been changed
+	public Image loadImage(String pkgName, Mover m) {
+		Image img = new Image(pkgName + "/" + m.getValue() + ".gif"); // changed from .png to .gif
 		return img;
 	}
 	
-	public Image loadImage(String pkgName, String imageName, Mover m) {
-		Image img = new Image(pkgName + "/" + imageName + "_" + m.toString());
+	/*
+	public Image loadImage(String pkgName, String imgName) {
+		Image img = new Image(pkgName + "/" + imgName + ".gif");
+		return img;
+	}
+	 */
+	
+	public Image loadImage(Mover m) {
+		Image img = new Image("Mover/" + m.getValue() + ".gif"); 
 		return img;
 	}
 	
@@ -89,4 +109,46 @@ public abstract class MinigameView {
 		return me;
 	}
 	
+	/**
+	 * Clears the current FX being displayed.
+	 * <p> 
+	 * GC is wiped and root is cleared of all children (Buttons, etc) which includes canvas to which gc draws upon.
+	 * This is handled in <code>View</code> class under <code>getGame()</code>
+	 * 
+	 * @author Ryan Peters
+	 * @see View
+	 * @see View.getGame()
+	 */
+	public void clearFX() {
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		root.getChildren().clear();
+		areButtonsMade = false;
+	}
+	/*
+	public void draw(Mover m) {
+		gc.drawImage(loadImage("Mover", m.getValue()),
+				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+	}
+	*/
+	
+	public void draw(Mover m) {
+		gc.drawImage(loadImage(m),
+				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+	}
+	
+	public GraphicsContext getGC() {
+		return this.gc;
+	}
+	
+	public Game getTheGame() {
+		return theGame;
+	}
+	
+	public void resetGameAttribute() {
+		game = theGame;
+	}
+	
+	public Game getGame() {
+		return this.game;
+	}
 }
