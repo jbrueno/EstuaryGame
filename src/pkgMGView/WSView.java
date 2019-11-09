@@ -18,22 +18,23 @@ public class WSView extends MinigameView{
 	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.WATERSAMPLING;
+		super(Game.WATERSAMPLING);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
 
 		importImages();
-	}
+	} 
 	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 		}
 		if (gs == GameState.INPROGRESS) {
-			draw(dns);
+			draw(movers);
 		}
 	}
 
@@ -55,20 +56,18 @@ public class WSView extends MinigameView{
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
-			g = Game.MAINSCREEN;
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
 		
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m : movers) {
 			draw(m);
-			System.out.println("drawing");
 		}
 	}
 
@@ -77,12 +76,4 @@ public class WSView extends MinigameView{
 		background= new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.gif");
 	}
-	
-	@Override
-	public Game getGame() {
-		Game gtTemp = g;
-		g = Game.WATERSAMPLING;
-		return gtTemp;
-	}
-
 }

@@ -3,14 +3,19 @@ package pkgMG;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
-import pkgMover.Bottle;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
 	Mover fullBottle;
-	boolean fill = false;
+	final int bottleImageWidth = 200;
+	final int bottleImageHeight = 200;
+	
+	
+	int waterLevel = 450;
+	int maxDepth = 800;
+	boolean filled = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
@@ -19,10 +24,16 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
+<<<<<<< HEAD
 		Bottle= new Bottle(600,50,200,200,0,10,"Bottle");
 <<<<<<< HEAD
 		fullBottle=new Bottle(600, backgroundHeight/2, 200, 200, 0, -8, "fullBottle");
 		dns.add(Bottle);
+=======
+		Bottle= new Bottle(600,50,0,10,"Bottle");
+		fullBottle=new Bottle(600, backgroundHeight/2, 0, -8, "fullBottle");
+		movers.add(Bottle);
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}
 	
 	@Override
@@ -31,7 +42,7 @@ public class WSModel extends MinigameModel{
 		Bottle.move();
 		System.out.println("y: "+Bottle.getY());
 		if(Bottle.getY() >= backgroundHeight/2) {
-			fill=true;
+			filled = true;
 		}
 		
 		if(checkFill()) {
@@ -65,13 +76,26 @@ public class WSModel extends MinigameModel{
 	
 >>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	public boolean checkFill() {
-		if (fill==true) {
-			if(!dns.contains(fullBottle)) {
-				dns.remove(Bottle);
-				dns.add(fullBottle);
+		if (filled) {
+			if(!movers.contains(fullBottle)) {
+				movers.remove(Bottle);
+				movers.add(fullBottle);
 			}
 			return true;
 		}
 		return false;
+	}
+	
+	class Bottle extends Mover {
+		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
+			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		}
+ 	}
+	 
+	public class PHStrip extends Mover{
+
+		public PHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
+		}
 	}
 }

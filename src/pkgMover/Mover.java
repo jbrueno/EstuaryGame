@@ -3,7 +3,11 @@ package pkgMover;
 import pkgEnum.Direction;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 public abstract class Mover extends DataNode{
+=======
+public abstract class Mover/* extends DataNode*/{
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	private double y;
 	private double x;
 	private int imageWidth;
@@ -12,7 +16,7 @@ public abstract class Mover extends DataNode{
 	private double yIncr;
 	private String value;
 	
-	
+	 
 	/**
 	 * Mover constructor that takes in an x,y for position; imageWidth/Height for collision detection;
 	 * and xIncr,yIncr for speed control. <code>value</code> is passed to constructor for <code>DataNode</code>
@@ -29,7 +33,7 @@ public abstract class Mover extends DataNode{
 	 * @param value			String relating to the subclass's name for image lookup later in MinigameViews
 	 */
 	public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-		super(value);
+		this.value=value;
 		this.x = x;
 		this.y = y;
 		this.imageWidth = imageWidth;
@@ -81,16 +85,16 @@ public class Mover {
 		return xIncr;
 	}
 	
-	public void setXIncr(int i) {
-		this.xIncr = i;
+	public void setXIncr(double d) {
+		this.xIncr = d;
 	}
 
 	public double getYIncr() {
 		return yIncr;
 	}
 	
-	public void setYIncr(int i) {
-		this.yIncr = i;
+	public void setYIncr(double d) {
+		this.yIncr = d;
 	}
 	
 	
@@ -180,6 +184,13 @@ public class Mover {
 	}
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	public String getValue() {
+		return value;
+	}
+	
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	public String toString() {
 		return getValue() + ": " + x + " " + y; 
 	}

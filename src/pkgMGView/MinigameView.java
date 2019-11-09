@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Direction;
@@ -27,18 +28,22 @@ public abstract class MinigameView {
 	GraphicsContext gc;
 	Group root;
 	Scene scene;
-	Game g;
+	Game game;
+	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
 	
 	
-	public abstract void update(ArrayList<DataNode> dns, GameState gs);
+	public abstract void update(ArrayList<Mover> movers, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
-	abstract void draw(ArrayList<DataNode> dns);
+	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
-	
+	public MinigameView(Game theGame) {
+		this.theGame = theGame;
+	} 
+
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {
@@ -46,12 +51,17 @@ public abstract class MinigameView {
 		return img;
 	}
 	
+	/*
 	public Image loadImage(String pkgName, String imgName) {
 		Image img = new Image(pkgName + "/" + imgName + ".gif");
 		return img;
 	}
-
+	 */
 	
+	public Image loadImage(Mover m) {
+		Image img = new Image("Mover/" + m.getValue() + ".gif"); 
+		return img;
+	}
 	
 	public double getAngle(Direction d) {
 		double angle = 0;
@@ -99,10 +109,6 @@ public abstract class MinigameView {
 		return me;
 	}
 	
-	public Game getGame() {
-		return this.g;
-	}
-	
 	/**
 	 * Clears the current FX being displayed.
 	 * <p> 
@@ -118,13 +124,31 @@ public abstract class MinigameView {
 		root.getChildren().clear();
 		areButtonsMade = false;
 	}
-	
+	/*
 	public void draw(Mover m) {
 		gc.drawImage(loadImage("Mover", m.getValue()),
+				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+	}
+	*/
+	
+	public void draw(Mover m) {
+		gc.drawImage(loadImage(m),
 				m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
 	}
 	
 	public GraphicsContext getGC() {
 		return this.gc;
+	}
+	
+	public Game getTheGame() {
+		return theGame;
+	}
+	
+	public void resetGameAttribute() {
+		game = theGame;
+	}
+	
+	public Game getGame() {
+		return this.game;
 	}
 }

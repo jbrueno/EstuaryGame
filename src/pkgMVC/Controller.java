@@ -39,14 +39,23 @@ public class Controller extends Application{
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				System.out.println(view.getGame());
 
+=======
+				
+			//	System.out.println(view.getGame());
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 				model.update(view.getGame(), view.getMouseEvent());
+<<<<<<< HEAD
 				view.update(model.getDataNodes(), GameState.INPROGRESS);
 =======
 				
 				model.update();
 				view.update(new ArrayList<Mover>(), GameState.INPROGRESS);
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
+=======
+				view.update(model.getMovers(), GameState.INPROGRESS);
 >>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 				
 				try {

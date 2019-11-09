@@ -20,13 +20,15 @@ import pkgMover.Mover;
 public class MainScreenView extends MinigameView {
 	
 	private Button btnSC; //sidescroller
-	private Button btnHCC; //horseshoe crab count
+	private Button btnHSCC; //horseshoe crab count
 	private Button btnAM; //animal matching
 	private Button btnWS; //water sampling 
 	private int btnSize = 45;
 	
 	public MainScreenView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.MAINSCREEN;
+		super(Game.MAINSCREEN);
+		game = theGame;
+		System.out.println(game + " " + theGame);
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -39,7 +41,7 @@ public class MainScreenView extends MinigameView {
 		// TODO Auto-generated method stub
 		
 	}
-
+ 
 	@Override
 	void stopTimer() {
 		// TODO Auto-generated method stub
@@ -50,24 +52,24 @@ public class MainScreenView extends MinigameView {
 	void setUpListeners() {
 		scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
     		public void handle(MouseEvent e) {
-    			System.out.println(e.getSceneX() + " " + e.getSceneY());
+    //			System.out.println(e.getSceneX() + " " + e.getSceneY());
     		}
     	});
 		
 		btnSC.setOnAction(e -> {
-			g = Game.SIDESCROLLER;
+			game = Game.SIDESCROLLER;
 		});
 		
-		btnHCC.setOnAction(e -> {
-			g = Game.HSCCOUNT;
+		btnHSCC.setOnAction(e -> {
+			game = Game.HSCCOUNT;
 		});
 		
 		btnAM.setOnAction(e -> {
-			g = Game.ANIMALMATCHING;
+			game = Game.ANIMALMATCHING;
 		});
 		
 		btnWS.setOnAction(e -> {
-			g = Game.WATERSAMPLING;
+			game = Game.WATERSAMPLING;
 		});
 		
 	}
@@ -76,8 +78,8 @@ public class MainScreenView extends MinigameView {
 		btnSC = new Button("Side Scroller");
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
-		btnHCC = new Button("Horseshoe Crab Count");
-		formatCircleButton(btnHCC, 417.0, 587.0);
+		btnHSCC = new Button("Horseshoe Crab Count");
+		formatCircleButton(btnHSCC, 417.0, 587.0);
 		
 		btnAM = new Button("Animal Matching");
 		formatCircleButton(btnAM, 852.0, 202.0);
@@ -86,10 +88,9 @@ public class MainScreenView extends MinigameView {
 		formatCircleButton(btnWS, 498.0, 85.0);
 		
 		root.getChildren().add(btnSC);
-		root.getChildren().add(btnHCC);
+		root.getChildren().add(btnHSCC);
 		root.getChildren().add(btnAM);
 		root.getChildren().add(btnWS);
-		
 	}
 	
 	/**
@@ -114,7 +115,7 @@ public class MainScreenView extends MinigameView {
 	 * @see loadImage()
 	 */
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		//dns is always empty; don't do anything with it
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
@@ -134,19 +135,20 @@ public class MainScreenView extends MinigameView {
 
 
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
-		System.out.println(gc.getCanvas());
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpButtons();
 			setUpListeners();
 			areButtonsMade = true;
 		}
+		
 		if (gs == GameState.FINISHED) {
-			g = Game.LEADERBOARD;
+			game = Game.LEADERBOARD;
 		} else {
-			draw(dns);
+			draw(movers);
 		}
 	}
+<<<<<<< HEAD
 	
 	
 	/**
@@ -160,4 +162,6 @@ public class MainScreenView extends MinigameView {
 		return gtTemp;
 	}
 
+=======
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 }

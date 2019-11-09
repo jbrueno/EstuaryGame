@@ -5,7 +5,7 @@ import javafx.scene.input.MouseEvent;
 public class LeaderboardModel extends MinigameModel{
 
 	public LeaderboardModel() {
-		
+		 
 	}
 	
 	@Override

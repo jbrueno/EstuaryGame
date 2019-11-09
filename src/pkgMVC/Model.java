@@ -11,10 +11,14 @@ import pkgMGView.MinigameView;
 import pkgMGView.SCView;
 import pkgMGView.WSView;
 import pkgMover.DataNode;
+<<<<<<< HEAD
 =======
 import pkgMG.HSCModel;
 import pkgMG.MinigameModel;
 import pkgMG.SCModel;
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
+=======
+import pkgMover.Mover;
 >>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 
 import java.awt.event.KeyEvent;
@@ -65,8 +69,12 @@ public class Model {
 		currGame = SC;
 >>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	}
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
+=======
+	 
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0
 	/**
 	 * 
 	 * @param g
@@ -102,8 +110,8 @@ public class Model {
 	 * @return
 	 * @see MinigameModel.getDataNodes()
 	 */
-	public ArrayList<DataNode> getDataNodes() {
-		return currGame.getDataNodes();
+	public ArrayList<Mover> getMovers() {
+		return currGame.getMovers();
 	}
 	
 	/**

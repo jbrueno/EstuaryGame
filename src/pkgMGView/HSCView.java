@@ -66,7 +66,8 @@ public class HSCView extends MinigameView{
 	Button btnReturn;
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
-		g = Game.HSCCOUNT;
+		super(Game.HSCCOUNT);
+		game = theGame;
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
@@ -76,13 +77,13 @@ public class HSCView extends MinigameView{
 	
 	
 	@Override
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 		}
 		if (gs == GameState.INPROGRESS) {
-			draw(dns);
+			draw(movers);
 		}
 	}
 
@@ -104,17 +105,16 @@ public class HSCView extends MinigameView{
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
-			g = Game.MAINSCREEN;
+			game = game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
 		
 	}
 
 	@Override
-	void draw(ArrayList<DataNode> dns) {
+	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		for (DataNode dn : dns) {
-			Mover m = (Mover) dn;
+		for (Mover m : movers) {
 			draw(m);
 		}
 	}
@@ -124,16 +124,4 @@ public class HSCView extends MinigameView{
 		fHSC = new Image("Mover/FemaleHSC.gif");
 		mHSC = new Image("Mover/MaleHSC.gif");
 	}
-	
-	/**
-	 * MainScreen Buttons can cause a switch between games. In this case, we want to send this new Game Enum
-	 * to View in <code>getGame()</code> but then reset it so that MainScreen can be loaded again in the future.
-	 */
-	@Override
-	public Game getGame() {
-		Game gtTemp = g;
-		g = Game.HSCCOUNT;
-		return gtTemp;
-	}
-	
 }

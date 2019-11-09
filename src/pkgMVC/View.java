@@ -51,7 +51,7 @@ public class View {
 	private Game game;
 	private Canvas canvas;
 	
-	
+	 
 	public View(Stage theStage) {	
 		this.stage = theStage;
 	    this.root = new Group();
@@ -75,9 +75,9 @@ public class View {
 	 * @param gs
 	 * @see MinigameView.update()
 	 */
-	public void update(ArrayList<DataNode> dns, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) {
 	//	System.out.println(currGame.getGame()); //testing current Game
-		currGame.update(dns, gs);
+		currGame.update(movers, gs);
 		
 	}
 	
@@ -99,7 +99,8 @@ public class View {
 		mgvs.add(new WSView(gc, root, scene));
 		mgvs.add(new LeaderboardView(gc, root, scene));
 		
-		currGame = mgvs.get(0); //default start for Game
+		//default start for Game
+		currGame = mgvs.get(0); 
         this.game = Game.MAINSCREEN;
 	}
 	
@@ -123,11 +124,12 @@ public class View {
 	 */
 	public Game getGame() {
 		Game g = currGame.getGame();
-		if (currGame.getGame() != g) {//loading new game (since getGame() resets the Game attribute if different)
+		if (g != currGame.getTheGame()) {//input (button press) determined new game needs to be loaded
+			currGame.resetGameAttribute();
 			currGame.clearFX();
 			root.getChildren().add(canvas);
+			currGame = retrieveMGV(g);
 		}
-		currGame = retrieveMGV(g);
 		return g;
 	}
 	
