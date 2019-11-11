@@ -13,8 +13,18 @@ public class Trash extends Mover{
 	
 	/** the value by which the score in SC will change based on collision with this mover
 	 * 
+	 * @return int the value of the score change, it will be added to the score of the SCgame
 	 */
 	public int getSCScoreChange() {
 		return scoreChange;
 	}
+	
+	/**
+	 * the value by which the speed of the terrapin will change upon collision with this mover
+	 * @return
+	 */
+	public int speedChange() {
+		return speedChange;
+	}
+	
 }
