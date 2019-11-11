@@ -1,6 +1,6 @@
 package pkgMover;
 
-public class Food extends Mover {
+public class Food extends SCMover {
 	
 	public int scoreChange = 100;
 	public int speedChange = 1;

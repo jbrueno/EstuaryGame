@@ -1,6 +1,6 @@
 package pkgMover;
 
-public class Seaweed extends Mover{
+public class Seaweed extends SCMover{
 	
 	int speedChange = -1;
 	int scoreChange = 0;

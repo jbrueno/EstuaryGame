@@ -111,7 +111,7 @@ public abstract class Mover/* extends DataNode*/{
 		return getValue() + ": " + x + " " + y; 
 	}
 	
-	public int getScoreChange()
+	
 	
 	
 	

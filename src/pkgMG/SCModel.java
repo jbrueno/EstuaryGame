@@ -9,6 +9,7 @@ import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.Food;
 import pkgMover.Mover;
+import pkgMover.SCMover;
 import pkgMover.Seaweed;
 import pkgMover.Terrapin;
 import pkgMover.Trash;
@@ -16,7 +17,7 @@ import pkgMover.Trash;
 public class SCModel extends MinigameModel{
 	
 	Terrapin terry;
-	ArrayList<Mover> items =  new ArrayList<Mover>();
+	ArrayList<SCMover> items =  new ArrayList<SCMover>();
 	private final double waterThreshold = 100;
 	final long startNanoTime = System.nanoTime();
 	GameState gameState;
@@ -33,6 +34,10 @@ public class SCModel extends MinigameModel{
 		
 		gameState = GameState.INPROGRESS;
 		score = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			addNewMover();
+		}
 	}
 
 	@Override
@@ -44,40 +49,42 @@ public class SCModel extends MinigameModel{
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
 		
-		for (Mover m : items) {
+		for (SCMover m : items) {
 			m.setX(m.getX() + m.getxIncr());
 			
 			if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
-				if (m instanceof Seaweed || m instanceof Food || m instanceof Trash) {
-					score += m.getScoreChange();
-					//terry.changeXIncr(m.getSpeedChange());
-				}
+				score += m.getScoreChange();
+				terry.changeXIncr(m.getSpeedChange());
+				
 				
 			}
 			
-			if (m.getX() < 0) {
-				items.remove(m);
+			if (m.getX() <= 0) {
+				movers.remove(m);
 			}
+		}
+		
+		if (items.size() <= 3) {
+			addNewMover();
 		}
 		
 	}
 
 	
 	public void addNewMover() {
-		if (movers.size() < 3) {
-			int newMover = new Random().nextInt(10);
-			if (newMover < 4)  {
-				Seaweed s = new Seaweed(backgroundWidth);
-				movers.add(s);
-			} else if (newMover < 8) {
-				Food f = new Food(backgroundWidth);
-				movers.add(f);
-			} else {
-				Trash t = new Trash(backgroundWidth);
-				movers.add(t);
-			}
+		int newMover = new Random().nextInt(10);
+		if (newMover < 4)  {
+			Seaweed s = new Seaweed(backgroundWidth);
+			movers.add(s);
+		} else if (newMover < 8) {
+			Food f = new Food(backgroundWidth);
+			movers.add(f);
+		} else {
+			Trash t = new Trash(backgroundWidth);
+			movers.add(t);
 		}
 	}
+	
 
 	@Override
 	public void handleBorderCollision(Mover m) {

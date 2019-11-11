@@ -1,6 +1,6 @@
 package pkgMover;
 
-public class Trash extends Mover{
+public class Trash extends SCMover{
 	
 	public int scoreChange = -100;
 	public int speedChange = -1;
