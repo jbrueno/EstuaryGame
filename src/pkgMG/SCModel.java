@@ -77,6 +77,12 @@ public class SCModel extends MinigameModel{
 		items.add(m);
 		
 	}
+	
+	public void addNewMover() {
+		if (movers.size() < 3) {
+			
+		}
+	}
 
 	@Override
 	public void handleBorderCollision(Mover m) {
