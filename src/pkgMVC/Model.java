@@ -1,7 +1,7 @@
 package pkgMVC;
 import pkgEnum.Direction;
 import pkgEnum.Game;
-import pkgMG.*;
+import pkgMGModel.*;
 import pkgMGView.AMView;
 import pkgMGView.HSCView;
 import pkgMGView.LeaderboardView;

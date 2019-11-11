@@ -1,4 +1,4 @@
-package pkgMG;
+package pkgMGModel;
 
 import pkgEnum.Game;
 import pkgMover.Mover;

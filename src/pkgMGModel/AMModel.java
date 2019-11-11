@@ -1,4 +1,4 @@
-package pkgMG;
+package pkgMGModel;
 
 import java.util.*;
 import javafx.scene.input.MouseEvent;

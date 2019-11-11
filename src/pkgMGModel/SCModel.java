@@ -1,4 +1,4 @@
-package pkgMG;
+package pkgMGModel;
 
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class SCModel extends MinigameModel{
 	
 	Terrapin terry;
 	ArrayList<SCMover> items =  new ArrayList<SCMover>();
-	private final double waterThreshold = 100;
+	private final double waterThreshold = 2 * backgroundHeight/3;
 	final long startNanoTime = System.nanoTime();
 	GameState gameState;
 	 
@@ -54,9 +54,7 @@ public class SCModel extends MinigameModel{
 			
 			if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
 				score += m.getScoreChange();
-				terry.changeXIncr(m.getSpeedChange());
-				
-				
+				terry.changeXIncr(m.getSpeedChange());		
 			}
 			
 			if (m.getX() <= 0) {
@@ -75,12 +73,15 @@ public class SCModel extends MinigameModel{
 		int newMover = new Random().nextInt(10);
 		if (newMover < 4)  {
 			Seaweed s = new Seaweed(backgroundWidth);
+			System.out.println("seaweed added");
 			movers.add(s);
 		} else if (newMover < 8) {
 			Food f = new Food(backgroundWidth);
+			System.out.println("food added");
 			movers.add(f);
 		} else {
 			Trash t = new Trash(backgroundWidth);
+			System.out.println("trashed added");
 			movers.add(t);
 		}
 	}

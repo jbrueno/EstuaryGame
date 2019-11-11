@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgEnum.GameState;
+import pkgMGModel.*;
+
 import java.util.ArrayList;
 
 //beans
@@ -13,8 +15,6 @@ import java.util.ArrayList;
 
 
 import javafx.animation.AnimationTimer;
-
-import pkgMG.*;
 import pkgMover.Mover;
 
 /**Controller for a MVC Design
