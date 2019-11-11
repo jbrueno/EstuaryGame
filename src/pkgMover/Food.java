@@ -4,10 +4,22 @@ public class Food extends Mover {
 	
 	public int scoreChange = 100;
 	public int speedChange = 1;
+	public int imageWidth = 50;
+	public int imageHeight = 50;
 
 	public Food(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * constructor to be used within the SC model. It only allows input for the canvas width, because 
+	 * all other factors should be the same given the game design
+	 * 
+	 * @param canvasWidth
+	 */
+	public Food(int canvasWidth) {
+		super(canvasWidth, canvasWidth / 3, 50, 50, -10, 0, "Food");
 	}
 	
 	/**

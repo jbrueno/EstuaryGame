@@ -19,4 +19,11 @@ public class Terrapin extends Mover {
 		airAmount = 100;
 		System.out.println("breath taken");
 	}
+	
+	/**
+	 * change xIncr
+	 */
+	public void changeXIncr(int xChange) {
+		setXIncr(this.getxIncr() + xChange);
+	}
 }

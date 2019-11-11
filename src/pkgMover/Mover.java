@@ -10,6 +10,7 @@ public abstract class Mover/* extends DataNode*/{
 	private double xIncr;
 	private double yIncr;
 	private String value;
+	public int scoreChange;
 	
 	 
 	/**
@@ -109,6 +110,8 @@ public abstract class Mover/* extends DataNode*/{
 	public String toString() {
 		return getValue() + ": " + x + " " + y; 
 	}
+	
+	public int getScoreChange()
 	
 	
 	

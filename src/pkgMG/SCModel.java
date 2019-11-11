@@ -7,8 +7,11 @@ import java.util.Random;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
+import pkgMover.Food;
 import pkgMover.Mover;
+import pkgMover.Seaweed;
 import pkgMover.Terrapin;
+import pkgMover.Trash;
 
 public class SCModel extends MinigameModel{
 	
@@ -45,18 +48,11 @@ public class SCModel extends MinigameModel{
 			m.setX(m.getX() + m.getxIncr());
 			
 			if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
-				if (m.getValue().equals("seaweed")) {
-					terry.setXIncr(terry.getxIncr() - 1);
-					System.out.println("hit seaweed, slowed down");
-				} else if (m.getValue().equals("trash")) {
-					terry.setXIncr(terry.getxIncr() - 1);
-					score = score - 50;
-					System.out.println("hit trash, lost points and slowed down");
-				} else if (m.getValue().equals("food")) {
-					terry.setXIncr(terry.getxIncr() + 1);
-					score = score + 100;
-					System.out.println("yummy, food!");
+				if (m instanceof Seaweed || m instanceof Food || m instanceof Trash) {
+					score += m.getScoreChange();
+					//terry.changeXIncr(m.getSpeedChange());
 				}
+				
 			}
 			
 			if (m.getX() < 0) {
@@ -69,9 +65,16 @@ public class SCModel extends MinigameModel{
 	
 	public void addNewMover() {
 		if (movers.size() < 3) {
-			int newMover = Random.nextInt(10);
+			int newMover = new Random().nextInt(10);
 			if (newMover < 4)  {
-				Seaweed s = new Seaweed(canvasWidth, canvasHeight, )
+				Seaweed s = new Seaweed(backgroundWidth);
+				movers.add(s);
+			} else if (newMover < 8) {
+				Food f = new Food(backgroundWidth);
+				movers.add(f);
+			} else {
+				Trash t = new Trash(backgroundWidth);
+				movers.add(t);
 			}
 		}
 	}
