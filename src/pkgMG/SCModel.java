@@ -2,6 +2,7 @@ package pkgMG;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
@@ -64,23 +65,14 @@ public class SCModel extends MinigameModel{
 		}
 		
 	}
-	
-	public void addItem(Mover m) {
-		m.setXIncr(-1);
-		m.setYIncr(0);
-		m.setX(backgroundWidth);
-		if (m.getValue().equals("seaweed") || m.getValue().equals("food")) {
-			//que pasa aqui?
-		}
-	
-		
-		items.add(m);
-		
-	}
+
 	
 	public void addNewMover() {
 		if (movers.size() < 3) {
-			
+			int newMover = Random.nextInt(10);
+			if (newMover < 4)  {
+				Seaweed s = new Seaweed(canvasWidth, canvasHeight, )
+			}
 		}
 	}
 
