@@ -1,19 +1,24 @@
-package pkgMG;
+package pkgMGModel;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
+import pkgMover.Food;
 import pkgMover.Mover;
+import pkgMover.SCMover;
+import pkgMover.Seaweed;
 import pkgMover.Terrapin;
+import pkgMover.Trash;
 
 public class SCModel extends MinigameModel{
 	
 	Terrapin terry;
-	ArrayList<Mover> items =  new ArrayList<Mover>();
-	private final double waterThreshold = 100;
+	ArrayList<SCMover> items =  new ArrayList<SCMover>();
+	private final double waterThreshold = 2 * backgroundHeight/3;
 	final long startNanoTime = System.nanoTime();
 	GameState gameState;
 	 
@@ -29,6 +34,10 @@ public class SCModel extends MinigameModel{
 		
 		gameState = GameState.INPROGRESS;
 		score = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			addNewMover();
+		}
 	}
 
 	@Override
@@ -40,43 +49,43 @@ public class SCModel extends MinigameModel{
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
 		
-		for (Mover m : items) {
+		for (SCMover m : items) {
 			m.setX(m.getX() + m.getxIncr());
 			
 			if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
-				if (m.getValue().equals("seaweed")) {
-					terry.setXIncr(terry.getxIncr() - 1);
-					System.out.println("hit seaweed, slowed down");
-				} else if (m.getValue().equals("trash")) {
-					terry.setXIncr(terry.getxIncr() - 1);
-					score = score - 50;
-					System.out.println("hit trash, lost points and slowed down");
-				} else if (m.getValue().equals("food")) {
-					terry.setXIncr(terry.getxIncr() + 1);
-					score = score + 100;
-					System.out.println("yummy, food!");
-				}
+				score += m.getScoreChange();
+				terry.changeXIncr(m.getSpeedChange());		
 			}
 			
-			if (m.getX() < 0) {
-				items.remove(m);
+			if (m.getX() <= 0) {
+				movers.remove(m);
 			}
 		}
 		
-	}
-	
-	public void addItem(Mover m) {
-		m.setXIncr(-1);
-		m.setYIncr(0);
-		m.setX(backgroundWidth);
-		if (m.getValue().equals("seaweed") || m.getValue().equals("food")) {
-			//que pasa aqui?
+		if (items.size() <= 3) {
+			addNewMover();
 		}
-	
-		
-		items.add(m);
 		
 	}
+
+	
+	public void addNewMover() {
+		int newMover = new Random().nextInt(10);
+		if (newMover < 4)  {
+			Seaweed s = new Seaweed(backgroundWidth);
+			System.out.println("seaweed added");
+			movers.add(s);
+		} else if (newMover < 8) {
+			Food f = new Food(backgroundWidth);
+			System.out.println("food added");
+			movers.add(f);
+		} else {
+			Trash t = new Trash(backgroundWidth);
+			System.out.println("trashed added");
+			movers.add(t);
+		}
+	}
+	
 
 	@Override
 	public void handleBorderCollision(Mover m) {

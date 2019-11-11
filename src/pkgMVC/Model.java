@@ -1,7 +1,7 @@
 package pkgMVC;
 import pkgEnum.Direction;
 import pkgEnum.Game;
-import pkgMG.*;
+import pkgMGModel.*;
 import pkgMGView.AMView;
 import pkgMGView.HSCView;
 import pkgMGView.LeaderboardView;
@@ -46,7 +46,7 @@ public class Model {
 	 * @param g
 	 * @param me
 	 */
-	public void update(Game g, MouseEvent me) {
+	public void update(Game g, MouseEvent me, ArrayList<DataNode> dns) {
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
 		}
@@ -97,6 +97,10 @@ public class Model {
 		minigames.add(new LeaderboardModel());
 		
 		currGame = minigames.get(0);	
+	}
+	
+	public ArrayList<DataNode> getDataNodes() {
+		return currGame.getDataNodes();
 	}
 	
 }

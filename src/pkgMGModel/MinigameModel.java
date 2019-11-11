@@ -1,4 +1,4 @@
-package pkgMG;
+package pkgMGModel;
 
 import pkgEnum.Game;
 import pkgMover.Mover;
@@ -26,6 +26,7 @@ public abstract class MinigameModel {
 	final int backgroundWidth = 1280;
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
+	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
 	public abstract void update(MouseEvent me);
 	
@@ -61,6 +62,10 @@ public abstract class MinigameModel {
 	
 	public Game getGame() {
 		return g;
+	}
+	
+	public ArrayList<DataNode> getDataNodes() {
+		return dns;
 	}
 	
 	

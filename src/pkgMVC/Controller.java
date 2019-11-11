@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pkgEnum.GameState;
+import pkgMGModel.*;
+
 import java.util.ArrayList;
 
 //beans
@@ -13,8 +15,6 @@ import java.util.ArrayList;
 
 
 import javafx.animation.AnimationTimer;
-
-import pkgMG.*;
 import pkgMover.Mover;
 
 /**Controller for a MVC Design
@@ -40,8 +40,9 @@ public class Controller extends Application{
 			public void handle(long currentNanoTime) {
 				
 			//	System.out.println(view.getGame());
-				model.update(view.getGame(), view.getMouseEvent());
-				view.update(model.getMovers(), GameState.INPROGRESS);
+				
+				model.update(view.getGame(), view.getMouseEvent(), view.getDataNodes());
+				view.update(model.getMovers(), GameState.INPROGRESS, model.getDataNodes());
 				
 				try {
 					Thread.sleep(100);

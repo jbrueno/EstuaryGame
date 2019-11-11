@@ -31,6 +31,8 @@ public abstract class MinigameView {
 	Game game;
 	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
+
+	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs);
@@ -39,6 +41,7 @@ public abstract class MinigameView {
 	abstract void setUpListeners();
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
+	
 	
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
@@ -151,4 +154,9 @@ public abstract class MinigameView {
 	public Game getGame() {
 		return this.game;
 	}
+	
+	public ArrayList<DataNode> getDataNodes() {
+		return dns;
+	}
+	
 }
