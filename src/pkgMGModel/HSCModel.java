@@ -23,8 +23,7 @@ public class HSCModel extends MinigameModel{
 	 * 
 	 */
 	private void createHSCrabs() {
-		Crosshairs = new Crosshairs(150,250,100,100,0,0,"Crosshairs");
-		movers.add(Crosshairs);
+		
 		for (int i = 0; i < 20; i++) {
 			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
@@ -45,11 +44,10 @@ public class HSCModel extends MinigameModel{
 		for (Mover m: movers) {
 			m.move();
 		}
-		Crosshairs.move(me.getX(),me.getY());
 		
 		for(Mover m: movers) {
-			if ((Crosshairs.getX() == m.getX() && Crosshairs.getX()== m.getX()) &&
-				(Crosshairs.getY() == m.getY() && Crosshairs.getY()== m.getY()) &&
+			if ((me.getX() <= m.getX()+50  && me.getX() >= m.getX()-50) &&
+				(me.getY() <= m.getY()+50 && me.getY() >= m.getY()-50) &&
 				me.getEventType()==me.MOUSE_CLICKED){
 					m.setValue("HSCTagged");
 			}
