@@ -9,12 +9,13 @@ public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
 	Mover fullBottle;
-	final int bottleImageWidth = 200;
-	final int bottleImageHeight = 200;
+	final int bottleImageWidth = 100;
+	final int bottleImageHeight = 100;
 	
+	final int maxHeight = bottleImageHeight;
+	final int maxDepth = backgroundHeight-bottleImageHeight;
 	
-	int waterLevel = 450;
-	int maxDepth = 800;
+	int waterLevel = backgroundHeight/2;
 	boolean filled = false;
 	
 	public WSModel() {
@@ -24,25 +25,22 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-		Bottle= new Bottle(600,50,0,10,"Bottle");
-		fullBottle=new Bottle(600, backgroundHeight/2, 0, -8, "fullBottle");
+		Bottle = new Bottle(backgroundWidth/2, maxHeight, 0, 15, "Bottle");
+		fullBottle=new Bottle(backgroundWidth/2, maxHeight, 0, -15, "fullBottle");
 		movers.add(Bottle);
 	}
 	
 	@Override
 	public void update(MouseEvent me) {
-		System.out.println(backgroundHeight);
-		Bottle.move();
-		System.out.println("y: "+Bottle.getY());
-		if(Bottle.getY() >= backgroundHeight/2) {
-			filled = true;
-		}
+		Bottle.move(me.getX(), me.getY());
 		
-		if(checkFill()) {
-		fullBottle.move();
+		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
+			filled=true;
+			checkFill();
 		}
+		fullBottle.move(me.getX(), me.getY());
 	}
-
+		
 	/**
 	 * Checks if bottle has been filled, adds new full bottle object to datanode list if so
 	 * 
@@ -53,6 +51,7 @@ public class WSModel extends MinigameModel{
 	public boolean checkFill() {
 		if (filled) {
 			if(!movers.contains(fullBottle)) {
+				fullBottle.setY(Bottle.getY());
 				movers.remove(Bottle);
 				movers.add(fullBottle);
 			}
@@ -62,8 +61,8 @@ public class WSModel extends MinigameModel{
 	}
 	
 	class Bottle extends Mover {
-		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
-			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		public Bottle(int x, double d, int xIncr, int yIncr, String value) {
+			super(x, d, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
  	}
 	 

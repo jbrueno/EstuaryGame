@@ -8,6 +8,7 @@ import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel{
+	Mover Crosshairs;
 	
 	public HSCModel() {
 		g = Game.HSCCOUNT;
@@ -22,13 +23,10 @@ public class HSCModel extends MinigameModel{
 	 * 
 	 */
 	private void createHSCrabs() {
-		for (int i = 0; i < 10; i++) {
-			movers.add(new MaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
-					r.nextInt() % 5, r.nextInt() % 5));
-		}
-		
-		for (int i = 0; i < 10; i++) {
-			movers.add(new FemaleHSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
+		Crosshairs = new Crosshairs(150,250,100,100,0,0,"Crosshairs");
+		movers.add(Crosshairs);
+		for (int i = 0; i < 20; i++) {
+			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight),
 					r.nextInt() % 5, r.nextInt() % 5));
 		}
 	}
@@ -40,30 +38,45 @@ public class HSCModel extends MinigameModel{
 	 * @author Ryan Peters
 	 * @
 	 */
+	
+	//TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
 		for (Mover m: movers) {
 			m.move();
 		}
-		System.out.println(movers); 
-		//later handle click from mouseevent; maybe have crabs scatter from the light slowly
+		Crosshairs.move(me.getX(),me.getY());
+		
+		for(Mover m: movers) {
+			if ((Crosshairs.getX() == m.getX() && Crosshairs.getX()== m.getX()) &&
+				(Crosshairs.getY() == m.getY() && Crosshairs.getY()== m.getY()) &&
+				me.getEventType()==me.MOUSE_CLICKED){
+					m.setValue("HSCTagged");
+			}
+		}
 	}
+	
 	
 	//TODO combine HSCs, add boolean value tagged
-	public class FemaleHSC extends Mover{
-		public FemaleHSC(int x, int y, int xIncr, int yIncr) {
-			super(x, y, 200, 136, xIncr, yIncr, "FemaleHSC");
+	public class HSC extends Mover{
+		boolean tagged;
+		
+		public HSC(int x, int y, int xIncr, int yIncr) {
+			super(x, y, 200, 136, xIncr, yIncr, "HSC");
+			tagged=false;
+		}
+		
+		public boolean getTagged() {
+			return tagged;
 		}
 	}
 	
-	
-	public class MaleHSC extends Mover{
-		public MaleHSC(int x, int y, int xIncr, int yIncr) {
-			super(x, y, 200, 136, xIncr, yIncr, "MaleHSC");
-		}
-	}
-	
+	public class Crosshairs extends Mover{
 
+		public Crosshairs(int x, double y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
+		}
+	}
 }
 
 

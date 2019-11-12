@@ -2,11 +2,13 @@ package pkgMGView;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -23,8 +25,11 @@ public class WSView extends MinigameView{
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-
+		
+		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 		importImages();
+		setUpListeners();
+		
 	} 
 	
 	@Override
@@ -49,9 +54,12 @@ public class WSView extends MinigameView{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 	@Override
 	void setUpListeners() {
+		
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);

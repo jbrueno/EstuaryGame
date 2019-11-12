@@ -50,8 +50,7 @@ public class View {
 	private int canvasHeight = 768;
 	private Game game;
 	private Canvas canvas;
-	
-	 
+		
 	public View(Stage theStage) {	
 		this.stage = theStage;
 	    this.root = new Group();
@@ -64,6 +63,7 @@ public class View {
         gc = canvas.getGraphicsContext2D();
         
 		createViews();
+		
 	}
 	
 	/**
