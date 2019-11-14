@@ -50,39 +50,39 @@ public class AMModel extends MinigameModel {
 	 *@author Ryan Peters, Andrew Brenner
 	 */
 	public void createAnimals() {
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Snowy Grouper", new String[] {
+		animals.add(new MatchingAnimal(100, 500, 50, 50, "Snowy Grouper", new String[] {
 				"I can grow to up to 70 pounds!",
 				"I am very rare to find in the Delaware Bay!",
 				"I have pearly-white spots!"})); 
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "White-Tailed Deer",new String[] {
+		animals.add(new MatchingAnimal(700, 400, 50, 50, "White-Tailed Deer",new String[] {
 				"While I live on land, I can swim up to 15 mph!",
 				"I use my tail to communicate with others!",
 				"I can grow to almost 4 ft tall!"}));
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Mussel", new String[] {
+		animals.add(new MatchingAnimal(300, 350, 50, 50, "Mussel", new String[] {
 				"I attach to rocks with little threads I make that I call my beard!",
 				"I can survive above water by trapping water in with my shell!",
 				"I have a shiny black shell!"})); 
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Blue Crab", new String[] {
+		animals.add(new MatchingAnimal(200, 700, 50, 50, "Blue Crab", new String[] {
 				"I eat small fish, snails, mussels, and plants!",
 				"I have learned to use my hind legs to help me swim!",
 				"I can grow up to 1 to 2 pounds!"})); 
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Oyster", new String[] {
+		animals.add(new MatchingAnimal(200, 500, 50, 50, "Oyster", new String[] {
 				"I feed on plankton by filtering water through my gills!",
 				"We cluster together on hard surfaces underwater on what we call beds",
 				"I can produce a beautiful pearl!"})); 
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Horseshoe Crab", new String[]{
+		animals.add(new MatchingAnimal(400, 700, 50, 50, "Horseshoe Crab", new String[]{
 				"I have existed for 220 million years. I'm almost a dinosaur!",
 				"I eat mollusks and crustaceans on the ocean floor!",
 				"I must shed (molt) my shell in order to grow!"}));
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Black Sea Bass", new String[] {
+		animals.add(new MatchingAnimal(250, 350, 50, 50, "Black Sea Bass", new String[] {
 				"In the fall, I migrate off-shore into coastal waters and the ocean",
 				"I can grow up to 2 feet and 9 pounds!",
 				"I sometimes have a long streamer coming off the top of my tail!"}));
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Muskrat", new String[] {
+		animals.add(new MatchingAnimal(600, 400, 50, 50, "Muskrat", new String[] {
 				"I am pretty small. I only weigh up to 4 pounds!",
 				"My tail is long and skinny!",
 				"I build my home by piling plants like cattails on top of tree stumps!"}));
-		animals.add(new MatchingAnimal(0, 0, 50, 50, "Beaver", new String[] {
+		animals.add(new MatchingAnimal(700, 500, 50, 50, "Beaver", new String[] {
 				"My tail is flat and wide!",
 				"I usually grow up to be between 35 and 60 pounds",
 				"I build a dam as my home made of mud, logs, and sticks!"}));
@@ -152,11 +152,6 @@ public class AMModel extends MinigameModel {
 		
 		public String[] getClues() {
 			return clues;
-		}
-		
-		@Override
-		public void move() {
-			
 		}
 	}	
 }
