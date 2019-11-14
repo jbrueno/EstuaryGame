@@ -30,9 +30,9 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
-		//movers dont actually move for now as restricting them to a certain area is too hard xD
 		for (Mover m : movers) {
 			if (isCollision(m, me)) {
+				System.out.println("MATCHED: " + me.getX() + " " + me.getY()+  " "  + m.getX() + " " + m.getY());
 				MatchingAnimal ma = (MatchingAnimal) m;
 				if (!ma.isMatched && ma.isMatch(me.getButton().toString())) {
 					score += 1;

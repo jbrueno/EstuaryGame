@@ -86,7 +86,9 @@ public class AMView extends MinigameView{
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		for (Mover m : movers) {
-			draw(m);
+			//TEMPORARY UNTIL IMAGES ARE GOTTEN!
+			gc.strokeOval(m.getX() - m.getImageWidth() / 2, m.getY() - m.getImageHeight() / 2, 
+					m.getImageWidth() * 2, m.getImageHeight() * 2);
 		}
 	}
 	
