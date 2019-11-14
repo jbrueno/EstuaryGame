@@ -29,6 +29,8 @@ public class SCView extends MinigameView {
 	Image seaweed;
 	int itemHeight = 150;
 	int itemWidth = 150;
+	int foodHeight = 50;
+	int foodWidth = 50;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -36,6 +38,7 @@ public class SCView extends MinigameView {
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
+	
 
 		importImages();
 	}
@@ -48,6 +51,9 @@ public class SCView extends MinigameView {
 			areButtonsMade = true;
 		}
 		
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
 		
 		
@@ -102,15 +108,16 @@ public class SCView extends MinigameView {
 
 	@Override
 	void draw(ArrayList<Mover> movers) {
+		
 		for (Mover m : movers) {
 			if (m instanceof Terrapin) {
 				gc.drawImage(terrapin, m.getX(), m.getY());
 			} else if (m instanceof Trash) {
 				gc.drawImage(trash, m.getX(), m.getY(), itemWidth, itemHeight);
 			} else if (m instanceof Food) {
-				gc.drawImage(food, m.getX(), m.getY(), itemWidth, itemHeight);
+				gc.drawImage(food, m.getX(), m.getY(), foodWidth, foodHeight);
 			} else if (m instanceof Seaweed) {
-				gc.drawImage(trash, m.getX(), m.getY(), itemWidth, itemHeight);
+				gc.drawImage(seaweed, m.getX(), m.getY(), itemWidth, itemHeight);
 			}
 		}
 		 
