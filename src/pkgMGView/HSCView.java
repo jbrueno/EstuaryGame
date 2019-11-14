@@ -1,8 +1,11 @@
   
 package pkgMGView;
 
-import java.util.ArrayList;
+//import java.awt.event.MouseEvent;
 
+import javafx.scene.input.MouseEvent;
+import java.util.ArrayList;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,8 +18,7 @@ import pkgMover.Mover;
 
 public class HSCView extends MinigameView{
 	
-	Image fHSC;
-	Image mHSC;
+	Image imgHSC;
 	Button btnReturn;
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
@@ -25,7 +27,9 @@ public class HSCView extends MinigameView{
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-
+		
+		scene.addEventFilter(MouseEvent.ANY, eventHandler);
+		setUpListeners();
 		importImages();
 	}
 	
@@ -53,8 +57,8 @@ public class HSCView extends MinigameView{
 		
 	}
 
-	@Override
-	void setUpListeners() {
+
+	void setUpListeners() {	
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
@@ -62,9 +66,8 @@ public class HSCView extends MinigameView{
 			game = game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
-		
 	}
-
+	
 	@Override
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
@@ -75,7 +78,6 @@ public class HSCView extends MinigameView{
 
 	@Override
 	void importImages() {
-		fHSC = new Image("Mover/FemaleHSC.gif");
-		mHSC = new Image("Mover/MaleHSC.gif");
+		imgHSC = new Image("Mover/HSC.gif");
 	}
 }

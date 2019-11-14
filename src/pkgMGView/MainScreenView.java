@@ -49,7 +49,7 @@ public class MainScreenView extends MinigameView {
 	}
 
 	@Override
-	void setUpListeners() {
+	public void setUpListeners() {
 		scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
     		public void handle(MouseEvent e) {
     //			System.out.println(e.getSceneX() + " " + e.getSceneY());

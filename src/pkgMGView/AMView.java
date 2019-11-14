@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -33,7 +34,10 @@ public class AMView extends MinigameView{
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
+		
 		importImages();
+		scene.addEventFilter(MouseEvent.ANY, eventHandler);
+		
 	}
 	
 	@Override

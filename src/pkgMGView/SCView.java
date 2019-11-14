@@ -2,11 +2,13 @@ package pkgMGView;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
@@ -50,6 +52,16 @@ public class SCView extends MinigameView {
 
 	@Override
 	void setUpListeners() {
+		EventHandler<MouseEvent> eh = new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				System.out.println(event.getX());
+				
+			}
+			
+		};
+		
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);

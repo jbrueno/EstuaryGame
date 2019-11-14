@@ -4,6 +4,8 @@ package pkgMGView;
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,6 +24,7 @@ public abstract class MinigameView {
 	Image background;
 	int backgroundWidth = 1280;
 	int backgroundHeight = 768;
+	
 	MouseEvent me;
 	//Timer timer;
 	Canvas c;
@@ -34,7 +37,6 @@ public abstract class MinigameView {
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
-	
 	public abstract void update(ArrayList<Mover> movers, GameState gs);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
@@ -42,6 +44,13 @@ public abstract class MinigameView {
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 	
+	//EVENTHANDLER!! This sees all mouse events in minigames
+	EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
+		   @Override 
+		   public void handle(MouseEvent e) {
+		      me=e;
+		   }
+		}; 
 	
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
@@ -53,6 +62,7 @@ public abstract class MinigameView {
 		Image img = new Image(pkgName + "/" + m.getValue() + ".gif"); // changed from .png to .gif
 		return img;
 	}
+	
 	
 	/*
 	public Image loadImage(String pkgName, String imgName) {
