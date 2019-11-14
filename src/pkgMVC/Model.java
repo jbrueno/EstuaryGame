@@ -1,6 +1,7 @@
 package pkgMVC;
 import pkgEnum.Direction;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMGModel.*;
 import pkgMGView.AMView;
 import pkgMGView.HSCView;
@@ -101,6 +102,10 @@ public class Model {
 	
 	public ArrayList<DataNode> getDataNodes() {
 		return currGame.getDataNodes();
+	}
+	
+	public GameState getGameState() {
+		return currGame.getGameState();
 	}
 	
 }

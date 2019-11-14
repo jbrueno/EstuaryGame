@@ -38,8 +38,11 @@ public class WSView extends MinigameView{
 			setUpListeners();
 			areButtonsMade = true;
 		}
-		if (gs == GameState.INPROGRESS) {
-			draw(movers);
+		draw(movers);
+		if (gs == GameState.WS_COLLECT) {
+		}
+		if (gs == GameState.WS_PH) {
+			System.out.println("ph");
 		}
 	}
 
@@ -81,7 +84,7 @@ public class WSView extends MinigameView{
 
 	@Override
 	void importImages() {
-		background= new Image("backgrounds/WaterSample.png");
-		bottle = new Image("Mover/Bottle.gif");
+		background = new Image("backgrounds/WaterSample.png");
+		bottle = new Image("Mover/Bottle.png");
 	}
 }

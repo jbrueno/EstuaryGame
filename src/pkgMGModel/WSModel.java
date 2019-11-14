@@ -3,6 +3,7 @@ package pkgMGModel;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
@@ -20,13 +21,14 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
+		gs = GameState.WS_COLLECT;
 		addObjects();
 	}
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
 		Bottle = new Bottle(backgroundWidth/2, maxHeight, 0, 15, "Bottle");
-		fullBottle=new Bottle(backgroundWidth/2, maxHeight, 0, -15, "fullBottle");
+	//	fullBottle=new Bottle(backgroundWidth/2, maxHeight, 0, -15, "fullBottle");
 		movers.add(Bottle);
 	}
 	
@@ -36,9 +38,10 @@ public class WSModel extends MinigameModel{
 		
 		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
 			filled=true;
-			checkFill();
+			//checkFill();
+			Bottle.setValue("fullBottle");
+			gs=GameState.WS_PH;
 		}
-		fullBottle.move(me.getX(), me.getY());
 	}
 		
 	/**

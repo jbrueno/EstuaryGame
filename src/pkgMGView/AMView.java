@@ -153,6 +153,6 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
-		turtle = new Image("/Mover/bogturtle_left_0.gif");
+		turtle = new Image("/Mover/bogturtle_left_0.png");
 	}
 }
