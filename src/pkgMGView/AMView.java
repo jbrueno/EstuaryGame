@@ -29,10 +29,12 @@ public class AMView extends MinigameView{
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
-	final private int clueHeight = 80;
+	final private int clueHeight = 70;
 	final private int clueSpacing = 10;
 	private VBox clueBox;
 	private HashMap<String, ClueList> clueBank;
+	private Button btnHint;
+	private Button selectedButton;
 	
 	
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
@@ -106,9 +108,21 @@ public class AMView extends MinigameView{
 			b.setText(clueBank.get(b.getId()).getIterator().next());
 			b.setPrefHeight(clueHeight);
 			b.setPrefWidth(clueWidth);
-			b.setOnMouseClicked(e -> b.setText(clueBank.get(b.getId()).getIterator().next()));
+			b.setWrapText(true);
+			b.setAlignment(Pos.CENTER);
+			b.setOnMouseClicked(e -> {selectedButton = b;});
 			clueBox.getChildren().add(b);
 		}
+		
+		btnHint = new Button("HINT");
+		btnHint.setPrefHeight(clueHeight);
+		btnHint.setPrefWidth(clueWidth);
+		btnHint.setOnMouseClicked(e -> {
+			if (selectedButton != null) {
+				selectedButton.setText(clueBank.get(selectedButton.getId()).getIterator().next());
+			}
+		});
+		clueBox.getChildren().add(btnHint);
 		
 		root.getChildren().add(clueBox);
 	}
