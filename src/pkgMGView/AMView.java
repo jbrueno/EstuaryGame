@@ -80,64 +80,6 @@ public class AMView extends MinigameView{
 		});
 		root.getChildren().add(btnReturn);
 		
-		btnHint = new Button("Hint");
-		btnHint.setLayoutX(backgroundWidth - 200);
-		btnHint.setLayoutY(backgroundHeight / 2);
-		root.getChildren().add(btnHint);
-		btnHint.setOnAction(e -> {
-			if(guessingThis.compareTo("Turtle") == 0) {
-				System.out.println("I have a Shell");
-			} else if(guessingThis.compareTo("Deer") == 0) {
-				System.out.println("I have brown hair");
-			} else if(guessingThis.compareTo("Mussel") == 0) {
-				System.out.println("I'm dark and live in the water");
-			} else if(guessingThis.compareTo("Crab") == 0) {
-				System.out.println("I have a claws");
-			} else if(guessingThis.compareTo("Clam") == 0) {
-				System.out.println("Happy as a ____");
-			}
-		});
-		
-		btnTurtle = new Button("Turtle");
-		btnTurtle.setLayoutX(backgroundWidth - 200);
-		btnTurtle.setLayoutY((backgroundHeight / 2) + 50);
-		root.getChildren().add(btnTurtle);
-		btnTurtle.setOnAction(e -> {
-			System.out.println("Turtle Selected");
-		});
-		
-		btnDeer = new Button("Deer");
-		btnDeer.setLayoutX(backgroundWidth - 200);
-		btnDeer.setLayoutY((backgroundHeight / 2) + 100);
-		root.getChildren().add(btnDeer);
-		btnDeer.setOnAction(e -> {
-			System.out.println("Deer Selected");
-		});
-		
-		btnMussel = new Button("Mussel");
-		btnMussel.setLayoutX(backgroundWidth - 200);
-		btnMussel.setLayoutY((backgroundHeight / 2) - 50);
-		root.getChildren().add(btnMussel);
-		btnMussel.setOnAction(e -> {
-			System.out.println("Mussel Selected");
-		});
-		
-		btnCrab = new Button("Crab");
-		btnCrab.setLayoutX(backgroundWidth - 200);
-		btnCrab.setLayoutY((backgroundHeight / 2) - 100);
-		root.getChildren().add(btnCrab);
-		btnCrab.setOnAction(e -> {
-			System.out.println("Crab Selected");
-		});
-		
-		btnClam = new Button("Clam");
-		btnClam.setLayoutX(backgroundWidth - 200);
-		btnHint.setLayoutY((backgroundHeight / 2) - 150);
-		root.getChildren().add(btnClam);
-		btnClam.setOnAction(e -> {
-			System.out.println("Clam Selected");
-		});
-		
 	}
 
 	@Override
