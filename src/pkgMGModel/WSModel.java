@@ -9,7 +9,6 @@ import pkgMover.Mover;
 public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
-	Mover fullBottle;
 	final int bottleImageWidth = 100;
 	final int bottleImageHeight = 100;
 	
@@ -21,14 +20,12 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT;
 		addObjects();
 	}
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
 		Bottle = new Bottle(backgroundWidth/2, maxHeight, 0, 15, "Bottle");
-	//	fullBottle=new Bottle(backgroundWidth/2, maxHeight, 0, -15, "fullBottle");
 		movers.add(Bottle);
 	}
 	
@@ -37,9 +34,11 @@ public class WSModel extends MinigameModel{
 		Bottle.move(me.getX(), me.getY());
 		
 		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
-			filled=true;
-			//checkFill();
-			Bottle.setValue("fullBottle");
+			fillBottle();
+		}
+		
+		if(filled) {
+			movers.remove(Bottle);
 			gs=GameState.WS_PH;
 		}
 	}
@@ -51,16 +50,10 @@ public class WSModel extends MinigameModel{
 	 * 
 	 * @return boolean true if bottle is full
 	 */
-	public boolean checkFill() {
-		if (filled) {
-			if(!movers.contains(fullBottle)) {
-				fullBottle.setY(Bottle.getY());
-				movers.remove(Bottle);
-				movers.add(fullBottle);
-			}
-			return true;
-		}
-		return false;
+	
+	public void fillBottle() {
+		filled=true;
+		Bottle.setValue("fullBottle");
 	}
 	
 	class Bottle extends Mover {

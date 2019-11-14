@@ -17,6 +17,7 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
+	Image backgroundPh;
 	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
@@ -43,6 +44,8 @@ public class WSView extends MinigameView{
 		}
 		if (gs == GameState.WS_PH) {
 			System.out.println("ph");
+			background=backgroundPh;
+			draw(movers);
 		}
 	}
 
@@ -85,6 +88,7 @@ public class WSView extends MinigameView{
 	@Override
 	void importImages() {
 		background = new Image("backgrounds/WaterSample.png");
+		backgroundPh = new Image("backgrounds/MainScreen.png");
 		bottle = new Image("Mover/Bottle.png");
 	}
 }
