@@ -18,6 +18,11 @@ public class SCView extends MinigameView {
 	
 	Button btnReturn;
 	final Game theGame = Game.SIDESCROLLER;
+	Image background;
+	Image terrapin;
+	Image trash;
+	Image food;
+	Image seaweed;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -74,7 +79,10 @@ public class SCView extends MinigameView {
 
 	@Override
 	void importImages() {
-		// TODO Auto-generated method stub
+		background = new Image("/backgrounds/underwater2.png");
+		
+		terrapin = new Image("/Mover/bogturtle_right_0.png");
+		
 		
 	}
 

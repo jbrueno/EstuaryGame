@@ -40,6 +40,18 @@ public class SCModel extends MinigameModel{
 		}
 	}
 
+	
+	/**
+	 * Updates the game every tick.
+	 * 
+	 * First looks at terrapin's position to see if it needs to breathe or lose air
+	 * Next iterates through every mover in the items array:
+	 * 	- checking if the xLoc is still onscreen, and removing it otherwise
+	 * 	- checking if there is a collision with terry and updating the score
+	 * 
+	 * Finally if the size of items is <=3, a need item is randomly added
+	 * 
+	 */
 	@Override
 	public void update(MouseEvent me) {
 		if (terry.getY() >= waterThreshold) {
@@ -48,24 +60,26 @@ public class SCModel extends MinigameModel{
 			terry.airAmount = terry.airAmount - 0.5;
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
-		
+
 		for (SCMover m : items) {
-			m.setX(m.getX() + m.getxIncr());
-			
-			if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
-				score += m.getScoreChange();
-				terry.changeXIncr(m.getSpeedChange());		
-			}
-			
-			if (m.getX() <= 0) {
-				movers.remove(m);
+			if (m.getX() < 0) {
+				items.remove(0);
+			} else {
+				m.setX(m.getX() + m.getxIncr());
+				if (terry.getX() >= m.getX() - m.getImageWidth() && terry.getX() <= m.getX() + m.getImageWidth()) {
+					score += m.getScoreChange();
+					terry.changeXIncr(m.getSpeedChange());
+					if (!(m instanceof Seaweed)) {
+						items.remove(m);
+					}
+				} 
 			}
 		}
 		
 		if (items.size() <= 3) {
 			addNewMover();
 		}
-		
+
 	}
 
 	
