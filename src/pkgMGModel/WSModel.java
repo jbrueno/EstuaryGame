@@ -11,6 +11,7 @@ public class WSModel extends MinigameModel{
 	Mover Bottle;
 	final int bottleImageWidth = 100;
 	final int bottleImageHeight = 100;
+	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
 	final int maxDepth = backgroundHeight-bottleImageHeight;
@@ -25,22 +26,28 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-		Bottle = new Bottle(backgroundWidth/2, maxHeight, 0, 15, "Bottle");
+		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
 		movers.add(Bottle);
 	}
 	
 	@Override
 	public void update(MouseEvent me) {
-		Bottle.move(me.getX(), me.getY());
 		
+		//ws_collect
+		//double startx, double starty, double endx, double endy)
+		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
 			fillBottle();
 		}
 		
-		if(filled) {
+		if(filled && Bottle.getY()< waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
 			movers.remove(Bottle);
 			gs=GameState.WS_PH;
 		}
+		
+		//ws_ph
+		
+		//ws_temp
 	}
 		
 	/**
