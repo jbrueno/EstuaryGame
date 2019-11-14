@@ -109,7 +109,7 @@ public class HSCModel extends MinigameModel {
 
 			if (((HSC) m).getTagged() && ((HSC) m).getCounted()) { // counts the tagged crabs
 				numTagged++;
-				((HSC) m).setCounted(false);
+				((HSC) m).setCounted(false); // reset counted so crab does not count more than once
 			}
 		}
 
