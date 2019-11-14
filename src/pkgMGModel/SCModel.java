@@ -38,6 +38,12 @@ public class SCModel extends MinigameModel{
 		for (int i = 0; i < 3; i++) {
 			addNewMover();
 		}
+		
+		movers.removeAll(getMovers());
+		for (SCMover sc : items) {
+			movers.add(sc);
+		}
+		movers.add(terry);
 	}
 
 	
@@ -78,8 +84,10 @@ public class SCModel extends MinigameModel{
 		
 		if (items.size() <= 3) {
 			addNewMover();
+			movers.removeAll(getMovers());
+			movers.addAll(items);
+			movers.add(terry);
 		}
-
 	}
 
 	
@@ -88,15 +96,15 @@ public class SCModel extends MinigameModel{
 		if (newMover < 4)  {
 			Seaweed s = new Seaweed(backgroundWidth);
 			System.out.println("seaweed added");
-			movers.add(s);
+			items.add(s);
 		} else if (newMover < 8) {
 			Food f = new Food(backgroundWidth);
 			System.out.println("food added");
-			movers.add(f);
+			items.add(f);
 		} else {
 			Trash t = new Trash(backgroundWidth);
 			System.out.println("trashed added");
-			movers.add(t);
+			items.add(t);
 		}
 	}
 	

@@ -12,7 +12,11 @@ import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
+import pkgMover.Food;
 import pkgMover.Mover;
+import pkgMover.Seaweed;
+import pkgMover.Terrapin;
+import pkgMover.Trash;
 
 public class SCView extends MinigameView {
 	
@@ -23,6 +27,8 @@ public class SCView extends MinigameView {
 	Image trash;
 	Image food;
 	Image seaweed;
+	int itemHeight = 150;
+	int itemWidth = 150;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -41,6 +47,10 @@ public class SCView extends MinigameView {
 			setUpListeners();
 			areButtonsMade = true;
 		}
+		
+		draw(movers);
+		
+		
 	}
 
 	@Override
@@ -83,12 +93,26 @@ public class SCView extends MinigameView {
 		
 		terrapin = new Image("/Mover/bogturtle_right_0.png");
 		
+		trash = new Image("/Mover/fullBottle.png");
 		
+		food = new Image("/Mover/clam_left_2.png");
+		
+		seaweed = new Image("/Mover/cordgrass.png");
 	}
 
 	@Override
 	void draw(ArrayList<Mover> movers) {
-		// TODO Auto-generated method stub
+		for (Mover m : movers) {
+			if (m instanceof Terrapin) {
+				gc.drawImage(terrapin, m.getX(), m.getY());
+			} else if (m instanceof Trash) {
+				gc.drawImage(trash, m.getX(), m.getY(), itemWidth, itemHeight);
+			} else if (m instanceof Food) {
+				gc.drawImage(food, m.getX(), m.getY(), itemWidth, itemHeight);
+			} else if (m instanceof Seaweed) {
+				gc.drawImage(trash, m.getX(), m.getY(), itemWidth, itemHeight);
+			}
+		}
 		 
 	}
 }
