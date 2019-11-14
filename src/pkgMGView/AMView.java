@@ -1,31 +1,38 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
 import pkgMover.Mover;
-import pkgMover.MatchingAnimal;
+import pkgMGModel.AMModel;
+import pkgMGModel.AMModel.MatchingAnimal;
 
 public class AMView extends MinigameView{
 	Image turtle;
 	Button btnReturn;
-	Button btnHint;
-	Button btnTurtle;
-	Button btnDeer;
-	Button btnMussel;
-	Button btnCrab;
-	Button btnClam;
-	String guessingThis = "Turtle";
-	boolean turtleDrawn = false;
-	boolean questionAsked = false;
+	final private int clueXBuffer = 300;
+	final private int clueYBuffer = 75;
+	final private int clueWidth = 250;
+	final private int clueHeight = 80;
+	final private int clueSpacing = 10;
+	private VBox clueBox;
+	private HashMap<String, ClueList> clueBank;
 	
 	
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
@@ -37,26 +44,17 @@ public class AMView extends MinigameView{
 		
 		importImages();
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
-		
 	}
 	
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs) {
-		if(!questionAsked) {
-			System.out.println("Which one is the turtle?");
-			questionAsked = true;
-		}
 		if (!areButtonsMade) {
 			setUpListeners();
+			storeClues(movers);
 			areButtonsMade = true;
 		}
-		if (gs == GameState.INPROGRESS) {
-			draw(movers);
-		}
+		draw(movers);
 	}
-	
-		
-
 
 	@Override
 	void startTimer(int ms) {
@@ -79,7 +77,6 @@ public class AMView extends MinigameView{
 			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
-		
 	}
 
 	@Override
@@ -92,11 +89,66 @@ public class AMView extends MinigameView{
 		}
 	}
 	
-	
-	 
+	private void storeClues(ArrayList<Mover> movers) {
+		clueBank = new HashMap<String, ClueList>();
+		clueBox = new VBox();
+		clueBox.setAlignment(Pos.CENTER_RIGHT);
+		clueBox.setTranslateX(backgroundWidth - clueXBuffer);
+		clueBox.setTranslateY(clueYBuffer);
+		clueBox.setSpacing(clueSpacing);
+		
+		
+		for (Mover m : movers) {
+			AMModel.MatchingAnimal ma = (AMModel.MatchingAnimal) m;
+			clueBank.put(ma.getValue(), new ClueList(ma.getClues()));
+			Button b = new Button();
+			b.setId(ma.getValue());
+			b.setText(clueBank.get(b.getId()).getIterator().next());
+			b.setPrefHeight(clueHeight);
+			b.setPrefWidth(clueWidth);
+			b.setOnMouseClicked(e -> b.setText(clueBank.get(b.getId()).getIterator().next()));
+			clueBox.getChildren().add(b);
+		}
+		
+		root.getChildren().add(clueBox);
+	}
+ 
 
 	@Override
 	void importImages() {
 		turtle = new Image("/Mover/bogturtle_left_0.gif");
 	}
+	
+	/**
+	 * A nested class that holds the clues with an iterator that loops through the list of clues continuously
+	 * <p>
+	 * In gameplay, we want the player to be able to "scroll" through the clues by clicking them then clicking "Hint" button.
+	 * This way, there is less logic to handle for a for-loop or other implementation (I hope)
+	 * 
+	 * @author Ryan Peters
+	 *
+	 */
+	private class ClueList {
+		private String[] clues;
+		private InfiniteIterator infit = new InfiniteIterator();
+		ClueList(String[] clues) {
+			this.clues = clues;
+		}
+		
+		public InfiniteIterator getIterator() {
+			return infit;
+		}
+		
+		private class InfiniteIterator implements Iterator{
+			int cursor;
+			InfiniteIterator() {cursor = 0;}
+
+			public String next() {
+				cursor = cursor % clues.length;
+				return clues[cursor++];
+			}
+
+			public boolean hasNext() {return true;}
+		}
+	}	
 }
