@@ -124,7 +124,7 @@ public class AMModel extends MinigameModel {
 	}
 	
 	
-	class MatchingAnimal extends Mover {
+	public class MatchingAnimal extends Mover {
 		
 		String[] clues; // hints for user (more hints = more education :D)
 		boolean isMatched = false; // has the animal been mathed up already
