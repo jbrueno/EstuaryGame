@@ -34,7 +34,7 @@ public class AMModel extends MinigameModel {
 		for (Mover m : movers) {
 			if (isCollision(m, me)) {
 				MatchingAnimal ma = (MatchingAnimal) m;
-				if (ma.isMatched && ma.isMatch(me.getButton().toString())) {
+				if (!ma.isMatched && ma.isMatch(me.getButton().toString())) {
 					score += 1;
 				}				
 			}
