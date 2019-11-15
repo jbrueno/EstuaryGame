@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.control.Label; 
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -30,12 +31,19 @@ public abstract class MinigameView {
 	//Timer timer;
 	Canvas c;
 	GraphicsContext gc;
-	Group root;
+	Group root; 
 	Scene scene;
 	Game game;
 	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
 	Text scoreBox = new Text();
+	
+	// ** need to modify update() to update total Score by getting sum of MiniGames **
+	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
+	int totalScore; // Overall score, sum of miniGameScores
+	Label scoreLabel = new Label();
+	final double scoreLabelX = backgroundWidth - 100;
+	final double scoreLabelY = 0;
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
@@ -169,6 +177,53 @@ public abstract class MinigameView {
 	
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
+	}
+	
+	public int getTotalScore() {
+		return totalScore;
+	}
+	
+	
+	
+	
+	// The following Score methods can be used for both total Score and current score for a particular miniGame
+	/**
+	 * @author Abrenner
+	 * method to draw up a brand new scoreLabel with score of zero for any miniGameView
+	 */
+	public void createScoreLabel(){
+		scoreLabel.setLayoutX(scoreLabelX);
+		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setText("Score: " + 0);
+		root.getChildren().add(scoreLabel);
+	}
+	
+	/**
+	 * @author Abrenner
+	 * @param score int - current score for particular view
+	 * method will be called when score is not assumed to be zero (loading MainScreenView with total score)
+	 */
+	public void drawScore(int score) {
+		scoreLabel.setLayoutX(scoreLabelX);
+		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setText("Score: " + score);
+		root.getChildren().add(scoreLabel);
+	}
+	
+	/**
+	 * @author Abrenner 
+	 * updates scoreLabel to display the current score
+	 */
+	public void updateScore(int score) {
+		scoreLabel.setText("Score: " + score);
+	}
+	
+	/**
+	 * @author Abrenner
+	 * removes the scoreLabel from the view
+	 */
+	public void removeScoreLabel() {
+		root.getChildren().remove(scoreLabel);
 	}
 	
 	
