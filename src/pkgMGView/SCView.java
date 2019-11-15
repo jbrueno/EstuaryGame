@@ -1,5 +1,6 @@
 package pkgMGView;
 
+
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
@@ -9,6 +10,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
@@ -31,6 +36,7 @@ public class SCView extends MinigameView {
 	int itemWidth = 150;
 	int foodHeight = 50;
 	int foodWidth = 50;
+	Text scoreBox = new Text();
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -38,23 +44,21 @@ public class SCView extends MinigameView {
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-	
-
-		importImages();
+		makeScoreBox();
 	}
 	
 
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 		}
-		
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
+		
+		//scoreBox.setText(String.valueOf(score));
 		
 		
 	}
@@ -107,7 +111,7 @@ public class SCView extends MinigameView {
 	}
 
 	@Override
-	void draw(ArrayList<Mover> movers) {
+	public void draw(ArrayList<Mover> movers) {
 		
 		for (Mover m : movers) {
 			if (m instanceof Terrapin) {
@@ -122,4 +126,18 @@ public class SCView extends MinigameView {
 		}
 		 
 	}
+	
+	public void makeScoreBox() {
+		scoreBox.setCache(true);
+		scoreBox.setX(backgroundWidth);
+		scoreBox.setY(backgroundHeight);
+		scoreBox.setFill(Color.RED);
+		scoreBox.setText("0");
+		scoreBox.setFont(Font.font(null, FontWeight.BOLD, 32));
+		
+		System.out.println("score box made");
+	}
+
+
+	
 }

@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 public class Model {
 	private ArrayList<MinigameModel> minigames;
 	private MinigameModel currGame;	
+	int score;
 	
 	/**
 	 * Constructor that creates the list of MinigameModels <code>minigames</code>.
@@ -106,6 +107,10 @@ public class Model {
 	
 	public GameState getGameState() {
 		return currGame.getGameState();
+	}
+	
+	public int getScore() {
+		return score;
 	}
 	
 }

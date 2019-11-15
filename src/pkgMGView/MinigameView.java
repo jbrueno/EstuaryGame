@@ -14,6 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -34,10 +35,11 @@ public abstract class MinigameView {
 	Game game;
 	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
+	Text scoreBox = new Text();
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
-	public abstract void update(ArrayList<Mover> movers, GameState gs);
+	public abstract void update(ArrayList<Mover> movers, GameState gs, int score);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
@@ -168,5 +170,6 @@ public abstract class MinigameView {
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
 	}
+	
 	
 }

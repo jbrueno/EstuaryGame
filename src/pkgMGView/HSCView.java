@@ -34,7 +34,7 @@ public class HSCView extends MinigameView{
 	
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;

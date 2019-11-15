@@ -32,7 +32,7 @@ public class SCModel extends MinigameModel{
 	 */
 	public SCModel(){
 		g = Game.SIDESCROLLER;
-		terry = new Terrapin(10, backgroundHeight/2, 2, 0);
+		terry = new Terrapin(10, backgroundHeight/2, 10, 0);
 		
 		gameState = GameState.INPROGRESS;
 		score = 0;
@@ -67,12 +67,16 @@ public class SCModel extends MinigameModel{
 	 */
 	@Override
 	public void update(MouseEvent me) {
+		
+		
 		if (terry.getY() >= waterThreshold) {
 			terry.breathe();
 		} else {
 			terry.airAmount = terry.airAmount - 0.5;
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
+		
+		
 
 		for (SCMover m : items) {
 			if (m.getX() < 0) {
