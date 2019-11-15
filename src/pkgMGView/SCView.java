@@ -36,7 +36,19 @@ public class SCView extends MinigameView {
 	int itemWidth = 150;
 	int foodHeight = 50;
 	int foodWidth = 50;
-	Text scoreBox = new Text();
+	//Text scoreBox = new Text();
+	Image zero;
+	Image one;
+	Image two;
+	Image three;
+	Image four;
+	Image five;
+	Image six;
+	Image seven;
+	Image eight;
+	Image nine;
+	int numberWidth = 20;
+	int numberHeight = 25;
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -44,7 +56,7 @@ public class SCView extends MinigameView {
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-		makeScoreBox();
+		//makeScoreBox();
 	}
 	
 
@@ -60,7 +72,7 @@ public class SCView extends MinigameView {
 		
 		//scoreBox.setText(String.valueOf(score));
 		
-		
+		drawScore(score);
 	}
 
 	@Override
@@ -108,6 +120,17 @@ public class SCView extends MinigameView {
 		food = new Image("/Mover/clam_left_2.png");
 		
 		seaweed = new Image("/Mover/cordgrass.png");
+		
+		one = new Image("/numbers/Number1.png");
+		two = new Image("/numbers/Number2.png");
+		three = new Image("/numbers/Number3.png");
+		four = new Image("/numbers/Number4.png");
+		five = new Image("/numbers/Number5.png");
+		six = new Image("/numbers/Number6.png");
+		seven = new Image("/numbers/Number7.png");
+		eight = new Image("/numbers/Number8.png");
+		nine = new Image("/numbers/Number9.png");
+		zero = new Image("/numbers/Number0.png");
 	}
 
 	@Override
@@ -125,6 +148,14 @@ public class SCView extends MinigameView {
 			}
 		}
 		 
+	}
+	
+	public void drawScore(int score) {
+		String scoreString = String.valueOf(score);
+		for (int i = scoreString.length(); i > 0; i--) {
+			gc.drawImage(zero, backgroundWidth - i, 0, numberWidth, numberHeight);
+		}
+		
 	}
 	
 	public void makeScoreBox() {
