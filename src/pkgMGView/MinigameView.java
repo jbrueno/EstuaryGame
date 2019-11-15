@@ -15,7 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+//import java.awt.Font;
 import javafx.scene.control.Label; 
+import javafx.scene.paint.Color;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -42,7 +45,7 @@ public abstract class MinigameView {
 	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
 	int totalScore; // Overall score, sum of miniGameScores
 	Label scoreLabel = new Label();
-	final double scoreLabelX = backgroundWidth - 100;
+	final double scoreLabelX = backgroundWidth - 200;
 	final double scoreLabelY = 0;
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
@@ -194,18 +197,23 @@ public abstract class MinigameView {
 	public void createScoreLabel(){
 		scoreLabel.setLayoutX(scoreLabelX);
 		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setFont(new Font("Arial", 30));
+		scoreLabel.setTextFill(Color.PEACHPUFF);
 		scoreLabel.setText("Score: " + 0);
 		root.getChildren().add(scoreLabel);
 	}
 	
 	/**
 	 * @author Abrenner
+	 * Overloading createScoreLabel()
 	 * @param score int - current score for particular view
 	 * method will be called when score is not assumed to be zero (loading MainScreenView with total score)
 	 */
-	public void drawScore(int score) {
+	public void createScoreLabel(int score) {
 		scoreLabel.setLayoutX(scoreLabelX);
 		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setFont(new Font("Arial", 30));
+		scoreLabel.setTextFill(Color.PEACHPUFF);
 		scoreLabel.setText("Score: " + score);
 		root.getChildren().add(scoreLabel);
 	}

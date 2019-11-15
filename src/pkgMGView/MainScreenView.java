@@ -139,7 +139,7 @@ public class MainScreenView extends MinigameView {
 		if (!areButtonsMade) {
 			setUpButtons();
 			setUpListeners();
-			createScoreLabel();
+			createScoreLabel(score);
 			areButtonsMade = true;
 		}
 		
