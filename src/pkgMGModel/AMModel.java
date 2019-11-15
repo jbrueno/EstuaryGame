@@ -1,6 +1,11 @@
 package pkgMGModel;
 
 import java.util.*;
+
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -11,14 +16,14 @@ import pkgEnum.Game;
 
 public class AMModel extends MinigameModel {
 	
-	//room on right side of screen for labels (don't allow movers to go here)
-	final private int labelBuffer = 300; 
-	
 	//all possible MatchingAnimals to be chosen from
 	private ArrayList<MatchingAnimal> animals = new ArrayList<MatchingAnimal>();
 	
 	//max number of matching animals to be chosen as the ones for the game
 	final private int maxMAs = 7;
+	
+	//button tracking for dragging animals during matching
+	private String btnSourceID;
 	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
@@ -30,15 +35,27 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
-		for (Mover m : movers) {
-			if (isCollision(m, me)) {
-				System.out.println("MATCHED: " + me.getX() + " " + me.getY()+  " "  + m.getX() + " " + m.getY());
-				MatchingAnimal ma = (MatchingAnimal) m;
-				if (!ma.isMatched && ma.isMatch(me.getButton().toString())) {
-					score += 1;
-				}				
+		System.out.println(me.getEventType());
+		if (me.getEventType() == MouseEvent.DRAG_DETECTED) {
+			try {
+				btnSourceID = ((Button) me.getSource()).getId();
+			} catch (ClassCastException e) {}
+			System.out.println(btnSourceID);
+		}
+		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+			System.out.println(me.getX() + " " + me.getY());
+			for (Mover m : movers) {
+				if (isCollision(m, me)) {
+					MatchingAnimal ma = (MatchingAnimal) m;
+					if (!ma.isMatched && ma.isMatch()) {
+						System.out.println("MATCHED");
+						score += 1;
+					}				
+				}
 			}
 		}
+		
+		
 	}
 	
 	/**
@@ -50,7 +67,7 @@ public class AMModel extends MinigameModel {
 	 *@author Ryan Peters, Andrew Brenner
 	 */
 	public void createAnimals() {
-		animals.add(new MatchingAnimal(100, 500, 50, 50, "Snowy Grouper", new String[] {
+		animals.add(new MatchingAnimal(100, 100, 50, 50, "Snowy Grouper", new String[] {
 				"I can grow to up to 70 pounds!",
 				"I am very rare to find in the Delaware Bay!",
 				"I have pearly-white spots!"})); 
@@ -145,8 +162,8 @@ public class AMModel extends MinigameModel {
 		 * @param name String used to compare whether selected animal is a match or not
 		 * @return boolean false if names are not the same, true if names are the same
 		 */
-		public boolean isMatch(String value) {
-			isMatched = super.getValue().compareTo(value) != 0;
+		public boolean isMatch() {
+			isMatched = btnSourceID.equals(super.getValue());
 			return isMatched;			
 		}
 		

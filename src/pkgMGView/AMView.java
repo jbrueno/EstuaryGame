@@ -1,10 +1,12 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -87,7 +89,7 @@ public class AMView extends MinigameView{
 		for (Mover m : movers) {
 			//TEMPORARY UNTIL IMAGES ARE GOTTEN!
 			gc.strokeOval(m.getX() - m.getImageWidth() / 2, m.getY() - m.getImageHeight() / 2, 
-					m.getImageWidth() * 2, m.getImageHeight() * 2);
+					m.getImageWidth() * Math.sqrt(2), m.getImageHeight() * Math.sqrt(2));
 		}
 	}
 	
@@ -102,7 +104,7 @@ public class AMView extends MinigameView{
 		
 		for (Mover m : movers) {
 			AMModel.MatchingAnimal ma = (AMModel.MatchingAnimal) m;
-			clueBank.put(ma.getValue(), new ClueList(ma.getClues()));
+			clueBank.put(ma.getValue(), new ClueList(ma.getValue(), ma.getClues()));
 			Button b = new Button();
 			b.setId(ma.getValue());
 			b.setText(clueBank.get(b.getId()).getIterator().next());
@@ -111,6 +113,10 @@ public class AMView extends MinigameView{
 			b.setWrapText(true);
 			b.setAlignment(Pos.CENTER);
 			b.setOnMouseClicked(e -> {selectedButton = b;});
+			b.setOnDragDetected(new EventHandler<MouseEvent>() { 
+				   @Override 
+				   public void handle(MouseEvent e) {me = e;}
+			});
 			clueBox.getChildren().add(b);
 		}
 		
@@ -145,8 +151,12 @@ public class AMView extends MinigameView{
 	private class ClueList {
 		private String[] clues;
 		private InfiniteIterator infit = new InfiniteIterator();
-		ClueList(String[] clues) {
-			this.clues = clues;
+		ClueList(String value, String[] clues) {
+			this.clues = new String[1 + clues.length];
+			this.clues[0] = value;
+			for (int i = 1; i < clues.length + 1; i++) {
+				this.clues[i] = clues[i-1];
+			}
 		}
 		
 		public InfiniteIterator getIterator() {
