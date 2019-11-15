@@ -38,9 +38,11 @@ public class HSCView extends MinigameView{
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel();
 		}
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
+			updateScoreLabel(score);
 		}
 	}
 
@@ -63,6 +65,7 @@ public class HSCView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
 	}

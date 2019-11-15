@@ -49,6 +49,7 @@ public class AMView extends MinigameView{
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
@@ -77,8 +78,12 @@ public class AMView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
+		
+		
+		
 		
 		btnHint = new Button("Hint");
 		btnHint.setLayoutX(backgroundWidth - 200);

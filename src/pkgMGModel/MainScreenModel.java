@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
+import pkgMVC.Model;
 import pkgMover.DataNode;
 import pkgMover.Mover;
 
@@ -15,9 +16,8 @@ public class MainScreenModel extends MinigameModel{
 	} 
 
 	@Override
-	public void update(MouseEvent me) {
+	public void update(MouseEvent me) {		
 		// TODO Auto-generated method stub
-		
 	}
 
 

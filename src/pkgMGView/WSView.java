@@ -38,6 +38,7 @@ public class WSView extends MinigameView{
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
 		draw(movers);
 		if (gs == GameState.WS_COLLECT) {
@@ -71,6 +72,7 @@ public class WSView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
 		

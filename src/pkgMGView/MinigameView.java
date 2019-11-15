@@ -222,7 +222,7 @@ public abstract class MinigameView {
 	 * @author Abrenner 
 	 * updates scoreLabel to display the current score
 	 */
-	public void updateScore(int score) {
+	public void updateScoreLabel(int score) {
 		scoreLabel.setText("Score: " + score);
 	}
 	

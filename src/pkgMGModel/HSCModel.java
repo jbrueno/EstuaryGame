@@ -52,9 +52,12 @@ public class HSCModel extends MinigameModel{
 				(me.getY() <= m.getY()+50 && me.getY() >= m.getY()-50) &&
 				me.getEventType()==me.MOUSE_CLICKED){
 					m.setValue("HSCTagged");
+					score += 1; // temporary score system, testing label updates
+					System.out.println("tagged! " + score);
 			}
 		}
 	}
+	
 	
 	
 	//TODO combine HSCs, add boolean value tagged
@@ -77,4 +80,5 @@ public class HSCModel extends MinigameModel{
 			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
 	}
+
 }
