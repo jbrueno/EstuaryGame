@@ -18,8 +18,9 @@ public class Trash extends SCMover{
 	 * 
 	 * @param canvasWidth
 	 */
-	public Trash(int canvasWidth) {
-		super(canvasWidth, canvasWidth / 3, 100, 100, -10, 0, "Trash");
+	public Trash(int canvasWidth, int y) {
+		super(canvasWidth, y, 100, 100, -10, 0, "Trash");
+		
 	}
 	
 

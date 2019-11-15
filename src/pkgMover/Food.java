@@ -18,8 +18,8 @@ public class Food extends SCMover {
 	 * 
 	 * @param canvasWidth
 	 */
-	public Food(int canvasWidth) {
-		super(canvasWidth, canvasWidth / 3, 50, 50, -10, 0, "Food");
+	public Food(int canvasWidth, int y) {
+		super(canvasWidth, y, 50, 50, -10, 0, "Food");
 	}
 	
 	/**

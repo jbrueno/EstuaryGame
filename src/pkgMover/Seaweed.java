@@ -18,8 +18,8 @@ public class Seaweed extends SCMover{
 	 * 
 	 * @param canvasWidth
 	 */
-	public Seaweed(int canvasWidth) {
-		super(canvasWidth, canvasWidth / 3, 100, 100, -10, 0, "Seaweed");
+	public Seaweed(int canvasWidth, int canvasHeight) {
+		super(canvasWidth, canvasHeight, 100, 100, -10, 0, "Seaweed");
 	}
 	
 	/**
