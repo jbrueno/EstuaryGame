@@ -26,4 +26,9 @@ public class Terrapin extends Mover {
 	public void changeXIncr(int xChange) {
 		setXIncr(this.getxIncr() + xChange);
 	}
+	
+	public void setXY(double mouseX, double mouseY) {
+		setX((int)mouseX);
+		setY((int)mouseY);
+	}
 }

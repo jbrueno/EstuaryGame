@@ -2,6 +2,7 @@ package pkgMGModel;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.DataNode;
 //import pkgMover.FemaleHSC;
 //import pkgMover.MaleHSC;
@@ -12,6 +13,7 @@ public class HSCModel extends MinigameModel{
 	
 	public HSCModel() {
 		g = Game.HSCCOUNT;
+		gs = GameState.INPROGRESS;
 		createHSCrabs();
 	}
 	

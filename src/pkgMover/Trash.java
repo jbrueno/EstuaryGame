@@ -18,12 +18,11 @@ public class Trash extends SCMover{
 	 * 
 	 * @param canvasWidth
 	 */
-	public Trash(int canvasWidth) {
-		super(canvasWidth, canvasWidth / 3, 100, 100, -10, 0, "Trash");
+	public Trash(int canvasWidth, int y) {
+		super(canvasWidth, y, 100, 100, -10, 0, "Trash");
 	}
 	
 
-	
 	/** the value by which the score in SC will change based on collision with this mover
 	 * 
 	 * @return int the value of the score change, it will be added to the score of the SCgame
@@ -34,6 +33,7 @@ public class Trash extends SCMover{
 	
 	/**
 	 * the value by which the speed of the terrapin will change upon collision with this mover
+	 * 
 	 * @return
 	 */
 	public int speedChange() {

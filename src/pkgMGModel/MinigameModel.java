@@ -68,6 +68,7 @@ public abstract class MinigameModel {
 		return dns;
 	}
 	
-	
-
+	public GameState getGameState() {
+		return gs;
+	}
 }

@@ -14,6 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -34,10 +35,11 @@ public abstract class MinigameView {
 	Game game;
 	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
+	Text scoreBox = new Text();
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
-	public abstract void update(ArrayList<Mover> movers, GameState gs);
+	public abstract void update(ArrayList<Mover> movers, GameState gs, int score);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
@@ -59,7 +61,7 @@ public abstract class MinigameView {
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {
-		Image img = new Image(pkgName + "/" + m.getValue() + ".gif"); // changed from .png to .gif
+		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); // changed from .png to .gif
 		return img;
 	}
 	
@@ -72,7 +74,7 @@ public abstract class MinigameView {
 	 */
 	
 	public Image loadImage(Mover m) {
-		Image img = new Image("Mover/" + m.getValue() + ".gif"); 
+		Image img = new Image("Mover/" + m.getValue() + ".png"); 
 		return img;
 	}
 	
@@ -168,5 +170,6 @@ public abstract class MinigameView {
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
 	}
+	
 	
 }

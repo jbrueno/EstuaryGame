@@ -91,6 +91,23 @@ public abstract class Mover/* extends DataNode*/{
 	}
 	
 	/**
+	 * Allows mover to bounce between two points
+	 * 
+	 * @param startx start x coordinate
+	 * @param starty start y coordinate
+	 * @param endx end x coordinate
+	 * @param endy end y coordinate
+	 */
+	public void move(double startx, double starty, double endx, double endy) {
+		this.move();
+		if( y>=endy && x>=endx|| y<=starty && y<=startx) {
+			yIncr=yIncr*-1;
+			xIncr=xIncr*-1;
+		}
+	
+	}
+	
+	/**
 	 * Sets x,y to the parameters.
 	 * Used for having an object "stick" to the mouse.
 	 * 
