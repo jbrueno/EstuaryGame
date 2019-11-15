@@ -35,15 +35,12 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
-		System.out.println(me.getEventType());
 		if (me.getEventType() == MouseEvent.DRAG_DETECTED) {
 			try {
 				btnSourceID = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
-			System.out.println(btnSourceID);
 		}
 		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-			System.out.println(me.getX() + " " + me.getY());
 			for (Mover m : movers) {
 				if (isCollision(m, me)) {
 					MatchingAnimal ma = (MatchingAnimal) m;
@@ -158,9 +155,14 @@ public class AMModel extends MinigameModel {
 		}
 		
 		/**
-		 * @author Andrew Brenner
-		 * @param name String used to compare whether selected animal is a match or not
-		 * @return boolean false if names are not the same, true if names are the same
+		 * Compares the ID of the button from which the drag originated to the endpoint of the drag. This will only be called
+		 * if the endpoint of the drag collides with a mover so it avoids NullPointerException in <code>super.getValue()</code>
+		 * <p>
+		 * The buttons in Animal Matching are loaded to have the ID of the value of the mover they represent so we can use this 
+		 * ID to check for a match from the button with name/clues and the image (mover)
+		 * 
+		 * @author Ryan Peters
+		 * @return boolean  whether the source of the drag matches the endpoint of the drag
 		 */
 		public boolean isMatch() {
 			isMatched = btnSourceID.equals(super.getValue());
