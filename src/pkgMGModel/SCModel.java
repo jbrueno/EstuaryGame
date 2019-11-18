@@ -23,6 +23,7 @@ public class SCModel extends MinigameModel{
 	GameState gameState;
 	int seaweedY = 100;
 	int foodY = 50;
+	
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -75,6 +76,8 @@ public class SCModel extends MinigameModel{
 			terry.airAmount = terry.airAmount - 0.5;
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
+		
+		terry.move(me.getX(), me.getY());
 		
 		
 

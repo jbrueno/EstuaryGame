@@ -1,6 +1,7 @@
 package pkgMGView;
 
 
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
@@ -49,6 +50,9 @@ public class SCView extends MinigameView {
 	Image nine;
 	int numberWidth = 20;
 	int numberHeight = 25;
+	double mouseX;
+	double mouseY;
+	
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.SIDESCROLLER);
@@ -57,6 +61,9 @@ public class SCView extends MinigameView {
 		this.scene = scene;
 		this.gc = gc;
 		//makeScoreBox();
+		
+		
+		
 	}
 	
 
@@ -70,10 +77,8 @@ public class SCView extends MinigameView {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
-		
-		//scoreBox.setText(String.valueOf(score));
-		
 		drawScore(score);
+		
 	}
 
 	@Override
@@ -94,9 +99,11 @@ public class SCView extends MinigameView {
 
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println(event.getX());
+				mouseX = event.getX();
+				mouseY = event.getY();
 				
 			}
+			
 			
 		};
 		
@@ -122,17 +129,6 @@ public class SCView extends MinigameView {
 		food = new Image("/Mover/clam_left_2.png");
 		
 		seaweed = new Image("/Mover/cordgrass.png");
-		
-		one = new Image("/numbers/Number1.png");
-		two = new Image("/numbers/Number2.png");
-		three = new Image("/numbers/Number3.png");
-		four = new Image("/numbers/Number4.png");
-		five = new Image("/numbers/Number5.png");
-		six = new Image("/numbers/Number6.png");
-		seven = new Image("/numbers/Number7.png");
-		eight = new Image("/numbers/Number8.png");
-		nine = new Image("/numbers/Number9.png");
-		zero = new Image("/numbers/Number0.png");
 	}
 
 	@Override
@@ -170,6 +166,22 @@ public class SCView extends MinigameView {
 		
 		System.out.println("score box made");
 	}
+	
+	public double getMouseX() {
+		return this.mouseX;
+	}
+	
+	public double getMouseY() {
+		return this.mouseY;
+	}
+
+
+
+	
+	
+
+
+
 
 
 	
