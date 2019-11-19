@@ -39,6 +39,7 @@ public class SCView extends MinigameView  {
 	int foodWidth = 50;
 	double mouseX;
 	double mouseY;
+	int gameLength;
 	
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
@@ -50,9 +51,7 @@ public class SCView extends MinigameView  {
 		importImages();
 		setUpListeners();
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
-		
-		
-		
+		startTimer(gameLength);	
 	}
 	
 
