@@ -52,8 +52,10 @@ public class Model {
 	public void update(Game g, MouseEvent me, ArrayList<DataNode> dns) {
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
-		}
+		} 
 		currGame.update(me);
+		
+		
 	}	
 	
 	/**

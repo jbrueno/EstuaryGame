@@ -69,6 +69,8 @@ public class SCModel extends MinigameModel{
 	@Override
 	public void update(MouseEvent me) {
 		
+		System.out.println(me);
+		
 		
 		if (terry.getY() >= waterThreshold) {
 			terry.breathe();
@@ -77,8 +79,12 @@ public class SCModel extends MinigameModel{
 			System.out.println("Terrapin air level " + terry.airAmount);
 		}
 		
-		terry.move(me.getX(), me.getY());
-		
+		try {
+			terry.move(me.getX(), me.getY());
+		} catch (NullPointerException e) {
+			System.out.println("caught null pointer exception");
+		}
+ 		
 		
 
 		for (SCMover m : items) {
