@@ -39,24 +39,39 @@ public class WSModel extends MinigameModel{
 	}
 	
 	@Override
-	public void update(MouseEvent me) {
+	public void update(MouseEvent me) {		
 		
-		//ws_collect
-		//double startx, double starty, double endx, double endy)
-		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
+		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
+		switch (gs) {
+		case START :
+			gs = GameState.WS_COLLECT;
+		case WS_COLLECT :
 		
-		if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			fillBottle();
-		}
-		if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			movers.remove(Bottle);
-			gs=GameState.WS_PH;
-		}
-	}
+			//double startx, double starty, double endx, double endy)
+			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 		
-		//ws_ph
+			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				fillBottle();
+			}
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				movers.remove(Bottle);
+				gs=GameState.WS_PH;
+			}
 		
-		//ws_temp
+		
+		
+		case WS_PH :
+			 System.out.println("WS_PH !!");
+		
+		
+		// **************** //
+			
+		case WS_TEMP :
+		
+		
+		}// end of switch
+	}	
+		
 	
 		
 	/**
