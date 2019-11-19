@@ -60,9 +60,9 @@ public abstract class MinigameView {
 	EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
 		   @Override 
 		   public void handle(MouseEvent e) {
-		      me=e;
+		      me = e;
 		   }
-		}; 
+	}; 
 	
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
