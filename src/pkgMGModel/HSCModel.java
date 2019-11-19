@@ -1,5 +1,8 @@
 package pkgMGModel;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -26,7 +29,6 @@ public class HSCModel extends MinigameModel {
 	 * 
 	 */
 	private void createHSCrabs() {
-
 		for (int i = 0; i < 20; i++) {
 			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight), (r.nextInt() % 7) + 1,
 					(r.nextInt() % 7) + 1));
@@ -36,8 +38,8 @@ public class HSCModel extends MinigameModel {
 	/**
 	 * Checks if a mover has gone out of view(isOffScreen) and if so the mover is
 	 * given a random x and y coordinate, entering the screen from the opposite
-	 * side. If the mover was tagged upon exiting the view, the tagged and counted
-	 * attributes are reset so it can be counted again
+	 * side. If the mover was tagged upon exiting the view, the tagged attribute is
+	 * reset so it can be tagged again
 	 * 
 	 * @author jbrueno
 	 * @param m the mover to be checked
@@ -47,9 +49,8 @@ public class HSCModel extends MinigameModel {
 		int iHeight = m.getImageHeight();
 
 		if (isOffScreen(m)) {
-			((HSC) m).setTagged(false);
-			((HSC) m).setCounted(false);
 			m.setValue("HSC");
+			((HSC) m).setTagged(false);
 			if (m.getX() < -iWidth) {
 				m.setX(backgroundWidth + r.nextInt(10));
 				m.setY(r.nextInt(backgroundHeight));
@@ -80,12 +81,7 @@ public class HSCModel extends MinigameModel {
 				&& me.getEventType() == MouseEvent.MOUSE_CLICKED && !((HSC) m).getTagged()) {
 			m.setValue("HSCTagged");
 			((HSC) m).setTagged(true);
-			((HSC) m).setCounted(true);
-		}
-
-		if (((HSC) m).getTagged() && ((HSC) m).getCounted()) { // counts the tagged crabs
 			numTagged++;
-			((HSC) m).setCounted(false); // reset counted so crab does not count more than once
 		}
 	}
 
@@ -98,20 +94,21 @@ public class HSCModel extends MinigameModel {
 	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
+		
 		for (Mover m : movers) {
+			spawnHSCrabs(m);
 			checkClick(me, m);
 			m.move();
-			spawnHSCrabs(m);
 		}
+		// System.out.println(numTagged);
 
 	}
 
 	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {
 		boolean tagged;
-		boolean counted;
 
-		public HSC(int x, int y, int xIncr, int yIncr) {
+		public HSC(int x, int y, double xIncr, double yIncr) {
 			super(x, y, 200, 136, xIncr, yIncr, "HSC");
 			tagged = false;
 		}
@@ -122,14 +119,6 @@ public class HSCModel extends MinigameModel {
 
 		public void setTagged(boolean tagged) {
 			this.tagged = tagged;
-		}
-
-		public boolean getCounted() {
-			return counted;
-		}
-
-		public void setCounted(boolean counted) {
-			this.counted = counted;
 		}
 	}
 
