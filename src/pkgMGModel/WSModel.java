@@ -10,9 +10,12 @@ import pkgMover.Mover;
 public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
+	Mover testtube;
 	Mover PHStrip;
-	final int bottleImageWidth = 75;
-	final int bottleImageHeight = 75;
+	int bottleImageWidth = 75;
+	int bottleImageHeight = 75;
+	int tubeImageWidth = 250;
+	int tubeImageHeight = 250;
 	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
@@ -28,13 +31,15 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
+		gs = GameState.WS_COLLECT;
 		addObjects();
 	}
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
+		Bottle = new Bottle(bottleX, maxHeight, bottleImageWidth, bottleImageHeight, 0, 15, "Bottle");
 		movers.add(Bottle);
+		testtube= new Bottle(0,0,0,0,0,0,"testtube");
 		PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
 	}
 	
@@ -43,22 +48,32 @@ public class WSModel extends MinigameModel{
 		
 		//ws_collect
 		//double startx, double starty, double endx, double endy)
-		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
-		
-		if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			fillBottle();
+		System.out.println(gs);
+		if (gs==GameState.WS_COLLECT){
+			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
+			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				fillBottle();
+				bottleImageWidth=500;
+				bottleImageHeight=500;
+			}
+			
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			
+				gs=GameState.WS_PH;
+			}
 		}
-		if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			movers.remove(Bottle);
-			gs=GameState.WS_PH;
+		
+		if(gs==GameState.WS_PH) {
+			Bottle.setValue("testtube");
+			Bottle.setX(backgroundWidth/3);
+			Bottle.setY(backgroundHeight*2/3);
+		}
+		
+		if (gs==GameState.WS_TEMP) {
+			//do something
 		}
 	}
-		
-		//ws_ph
-		
-		//ws_temp
-	
-		
+
 	/**
 	 * Checks if bottle has been filled, adds new full bottle object to datanode list if so
 	 * 
@@ -78,8 +93,8 @@ public class WSModel extends MinigameModel{
 	}
 	
 	class Bottle extends Mover {
-		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
-			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		public Bottle(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
  	}
 	 

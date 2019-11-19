@@ -79,6 +79,7 @@ public abstract class Mover/* extends DataNode*/{
 		this.yIncr = d;
 	}
 	
+
 	
 	/**
 	 * Updates x,y by their relative speeds for background movers who always move (ie aren't user-controlled)
