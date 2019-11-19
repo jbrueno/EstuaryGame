@@ -19,7 +19,7 @@ public abstract class MinigameModel {
 	 */
 
 	Game g;
-	int score;
+	int score = 0;  
 	int totalTime;
 	GameState gs = GameState.START;
 	final int backgroundHeight = 768;
@@ -85,5 +85,14 @@ public abstract class MinigameModel {
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
 	}
-
+	
+	public GameState getGameState() {
+		return gs;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+	
 }
+

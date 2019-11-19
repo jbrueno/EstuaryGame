@@ -48,13 +48,18 @@ public class HSCView extends MinigameView {
 	//Rectangle light = lighting();
 
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
-		createLightFX();
-		
-		setUpListeners();
-		
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+    createLightFX();
+    
+		if (!areButtonsMade) {
+			setUpListeners();
+			areButtonsMade = true;
+			createScoreLabel();
+		}
+
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
+			updateScoreLabel(score);
 		}
 
 	}
@@ -77,6 +82,7 @@ public class HSCView extends MinigameView {
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		lighting.getChildren().add(btnReturn);
 	}
@@ -119,8 +125,4 @@ public class HSCView extends MinigameView {
 
 		lighting.getChildren().add(rect);
 	}
-
-	
-	
-
 }

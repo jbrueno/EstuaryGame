@@ -41,7 +41,7 @@ public class AMView extends MinigameView{
 	}
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
 		if(!questionAsked) {
 			System.out.println("Which one is the turtle?");
 			questionAsked = true;
@@ -49,6 +49,7 @@ public class AMView extends MinigameView{
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
@@ -77,8 +78,12 @@ public class AMView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
+		
+		
+		
 		
 		btnHint = new Button("Hint");
 		btnHint.setLayoutX(backgroundWidth - 200);
@@ -153,6 +158,6 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
-		turtle = new Image("/Mover/bogturtle_left_0.gif");
+		turtle = new Image("/Mover/bogturtle_left_0.png");
 	}
 }

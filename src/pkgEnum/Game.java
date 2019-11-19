@@ -1,6 +1,9 @@
 package pkgEnum;
 
+
 public enum Game {
 	MAINSCREEN, ANIMALMATCHING, HSCCOUNT, SIDESCROLLER, WATERSAMPLING, LEADERBOARD;
+	
+	
 
 }

@@ -17,6 +17,7 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
+	Image backgroundPh;
 	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
@@ -33,12 +34,19 @@ public class WSView extends MinigameView{
 	} 
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
-		if (gs == GameState.INPROGRESS) {
+		draw(movers);
+		updateScoreLabel(score);
+		if (gs == GameState.WS_COLLECT) {
+		}
+		if (gs == GameState.WS_PH) {
+			System.out.println("ph");
+			background=backgroundPh;
 			draw(movers);
 		}
 	}
@@ -65,6 +73,7 @@ public class WSView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
 		
@@ -81,7 +90,8 @@ public class WSView extends MinigameView{
 
 	@Override
 	void importImages() {
-		background= new Image("backgrounds/WaterSample.png");
-		bottle = new Image("Mover/Bottle.gif");
+		background = new Image("backgrounds/WaterSample.png");
+		backgroundPh = new Image("backgrounds/MainScreen.png");
+		bottle = new Image("Mover/Bottle.png");
 	}
 }

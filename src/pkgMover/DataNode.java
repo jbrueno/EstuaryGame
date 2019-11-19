@@ -23,4 +23,3 @@ public class DataNode {
 		return value;
 	}
 }
- 

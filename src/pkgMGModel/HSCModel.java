@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.DataNode;
 //import pkgMover.FemaleHSC;
 //import pkgMover.MaleHSC;
@@ -16,6 +17,7 @@ public class HSCModel extends MinigameModel {
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
+		gs = GameState.INPROGRESS;
 		createHSCrabs();
 	}
 
@@ -94,7 +96,6 @@ public class HSCModel extends MinigameModel {
 	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
-		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
 			checkClick(me, m);
@@ -103,9 +104,9 @@ public class HSCModel extends MinigameModel {
 		// System.out.println(numTagged);
 
 	}
-
-	// TODO combine HSCs, add boolean value tagged
-	public class HSC extends Mover {
+  
+	//TODO combine HSCs, add boolean value tagged
+	public class HSC extends Mover{
 		boolean tagged;
 
 		public HSC(int x, int y, double xIncr, double yIncr) {
@@ -130,3 +131,4 @@ public class HSCModel extends MinigameModel {
 	}
 
 }
+
