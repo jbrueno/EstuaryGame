@@ -2,6 +2,7 @@ package pkgMGModel;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.Mover;
@@ -9,15 +10,21 @@ import pkgMover.Mover;
 public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
-	final int bottleImageWidth = 100;
-	final int bottleImageHeight = 100;
+	Mover PHStrip;
+	final int bottleImageWidth = 75;
+	final int bottleImageHeight = 75;
 	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
-	final int maxDepth = backgroundHeight-bottleImageHeight;
+	final int maxDepth = backgroundHeight-bottleImageHeight-100;
 	
 	int waterLevel = backgroundHeight/2;
+	int shallowLevel=400;
+	int correctLevel=500;
+	int deepLevel=600;
 	boolean filled = false;
+	
+	int pH;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
@@ -28,6 +35,7 @@ public class WSModel extends MinigameModel{
 	public void addObjects() {
 		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
 		movers.add(Bottle);
+		PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
 	}
 	
 	@Override
@@ -36,19 +44,20 @@ public class WSModel extends MinigameModel{
 		//ws_collect
 		//double startx, double starty, double endx, double endy)
 		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
-		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
+		
+		if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			fillBottle();
 		}
-		
-		if(filled && Bottle.getY()< waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
+		if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			movers.remove(Bottle);
 			gs=GameState.WS_PH;
 		}
+	}
 		
 		//ws_ph
 		
 		//ws_temp
-	}
+	
 		
 	/**
 	 * Checks if bottle has been filled, adds new full bottle object to datanode list if so
@@ -61,11 +70,16 @@ public class WSModel extends MinigameModel{
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
+		if(Bottle.getY()>=shallowLevel && Bottle.getY()<correctLevel) {
+			score+=1;
+		} else if (Bottle.getY()>=correctLevel && Bottle.getY()<deepLevel) {
+			score+=5;
+		}
 	}
 	
 	class Bottle extends Mover {
-		public Bottle(int x, double d, int xIncr, int yIncr, String value) {
-			super(x, d, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
+			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
  	}
 	 
