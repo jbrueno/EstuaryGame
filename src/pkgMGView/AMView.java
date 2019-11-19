@@ -26,7 +26,6 @@ import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;
 
 public class AMView extends MinigameView{
-	Image turtle;
 	Button btnReturn;
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
@@ -136,7 +135,6 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
-		turtle = new Image("/Mover/bogturtle_left_0.gif");
 	}
 	
 	/**

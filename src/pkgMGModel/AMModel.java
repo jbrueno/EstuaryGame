@@ -23,7 +23,7 @@ public class AMModel extends MinigameModel {
 	final private int maxMAs = 7;
 	
 	//button tracking for dragging animals during matching
-	private String btnSourceID;
+	private String btnSourceID = "";
 	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
@@ -35,6 +35,7 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
+		System.out.println(me.getEventType());
 		if (me.getEventType() == MouseEvent.DRAG_DETECTED) {
 			try {
 				btnSourceID = ((Button) me.getSource()).getId();
