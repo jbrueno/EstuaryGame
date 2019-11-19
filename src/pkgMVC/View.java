@@ -79,6 +79,9 @@ public class View {
 	//	System.out.println(currGame.getGame()); //testing current Game
 		currGame.update(movers, gs, score);
 		
+		
+		// ArrayList dns currently UNUSED  **
+		
 	}
 	
 	/**

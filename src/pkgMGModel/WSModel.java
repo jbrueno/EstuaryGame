@@ -57,18 +57,23 @@ public class WSModel extends MinigameModel{
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
 			}
-		
+			break;
 		
 		
 		case WS_PH :
-			 System.out.println("WS_PH !!");
+			 //System.out.println("WS_PH !!");
+			break;
 		
 		
 		// **************** //
 			
 		case WS_TEMP :
+			break;
 		
 		
+		
+		default :
+			break;
 		}// end of switch
 	}	
 		
