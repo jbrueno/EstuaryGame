@@ -21,7 +21,7 @@ public class WSView extends MinigameView{
 	Image background_collect;
 	Image background_lab;
 	Button btnReturn;
-	
+	//
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -122,7 +122,6 @@ public class WSView extends MinigameView{
 
 	@Override
 	void importImages() {
-		background = new Image("backgrounds/WaterSample.png");
 		background_collect = new Image("backgrounds/WaterSample.png");
 		backgroundPh = new Image("backgrounds/MainScreen.png");
 		bottle = new Image("Mover/Bottle.png");

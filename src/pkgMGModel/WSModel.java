@@ -96,11 +96,13 @@ public class WSModel extends MinigameModel{
 			score+=5;
 		}
 	}
-	
+	//
 	class Bottle extends Mover {
 		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
+		
+		
  	}
 	 
 	public class PHStrip extends Mover{
