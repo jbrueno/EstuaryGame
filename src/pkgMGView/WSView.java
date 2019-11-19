@@ -41,6 +41,7 @@ public class WSView extends MinigameView{
 			createScoreLabel(score);
 		}
 		draw(movers);
+		updateScoreLabel(score);
 		if (gs == GameState.WS_COLLECT) {
 		}
 		if (gs == GameState.WS_PH) {
