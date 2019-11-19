@@ -28,7 +28,7 @@ public abstract class Mover/* extends DataNode*/{
 	 * @param yIncr			speed for y movement
 	 * @param value			String relating to the subclass's name for image lookup later in MinigameViews
 	 */
-	public Mover(int x, double y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+	public Mover(int x, double y, int imageWidth, int imageHeight, double xIncr, double yIncr, String value) {
 		this.value=value;
 		this.x = x;
 		this.y = y;
@@ -79,6 +79,7 @@ public abstract class Mover/* extends DataNode*/{
 		this.yIncr = d;
 	}
 	
+
 	
 	/**
 	 * Updates x,y by their relative speeds for background movers who always move (ie aren't user-controlled)
@@ -88,6 +89,23 @@ public abstract class Mover/* extends DataNode*/{
 	public void move() {
 		x += xIncr;
 		y += yIncr;
+	}
+	
+	/**
+	 * Allows mover to bounce between two points
+	 * 
+	 * @param startx start x coordinate
+	 * @param starty start y coordinate
+	 * @param endx end x coordinate
+	 * @param endy end y coordinate
+	 */
+	public void move(double startx, double starty, double endx, double endy) {
+		this.move();
+		if( y>=endy && x>=endx|| y<=starty && y<=startx) {
+			yIncr=yIncr*-1;
+			xIncr=xIncr*-1;
+		}
+	
 	}
 	
 	/**

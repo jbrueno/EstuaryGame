@@ -17,8 +17,11 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
+	Image backgroundPh;
+	Image background_collect;
+	Image background_lab;
 	Button btnReturn;
-	
+	//
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -33,16 +36,53 @@ public class WSView extends MinigameView{
 	} 
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
-		if (gs == GameState.INPROGRESS) {
+		updateScoreLabel(score);
+		
+		System.out.println("gs: " + gs);
+		
+		switch (gs) {
+		case WS_COLLECT :
+			background = background_collect;
+			break;
+		case WS_TEMP :
+			background = background_lab;
+			break;
+		case WS_PH :
+
+			background = background_lab;
+			break;
+		default:
+			break;
+		
+		}
+		
+		draw(movers);
+
+		
+		
+		
+		/*
+		if (gs == GameState.WS_COLLECT) {
+			System.out.println("WS_COLLECT!!");
+		}
+		if (gs == GameState.WS_PH) {
+			System.out.println("ph");
+			background=backgroundPh;
 			draw(movers);
 		}
+		*/
 	}
 
+	
+	
+	
+	
 	@Override
 	void startTimer(int ms) {
 		// TODO Auto-generated method stub
@@ -65,6 +105,7 @@ public class WSView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
 		
@@ -81,7 +122,9 @@ public class WSView extends MinigameView{
 
 	@Override
 	void importImages() {
-		background= new Image("backgrounds/WaterSample.png");
-		bottle = new Image("Mover/Bottle.gif");
+		background_collect = new Image("backgrounds/WaterSample.png");
+		backgroundPh = new Image("backgrounds/MainScreen.png");
+		bottle = new Image("Mover/Bottle.png");
+		background_lab = new Image("backgrounds/lab_background.png");
 	}
 }

@@ -1,3 +1,4 @@
+  
 /**
  * SCMover is an abstract class created just for objects that are being used in the items array in 
  * the SCModel. This is to avoid code that is only applicable to SCMovers (such as getSpeedChange() ) 

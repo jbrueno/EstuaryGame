@@ -2,21 +2,29 @@ package pkgMGModel;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
 	
 	Mover Bottle;
-	Mover fullBottle;
-	final int bottleImageWidth = 100;
-	final int bottleImageHeight = 100;
+	Mover PHStrip;
+	final int bottleImageWidth = 75;
+	final int bottleImageHeight = 75;
+	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
-	final int maxDepth = backgroundHeight-bottleImageHeight;
+	final int maxDepth = backgroundHeight-bottleImageHeight-100;
 	
 	int waterLevel = backgroundHeight/2;
+	int shallowLevel=400;
+	int correctLevel=500;
+	int deepLevel=600;
 	boolean filled = false;
+	
+	int pH;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
@@ -25,21 +33,51 @@ public class WSModel extends MinigameModel{
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 	public void addObjects() {
-		Bottle = new Bottle(backgroundWidth/2, maxHeight, 0, 15, "Bottle");
-		fullBottle=new Bottle(backgroundWidth/2, maxHeight, 0, -15, "fullBottle");
+		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
 		movers.add(Bottle);
+		PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
 	}
 	
 	@Override
-	public void update(MouseEvent me) {
-		Bottle.move(me.getX(), me.getY());
+	public void update(MouseEvent me) {		
 		
-		if(Bottle.getY()> waterLevel && me.getEventType() == me.MOUSE_CLICKED) {
-			filled=true;
-			checkFill();
-		}
-		fullBottle.move(me.getX(), me.getY());
-	}
+		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
+		switch (gs) {
+		case START :
+			gs = GameState.WS_COLLECT;
+		case WS_COLLECT :
+		
+			//double startx, double starty, double endx, double endy)
+			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
+		
+			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				fillBottle();
+			}
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				movers.remove(Bottle);
+				gs=GameState.WS_PH;
+			}
+			break;
+		
+		
+		case WS_PH :
+			 //System.out.println("WS_PH !!");
+			break;
+		
+		
+		// **************** //
+			
+		case WS_TEMP :
+			break;
+		
+		
+		
+		default :
+			break;
+		}// end of switch
+	}	
+		
+	
 		
 	/**
 	 * Checks if bottle has been filled, adds new full bottle object to datanode list if so
@@ -48,22 +86,23 @@ public class WSModel extends MinigameModel{
 	 * 
 	 * @return boolean true if bottle is full
 	 */
-	public boolean checkFill() {
-		if (filled) {
-			if(!movers.contains(fullBottle)) {
-				fullBottle.setY(Bottle.getY());
-				movers.remove(Bottle);
-				movers.add(fullBottle);
-			}
-			return true;
-		}
-		return false;
-	}
 	
-	class Bottle extends Mover {
-		public Bottle(int x, double d, int xIncr, int yIncr, String value) {
-			super(x, d, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+	public void fillBottle() {
+		filled=true;
+		Bottle.setValue("fullBottle");
+		if(Bottle.getY()>=shallowLevel && Bottle.getY()<correctLevel) {
+			score+=1;
+		} else if (Bottle.getY()>=correctLevel && Bottle.getY()<deepLevel) {
+			score+=5;
 		}
+	}
+	//
+	class Bottle extends Mover {
+		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
+			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
+		}
+		
+		
  	}
 	 
 	public class PHStrip extends Mover{

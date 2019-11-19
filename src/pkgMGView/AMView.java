@@ -50,11 +50,12 @@ public class AMView extends MinigameView{
 	}
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) {
+	public void update(ArrayList<Mover> movers, GameState gs) 
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);
 			areButtonsMade = true;
+			createScoreLabel(score);
 		}
 		draw(movers);
 	}
@@ -78,6 +79,7 @@ public class AMView extends MinigameView{
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
+			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
 	}
@@ -135,6 +137,7 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
+
 	}
 	
 	/**
@@ -174,3 +177,4 @@ public class AMView extends MinigameView{
 		}
 	}	
 }
+

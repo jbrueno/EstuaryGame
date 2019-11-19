@@ -14,6 +14,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.control.Label; 
+import javafx.scene.paint.Color;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -29,15 +33,23 @@ public abstract class MinigameView {
 	//Timer timer;
 	Canvas c;
 	GraphicsContext gc;
-	Group root;
+	Group root; 
 	Scene scene;
 	Game game;
 	final Game theGame; //final in each subclass
 	boolean areButtonsMade = false;
+	Text scoreBox = new Text();
+	
+	// ** need to modify update() to update total Score by getting sum of MiniGames **
+	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
+	int totalScore; // Overall score, sum of miniGameScores
+	Label scoreLabel = new Label();
+	final double scoreLabelX = backgroundWidth - 200;
+	final double scoreLabelY = 0;
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	
-	public abstract void update(ArrayList<Mover> movers, GameState gs);
+	public abstract void update(ArrayList<Mover> movers, GameState gs, int score);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
 	abstract void setUpListeners();
@@ -59,7 +71,7 @@ public abstract class MinigameView {
 	// need to find a way to differentiate whether image is .png or .gif
 	// only movers are .gif at the moment so it has been changed
 	public Image loadImage(String pkgName, Mover m) {
-		Image img = new Image(pkgName + "/" + m.getValue() + ".gif"); // changed from .png to .gif
+		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); // changed from .png to .gif
 		return img;
 	}
 	
@@ -72,7 +84,7 @@ public abstract class MinigameView {
 	 */
 	
 	public Image loadImage(Mover m) {
-		Image img = new Image("Mover/" + m.getValue() + ".gif"); 
+		Image img = new Image("Mover/" + m.getValue() + ".png"); 
 		return img;
 	}
 	
@@ -168,5 +180,59 @@ public abstract class MinigameView {
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
 	}
+	
+	public int getTotalScore() {
+		return totalScore;
+	}
+	
+	
+	
+	
+	// The following Score methods can be used for both total Score and current score for a particular miniGame
+	/**
+	 * @author Abrenner
+	 * method to draw up a brand new scoreLabel with score of zero for any miniGameView
+	 */
+	public void createScoreLabel(){
+		scoreLabel.setLayoutX(scoreLabelX);
+		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setFont(new Font("Arial", 30));
+		scoreLabel.setTextFill(Color.PEACHPUFF);
+		scoreLabel.setText("Score: " + 0);
+		root.getChildren().add(scoreLabel);
+	}
+	
+	/**
+	 * @author Abrenner
+	 * Overloading createScoreLabel()
+	 * @param score int - current score for particular view
+	 * method will be called when score is not assumed to be zero (loading MainScreenView with total score)
+	 */
+	public void createScoreLabel(int score) {
+		scoreLabel.setLayoutX(scoreLabelX);
+		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setFont(new Font("Arial", 30));
+		scoreLabel.setTextFill(Color.PEACHPUFF);
+		scoreLabel.setText("Score: " + score);
+		root.getChildren().add(scoreLabel);
+	}
+	
+	/**
+	 * @author Abrenner 
+	 * updates scoreLabel to display the current score
+	 */
+	public void updateScoreLabel(int score) {
+		scoreLabel.setText("Score: " + score);
+	}
+	
+	/**
+	 * @author Abrenner
+	 * removes the scoreLabel from the view
+	 * may not need if we include label in method clearFX()
+	 */
+	public void removeScoreLabel() {
+		root.getChildren().remove(scoreLabel);
+	}
+	
 	
 }

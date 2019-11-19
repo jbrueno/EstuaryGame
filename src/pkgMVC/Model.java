@@ -1,6 +1,7 @@
 package pkgMVC;
 import pkgEnum.Direction;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMGModel.*;
 import pkgMGView.AMView;
 import pkgMGView.HSCView;
@@ -30,6 +31,8 @@ import javafx.scene.input.MouseEvent;
 public class Model {
 	private ArrayList<MinigameModel> minigames;
 	private MinigameModel currGame;	
+	int totalScore; // sum of all minigame scores
+	boolean totalUpdated = false;
 	
 	/**
 	 * Constructor that creates the list of MinigameModels <code>minigames</code>.
@@ -49,8 +52,10 @@ public class Model {
 	public void update(Game g, MouseEvent me, ArrayList<DataNode> dns) {
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
-		}
+		} 
 		currGame.update(me);
+		
+		
 	}	
 	
 	/**
@@ -102,5 +107,42 @@ public class Model {
 	public ArrayList<DataNode> getDataNodes() {
 		return currGame.getDataNodes();
 	}
+	
+	public GameState getGameState() {
+		return currGame.getGameState();
+	}
+	
+	/**
+	 * @author Abrenner
+	 * @return score int - score of the Minigame Model stored in currGame
+	 * If on mainscreen, we need totalScore, which needs to be up to date
+	 */
+	public int getScore() {	
+		if (currGame == minigames.get(0)) { // Mainscreen 
+			updateTotalScore(); // need to figure out a way to only update upon entering MainScreen, not continuously (like boolean areButtonsMade)
+			return totalScore;
+		} else {
+			return currGame.getScore();
+		}
+	}
+	
+	
+	/**
+	 * @author Abrenner
+	 * sums up the scores from each Minigame Model to calculate total score
+	 */
+	public void updateTotalScore() {
+		totalScore = 0;
+		System.out.println("Scores: ");
+		for(MinigameModel MGM : minigames) {
+			System.out.println(MGM.getScore());
+			totalScore += MGM.getScore();
+		}
+		
+	}
+	
+	
+	
+	
 	
 }
