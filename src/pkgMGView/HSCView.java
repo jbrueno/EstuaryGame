@@ -99,7 +99,7 @@ public class HSCView extends MinigameView {
 	@Override
 	void importImages() {
 		background= new Image("backgrounds/TempHSC.png");
-		imgHSC = new Image("Mover/HSC.gif");
+		imgHSC = new Image("Mover/HSC.png");
 	}
 	
 	
