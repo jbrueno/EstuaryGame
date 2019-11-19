@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-//import java.awt.Font;
 import javafx.scene.control.Label; 
 import javafx.scene.paint.Color;
 import pkgEnum.Direction;
@@ -229,6 +228,7 @@ public abstract class MinigameView {
 	/**
 	 * @author Abrenner
 	 * removes the scoreLabel from the view
+	 * may not need if we include label in method clearFX()
 	 */
 	public void removeScoreLabel() {
 		root.getChildren().remove(scoreLabel);

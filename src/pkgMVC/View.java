@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -77,8 +78,8 @@ public class View {
 	 */
 	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score) {
 	//	System.out.println(currGame.getGame()); //testing current Game
+
 		currGame.update(movers, gs, score);
-		
 	}
 	
 	/**

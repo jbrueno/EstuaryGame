@@ -24,7 +24,7 @@ import pkgMover.Seaweed;
 import pkgMover.Terrapin;
 import pkgMover.Trash;
 
-public class SCView extends MinigameView {
+public class SCView extends MinigameView  {
 	
 	Button btnReturn;
 	final Game theGame = Game.SIDESCROLLER;
@@ -37,19 +37,6 @@ public class SCView extends MinigameView {
 	int itemWidth = 150;
 	int foodHeight = 50;
 	int foodWidth = 50;
-	//Text scoreBox = new Text();
-	Image zero;
-	Image one;
-	Image two;
-	Image three;
-	Image four;
-	Image five;
-	Image six;
-	Image seven;
-	Image eight;
-	Image nine;
-	int numberWidth = 20;
-	int numberHeight = 25;
 	double mouseX;
 	double mouseY;
 	
@@ -60,7 +47,9 @@ public class SCView extends MinigameView {
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-		//makeScoreBox();
+		importImages();
+		setUpListeners();
+		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 		
 		
 		
@@ -69,15 +58,18 @@ public class SCView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+		 updateScoreLabel(score);
+		
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
 		}
+		
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
-		drawScore(score);
+	
 		
 	}
 
@@ -95,17 +87,7 @@ public class SCView extends MinigameView {
 
 	@Override
 	void setUpListeners() {
-		EventHandler<MouseEvent> eh = new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				mouseX = event.getX();
-				mouseY = event.getY();
-				
-			}
-			
-			
-		};
+		
 		
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
@@ -148,13 +130,6 @@ public class SCView extends MinigameView {
 		 
 	}
 	
-	public void drawScore(int score) {
-		String scoreString = String.valueOf(score);
-		for (int i = scoreString.length(); i > 0; i--) {
-			gc.drawImage(zero, backgroundWidth - i, 0, numberWidth, numberHeight);
-		}
-		
-	}
 	
 	public void makeScoreBox() {
 		scoreBox.setCache(true);
@@ -175,14 +150,22 @@ public class SCView extends MinigameView {
 		return this.mouseY;
 	}
 
+	public void mouseDragged(MouseEvent e) {
+		mouseX = e.getX();
+		mouseY = e.getY();
+		me = e;
+	}
 
-
+	public void mouseMoved(MouseEvent e) {
+		mouseX = e.getX();
+		mouseY = e.getY();
+		me = e;
+	}
 	
-	
-
-
-
-
+	@Override
+	public MouseEvent getMouseEvent() {
+		return me;
+	}
 
 	
 }
