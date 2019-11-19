@@ -24,7 +24,7 @@ import pkgEnum.Game;
 import pkgMover.DataNode;
 import pkgMover.Mover;
 
-public class HSCView extends MinigameView {
+public class HSCView extends MinigameView { 
 
 	Image imgHSC;
 	Button btnReturn;

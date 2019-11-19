@@ -67,7 +67,7 @@ public class HSCModel extends MinigameModel {
 	}
 
 	/**
-	 * Checks to see if the me was a click and if it is withing the bounds of a HSC.
+	 * Checks to see if the me was a click and if it is within the bounds of a HSC.
 	 * Is it is, then it sets tagged and counted to true. Also, if the HSC is tagged
 	 * and needs to be counted, increments numTagged.
 	 * 

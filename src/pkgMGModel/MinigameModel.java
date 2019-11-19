@@ -59,6 +59,7 @@ public abstract class MinigameModel {
 	
 	/**
 	 * Checks to see if the image of a mover has gone off screen and if it has returns true
+	 * otherwise false
 	 * 
 	 * @param m mover to be checked
 	 * @return
