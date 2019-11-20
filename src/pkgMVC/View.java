@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 // NOTE: will not be needed once lab is complete
 import java.util.Random;
+import java.util.Timer;
 
 
 /**The View class for an MVC design.
@@ -76,10 +77,10 @@ public class View {
 	 * @param gs
 	 * @see MinigameView.update()
 	 */
-	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score, int time) {
 	//	System.out.println(currGame.getGame()); //testing current Game
 
-		currGame.update(movers, gs, score);
+		currGame.update(movers, gs, score, time);
 	}
 	
 	/**

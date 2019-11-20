@@ -1,6 +1,7 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -41,7 +42,7 @@ public class AMView extends MinigameView{
 	}
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if(!questionAsked) {
 			System.out.println("Which one is the turtle?");
 			questionAsked = true;

@@ -34,7 +34,7 @@ public class WSView extends MinigameView{
 	} 
 	
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;

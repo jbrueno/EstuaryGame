@@ -6,6 +6,9 @@ import pkgEnum.GameState;
 import pkgMover.DataNode;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pkgMover.DataNode;
 
 import javafx.scene.input.MouseEvent;
@@ -27,6 +30,8 @@ public abstract class MinigameModel {
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
+	Timer timer = new Timer();
+	int time;
 
 	public abstract void update(MouseEvent me);
 
@@ -92,6 +97,29 @@ public abstract class MinigameModel {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public int getTime() {
+		return time;
+	}
+
+	
+	public void setUpTimer() {
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				--time;
+				System.out.println("time remaining: " + time);
+				if(time == 0) {
+					timer.cancel();
+					System.out.println("times up");
+					gs = gs.FINISHED;
+				}
+
+			}
+
+		}, 100, 100);
+
 	}
 	
 }

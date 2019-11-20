@@ -16,13 +16,13 @@ public class HSCModel extends MinigameModel {
 	int tagHeight = 85;
 	int tagDepth = 195;
 	int points = 50;
-	Timer timer = new Timer();
-	int time = 300;
+	boolean timerSet = false;
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
 		gs = GameState.INPROGRESS;
 		createHSCrabs();
+		time = 300;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class HSCModel extends MinigameModel {
 		if ((mouseEventX <= moverX + tagWidth && mouseEventX >= moverX)
 				&& (mouseEventY <= (moverY + tagDepth) && mouseEventY >= moverY + tagHeight)
 				&& me.getEventType() == MouseEvent.MOUSE_CLICKED && !((HSC) m).getTagged()) {
-			
+
 			m.setValue("HSCTagged");
 			((HSC) m).setTagged(true);
 			numTagged++;
@@ -108,24 +108,36 @@ public class HSCModel extends MinigameModel {
 	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
+		if(!timerSet) {
+			setUpTimer();
+			timerSet = true;
+		}
+		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
 			checkTagged(me, m);
 			m.move();
 		}
-		
-		/*timer.scheduleAtFixedRate(new TimerTask() {
-	        public void run() {
-	            System.out.println(time);
-	        }
-	    }, 100, 100);
-		
-	    if (time == 1)
-	        timer.cancel();
-	    --time;*/
 
 	}
 
+	/*private void setUpTimer() {
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				--time;
+				System.out.println("time remaining: " + time);
+				if(time == 0) {
+					timer.cancel();
+					System.out.println("times up");
+					gs = gs.FINISHED;
+				}
+
+			}
+
+		}, 100, 100);
+
+	}*/
 
 	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {

@@ -16,6 +16,8 @@ import pkgMover.Mover;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.scene.input.MouseEvent;
 
@@ -33,6 +35,8 @@ public class Model {
 	private MinigameModel currGame;	
 	int totalScore; // sum of all minigame scores
 	boolean totalUpdated = false;
+	int mgTime;
+ 
 	
 	/**
 	 * Constructor that creates the list of MinigameModels <code>minigames</code>.
@@ -54,8 +58,6 @@ public class Model {
 			currGame = minigames.get(g.ordinal());
 		} 
 		currGame.update(me);
-		
-		
 	}	
 	
 	/**
@@ -141,7 +143,9 @@ public class Model {
 		
 	}
 	
-	
+	public int getTime() {
+		return currGame.getTime();
+	}
 	
 	
 	
