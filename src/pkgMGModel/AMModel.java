@@ -69,7 +69,7 @@ public class AMModel extends MinigameModel {
 				"I can grow to up to 70 pounds!",
 				"I am very rare to find in the Delaware Bay!",
 				"I have pearly-white spots!"})); 
-		animals.add(new MatchingAnimal(700, 400, 50, 50, "White-Tailed Deer",new String[] {
+		animals.add(new MatchingAnimal(400, 400, 50, 50, "White-Tailed Deer",new String[] {
 				"While I live on land, I can swim up to 15 mph!",
 				"I use my tail to communicate with others!",
 				"I can grow to almost 4 ft tall!"}));

@@ -49,8 +49,7 @@ public class AMView extends MinigameView{
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 	}
 	
-	@Override
-	public void update(ArrayList<Mover> movers, GameState gs) 
+	public void update(ArrayList<Mover> movers, GameState gs, int score) { 
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);

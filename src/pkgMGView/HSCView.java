@@ -111,6 +111,7 @@ public class HSCView extends MinigameView {
 	 * @author jbrueno
 	 */
 	public void createLightFX() {
+		/*
 		lighting.getChildren().clear();
 		root.getChildren().remove(lighting);
 		root.getChildren().add(lighting);
@@ -124,5 +125,6 @@ public class HSCView extends MinigameView {
 		rect.setOpacity(0.985);
 
 		lighting.getChildren().add(rect);
+		*/
 	}
 }
