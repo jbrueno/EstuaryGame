@@ -17,6 +17,8 @@ public class HSCModel extends MinigameModel {
 	int tagDepth = 195;
 	int points = 50;
 	boolean timerSet = false;
+	final int maxHSC = 10;
+	int maxSpeed = 10;
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
@@ -35,9 +37,9 @@ public class HSCModel extends MinigameModel {
 	 * 
 	 */
 	private void createHSCrabs() {
-		for (int i = 0; i < 20; i++) {
-			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight), (r.nextInt() % 7) + 1,
-					(r.nextInt() % 7) + 1));
+		for (int i = 0; i < maxHSC; i++) {
+			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight), (r.nextInt() % maxSpeed) + 1,
+					(r.nextInt() % maxSpeed) + 1));
 		}
 	}
 
@@ -57,7 +59,6 @@ public class HSCModel extends MinigameModel {
 
 		if (isOffScreen(m)) {
 			m.setValue("HSC");
-			((HSC) m).setTagged(false);
 			if (m.getX() < -iWidth) {
 				m.setX(backgroundWidth + buffer);
 				m.setY(r.nextInt(backgroundHeight));
@@ -74,30 +75,6 @@ public class HSCModel extends MinigameModel {
 		}
 	}
 
-	/**
-	 * Checks to see if the me was a click and if it is within the bounds of a HSC.
-	 * Is it is, then it sets tagged and counted to true. Also, if the HSC is tagged
-	 * and needs to be counted, increments numTagged.
-	 * 
-	 * @param me MouseEvent
-	 * @param m  mover being checked
-	 */
-	private void checkTagged(MouseEvent me, Mover m) {
-		double mouseEventX = me.getX();
-		double mouseEventY = me.getY();
-		double moverX = m.getX();
-		double moverY = m.getY();
-
-		if ((mouseEventX <= moverX + tagWidth && mouseEventX >= moverX)
-				&& (mouseEventY <= (moverY + tagDepth) && mouseEventY >= moverY + tagHeight)
-				&& me.getEventType() == MouseEvent.MOUSE_CLICKED && !((HSC) m).getTagged()) {
-
-			m.setValue("HSCTagged");
-			((HSC) m).setTagged(true);
-			numTagged++;
-			score += points;
-		}
-	}
 
 	/**
 	 * For each horseshoe crab, move() based on xIncr,yIncr
@@ -115,29 +92,17 @@ public class HSCModel extends MinigameModel {
 		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
-			checkTagged(me, m);
+			if (me.getEventType() == MouseEvent.MOUSE_CLICKED && isCollision(m, me) && !((HSC) m).getTagged()) {
+				((HSC) m).tag();
+				score += points;
+				numTagged++;
+			}
 			m.move();
 		}
 
 	}
 
-	/*private void setUpTimer() {
-
-		timer.scheduleAtFixedRate(new TimerTask() {
-			public void run() {
-				--time;
-				System.out.println("time remaining: " + time);
-				if(time == 0) {
-					timer.cancel();
-					System.out.println("times up");
-					gs = gs.FINISHED;
-				}
-
-			}
-
-		}, 100, 100);
-
-	}*/
+	
 
 	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {
@@ -154,8 +119,9 @@ public class HSCModel extends MinigameModel {
 			return tagged;
 		}
 
-		public void setTagged(boolean tagged) {
-			this.tagged = tagged;
+		public void tag() {
+			this.tagged = true;
+			super.setValue("HSCTagged");
 		}
 	}
 
