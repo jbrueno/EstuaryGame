@@ -185,7 +185,7 @@ public abstract class MinigameView {
 	 */
 
 	public void draw(Mover m) {
-		gc.drawImage(loadImage(m), m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth());
+		gc.drawImage(loadImage(m), m.getTranslatedX(), m.getTranslatedY(), m.getImageWidth(), m.getImageWidth());
 	}
 
 	public GraphicsContext getGC() {
@@ -307,5 +307,6 @@ public abstract class MinigameView {
 		});
 		root.getChildren().add(backToMain);
 	}
+
 
 }
