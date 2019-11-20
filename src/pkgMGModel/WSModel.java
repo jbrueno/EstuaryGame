@@ -9,8 +9,8 @@ import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
 	
+	// WS_COLLECT
 	Mover Bottle;
-	Mover PHStrip;
 	final int bottleImageWidth = 75;
 	final int bottleImageHeight = 75;
 	final int bottleX = backgroundWidth/2;
@@ -19,23 +19,47 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight-100;
 	
 	int waterLevel = backgroundHeight/2;
-	int shallowLevel=400;
-	int correctLevel=500;
-	int deepLevel=600;
+	int shallowLevel=backgroundHeight*3/5;
+	int correctLevel=backgroundHeight*7/10;
+	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
 	
+	// WS_PH
+	
+	Mover pHStrip;
+	final int pHStripWidth = 50;
+	final int pHStripHeight = 100;
 	int pH;
+	
+	Mover testTube;
+	final int testTubeImageWidth = 200;
+	final int testTubeImageHeight = 500;
+	boolean labSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		addObjects();
+		gs = GameState.WS_COLLECT; /////
+		addObjects(gs);
 	}
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-	public void addObjects() {
-		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
-		movers.add(Bottle);
-		PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
+	public void addObjects(GameState gs) {
+		
+		switch (gs) {
+		case WS_COLLECT :
+			Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
+			movers.add(Bottle);
+			break;
+		case WS_PH : 
+			pHStrip = new pHStrip(200, 400, 50, 100, 0, 0, "PHStrip");
+			testTube = new testTube(300, 300, 0, 0, "testtube");
+			movers.add(pHStrip);
+			movers.add(testTube);
+			break;
+		}
+		
+		
+		
 	}
 	
 	@Override
@@ -61,7 +85,14 @@ public class WSModel extends MinigameModel{
 		
 		
 		case WS_PH :
-			 //System.out.println("WS_PH !!");
+			if(!labSet) { // if lab is not set up
+				addObjects(gs);
+				labSet = true;
+			}
+			 System.out.println(movers);
+			
+			
+			//System.out.println("WS_PH !!");
 			break;
 		
 		
@@ -105,10 +136,18 @@ public class WSModel extends MinigameModel{
 		
  	}
 	 
-	public class PHStrip extends Mover{
+	public class pHStrip extends Mover{
 
-		public PHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
+		public pHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
 	}
+	
+	public class testTube extends Mover{
+		public testTube(int x, int y, int xIncr, int yIncr, String value) {
+			super(x, y, testTubeImageWidth, testTubeImageHeight, xIncr, yIncr, value);
+		}
+	}
+	
+	
 }

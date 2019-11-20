@@ -69,10 +69,14 @@ public abstract class MinigameView {
 		this.theGame = theGame;
 	} 
 
-	// need to find a way to differentiate whether image is .png or .gif
-	// only movers are .gif at the moment so it has been changed
+	/**
+	 * Finds and returns image associated with given Mover object
+	 * @param pkgName package to determine where image is located
+	 * @param m Mover - used to grab value attribute (name of image)
+	 * @return Image img - image associated with that particular Mover object
+	 */
 	public Image loadImage(String pkgName, Mover m) {
-		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); // changed from .png to .gif
+		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); 
 		return img;
 	}
 	
@@ -84,6 +88,11 @@ public abstract class MinigameView {
 	}
 	 */
 	
+	/**
+	 * Finds and returns image associated with given Mover object
+	 * @param m Mover - used to grab value attribute (name of image)
+	 * @return Image img - image associated with that particular Mover object
+	 */
 	public Image loadImage(Mover m) {
 		Image img = new Image("Mover/" + m.getValue() + ".png"); 
 		return img;
