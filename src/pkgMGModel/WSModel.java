@@ -89,14 +89,14 @@ public class WSModel extends MinigameModel{
 				addObjects(gs);
 				labSet = true;
 			}
-			 System.out.println(movers);
+
+			System.out.println(movers);
 			
 			
-			//System.out.println("WS_PH !!");
+			
 			break;
 		
 		
-		// **************** //
 			
 		case WS_TEMP :
 			break;
@@ -132,8 +132,6 @@ public class WSModel extends MinigameModel{
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
-		
-		
  	}
 	 
 	public class pHStrip extends Mover{
@@ -141,7 +139,10 @@ public class WSModel extends MinigameModel{
 		public pHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
+		
+		boolean isDipped = false; // has pHStripp been dipped & tested yet?
 	}
+	
 	
 	public class testTube extends Mover{
 		public testTube(int x, int y, int xIncr, int yIncr, String value) {
