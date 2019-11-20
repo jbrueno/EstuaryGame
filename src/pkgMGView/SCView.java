@@ -42,9 +42,11 @@ public class SCView extends MinigameView  {
 	double mouseX;
 	double mouseY;
 	int gameLength;
+
 	Rectangle breathBar = new Rectangle();
 	Rectangle breathBarFill = new Rectangle();
 	int lungCapacity;
+
 	
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
@@ -56,11 +58,12 @@ public class SCView extends MinigameView  {
 		importImages();
 		setUpListeners();
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
+
 		startTimer(gameLength);
 		createRectangles();
 		root.getChildren().add(breathBar);
 		root.getChildren().add(breathBarFill);
-		
+
 	}
 	
 

@@ -18,6 +18,10 @@ public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
 	Image backgroundPh;
+
+	Image background_collect;
+	Image background_lab;
+	Image testTube;
 	Button btnReturn;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
@@ -87,11 +91,20 @@ public class WSView extends MinigameView{
 			draw(m);
 		}
 	}
+	
+	void setUpLab() {
+		//gc.drawImage(testTube, , y, w, h);
+	}
+	
 
 	@Override
 	void importImages() {
 		background = new Image("backgrounds/WaterSample.png");
 		backgroundPh = new Image("backgrounds/MainScreen.png");
 		bottle = new Image("Mover/Bottle.png");
+
+		background_lab = new Image("backgrounds/lab_background.png");
+		testTube = new Image("Mover/testtube.png");
+
 	}
 }
