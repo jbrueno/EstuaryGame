@@ -2,7 +2,7 @@ package pkgMover;
 
 public class Seaweed extends SCMover{
 	
-	int speedChange = -1;
+	int speedChange = 1;
 	int scoreChange = 0;
 	int imageHeight = 100;
 	int imageWidth = 100;
@@ -19,8 +19,8 @@ public class Seaweed extends SCMover{
 	 * @param canvasWidth where the SCMover will start
 	 * @param canvasHeight to determine where the seaweed will be placed
 	 */
-	public Seaweed(int canvasWidth, int canvasHeight) {
-		super(canvasWidth, canvasHeight + 100, 100, 100, -10, 0, "Seaweed");
+	public Seaweed(int canvasWidth, int canvasHeight, int speed) {
+		super(canvasWidth, canvasHeight, 100, 100, speed, 0, "Seaweed");
 	}
 	
 	/**
@@ -39,5 +39,14 @@ public class Seaweed extends SCMover{
 	 */
 	public int getSCScoreChange() {
 		return scoreChange;
+	}
+
+	@Override
+	public int changeScore(int score) {
+		return score;
+	}
+
+	public void changeSpeed(int speed) {
+		setXIncr(speed);
 	}
 }

@@ -39,44 +39,24 @@ public class WSModel extends MinigameModel{
 	}
 	
 	@Override
-	public void update(MouseEvent me) {		
+	public void update(MouseEvent me) {
 		
-		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
-		switch (gs) {
-		case START :
-			gs = GameState.WS_COLLECT;
-		case WS_COLLECT :
+		//ws_collect
+		//double startx, double starty, double endx, double endy)
+		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 		
-			//double startx, double starty, double endx, double endy)
-			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
+		if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			fillBottle();
+		}
+		if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			movers.remove(Bottle);
+			gs=GameState.WS_PH;
+		}
+	}
 		
-			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-				fillBottle();
-			}
-			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-				movers.remove(Bottle);
-				gs=GameState.WS_PH;
-			}
-			break;
+		//ws_ph
 		
-		
-		case WS_PH :
-			 //System.out.println("WS_PH !!");
-			break;
-		
-		
-		// **************** //
-			
-		case WS_TEMP :
-			break;
-		
-		
-		
-		default :
-			break;
-		}// end of switch
-	}	
-		
+		//ws_temp
 	
 		
 	/**
@@ -96,13 +76,11 @@ public class WSModel extends MinigameModel{
 			score+=5;
 		}
 	}
-	//
+	
 	class Bottle extends Mover {
 		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
-		
-		
  	}
 	 
 	public class PHStrip extends Mover{

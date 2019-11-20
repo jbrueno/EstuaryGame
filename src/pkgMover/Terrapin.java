@@ -2,12 +2,14 @@ package pkgMover;
 
 public class Terrapin extends Mover {
 	
-	public double airAmount;
+	double airAmount;
 	int maxDist = 100;
-	int maxSpeed = 3;
+	int maxSpeed = 1;
 	
+
 	public Terrapin(int x, int y, int xIncr, int yIncr) {
 		super(x, y, 200, 200, xIncr, yIncr,"Terrapin");
+		setImageWidthAndHeight(150, 150);
 		this.airAmount = 100;
 	}
 	
@@ -20,6 +22,11 @@ public class Terrapin extends Mover {
 	public void breathe() {
 		airAmount = 100;
 		System.out.println("breath taken");
+	}
+	
+	public void holdBreath() {
+		airAmount = airAmount - 0.5;
+		System.out.println("Terrapin breath level: " + airAmount);
 	}
 	
 	/**
@@ -51,4 +58,9 @@ public class Terrapin extends Mover {
 		setYIncr((((yDist + maxDist) / (maxDist * 2)) * (maxSpeed - (-1* maxSpeed)) + (-1 * maxSpeed)));
 		
 	}
+	
+	public double getAirAmount() {
+		return airAmount;
+	}
+	
 }
