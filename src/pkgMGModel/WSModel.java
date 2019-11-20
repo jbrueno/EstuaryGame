@@ -35,7 +35,7 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT;
+		gs = GameState.WS_COLLECT; /////
 		addObjects(gs);
 	}
 	
