@@ -92,8 +92,9 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
-			movers.get(0).setX(me.getX());
-			movers.get(0).setY(me.getY());
+			System.out.println(pHStrip.getX());
+			//movers.get(0).setX(me.getX());
+			//movers.get(0).setY(me.getY());
 			dipStrip(); 
 
 			

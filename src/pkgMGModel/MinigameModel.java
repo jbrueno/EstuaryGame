@@ -6,6 +6,9 @@ import pkgEnum.GameState;
 import pkgMover.DataNode;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pkgMover.DataNode;
 
 import javafx.scene.input.MouseEvent;
@@ -27,6 +30,8 @@ public abstract class MinigameModel {
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
+	Timer timer = new Timer();
+	int time;
 
 	public abstract void update(MouseEvent me);
 
@@ -65,9 +70,9 @@ public abstract class MinigameModel {
 	 * @return
 	 */
 	public boolean isOffScreen(Mover m) {
-		if(m.getX() < -m.getImageWidth() || m.getX() > backgroundWidth) {
+		if(m.getX() + m.getImageWidth()/2 < 0 || m.getX() - m.getImageWidth() > backgroundWidth) {
 			return true;
-		}else if(m.getY() < -m.getImageHeight() || m.getY() > backgroundHeight) {
+		}else if(m.getY() + m.getImageHeight()/2 < 0 || m.getY() - m.getImageHeight() > backgroundHeight) {
 			return true;
 		}else {
 			return false;
@@ -94,4 +99,49 @@ public abstract class MinigameModel {
 		return score;
 	}
 	
+	public int getTime() {
+		return time;
+	}
+
+	
+	public void setUpTimer() {
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				--time;
+				System.out.println("time remaining: " + time);
+				if(time == 0) {
+					timer.cancel();
+					System.out.println("times up");
+					gs = gs.FINISHED;
+				}
+
+			}
+
+		}, 100, 100);
+
+	}
+	
+	/**
+	 * Determines whether the MouseEvent's location is currently within an ellipse created from the mover's imageWidth and 
+	 * imageHeight attributes. If it is, return <code>True</code>, else <code>false</code>
+	 * 
+	 * @author	Ryan Peters
+	 * @param m		Mover to test if the mouse is over it in terms of the view/image
+	 * @param me	MouseEvent from <code>View</code> of the current mouse position on screen 
+	 * @return
+	 */
+	public boolean isCollision(Mover m, double x, double y) {
+		double xDist = (Math.pow(m.getX() - x, 2) / Math.pow(m.getImageWidth() / 2, 2));
+		double yDist = (Math.pow(m.getY() - y, 2) / Math.pow(m.getImageHeight() / 2, 2));
+		double dist = xDist + yDist;
+		return dist < 1;
+	}
+	
+
+	public boolean isCollision(Mover m, MouseEvent me) {
+		return isCollision(m, me.getX(), me.getY());
+	}
+	
 }
+

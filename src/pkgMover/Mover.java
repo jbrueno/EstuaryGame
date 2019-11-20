@@ -84,6 +84,14 @@ public abstract class Mover/* extends DataNode*/{
 		this.yIncr = d;
 	}
 	
+	public double getTranslatedX() {
+		return x - imageWidth/2;
+	}
+	
+	public double getTranslatedY() {
+		return y - imageHeight/2;
+	}
+	
 	
 	/**
 	 * Updates x,y by their relative speeds for background movers who always move (ie aren't user-controlled)
