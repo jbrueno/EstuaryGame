@@ -30,15 +30,17 @@ public class WSModel extends MinigameModel{
 	final int pHStripWidth = 50;
 	final int pHStripHeight = 100;
 	int pH;
+	boolean isDipped = false;
 	
 	Mover testTube;
-	final int testTubeImageWidth = 200;
+	final int testTubeImageWidth = 500;
+	final int testTubeSideFromBorder = 190;
 	final int testTubeImageHeight = 500;
 	boolean labSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT; /////
+		gs = GameState.WS_PH; /////
 		addObjects(gs);
 	}
 	
@@ -52,7 +54,7 @@ public class WSModel extends MinigameModel{
 			break;
 		case WS_PH : 
 			pHStrip = new pHStrip(200, 400, 50, 100, 0, 0, "PHStrip");
-			testTube = new testTube(300, 300, 0, 0, "testtube");
+			testTube = new testTube(200, 200, 0, 0, "testtube");
 			movers.add(pHStrip);
 			movers.add(testTube);
 			break;
@@ -89,8 +91,11 @@ public class WSModel extends MinigameModel{
 				addObjects(gs);
 				labSet = true;
 			}
+			
+			movers.get(0).setX(me.getX());
+			movers.get(0).setY(me.getY());
+			dipStrip(); 
 
-			System.out.println(movers);
 			
 			
 			
@@ -127,7 +132,27 @@ public class WSModel extends MinigameModel{
 			score+=5;
 		}
 	}
-	//
+	
+	
+	/**
+	 * @author Abrenner
+	 * logic for determining if pHStrip is within bounds of testtube and has been dipped in water
+	 * changes boolean isDipped to true upon meeting criteria
+	 */
+	public void dipStrip() {
+		// setting up logic for dipping pHStrip within testTube bounds
+		if(movers.get(0).getX() >= movers.get(1).getX()+testTubeSideFromBorder &&
+			movers.get(0).getX() <= (movers.get(1).getX()+testTubeImageWidth-testTubeSideFromBorder) &&
+			movers.get(0).getY() >= (movers.get(1).getY()+(testTubeImageHeight / 2)) &&
+			 movers.get(0).getY() <= (movers.get(1).getY()+testTubeImageHeight)) {
+						
+				isDipped = true;
+				System.out.println("Strip is Dipped!!");
+		}
+	}
+	
+	
+	// Movers related to WS
 	class Bottle extends Mover {
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
@@ -139,8 +164,6 @@ public class WSModel extends MinigameModel{
 		public pHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
-		
-		boolean isDipped = false; // has pHStripp been dipped & tested yet?
 	}
 	
 	
