@@ -2,6 +2,7 @@ package pkgMGView;
 //testing branch
 //test
 import java.util.ArrayList;
+import java.util.Timer;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -213,7 +214,7 @@ public abstract class MinigameView {
 		scoreLabel.setLayoutY(scoreLabelY);
 		scoreLabel.setFont(new Font("Arial", 30));
 		scoreLabel.setTextFill(Color.PEACHPUFF);
-		scoreLabel.setText("Score: " + score);
+		scoreLabel.setText("Score: " + 0);
 		root.getChildren().add(scoreLabel);
 	}
 	

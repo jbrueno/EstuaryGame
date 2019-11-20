@@ -8,6 +8,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ import pkgEnum.Game;
 import pkgMover.DataNode;
 import pkgMover.Mover;
 
-public class HSCView extends MinigameView { 
+public class HSCView extends MinigameView {
 
 	Image imgHSC;
 	Button btnReturn;
@@ -36,30 +37,25 @@ public class HSCView extends MinigameView {
 		this.root = root;
 		this.scene = scene;
 		this.gc = gc;
-		
+
 		root.getChildren().add(lighting); // add lighting Group
-		
+
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 		setUpListeners();
 		importImages();
-		
+
 	}
-	
-	//Rectangle light = lighting();
 
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score) {
-    createLightFX();
-    
-		if (!areButtonsMade) {
-			setUpListeners();
-			areButtonsMade = true;
-			createScoreLabel();
-		}
+		createLightFX();
 
+		setUpListeners();
+
+		createScoreLabel(score);
+		
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
-			updateScoreLabel(score);
 		}
 
 	}
@@ -84,7 +80,7 @@ public class HSCView extends MinigameView {
 			game = game.MAINSCREEN;
 			removeScoreLabel();
 		});
-		lighting.getChildren().add(btnReturn);
+		root.getChildren().add(btnReturn);
 	}
 
 	@Override
@@ -98,15 +94,15 @@ public class HSCView extends MinigameView {
 
 	@Override
 	void importImages() {
-		background= new Image("backgrounds/TempHSC.png");
+		background = new Image("backgrounds/TempHSC.png");
 		imgHSC = new Image("Mover/HSC.png");
 	}
-	
-	
+
 	/**
-	 * Starts by clearing the 'lighting' Group, removing, and re-adding it to root in order for the rectangle to be redrawn.
-	 * Then, creates a rectangle with a radial gradient fill and adds it to 'lighting' in order for the rectangle to appear
-	 * over the HSC's.
+	 * Starts by clearing the 'lighting' Group, and removing then re-adding it to root
+	 * in order for the rectangle to be redrawn. Then, creates a rectangle with a
+	 * radial gradient fill and adds it to 'lighting' in order for the rectangle to
+	 * appear over the HSC's.
 	 * 
 	 * @author jbrueno
 	 */
@@ -114,15 +110,23 @@ public class HSCView extends MinigameView {
 		lighting.getChildren().clear();
 		root.getChildren().remove(lighting);
 		root.getChildren().add(lighting);
-		
-		RadialGradient light = new RadialGradient(0, 0, me.getX()/backgroundWidth, me.getY()/backgroundHeight, 0.2, true, CycleMethod.NO_CYCLE,  new Stop[] {
-		        new Stop(0.15, Color.TRANSPARENT),
-		        new Stop(1, Color.BLACK)
-		    });
+
+		RadialGradient light = new RadialGradient(0, 0, me.getX() / backgroundWidth, me.getY() / backgroundHeight, 0.2,
+				true, CycleMethod.NO_CYCLE, new Stop[] { new Stop(0.15, Color.TRANSPARENT), new Stop(1, Color.BLACK) });
 
 		Rectangle rect = new Rectangle(backgroundWidth, backgroundHeight, light);
 		rect.setOpacity(0.985);
 
 		lighting.getChildren().add(rect);
+	}
+	
+	@Override
+	public void createScoreLabel(int score) {
+		scoreLabel.setLayoutX(scoreLabelX);
+		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setFont(new Font("Arial", 30));
+		scoreLabel.setTextFill(Color.PEACHPUFF);
+		scoreLabel.setText("Score: " + score);
+		lighting.getChildren().add(scoreLabel);
 	}
 }
