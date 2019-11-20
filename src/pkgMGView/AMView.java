@@ -1,6 +1,8 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Timer;
 
 import javafx.event.EventHandler;
@@ -48,11 +50,6 @@ public class AMView extends MinigameView{
 	
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		if(!questionAsked) {
-			System.out.println("Which one is the turtle?");
-			questionAsked = true;
-		}
-
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);
