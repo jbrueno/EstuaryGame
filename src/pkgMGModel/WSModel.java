@@ -122,7 +122,7 @@ public class WSModel extends MinigameModel{
 	}
 	//
 	class Bottle extends Mover {
-		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
+		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
 		
