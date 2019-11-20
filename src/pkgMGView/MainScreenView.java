@@ -57,11 +57,11 @@ public class MainScreenView extends MinigameView {
     	});
 		
 		btnSC.setOnAction(e -> {
-			game = Game.SIDESCROLLER;
+				game = Game.SIDESCROLLER;
 		});
 		
 		btnHSCC.setOnAction(e -> {
-			game = Game.HSCCOUNT;
+				game = Game.HSCCOUNT;
 		});
 		
 		btnAM.setOnAction(e -> {
@@ -135,7 +135,7 @@ public class MainScreenView extends MinigameView {
 
 
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
 			setUpButtons();
 			setUpListeners();

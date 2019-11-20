@@ -58,6 +58,7 @@ public class SCView extends MinigameView  {
 	int lungCapacity = 100;
 	//private ParallelTransition parallelTransition;
 	
+
 	
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
@@ -72,15 +73,14 @@ public class SCView extends MinigameView  {
 		startTimer(gameLength);
 		gc.fillRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
 		//createBackgroundAnimation();
-		
+
 	}
 	
 
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs, int score) {
-		updateScoreLabel(score);
-		
-	
+
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
+		 updateScoreLabel(score);
 		
 		if (!areButtonsMade) {
 			setUpListeners();

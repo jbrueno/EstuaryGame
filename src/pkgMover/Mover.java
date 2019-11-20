@@ -28,7 +28,7 @@ public abstract class Mover/* extends DataNode*/{
 	 * @param yIncr			speed for y movement
 	 * @param value			String relating to the subclass's name for image lookup later in MinigameViews
 	 */
-	public Mover(int x, double y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+	public Mover(double x, double y, int imageWidth, int imageHeight, double xIncr, double yIncr, String value) {
 		this.value=value;
 		this.x = x;
 		this.y = y;

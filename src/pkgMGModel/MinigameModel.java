@@ -6,18 +6,21 @@ import pkgEnum.GameState;
 import pkgMover.DataNode;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import pkgMover.DataNode;
 
 import javafx.scene.input.MouseEvent;
 
 public abstract class MinigameModel {
-	
 
-	/** Abstract class representing the minigame model, will be extended
-	 *  to the models of all of the different views
+	/**
+	 * Abstract class representing the minigame model, will be extended to the
+	 * models of all of the different views
 	 * 
 	 */
-	   
+
 	Game g;
 	int score = 0;  
 	int totalTime;
@@ -27,17 +30,20 @@ public abstract class MinigameModel {
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
-	
+	Timer timer = new Timer();
+	int time;
+
 	public abstract void update(MouseEvent me);
-	
+
 	/**
-	 * Stops a mover at the edge of a screen (1280x768). 
-	 * Since the mover is represented visually by an image, account for imageWidth/Height at bottom and right border
+	 * Stops a mover at the edge of a screen (1280x768). Since the mover is
+	 * represented visually by an image, account for imageWidth/Height at bottom and
+	 * right border
 	 * <p>
-	 * A <code>Follower</code> will want to override this so that 
+	 * A <code>Follower</code> will want to override this so that
 	 * 
 	 * @author Ryan Peters
-	 * @param m	Mover to be checked for Border Collision
+	 * @param m Mover to be checked for Border Collision
 	 */
 	public void handleBorderCollision(Mover m) {
 		double mx = m.getX();
@@ -47,23 +53,40 @@ public abstract class MinigameModel {
 		} else if (mx > backgroundWidth - m.getImageWidth()) {
 			m.setX(backgroundWidth - m.getImageWidth());
 		}
-		
+
 		if (my < 0) {
 			m.setY(0);
-		} else if (my > backgroundHeight - my/2) {
-			m.setY(backgroundHeight - my/2);
+		} else if (my > backgroundHeight - my / 2) {
+			m.setY(backgroundHeight - my / 2);
 		}
 	}
+
 	
-	
+	/**
+	 * Checks to see if the image of a mover has gone off screen and if it has returns true
+	 * otherwise false
+	 * 
+	 * @param m mover to be checked
+	 * @return
+	 */
+	public boolean isOffScreen(Mover m) {
+		if(m.getX() < -m.getImageWidth() || m.getX() > backgroundWidth) {
+			return true;
+		}else if(m.getY() < -m.getImageHeight() || m.getY() > backgroundHeight) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
 	public ArrayList<Mover> getMovers() {
 		return this.movers;
 	}
-	
+
 	public Game getGame() {
 		return g;
 	}
-	
+
 	public ArrayList<DataNode> getDataNodes() {
 		return dns;
 	}
@@ -76,4 +99,28 @@ public abstract class MinigameModel {
 		return score;
 	}
 	
+	public int getTime() {
+		return time;
+	}
+
+	
+	public void setUpTimer() {
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				--time;
+				System.out.println("time remaining: " + time);
+				if(time == 0) {
+					timer.cancel();
+					System.out.println("times up");
+					gs = gs.FINISHED;
+				}
+
+			}
+
+		}, 100, 100);
+
+	}
+	
 }
+

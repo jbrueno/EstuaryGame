@@ -61,9 +61,11 @@ public class Terrapin extends Mover {
 		setX(getX() + getxIncr());
 	}
 
+
 	
 	public double getAirAmount() {
 		return airAmount;
 	}
+
 	
 }
