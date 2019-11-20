@@ -4,12 +4,18 @@ package pkgMGView;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -17,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
@@ -31,21 +38,26 @@ public class SCView extends MinigameView  {
 	Button btnReturn;
 	final Game theGame = Game.SIDESCROLLER;
 	Image background;
+	Node background2;
 	Image terrapin;
 	Image trash;
 	Image food;
 	Image seaweed;
-	int itemHeight = 150;
-	int itemWidth = 150;
+	int seaweedHeight = 150;
+	int seaweedWidth = 150;
+	int trashHeight = 100;
+	int trashWidth = 50;
 	int foodHeight = 50;
 	int foodWidth = 50;
 	double mouseX;
 	double mouseY;
 	int gameLength;
-
-	Rectangle breathBar = new Rectangle();
-	Rectangle breathBarFill = new Rectangle();
-	int lungCapacity;
+	double breathBarX = backgroundWidth - 190;
+	double breathBarY = 50;
+	double breathBarHeight = 10;
+	int lungCapacity = 100;
+	//private ParallelTransition parallelTransition;
+	
 
 	
 	
@@ -58,16 +70,15 @@ public class SCView extends MinigameView  {
 		importImages();
 		setUpListeners();
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
-
 		startTimer(gameLength);
-		createRectangles();
-		root.getChildren().add(breathBar);
-		root.getChildren().add(breathBarFill);
+		gc.fillRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
+		//createBackgroundAnimation();
 
 	}
 	
 
 	@Override
+
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		 updateScoreLabel(score);
 		
@@ -81,10 +92,17 @@ public class SCView extends MinigameView  {
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
 		
-		if (movers.get(0) instanceof Terrapin) {
-			Terrapin terry = (Terrapin) movers.get(0);
-			breathBarFill.setWidth(terry.getAirAmount());
+		gc.clearRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
+		for (Mover m : movers) {
+			if (m instanceof Terrapin) {
+				Terrapin t = (Terrapin)m;
+				gc.fillRect(breathBarX, breathBarY, t.getAirAmount(), breathBarHeight);
+				break;
+			}
 		}
+		
+		
+		
 	
 		
 	}
@@ -118,11 +136,12 @@ public class SCView extends MinigameView  {
 
 	@Override
 	void importImages() {
-		background = new Image("/backgrounds/underwater2.png");
+		background = new Image("/backgrounds/sidescroller_background.png");
+		background2 = new ImageView("/backgrounds/sidescroller_background.png");
 		
 		terrapin = new Image("/Mover/bogturtle_right_0.png");
 		
-		trash = new Image("/Mover/fullBottle.png");
+		trash = new Image("/Mover/can.png");
 		
 		food = new Image("/Mover/clam_left_2.png");
 		
@@ -136,11 +155,11 @@ public class SCView extends MinigameView  {
 			if (m instanceof Terrapin) {
 				gc.drawImage(terrapin, m.getX(), m.getY());
 			} else if (m instanceof Trash) {
-				gc.drawImage(trash, m.getX(), m.getY(), itemWidth, itemHeight);
+				gc.drawImage(trash, m.getX(), m.getY(), trashWidth, trashHeight);
 			} else if (m instanceof Food) {
 				gc.drawImage(food, m.getX(), m.getY(), foodWidth, foodHeight);
 			} else if (m instanceof Seaweed) {
-				gc.drawImage(seaweed, m.getX(), m.getY(), itemWidth, itemHeight);
+				gc.drawImage(seaweed, m.getX(), m.getY(), seaweedWidth, seaweedHeight);
 			}
 		}
 		 
@@ -182,20 +201,27 @@ public class SCView extends MinigameView  {
 	public MouseEvent getMouseEvent() {
 		return me;
 	}
-
-	public void createRectangles() {
-		breathBar.setX(backgroundWidth - lungCapacity);
-		breathBar.setY(20);
-		breathBar.setWidth(lungCapacity);
-		breathBar.setHeight(5);
-		breathBar.setStroke(Paint.valueOf("black"));
-		
-		breathBarFill.setX(backgroundWidth - lungCapacity);
-		breathBarFill.setY(20);
-		breathBarFill.setWidth(lungCapacity);
-		breathBarFill.setHeight(5);
-		breathBarFill.setFill(Paint.valueOf("blue"));
-		
-	}
+	
+//	public void createBackgroundAnimation() {
+//		TranslateTransition translateTransition = 
+//				new TranslateTransition(Duration.millis(10000), background1);
+//		translateTransition.setFromX(0);
+//		translateTransition.setToX(-1 * backgroundWidth);
+//		translateTransition.setInterpolator(Interpolator.LINEAR);
+//		
+//		TranslateTransition translateTransition2 =
+//	           new TranslateTransition(Duration.millis(10000), background2);
+//		translateTransition2.setFromX(0);
+//		translateTransition2.setToX(-1 * backgroundWidth);
+//		translateTransition2.setInterpolator(Interpolator.LINEAR);
+//
+//		parallelTransition = 
+//			new ParallelTransition( translateTransition, translateTransition2 );
+//		parallelTransition.setCycleCount(Animation.INDEFINITE);
+//		
+//		parallelTransition.play();
+//	}
+	
+	
 	
 }
