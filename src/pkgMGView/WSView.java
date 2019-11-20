@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.*;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -18,8 +19,14 @@ public class WSView extends MinigameView{
 	Image bottle;
 	Image background;
 	Image backgroundPh;
+	Image background_collect;
+	Image background_lab;
+	Image testTube;
 	Button btnReturn;
+	Rectangle phStripBase;
+	Rectangle phStripColor;
 	
+	//
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -40,17 +47,46 @@ public class WSView extends MinigameView{
 			areButtonsMade = true;
 			createScoreLabel(score);
 		}
-		draw(movers);
 		updateScoreLabel(score);
+		
+		System.out.println("gs: " + gs);
+		
+		switch (gs) {
+		case WS_COLLECT :
+			background = background_collect;
+			break;
+		case WS_TEMP :
+			background = background_lab;
+			break;
+		case WS_PH :
+			background = background_lab;
+			break;
+		default:
+			break;
+		
+		}
+		
+		draw(movers);
+
+		
+		
+		
+		/*
 		if (gs == GameState.WS_COLLECT) {
+			System.out.println("WS_COLLECT!!");
 		}
 		if (gs == GameState.WS_PH) {
 			System.out.println("ph");
 			background=backgroundPh;
 			draw(movers);
 		}
+		*/
 	}
 
+	
+	
+	
+	
 	@Override
 	void startTimer(int ms) {
 		// TODO Auto-generated method stub
@@ -84,14 +120,24 @@ public class WSView extends MinigameView{
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		for (Mover m : movers) {
-			draw(m);
+			if(m.getValue().compareTo("PHStrip") != 0) { // draw all objects except PHStrip (no image)
+				draw(m);
+			}
 		}
 	}
+	
+	void setUpLab() {
+		//gc.drawImage(testTube, , y, w, h);
+	}
+	
 
 	@Override
 	void importImages() {
-		background = new Image("backgrounds/WaterSample.png");
+		background_collect = new Image("backgrounds/WaterSample.png");
 		backgroundPh = new Image("backgrounds/MainScreen.png");
 		bottle = new Image("Mover/Bottle.png");
+		background_lab = new Image("backgrounds/lab_background.png");
+		testTube = new Image("Mover/testtube.png");
+		
 	}
 }

@@ -145,8 +145,8 @@ public class HSCModel extends MinigameModel {
 		static final int hscWidth = 200;
 		static final int hscHeight = 136;
 
-		public HSC(int x, int y, double xIncr, double yIncr) {
-			super(x, y, hscWidth, hscHeight, xIncr, yIncr, "HSC");
+		public HSC(int x, int y, int xIncr, int yIncr) {
+			super(x, y, 200, 136, xIncr, yIncr, "HSC");
 			tagged = false;
 		}
 
@@ -161,9 +161,10 @@ public class HSCModel extends MinigameModel {
 
 	public class Crosshairs extends Mover {
 
-		public Crosshairs(int x, double y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+		public Crosshairs(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
 	}
 
 }
+

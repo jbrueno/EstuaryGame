@@ -2,8 +2,8 @@ package pkgMover;
 
 public class Trash extends SCMover{
 	
-	public int scoreChange = -100;
-	public int speedChange = -1;
+	public int scoreChange = 50;
+	public int speedChange = 3;
 	public int imageWidth = 100;
 	public int imageHeight = 100;
 	
@@ -18,8 +18,8 @@ public class Trash extends SCMover{
 	 * 
 	 * @param canvasWidth
 	 */
-	public Trash(int canvasWidth, int y) {
-		super(canvasWidth, y, 100, 100, -10, 0, "Trash");
+	public Trash(int canvasWidth, int y, int speed) {
+		super(canvasWidth, y, 100, 100, speed, 0, "Trash");
 	}
 	
 
@@ -39,5 +39,20 @@ public class Trash extends SCMover{
 	public int speedChange() {
 		return speedChange;
 	}
+
+	@Override
+	public int changeScore(int score) {
+		return score - scoreChange;
+	}
+	
+	public void changeSpeed(int speed) {
+		setXIncr(speed);
+	}
+
+
+
+	
+	
+
 	
 }

@@ -3,7 +3,7 @@ package pkgMover;
 public class Food extends SCMover {
 	
 	public int scoreChange = 100;
-	public int speedChange = 1;
+	public int speedChange = -2;
 	public int imageWidth = 50;
 	public int imageHeight = 50;
 
@@ -18,8 +18,8 @@ public class Food extends SCMover {
 	 * 
 	 * @param canvasWidth
 	 */
-	public Food(int canvasWidth, int y) {
-		super(canvasWidth, y, 50, 50, -10, 0, "Food");
+	public Food(int canvasWidth, int y, int speed) {
+		super(canvasWidth, y, 50, 50, speed, 0, "Food");
 	}
 	
 	/**
@@ -42,6 +42,17 @@ public class Food extends SCMover {
 	public int getSpeedChange() {
 		return speedChange;
 	}
+
+	@Override
+	public int changeScore(int score) {
+		return score + scoreChange;
+	}
+	
+	public void changeSpeed(int speed) {
+		setXIncr(speed);
+	}
+
+
 	
 	
 
