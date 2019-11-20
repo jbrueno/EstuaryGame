@@ -34,5 +34,20 @@ public abstract class SCMover extends Mover {
 	public int getSpeedChange() {
 		return speedChange;
 	}
+	
+	public abstract int changeScore(int score);
+	
+	public void changeSpeed(int speed) {
+		setXIncr(speed);
+	}
+	
+	
+	public boolean collison(Mover m) {
+
+		boolean xCol = getX() < m.getX() + m.getImageWidth() && getX() > m.getX();
+		boolean yCol = getY() < m.getY() + m.getImageHeight() && getY() > m.getX();
+		return xCol && yCol;
+
+	}
 
 }

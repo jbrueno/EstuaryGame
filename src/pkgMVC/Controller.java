@@ -42,7 +42,7 @@ public class Controller extends Application{
 			//	System.out.println(view.getGame());
 				
 				model.update(view.getGame(), view.getMouseEvent(), view.getDataNodes());
-				view.update(model.getMovers(), model.getGameState(), model.getDataNodes(), model.getScore());
+				view.update(model.getMovers(), model.getGameState(), model.getDataNodes(), model.getScore(), model.getTime());
 			//	System.out.println(model.getGameState());
 				try {
 					Thread.sleep(100);

@@ -1,10 +1,9 @@
 package pkgMGView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Timer;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -49,7 +48,8 @@ public class AMView extends MinigameView{
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 	}
 	
-	public void update(ArrayList<Mover> movers, GameState gs, int score) { 
+
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);
@@ -176,4 +176,3 @@ public class AMView extends MinigameView{
 		}
 	}	
 }
-

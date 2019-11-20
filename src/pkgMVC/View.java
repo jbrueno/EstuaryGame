@@ -20,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 
 // NOTE: will not be needed once lab is complete
 import java.util.Random;
+import java.util.Timer;
 
 
 /**The View class for an MVC design.
@@ -76,14 +76,10 @@ public class View {
 	 * @param gs
 	 * @see MinigameView.update()
 	 */
-	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score, int time) {
 	//	System.out.println(currGame.getGame()); //testing current Game
 
-		currGame.update(movers, gs, score);
-		
-		
-		// ArrayList dns currently UNUSED  **
-		
+		currGame.update(movers, gs, score, time);
 	}
 	
 	/**
