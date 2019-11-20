@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,6 +42,11 @@ public class SCView extends MinigameView  {
 	double mouseX;
 	double mouseY;
 	int gameLength;
+
+	Rectangle breathBar = new Rectangle();
+	Rectangle breathBarFill = new Rectangle();
+	int lungCapacity;
+
 	
 	
 	public SCView(GraphicsContext gc, Group root, Scene scene) {
@@ -51,7 +58,12 @@ public class SCView extends MinigameView  {
 		importImages();
 		setUpListeners();
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
-		startTimer(gameLength);	
+
+		startTimer(gameLength);
+		createRectangles();
+		root.getChildren().add(breathBar);
+		root.getChildren().add(breathBarFill);
+
 	}
 	
 
@@ -68,6 +80,11 @@ public class SCView extends MinigameView  {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
 		draw(movers);
+		
+		if (movers.get(0) instanceof Terrapin) {
+			Terrapin terry = (Terrapin) movers.get(0);
+			breathBarFill.setWidth(terry.getAirAmount());
+		}
 	
 		
 	}
@@ -166,5 +183,19 @@ public class SCView extends MinigameView  {
 		return me;
 	}
 
+	public void createRectangles() {
+		breathBar.setX(backgroundWidth - lungCapacity);
+		breathBar.setY(20);
+		breathBar.setWidth(lungCapacity);
+		breathBar.setHeight(5);
+		breathBar.setStroke(Paint.valueOf("black"));
+		
+		breathBarFill.setX(backgroundWidth - lungCapacity);
+		breathBarFill.setY(20);
+		breathBarFill.setWidth(lungCapacity);
+		breathBarFill.setHeight(5);
+		breathBarFill.setFill(Paint.valueOf("blue"));
+		
+	}
 	
 }

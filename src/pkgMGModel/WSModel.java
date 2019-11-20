@@ -98,13 +98,22 @@ public class WSModel extends MinigameModel{
 		case WS_TEMP :
 			break;
 		
+		//ws_collect
+		//double startx, double starty, double endx, double endy)
+		Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 		
+		if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			fillBottle();
+		}
+		if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			movers.remove(Bottle);
+			gs=GameState.WS_PH;
+		}
+	}
 		
-		default :
-			break;
-		}// end of switch
-	}	
+		//ws_ph
 		
+		//ws_temp
 	
 		
 	/**
@@ -124,13 +133,11 @@ public class WSModel extends MinigameModel{
 			score+=5;
 		}
 	}
-	//
+	
 	class Bottle extends Mover {
 		public Bottle(int x, double y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
-		
-		
  	}
 	 
 	public class PHStrip extends Mover{
