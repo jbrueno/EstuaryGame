@@ -9,7 +9,6 @@ import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
 	
-	// WS_COLLECT
 	Mover Bottle;
 	Mover PHStrip;
 	final int bottleImageWidth = 75;
@@ -20,47 +19,24 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight-100;
 	
 	int waterLevel = backgroundHeight/2;
-	int shallowLevel=backgroundHeight*3/5;
-	int correctLevel=backgroundHeight*7/10;
-	int deepLevel=backgroundHeight*4/5;
+	int shallowLevel=400;
+	int correctLevel=500;
+	int deepLevel=600;
 	boolean filled = false;
 	
-	// WS_PH
-	
-	Mover testTube;
 	int pH;
-	final int testTubeImageWidth = 200;
-	final int testTubeImageHeight = 500;
-	boolean labSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT; /////
-		addObjects(gs);
+		addObjects();
 	}
 	
 	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-	public void addObjects(GameState gs) {
-		
-		switch (gs) {
-		case WS_COLLECT :
-			Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
-			movers.add(Bottle);
-			break;
-		case WS_PH :
-			//PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
-			testTube = new testTube(300,300, 0, 0, "testtube");
-			//movers.add(PHStrip);
-			movers.add(testTube);
-			break;
-		}
+	public void addObjects() {
+		Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
+		movers.add(Bottle);
+		PHStrip = new PHStrip(0,0,0,0,0,0,"PHStrip");
 	}
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public void update(MouseEvent me) {		
@@ -77,7 +53,7 @@ public class WSModel extends MinigameModel{
 			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				fillBottle();
 			}
-			if(filled && Bottle.getY() < waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
 			}
@@ -85,17 +61,17 @@ public class WSModel extends MinigameModel{
 		
 		
 		case WS_PH :
-			if(!labSet) { // if lab is not set up
-				addObjects(gs);
-				labSet = true;
-			}
-			 System.out.println(movers);
-			//System.out.println("WS_PH !!");
+			 //System.out.println("WS_PH !!");
 			break;
-					
+		
+		
+		// **************** //
+			
 		case WS_TEMP :
 			break;
-			
+		
+		
+		
 		default :
 			break;
 		}// end of switch
@@ -135,12 +111,4 @@ public class WSModel extends MinigameModel{
 			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
 	}
-	
-	public class testTube extends Mover{
-		public testTube(int x, int y, int xIncr, int yIncr, String value) {
-			super(x, y, testTubeImageWidth, testTubeImageHeight, xIncr, yIncr, value);
-		}
-	}
-	
-	
 }
