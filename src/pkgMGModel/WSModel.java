@@ -35,7 +35,7 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT; /////
+		gs = GameState.WS_COLLECT;
 		addObjects(gs);
 	}
 	
@@ -54,10 +54,13 @@ public class WSModel extends MinigameModel{
 			movers.add(testTube);
 			break;
 		}
-		
-		
-		
 	}
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	public void update(MouseEvent me) {		
@@ -74,7 +77,7 @@ public class WSModel extends MinigameModel{
 			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				fillBottle();
 			}
-			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(filled && Bottle.getY() < waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
 			}
@@ -87,19 +90,12 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			 System.out.println(movers);
-			
-			
 			//System.out.println("WS_PH !!");
 			break;
-		
-		
-		// **************** //
-			
+					
 		case WS_TEMP :
 			break;
-		
-		
-		
+			
 		default :
 			break;
 		}// end of switch

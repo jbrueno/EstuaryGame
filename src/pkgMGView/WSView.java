@@ -122,6 +122,7 @@ public class WSView extends MinigameView{
 		}
 	}
 	
+	
 	void setUpLab() {
 		//gc.drawImage(testTube, , y, w, h);
 	}
