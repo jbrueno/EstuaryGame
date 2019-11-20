@@ -1,24 +1,28 @@
 package pkgMGModel;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.DataNode;
-//import pkgMover.FemaleHSC;
-//import pkgMover.MaleHSC;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel {
 	Mover Crosshairs;
 	int numTagged;
+	int tagWidth = 155;
+	int tagHeight = 85;
+	int tagDepth = 195;
+	int points = 50;
+	boolean timerSet = false;
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
 		gs = GameState.INPROGRESS;
 		createHSCrabs();
+		time = 300;
 	}
 
 	/**
@@ -48,23 +52,24 @@ public class HSCModel extends MinigameModel {
 	 */
 	private void spawnHSCrabs(Mover m) {
 		int iWidth = m.getImageWidth();
-		int iHeight = m.getImageHeight();
+		int iHeight = m.getImageHeight() + 90;
+		int buffer = r.nextInt(10);
 
 		if (isOffScreen(m)) {
 			m.setValue("HSC");
 			((HSC) m).setTagged(false);
 			if (m.getX() < -iWidth) {
-				m.setX(backgroundWidth + r.nextInt(10));
+				m.setX(backgroundWidth + buffer);
 				m.setY(r.nextInt(backgroundHeight));
 			} else if (m.getX() > backgroundWidth) {
-				m.setX(r.nextInt(10) - (iWidth + 15));
+				m.setX(buffer - (iWidth + buffer));
 				m.setY(r.nextInt(backgroundHeight));
-			} else if (m.getY() < -iHeight - 90) {
+			} else if (m.getY() < -iHeight) {
 				m.setX(r.nextInt(backgroundWidth));
-				m.setY(backgroundHeight + r.nextInt(10));
+				m.setY(backgroundHeight + buffer);
 			} else if (m.getY() > backgroundHeight) {
 				m.setX(r.nextInt(backgroundWidth));
-				m.setY(r.nextInt(10) - (iHeight + 90));
+				m.setY(buffer - iHeight);
 			}
 		}
 	}
@@ -77,13 +82,20 @@ public class HSCModel extends MinigameModel {
 	 * @param me MouseEvent
 	 * @param m  mover being checked
 	 */
-	private void checkClick(MouseEvent me, Mover m) {
-		if ((me.getX() <= (m.getX() + 165) && me.getX() >= m.getX())
-				&& (me.getY() <= (m.getY() + 200) && me.getY() >= m.getY() + 90)
+	private void checkTagged(MouseEvent me, Mover m) {
+		double mouseEventX = me.getX();
+		double mouseEventY = me.getY();
+		double moverX = m.getX();
+		double moverY = m.getY();
+
+		if ((mouseEventX <= moverX + tagWidth && mouseEventX >= moverX)
+				&& (mouseEventY <= (moverY + tagDepth) && mouseEventY >= moverY + tagHeight)
 				&& me.getEventType() == MouseEvent.MOUSE_CLICKED && !((HSC) m).getTagged()) {
+
 			m.setValue("HSCTagged");
 			((HSC) m).setTagged(true);
 			numTagged++;
+			score += points;
 		}
 	}
 
@@ -96,18 +108,42 @@ public class HSCModel extends MinigameModel {
 	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
+		if(!timerSet) {
+			setUpTimer();
+			timerSet = true;
+		}
+		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
-			checkClick(me, m);
+			checkTagged(me, m);
 			m.move();
 		}
-		// System.out.println(numTagged);
 
 	}
-  
-	//TODO combine HSCs, add boolean value tagged
-	public class HSC extends Mover{
+
+	/*private void setUpTimer() {
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				--time;
+				System.out.println("time remaining: " + time);
+				if(time == 0) {
+					timer.cancel();
+					System.out.println("times up");
+					gs = gs.FINISHED;
+				}
+
+			}
+
+		}, 100, 100);
+
+	}*/
+
+	// TODO combine HSCs, add boolean value tagged
+	public class HSC extends Mover {
 		boolean tagged;
+		static final int hscWidth = 200;
+		static final int hscHeight = 136;
 
 		public HSC(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 200, 136, xIncr, yIncr, "HSC");
@@ -131,3 +167,4 @@ public class HSCModel extends MinigameModel {
 	}
 
 }
+

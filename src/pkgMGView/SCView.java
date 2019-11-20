@@ -68,7 +68,7 @@ public class SCView extends MinigameView  {
 	
 
 	@Override
-	public void update(ArrayList<Mover> movers, GameState gs, int score) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		 updateScoreLabel(score);
 		
 		if (!areButtonsMade) {
