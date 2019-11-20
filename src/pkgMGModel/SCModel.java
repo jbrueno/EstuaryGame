@@ -21,11 +21,11 @@ public class SCModel extends MinigameModel{
 	ArrayList<SCMover> items =  new ArrayList<SCMover>();
 	private final double waterThreshold = 150;
 	final long startNanoTime = System.nanoTime();
-	GameState gameState;
 	int seaweedY = 150;
 	double breathLostOnTick = 0.5;
 	int currentItemSpeed = -10;
 	final int itemYSpeed = 0;
+	boolean timerSet = false;
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -36,8 +36,9 @@ public class SCModel extends MinigameModel{
 	public SCModel(){
 		g = Game.SIDESCROLLER;
 		terry = new Terrapin(100, backgroundHeight/2, 0, 10);
+		time = 600;
 		
-		gameState = GameState.INPROGRESS;
+		gs = GameState.INPROGRESS;
 		score = 0;
 		
 		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "Seaweed");
@@ -71,11 +72,20 @@ public class SCModel extends MinigameModel{
 	 */
 	@Override
 	public void update(MouseEvent me) {
+		if (! timerSet) {
+			setUpTimer();
+			timerSet = true;
+		}
+		
 		
 		if (terry.getY() <= waterThreshold) {
 			terry.breathe();
 		} else {
-			terry.holdBreath();
+			if (terry.getAirAmount() > 0) {
+				terry.holdBreath();
+			} else {
+				gs = GameState.FINISHED;
+			}
 		}
 		
 		try {
@@ -116,6 +126,8 @@ public class SCModel extends MinigameModel{
 			movers.addAll(items);
 			movers.add(terry);
 		}
+		
+		
 		
 		System.out.println(items);
 	}

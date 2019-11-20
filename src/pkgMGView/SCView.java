@@ -80,7 +80,9 @@ public class SCView extends MinigameView  {
 	@Override
 
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		 updateScoreLabel(score);
+		
+		updateScoreLabel(score);
+		createTimer(time);
 		
 		if (!areButtonsMade) {
 			setUpListeners();
@@ -88,11 +90,13 @@ public class SCView extends MinigameView  {
 			createScoreLabel(score);
 		}
 		
+		
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		draw(movers);
+		
 		
 		gc.clearRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
+		
 		for (Mover m : movers) {
 			if (m instanceof Terrapin) {
 				Terrapin t = (Terrapin)m;
@@ -101,6 +105,15 @@ public class SCView extends MinigameView  {
 			}
 		}
 		
+		if (gs == GameState.INPROGRESS) {
+			draw(movers);
+		} else if (gs == GameState.FINISHED) {
+			drawGameOver();
+			backToMainButton();
+			
+		}
+		
+		System.out.println("SCVIEW GAMESTATE IS " + gs);
 		
 		
 	
