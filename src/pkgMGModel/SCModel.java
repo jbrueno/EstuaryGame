@@ -35,7 +35,7 @@ public class SCModel extends MinigameModel{
 	 */
 	public SCModel(){
 		g = Game.SIDESCROLLER;
-		terry = new Terrapin(10, backgroundHeight/2, 10, 0);
+		terry = new Terrapin(100, backgroundHeight/2, 0, 10);
 		
 		gameState = GameState.INPROGRESS;
 		score = 0;
@@ -49,11 +49,12 @@ public class SCModel extends MinigameModel{
 		items.add(f);
 		
 		movers.removeAll(getMovers());
-		movers.add(terry);
 		
 		for (SCMover sc : items) {
 			movers.add(sc);
 		}
+		
+		movers.add(terry);
 	}
 
 	
@@ -93,7 +94,6 @@ public class SCModel extends MinigameModel{
 				itemsIt.remove();
 			} else {
 				m.move();
-				System.out.println(m.getxIncr());
 				if (m.collison(terry)) {
 					collisionOccured = true;
 					System.out.println("collision with " + m);

@@ -11,6 +11,7 @@ public class Terrapin extends Mover {
 		super(x, y, 200, 200, xIncr, yIncr,"Terrapin");
 		setImageWidthAndHeight(150, 150);
 		this.airAmount = 100;
+		this.setXIncr(0);
 	}
 	
 	/**
@@ -36,28 +37,30 @@ public class Terrapin extends Mover {
 		setXIncr(this.getxIncr() + xChange);
 	}
 	
-	public void move(int targetX, int targetY) {
-		double xDist = targetX - getX();
-		if (xDist > maxDist) {
-			xDist = maxDist;
-		} else if (getX() < (-1 * maxDist)){
-			xDist = (-1 * maxDist);
+	@Override
+	public void move(double targetX, double targetY) {
+		if (getX() > 25) {
+			setXIncr(0);
+		} else if (targetX < getX() && getX() > 0) {
+			setXIncr(-1 * getxIncr());
+		} else if (targetX > getX() && getX() < 0) {
+			setXIncr(-1 * getxIncr());
 		}
 		
-		
-		setXIncr((((xDist + maxDist) / (maxDist * 2)) * (maxSpeed - (-1* maxSpeed)) + (-1 * maxSpeed)));
-		
-		double yDist = targetY - getY();
-		if (yDist > maxDist) {
-			yDist = maxDist;
-		} else if (yDist < (-1 * maxDist)){
-			yDist = (-1 * maxDist);
+		if (targetY < getY() - 10) {
+			if (getYIncr() > 0) {
+				setYIncr(-1 * getYIncr());
+			}
+		} else if (targetY > getY() - 10) {
+			if (getYIncr() < 0) {
+				setYIncr(-1 * getYIncr());
+			}
 		}
 		
-		
-		setYIncr((((yDist + maxDist) / (maxDist * 2)) * (maxSpeed - (-1* maxSpeed)) + (-1 * maxSpeed)));
-		
+		setY(getY() + getYIncr());
+		setX(getX() + getxIncr());
 	}
+
 	
 	public double getAirAmount() {
 		return airAmount;

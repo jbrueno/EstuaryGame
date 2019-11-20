@@ -43,17 +43,14 @@ public abstract class SCMover extends Mover {
 	
 	
 	public boolean collison(Mover m) {
-		int thisXRange = (int) (getX() + this.getImageWidth());
-		int thisYRange = (int) (getY() + this.getImageHeight());
-		int mXRange = (int) (m.getX() + m.getImageWidth());
-		int mYRange = (int) (m.getX() + m.getImageHeight());
+		boolean xCol = getX() < m.getX() + m.getImageWidth() && getX() > m.getX();
+		boolean yCol = getY() < m.getY() + m.getImageHeight() && getY() > m.getX();
 		
 		
-		
-		boolean xCol = thisXRange - mXRange < 0;
-		boolean yCol = thisYRange - mYRange < 0;
 		
 		return xCol && yCol;
+			
+		
 	}
 
 }
