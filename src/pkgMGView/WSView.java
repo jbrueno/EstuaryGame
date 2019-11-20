@@ -103,7 +103,6 @@ public class WSView extends MinigameView{
 		background = new Image("backgrounds/WaterSample.png");
 		backgroundPh = new Image("backgrounds/MainScreen.png");
 		bottle = new Image("Mover/Bottle.png");
-
 		background_lab = new Image("backgrounds/lab_background.png");
 		testTube = new Image("Mover/testtube.png");
 
