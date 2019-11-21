@@ -9,7 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -33,6 +36,8 @@ public class WSView extends MinigameView{
 	float pH; // Actual pH of Water
 	Image background_lab;
 	Image testTube;
+	Image phStrip;
+	Color phColor;
 	
 	// pHScale Image dimensions & location
 	Image pHScale;
@@ -40,7 +45,7 @@ public class WSView extends MinigameView{
 	int pHScaleY = 0;
 	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
 	int pHScaleHeight = backgroundHeight / 5;
-	
+
 	Label pHLabel; // Label "Holding" the labels and buttons for guessing the pH
 	int pHLabelX = pHScaleX + pHScaleWidth; // x-Loc
 	int pHLabelY = backgroundHeight / 2; // y-Loc
@@ -78,7 +83,6 @@ public class WSView extends MinigameView{
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
-			
 		}
 		updateScoreLabel(score);
 		
@@ -92,7 +96,6 @@ public class WSView extends MinigameView{
 			background = background_lab;
 			break;
 		case WS_PH :
-			drawpHLabel();
 			background = background_lab;			
 			break;
 		default:
@@ -125,7 +128,6 @@ public class WSView extends MinigameView{
 	@Override
 	void setUpListeners() {
 		
-		// return button
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
@@ -141,13 +143,12 @@ public class WSView extends MinigameView{
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
+
 		for (Mover m : movers) {
-			if(m.getValue().compareTo("PHStrip") != 0) { // draw all objects except PHStrip (no image)
 				draw(m);
-			}
 		}
 	}
+
 	
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
@@ -177,16 +178,7 @@ public class WSView extends MinigameView{
 		root.getChildren().add(pHLabel);
 	}
 	
-	
-	
-	
-	/*
-	void setUpLab() {
-		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
-	}
-	*/
-	
+
 
 	@Override
 	void importImages() {
@@ -194,7 +186,6 @@ public class WSView extends MinigameView{
 		bottle = new Image("Mover/Bottle.png");
 		background_lab = new Image("backgrounds/lab_background.png");
 		testTube = new Image("Mover/testtube.png");
-		pHScale = new Image("Backgrounds/pH_scale.png");
-		
+		phStrip = new Image("Mover/pHStrip.png");
 	}
 }
