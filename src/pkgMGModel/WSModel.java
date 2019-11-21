@@ -11,7 +11,7 @@ import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
-	
+	 
 	// WS_COLLECT
 	Mover Bottle;
 	final int bottleImageWidth = 75;

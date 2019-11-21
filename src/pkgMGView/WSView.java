@@ -125,7 +125,7 @@ public class WSView extends MinigameView{
 		for (Mover m : movers) {
 				draw(m);
 			}
-	}
+	} 
 	
 	public void updatepHColor(String phColor){
 		ColorInput ci = new ColorInput();
