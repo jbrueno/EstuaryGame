@@ -113,10 +113,8 @@ public class AMView extends MinigameView{
 			b.setWrapText(true);
 			b.setAlignment(Pos.CENTER);
 			b.setOnMouseClicked(e -> {selectedButton = b;});
-			b.setOnDragDetected(new EventHandler<MouseEvent>() { 
-				   @Override 
-				   public void handle(MouseEvent e) {me = e;}
-			});
+			b.setOnDragDetected(e -> {me = e;});
+			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
 			clueBox.getChildren().add(b);
 		}
 		
