@@ -136,12 +136,13 @@ public class WSView extends MinigameView{
 	
 	
 	public void drawpHGuessBox() {
+		pHGuessBox = new Rectangle();
 		pHGuessBox.setX(pHGuessBoxX);
 		pHGuessBox.setY(pHGuessBoxY);
 		pHGuessBox.setWidth(pHGuessBoxWidth);
 		pHGuessBox.setHeight(pHGuessBoxHeight);
 		pHGuessBox.setFill(Color.PEACHPUFF);
-		//root.getChildren().add(pHGuessBox);
+		root.getChildren().add(pHGuessBox);
 	}
 	
 	
