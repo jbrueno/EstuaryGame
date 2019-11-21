@@ -10,11 +10,7 @@ import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel {
-	Mover Crosshairs;
-	int numTagged;
-	int tagWidth = 155;
-	int tagHeight = 85;
-	int tagDepth = 195;
+	int numTagged = 0;
 	int points = 50;
 	boolean timerSet = false;
 	final int maxHSC = 10;
@@ -28,8 +24,8 @@ public class HSCModel extends MinigameModel {
 	}
 
 	/**
-	 * Adds 20 horshoecrabs (10 male/10 female) to the DataNode list
-	 * <code>dns</code> located in the abstract class <code>MinigameModel</code>
+	 * Adds <code>maxHSC</code> horshoecrabs to <code>movers</code>
+	 * <code>movers</code> located in the abstract class <code>MinigameModel</code>
 	 * with random x,y starting location and random xIncr,yIncr within constricted
 	 * ranges
 	 * 
@@ -92,10 +88,12 @@ public class HSCModel extends MinigameModel {
 		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
-			if (me.getEventType() == MouseEvent.MOUSE_CLICKED && isCollision(m, me) && !((HSC) m).getTagged()) {
-				((HSC) m).tag();
-				score += points;
-				numTagged++;
+			if (me.getEventType() == MouseEvent.MOUSE_CLICKED  || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				if (isCollision(m, me) && !((HSC) m).getTagged()) {
+					((HSC) m).tag();
+					score += points;
+					numTagged++;
+				}
 			}
 			m.move();
 		}

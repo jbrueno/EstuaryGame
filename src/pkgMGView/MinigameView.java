@@ -307,6 +307,15 @@ public abstract class MinigameView {
 		});
 		root.getChildren().add(backToMain);
 	}
+	
+	/*
+	 * Prevents a button from being clicked
+	 * 
+	 * @author Ryan Peters
+	 */
+	public void disableButton(Button b) {
+		b.setDisable(true);
+	}
 
 
 }

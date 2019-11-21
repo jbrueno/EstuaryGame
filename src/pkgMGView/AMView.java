@@ -48,14 +48,14 @@ public class AMView extends MinigameView{
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 	}
 	
-	@Override
+
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);
-			areButtonsMade = true;
-			createScoreLabel(score);
+			areButtonsMade = true;	
 		}
+		createScoreLabel(score);
 		draw(movers);
 	}
 
@@ -86,10 +86,12 @@ public class AMView extends MinigameView{
 	@Override
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0);
 		for (Mover m : movers) {
+			draw(m);
 			//TEMPORARY UNTIL IMAGES ARE GOTTEN!
-			gc.strokeOval(m.getX() - m.getImageWidth() / 2, m.getY() - m.getImageHeight() / 2, 
-					m.getImageWidth() * Math.sqrt(2), m.getImageHeight() * Math.sqrt(2));
+			//gc.strokeOval(m.getX() - m.getImageWidth() / 2, m.getY() - m.getImageHeight() / 2, 
+					//m.getImageWidth() * Math.sqrt(2), m.getImageHeight() * Math.sqrt(2));
 		}
 	}
 	
@@ -113,10 +115,10 @@ public class AMView extends MinigameView{
 			b.setWrapText(true);
 			b.setAlignment(Pos.CENTER);
 			b.setOnMouseClicked(e -> {selectedButton = b;});
-			b.setOnDragDetected(new EventHandler<MouseEvent>() { 
-				   @Override 
-				   public void handle(MouseEvent e) {me = e;}
-			});
+			b.setOnDragDetected(e -> {me = e;});
+			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
+			b.setOnMouseDragged(e -> {me = e;});
+			b.setStyle("-fx-font-weight: bold");
 			clueBox.getChildren().add(b);
 		}
 		
@@ -136,7 +138,7 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
-
+		background = new Image("backgrounds/background_animalmatching.png");
 	}
 	
 	/**
@@ -152,11 +154,7 @@ public class AMView extends MinigameView{
 		private String[] clues;
 		private InfiniteIterator infit = new InfiniteIterator();
 		ClueList(String value, String[] clues) {
-			this.clues = new String[1 + clues.length];
-			this.clues[0] = value;
-			for (int i = 1; i < clues.length + 1; i++) {
-				this.clues[i] = clues[i-1];
-			}
+			this.clues = clues;
 		}
 		
 		public InfiniteIterator getIterator() {

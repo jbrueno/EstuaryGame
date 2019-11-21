@@ -135,9 +135,9 @@ public class Model {
 	 */
 	public void updateTotalScore() {
 		totalScore = 0;
-		System.out.println("Scores: ");
+		//System.out.println("Scores: ");
 		for(MinigameModel MGM : minigames) {
-			System.out.println(MGM.getScore());
+			//System.out.println(MGM.getScore());
 			totalScore += MGM.getScore();
 		}
 		
