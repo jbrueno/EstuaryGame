@@ -88,10 +88,12 @@ public class HSCModel extends MinigameModel {
 		
 		for (Mover m : movers) {
 			spawnHSCrabs(m);
-			if (me.getEventType() == MouseEvent.MOUSE_CLICKED && isCollision(m, me) && !((HSC) m).getTagged()) {
-				((HSC) m).tag();
-				score += points;
-				numTagged++;
+			if (me.getEventType() == MouseEvent.MOUSE_CLICKED  || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				if (isCollision(m, me) && !((HSC) m).getTagged()) {
+					((HSC) m).tag();
+					score += points;
+					numTagged++;
+				}
 			}
 			m.move();
 		}
