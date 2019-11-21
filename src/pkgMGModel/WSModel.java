@@ -1,14 +1,17 @@
 package pkgMGModel;
 
+import java.util.Random;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
-	
+	 
 	// WS_COLLECT
 	Mover Bottle;
 	final int bottleImageWidth = 75;
@@ -27,20 +30,39 @@ public class WSModel extends MinigameModel{
 	// WS_PH
 	
 	Mover pHStrip;
-	final int pHStripWidth = 50;
+	final int pHStripWidth = 30;
 	final int pHStripHeight = 100;
+	final int phX =50;
+	final int phY= 50;
+	
+	final int pHMax=9;
+	final int pHMin=5;
 	int pH;
 	boolean isDipped = false;
 	
 	Mover testTube;
 	final int testTubeImageWidth = 500;
-	final int testTubeSideFromBorder = 190;
+	final int testTubeSideFromBorder = 185;
 	final int testTubeImageHeight = 500;
+	final int testTubeX = backgroundWidth / 3;
+	final int testTubeY = backgroundHeight - 315;
+	final int testTubeLeftSide = 365; // x-coord
+	final int testTubeRightSide = 485; // x-coord
+	final int testTubeWaterLevel = 425; // y-coord
+	final int testTubeBottom = 680;
+	// left = 365x
+	// right = 485x
+	// water = 425y
+	// bottom = 680y
 	boolean labSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_PH; /////
+
+	//	gs = GameState.WS_COLLECT; 
+
+		//gs = GameState.WS_COLLECT; /////
+		gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
 	
@@ -53,10 +75,13 @@ public class WSModel extends MinigameModel{
 			movers.add(Bottle);
 			break;
 		case WS_PH : 
-			pHStrip = new pHStrip(200, 400, 50, 100, 0, 0, "PHStrip");
-			testTube = new testTube(200, 200, 0, 0, "testtube");
+			setPH();
+			pHStrip = new pHStrip(phX, phY, 0, 0, "pHStrip");
+			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
 			movers.add(pHStrip);
 			movers.add(testTube);
+			break;
+		default:
 			break;
 		}
 		
@@ -92,14 +117,13 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
-			System.out.println(pHStrip.getX());
-			//movers.get(0).setX(me.getX());
-			//movers.get(0).setY(me.getY());
+
+			pHStrip.move(me.getX(),me.getY());
+			System.out.println(pHStrip.getX() + ", " + pHStrip.getY());
+
+
 			dipStrip(); 
 
-			
-			
-			
 			break;
 		
 		
@@ -134,6 +158,10 @@ public class WSModel extends MinigameModel{
 		}
 	}
 	
+	public void setPH() {
+		Random rand = new Random();
+		pH=rand.nextInt((pHMax - pHMin) + 1) + pHMin;
+	}
 	
 	/**
 	 * @author Abrenner
@@ -141,15 +169,26 @@ public class WSModel extends MinigameModel{
 	 * changes boolean isDipped to true upon meeting criteria
 	 */
 	public void dipStrip() {
+		//System.out.println("pHStrip X: " + movers.get(0).getY());
+		
 		// setting up logic for dipping pHStrip within testTube bounds
-		if(movers.get(0).getX() >= movers.get(1).getX()+testTubeSideFromBorder &&
-			movers.get(0).getX() <= (movers.get(1).getX()+testTubeImageWidth-testTubeSideFromBorder) &&
-			movers.get(0).getY() >= (movers.get(1).getY()+(testTubeImageHeight / 2)) &&
-			 movers.get(0).getY() <= (movers.get(1).getY()+testTubeImageHeight)) {
+		if(pHStrip.getX() >= testTubeLeftSide &&
+			pHStrip.getX() <= testTubeRightSide &&
+			pHStrip.getY() >= testTubeWaterLevel &&
+			 pHStrip.getY() <= testTubeBottom) {
 						
+			
+			
 				isDipped = true;
+				changeColor(pH);
 				System.out.println("Strip is Dipped!!");
 		}
+		
+	}
+	
+	public void changeColor(int ph) {
+		pHStrip.setValue("pHStrip"+ph);
+		
 	}
 	
 	
@@ -162,8 +201,12 @@ public class WSModel extends MinigameModel{
 	 
 	public class pHStrip extends Mover{
 
-		public pHStrip(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+		public pHStrip(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
+		}
+		
+		public void setColor(String color) {
+			
 		}
 	}
 	
