@@ -58,7 +58,11 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT; 
+
+	//	gs = GameState.WS_COLLECT; 
+
+		//gs = GameState.WS_COLLECT; /////
+		gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
 	
@@ -114,7 +118,11 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
+
 			pHStrip.move(me.getX(),me.getY());
+
+
+
 			dipStrip(); 
 
 			break;
