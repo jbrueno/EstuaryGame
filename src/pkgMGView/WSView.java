@@ -30,12 +30,9 @@ public class WSView extends MinigameView{
 	
 	
 	// WS_PH
+	float pH; // Actual pH of Water
 	Image background_lab;
 	Image testTube;
-	Rectangle phStripBase;
-	Rectangle phStripColor; // just the tip of pH strip should get colored (smaller rect, overtop pHStripBase)
-	
-	
 	
 	// pHScale Image dimensions & location
 	Image pHScale;
@@ -47,8 +44,18 @@ public class WSView extends MinigameView{
 	Label pHLabel; // Label "Holding" the labels and buttons for guessing the pH
 	int pHLabelX = pHScaleX + pHScaleWidth; // x-Loc
 	int pHLabelY = backgroundHeight / 2; // y-Loc
-	int pHLabelWidth = 50;
-	int pHLabelHeight = 100;
+	int pHLabelWidth = 300;
+	int pHLabelHeight = 200;
+	
+	Button increasepH;
+	Button decreasepH;
+	Label pHDisplay;
+	int pHDisplayX;
+	int pHDisplayY;
+	int pHDisplayWidth;
+	int pHDisplayHeight;
+	float guesspH; // user's guess for what actual pH is
+	
 	
 	
 	//
@@ -142,13 +149,12 @@ public class WSView extends MinigameView{
 		}
 	}
 	
-	
+	// draws label to screen
+	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
 	public void drawpHLabel() {
 		pHLabel = new Label();
 		pHLabel.setLayoutX(pHLabelX);
 		pHLabel.setLayoutY(pHLabelY);
-		//pHGuessBox.setWidth(pHGuessBoxWidth);
-		//pHGuessBox.setHeight(pHGuessBoxHeight);
 		pHLabel.setMinWidth(pHLabelWidth);
 		pHLabel.setMinHeight(pHLabelHeight);
 		
@@ -156,6 +162,22 @@ public class WSView extends MinigameView{
 		pHLabel.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
 		root.getChildren().add(pHLabel);
 	}
+	
+	// draws label to screen
+	// Label displays the user's guess as to what the pH of the water is
+	public void drawpHDisplay() {
+		pHDisplay = new Label();
+		pHDisplay.setLayoutX(pHDisplayX);
+		pHDisplay.setLayoutY(pHDisplayY);
+		pHDisplay.setMinWidth(pHDisplayWidth);
+		pHDisplay.setMinHeight(pHDisplayHeight);
+		
+		
+		pHLabel.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
+		root.getChildren().add(pHLabel);
+	}
+	
+	
 	
 	
 	/*
