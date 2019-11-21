@@ -32,8 +32,8 @@ public class WSModel extends MinigameModel{
 	Mover pHStrip;
 	final int pHStripWidth = 30;
 	final int pHStripHeight = 100;
-	final int phX =250;
-	final int phY=250;
+	final int phX =50;
+	final int phY= 50;
 	
 	final int pHMax=9;
 	final int pHMin=5;
@@ -75,7 +75,7 @@ public class WSModel extends MinigameModel{
 			movers.add(Bottle);
 			break;
 		case WS_PH : 
-			
+			setPH();
 			pHStrip = new pHStrip(phX, phY, 0, 0, "pHStrip");
 			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
 			movers.add(pHStrip);
@@ -113,14 +113,13 @@ public class WSModel extends MinigameModel{
 		
 		case WS_PH :
 			if(!labSet) { // if lab is not set up
-				setPH();
 				addObjects(gs);
 				labSet = true;
 			}
 			
 
 			pHStrip.move(me.getX(),me.getY());
-
+			System.out.println(pHStrip.getX() + ", " + pHStrip.getY());
 
 
 			dipStrip(); 
