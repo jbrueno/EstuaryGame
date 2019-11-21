@@ -3,12 +3,17 @@ package pkgMGView;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import pkgEnum.GameState;
@@ -39,11 +44,11 @@ public class WSView extends MinigameView{
 	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
 	int pHScaleHeight = backgroundHeight / 5;
 	
-	Rectangle pHGuessBox; // Rectangle "Holding" the labels and buttons for guessing the pH
-	int pHGuessBoxX = pHScaleX + pHScaleWidth; // x-Loc
-	int pHGuessBoxY = backgroundHeight / 2; // y-Loc
-	int pHGuessBoxWidth = 300;
-	int pHGuessBoxHeight = 500;
+	Label pHLabel; // Label "Holding" the labels and buttons for guessing the pH
+	int pHLabelX = pHScaleX + pHScaleWidth; // x-Loc
+	int pHLabelY = backgroundHeight / 2; // y-Loc
+	int pHLabelWidth = 50;
+	int pHLabelHeight = 100;
 	
 	
 	//
@@ -66,6 +71,7 @@ public class WSView extends MinigameView{
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
+			
 		}
 		updateScoreLabel(score);
 		
@@ -79,6 +85,7 @@ public class WSView extends MinigameView{
 			background = background_lab;
 			break;
 		case WS_PH :
+			drawpHLabel();
 			background = background_lab;			
 			break;
 		default:
@@ -111,15 +118,16 @@ public class WSView extends MinigameView{
 	@Override
 	void setUpListeners() {
 		
+		// return button
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
 			game = Game.MAINSCREEN;
 			removeScoreLabel();
+			root.getChildren().remove(pHLabel);
 		});
 		root.getChildren().add(btnReturn);
-		
 	}
 
 	@Override
@@ -135,14 +143,18 @@ public class WSView extends MinigameView{
 	}
 	
 	
-	public void drawpHGuessBox() {
-		pHGuessBox = new Rectangle();
-		pHGuessBox.setX(pHGuessBoxX);
-		pHGuessBox.setY(pHGuessBoxY);
-		pHGuessBox.setWidth(pHGuessBoxWidth);
-		pHGuessBox.setHeight(pHGuessBoxHeight);
-		pHGuessBox.setFill(Color.PEACHPUFF);
-		root.getChildren().add(pHGuessBox);
+	public void drawpHLabel() {
+		pHLabel = new Label();
+		pHLabel.setLayoutX(pHLabelX);
+		pHLabel.setLayoutY(pHLabelY);
+		//pHGuessBox.setWidth(pHGuessBoxWidth);
+		//pHGuessBox.setHeight(pHGuessBoxHeight);
+		pHLabel.setMinWidth(pHLabelWidth);
+		pHLabel.setMinHeight(pHLabelHeight);
+		
+		
+		pHLabel.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
+		root.getChildren().add(pHLabel);
 	}
 	
 	
