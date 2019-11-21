@@ -70,7 +70,9 @@ public class WSView extends MinigameView{
 	int btnDecreasepHX = btnIncreasepHX;
 	int btnDecreasepHY = btnIncreasepHY + 50;
 	
-	
+	Button btnSubmit;
+	int btnSubmitX = btnIncreasepHX;
+	int btnSubmitY = btnDecreasepHY + 50;
 	
 	
 	
@@ -155,6 +157,7 @@ public class WSView extends MinigameView{
 			root.getChildren().remove(pHDisplay);
 			root.getChildren().remove(btnIncreasepH);
 			root.getChildren().remove(btnDecreasepH);
+			root.getChildren().remove(btnSubmit);
 			
 		});
 		root.getChildren().add(btnReturn);
@@ -211,26 +214,35 @@ public class WSView extends MinigameView{
 				btnIncreasepH.setLayoutX(btnIncreasepHX);
 				btnIncreasepH.setLayoutY(btnIncreasepHY);
 				btnIncreasepH.setOnAction(e -> {
-					System.out.println("INCREASE IT !!!");
 					if(guesspH < 14) {
 						guesspH++;
-						System.out.println("BTN^ -> guesspH: " + guesspH);
 					}
 				});
+				root.getChildren().add(btnIncreasepH);
+
 				
 				btnDecreasepH = new Button("v");
 				btnDecreasepH.setLayoutX(btnDecreasepHX);
 				btnDecreasepH.setLayoutY(btnDecreasepHY);
 				btnDecreasepH.setOnAction(e -> {
-					System.out.println("DECREASE IT !!!");
 					if(guesspH > 0) {
 						guesspH--;
-						System.out.println("BTNv -> guesspH: " + guesspH);
-
 					}
 				});
-				root.getChildren().add(btnIncreasepH);
 				root.getChildren().add(btnDecreasepH);
+				
+				
+				btnSubmit = new Button("Submit");
+				btnSubmit.setLayoutX(btnSubmitX);
+				btnSubmit.setLayoutY(btnSubmitY);
+				btnSubmit.setOnAction(e -> {
+					
+				});
+				root.getChildren().add(btnSubmit);
+				
+				
+				
+				
 	}
 	
 
