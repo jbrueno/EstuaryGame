@@ -86,7 +86,7 @@ public class AMModel extends MinigameModel {
 				"I can survive above water by trapping water in with my shell!",
 				"I have a shiny black shell!",
 				"I am a Mussel!"})); 
-		animals.add(new MatchingAnimal(200, 700, 100, 95, "BlueCrab", new String[] {
+		animals.add(new MatchingAnimal(150, 630, 100, 95, "BlueCrab", new String[] {
 				"I eat small fish, snails, mussels, and plants!",
 				"I have learned to use my hind legs to help me swim!",
 				"I can grow up to 1 to 2 pounds!",
