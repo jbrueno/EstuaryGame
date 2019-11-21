@@ -19,6 +19,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -38,7 +39,7 @@ public class WSView extends MinigameView{
 	Image testTube;
 	Image phStrip;
 	Color phColor;
-	
+	boolean labIsSetUp = false;
 	// pHScale Image dimensions & location
 	Image pHScale;
 	int pHScaleX = 300;
@@ -52,18 +53,29 @@ public class WSView extends MinigameView{
 	int pHLabelWidth = 300;
 	int pHLabelHeight = 200;
 	
-	Button increasepH;
-	Button decreasepH;
+	
+	
 	Label pHDisplay;
-	int pHDisplayX;
-	int pHDisplayY;
-	int pHDisplayWidth;
-	int pHDisplayHeight;
-	float guesspH; // user's guess for what actual pH is
+	int pHDisplayX = pHLabelX + 25;
+	int pHDisplayY = pHLabelY + 25;
+	int pHDisplayWidth = pHLabelWidth * 3/5; // leave room for buttons
+	int pHDisplayHeight = pHLabelHeight - 50; 
+	float guesspH = 7; // user's guess for what actual pH is, set to 7 as starting point
+	
+	Button btnIncreasepH;
+	int btnIncreasepHX = pHDisplayX + pHDisplayWidth + 10;
+	int btnIncreasepHY = pHDisplayY;
+	
+	Button btnDecreasepH;
+	int btnDecreasepHX = btnIncreasepHX;
+	int btnDecreasepHY = btnIncreasepHY + 50;
+	
+	Button btnSubmit;
+	int btnSubmitX = btnIncreasepHX;
+	int btnSubmitY = btnDecreasepHY + 50;
 	
 	
 	
-	//
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -83,7 +95,6 @@ public class WSView extends MinigameView{
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
-			//drawpHGuessBox();
 		}
 		updateScoreLabel(score);
 		
@@ -93,12 +104,19 @@ public class WSView extends MinigameView{
 		case WS_COLLECT :
 			background = background_collect;
 			break;
+		case WS_PH :
+			if(!labIsSetUp) {
+				background = background_lab;
+				drawpHLabel();
+				drawpHDisplay();
+				drawpHButtons();
+				labIsSetUp = true;
+			}
+			updatepHDisplay();
+			break;
 		case WS_TEMP :
 			background = background_lab;
-			break;
-		case WS_PH :
-			background = background_lab;			
-			break;
+			break;	
 		default:
 			break;
 		
@@ -136,6 +154,11 @@ public class WSView extends MinigameView{
 			game = Game.MAINSCREEN;
 			removeScoreLabel();
 			root.getChildren().remove(pHLabel);
+			root.getChildren().remove(pHDisplay);
+			root.getChildren().remove(btnIncreasepH);
+			root.getChildren().remove(btnDecreasepH);
+			root.getChildren().remove(btnSubmit);
+			
 		});
 		root.getChildren().add(btnReturn);
 	}
@@ -161,7 +184,7 @@ public class WSView extends MinigameView{
 		pHLabel.setMinHeight(pHLabelHeight);
 		
 		
-		pHLabel.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
+		pHLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY ,Insets.EMPTY )));
 		root.getChildren().add(pHLabel);
 	}
 	
@@ -173,10 +196,53 @@ public class WSView extends MinigameView{
 		pHDisplay.setLayoutY(pHDisplayY);
 		pHDisplay.setMinWidth(pHDisplayWidth);
 		pHDisplay.setMinHeight(pHDisplayHeight);
-		
-		
-		pHLabel.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
-		root.getChildren().add(pHLabel);
+		pHDisplay.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY ,Insets.EMPTY )));
+		pHDisplay.setFont(new Font("Arial", 108));
+		//pHDisplay.setText(""+guesspH); // cannot cast float to String.. temp. solution
+		root.getChildren().add(pHDisplay);
+	}
+	
+	//updates the pHDisplay label to display most up to date guess
+	public void updatepHDisplay() {
+		System.out.println("guesspH: " + guesspH);
+		pHDisplay.setText(""+guesspH);
+	}
+	
+	// user guessing pH button
+	public void drawpHButtons() {
+				btnIncreasepH = new Button("^");
+				btnIncreasepH.setLayoutX(btnIncreasepHX);
+				btnIncreasepH.setLayoutY(btnIncreasepHY);
+				btnIncreasepH.setOnAction(e -> {
+					if(guesspH < 14) {
+						guesspH++;
+					}
+				});
+				root.getChildren().add(btnIncreasepH);
+
+				
+				btnDecreasepH = new Button("v");
+				btnDecreasepH.setLayoutX(btnDecreasepHX);
+				btnDecreasepH.setLayoutY(btnDecreasepHY);
+				btnDecreasepH.setOnAction(e -> {
+					if(guesspH > 0) {
+						guesspH--;
+					}
+				});
+				root.getChildren().add(btnDecreasepH);
+				
+				
+				btnSubmit = new Button("Submit");
+				btnSubmit.setLayoutX(btnSubmitX);
+				btnSubmit.setLayoutY(btnSubmitY);
+				btnSubmit.setOnAction(e -> {
+					
+				});
+				root.getChildren().add(btnSubmit);
+				
+				
+				
+				
 	}
 	
 

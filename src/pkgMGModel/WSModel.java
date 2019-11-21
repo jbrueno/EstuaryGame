@@ -168,21 +168,15 @@ public class WSModel extends MinigameModel{
 	 * changes boolean isDipped to true upon meeting criteria
 	 */
 	public void dipStrip() {
-		//System.out.println("pHStrip X: " + movers.get(0).getY());
-		
 		// setting up logic for dipping pHStrip within testTube bounds
 		if(pHStrip.getX() >= testTubeLeftSide &&
 			pHStrip.getX() <= testTubeRightSide &&
 			pHStrip.getY() >= testTubeWaterLevel &&
 			 pHStrip.getY() <= testTubeBottom) {
 						
-			
-			
-				isDipped = true;
-				changeColor(pH);
-				System.out.println("Strip is Dipped!!");
-		}
-		
+					isDipped = true;
+					changeColor(pH);
+		} // end if
 	}
 	
 	public void changeColor(int ph) {
