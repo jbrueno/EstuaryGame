@@ -40,7 +40,7 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_PH; /////
+		gs = GameState.WS_COLLECT; /////
 		addObjects(gs);
 	}
 	
@@ -93,9 +93,9 @@ public class WSModel extends MinigameModel{
 			}
 			
 			System.out.println(pHStrip.getX());
-			//movers.get(0).setX(me.getX());
-			//movers.get(0).setY(me.getY());
-			dipStrip(); 
+			pHStrip.setX(me.getX());
+			pHStrip.setY(me.getY());
+			//dipStrip(); 
 
 			
 			

@@ -26,13 +26,7 @@ public class WSView extends MinigameView{
 	Rectangle phStripBase;
 	Rectangle phStripColor;
 	
-	// pHScale Image dimensions & location
-	int pHScaleX = 300;
-	int pHScaleY = 0;
-	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
-	int pHScaleHeight = backgroundHeight / 5;
-	
-	//
+	Image pHStrip;
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -112,11 +106,8 @@ public class WSView extends MinigameView{
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
 		for (Mover m : movers) {
-			if(m.getValue().compareTo("PHStrip") != 0) { // draw all objects except PHStrip (no image)
 				draw(m);
-			}
 		}
 	}
 	
@@ -134,7 +125,6 @@ public class WSView extends MinigameView{
 		bottle = new Image("Mover/Bottle.png");
 		background_lab = new Image("backgrounds/lab_background.png");
 		testTube = new Image("Mover/testtube.png");
-		pHScale = new Image("Backgrounds/pH_scale.png");
-		
+		pHStrip=new Image("Mover/pHStrip.png");
 	}
 }
