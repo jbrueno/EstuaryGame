@@ -132,9 +132,10 @@ public abstract class MinigameModel {
 	 * @return
 	 */
 	public boolean isCollision(Mover m, double x, double y) {
-		double xDist = (Math.pow(m.getX() - x, 2) / Math.pow(m.getImageWidth() / 2, 2));
-		double yDist = (Math.pow(m.getY() - y, 2) / Math.pow(m.getImageHeight() / 2, 2));
+		double xDist = Math.abs(Math.pow(m.getX() - x, 2) / Math.pow(m.getImageWidth() / 2, 2));
+		double yDist = Math.abs(Math.pow(m.getY() - y, 2) / Math.pow(m.getImageHeight() / 2, 2));
 		double dist = xDist + yDist;
+		System.out.println(dist);
 		return dist < 1;
 	}
 	

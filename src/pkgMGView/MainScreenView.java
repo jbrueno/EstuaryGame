@@ -58,18 +58,22 @@ public class MainScreenView extends MinigameView {
 		
 		btnSC.setOnAction(e -> {
 				game = Game.SIDESCROLLER;
+				disableButton(btnSC);
 		});
 		
 		btnHSCC.setOnAction(e -> {
 				game = Game.HSCCOUNT;
+				disableButton(btnHSCC);
 		});
 		
 		btnAM.setOnAction(e -> {
 			game = Game.ANIMALMATCHING;
+			disableButton(btnAM);
 		});
 		
 		btnWS.setOnAction(e -> {
 			game = Game.WATERSAMPLING;
+			disableButton(btnWS);
 		});
 		
 	}

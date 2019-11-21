@@ -84,6 +84,7 @@ public class WSView extends MinigameView{
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
+			//drawpHGuessBox();
 		}
 		updateScoreLabel(score);
 		

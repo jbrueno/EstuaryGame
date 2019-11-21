@@ -61,8 +61,8 @@ public class WSModel extends MinigameModel{
 
 	//	gs = GameState.WS_COLLECT; 
 
-		//gs = GameState.WS_COLLECT; /////
-		gs = GameState.WS_PH; 
+		gs = GameState.WS_COLLECT; /////
+		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
 	
@@ -152,9 +152,9 @@ public class WSModel extends MinigameModel{
 		filled=true;
 		Bottle.setValue("fullBottle");
 		if(Bottle.getY()>=shallowLevel && Bottle.getY()<correctLevel) {
-			score+=1;
+			score+=50;
 		} else if (Bottle.getY()>=correctLevel && Bottle.getY()<deepLevel) {
-			score+=5;
+			score+=100;
 		}
 	}
 	
