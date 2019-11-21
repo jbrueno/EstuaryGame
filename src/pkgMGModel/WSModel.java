@@ -34,13 +34,25 @@ public class WSModel extends MinigameModel{
 	
 	Mover testTube;
 	final int testTubeImageWidth = 500;
-	final int testTubeSideFromBorder = 190;
+	final int testTubeSideFromBorder = 185;
 	final int testTubeImageHeight = 500;
+	final int testTubeX = backgroundWidth / 3;
+	final int testTubeY = backgroundHeight - 315;
+	final int testTubeLeftSide = 365; // x-coord
+	final int testTubeRightSide = 485; // x-coord
+	final int testTubeWaterLevel = 425; // y-coord
+	final int testTubeBottom = 680;
+	// left = 365x
+	// right = 485x
+	// water = 425y
+	// bottom = 680y
 	boolean labSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT; /////
+
+		//gs = GameState.WS_COLLECT; /////
+		gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
 	
@@ -53,8 +65,8 @@ public class WSModel extends MinigameModel{
 			movers.add(Bottle);
 			break;
 		case WS_PH : 
-			pHStrip = new pHStrip(200, 400, 50, 100, 0, 0, "PHStrip");
-			testTube = new testTube(200, 200, 0, 0, "testtube");
+			pHStrip = new pHStrip(0, 0, 50, 100, 0, 0, "PHStrip");
+			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
 			movers.add(pHStrip);
 			movers.add(testTube);
 			break;
@@ -96,6 +108,11 @@ public class WSModel extends MinigameModel{
 			pHStrip.setX(me.getX());
 			pHStrip.setY(me.getY());
 			//dipStrip(); 
+			movers.get(0).setX(me.getX());
+			movers.get(0).setY(me.getY());
+			//System.out.println(pHStrip.getX());
+
+			dipStrip(); 
 
 			
 			
@@ -141,12 +158,16 @@ public class WSModel extends MinigameModel{
 	 * changes boolean isDipped to true upon meeting criteria
 	 */
 	public void dipStrip() {
+		//System.out.println("pHStrip X: " + movers.get(0).getY());
+		
 		// setting up logic for dipping pHStrip within testTube bounds
-		if(movers.get(0).getX() >= movers.get(1).getX()+testTubeSideFromBorder &&
-			movers.get(0).getX() <= (movers.get(1).getX()+testTubeImageWidth-testTubeSideFromBorder) &&
-			movers.get(0).getY() >= (movers.get(1).getY()+(testTubeImageHeight / 2)) &&
-			 movers.get(0).getY() <= (movers.get(1).getY()+testTubeImageHeight)) {
+		if(movers.get(0).getX() >= testTubeLeftSide &&
+			movers.get(0).getX() <= testTubeRightSide &&
+			movers.get(0).getY() >= testTubeWaterLevel &&
+			 movers.get(0).getY() <= testTubeBottom) {
 						
+			
+			
 				isDipped = true;
 				System.out.println("Strip is Dipped!!");
 		}

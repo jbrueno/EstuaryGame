@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -16,17 +17,37 @@ import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
+	// WS_COLLECT
 	Image bottle;
 	Image background; // used to switch between different backgrounds
 	Image background_collect;
+	Button btnReturn;
+	
+	
+	// WS_PH
 	Image background_lab;
 	Image testTube;
-	Image pHScale;
-	Button btnReturn;
 	Rectangle phStripBase;
-	Rectangle phStripColor;
+	Rectangle phStripColor; // just the tip of pH strip should get colored (smaller rect, overtop pHStripBase)
+	
+	
 	
 	Image pHStrip;
+	// pHScale Image dimensions & location
+	Image pHScale;
+	int pHScaleX = 300;
+	int pHScaleY = 0;
+	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
+	int pHScaleHeight = backgroundHeight / 5;
+	
+	Rectangle pHGuessBox; // Rectangle "Holding" the labels and buttons for guessing the pH
+	int pHGuessBoxX = pHScaleX + pHScaleWidth; // x-Loc
+	int pHGuessBoxY = backgroundHeight / 2; // y-Loc
+	int pHGuessBoxWidth = 300;
+	int pHGuessBoxHeight = 500;
+	
+	
+	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -110,6 +131,18 @@ public class WSView extends MinigameView{
 				draw(m);
 		}
 	}
+	
+	
+	public void drawpHGuessBox() {
+		pHGuessBox = new Rectangle();
+		pHGuessBox.setX(pHGuessBoxX);
+		pHGuessBox.setY(pHGuessBoxY);
+		pHGuessBox.setWidth(pHGuessBoxWidth);
+		pHGuessBox.setHeight(pHGuessBoxHeight);
+		pHGuessBox.setFill(Color.PEACHPUFF);
+		root.getChildren().add(pHGuessBox);
+	}
+	
 	
 	/*
 	void setUpLab() {
