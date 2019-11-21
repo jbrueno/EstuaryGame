@@ -38,17 +38,17 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
-		System.out.println(me.getEventType());
 		if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
 			try {
 				btnSourceID = ((Button) me.getSource()).getId();
+				System.out.println("SOURCE SET TO: " + btnSourceID);
 			} catch (ClassCastException e) {}
 		}
 		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+			System.out.println("DRAG DROPPED");
 			for (Mover m : movers) {
-				System.out.println(m.getX() + "  " + me.getY());
 				if (isCollision(m, me)) {
-					System.out.println("MATCHED " + m.getValue() + btnSourceID );
+					System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
 					MatchingAnimal ma = (MatchingAnimal) m;
 					if (!ma.isMatched && ma.isMatch()) {
 						System.out.println("MATCHED");
