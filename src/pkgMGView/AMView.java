@@ -117,6 +117,7 @@ public class AMView extends MinigameView{
 			b.setOnMouseClicked(e -> {selectedButton = b;});
 			b.setOnDragDetected(e -> {me = e;});
 			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
+			b.setStyle("-fx-font-weight: bold");
 			clueBox.getChildren().add(b);
 		}
 		
