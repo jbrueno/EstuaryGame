@@ -96,7 +96,7 @@ public class AMModel extends MinigameModel {
 				"We cluster together on hard surfaces underwater on what we call beds",
 				"I can produce a beautiful pearl!",
 				"I am an oyster!"})); 
-		animals.add(new MatchingAnimal(400, 700, 272, 185, "HSC", new String[]{
+		animals.add(new MatchingAnimal(400, 700, 272, 185, "HorseshoeCrab", new String[]{
 				"I have existed for 220 million years. I'm almost a dinosaur!",
 				"I eat mollusks and crustaceans on the ocean floor!",
 				"I must shed (molt) my shell in order to grow!",

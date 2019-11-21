@@ -86,6 +86,7 @@ public class AMView extends MinigameView{
 	@Override
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0);
 		for (Mover m : movers) {
 			draw(m);
 			//TEMPORARY UNTIL IMAGES ARE GOTTEN!
@@ -135,7 +136,7 @@ public class AMView extends MinigameView{
 
 	@Override
 	void importImages() {
-
+		background = new Image("backgrounds/background_animalmatching.png");
 	}
 	
 	/**
