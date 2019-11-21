@@ -91,7 +91,6 @@ public class WSModel extends MinigameModel{
 	
 	@Override
 	public void update(MouseEvent me) {		
-		
 		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
 		switch (gs) {
 		case START :
