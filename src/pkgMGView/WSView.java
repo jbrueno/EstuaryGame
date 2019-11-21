@@ -7,7 +7,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -27,20 +30,11 @@ public class WSView extends MinigameView{
 	// WS_PH
 	Image background_lab;
 	Image testTube;
-	Rectangle phStripBase;
-	Rectangle phStripColor; // just the tip of pH strip should get colored (smaller rect, overtop pHStripBase)
-	
-	
-	
-	// pHScale Image dimensions & location
-	Image pHScale;
-	int pHScaleX = 300;
-	int pHScaleY = 0;
-	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
-	int pHScaleHeight = backgroundHeight / 5;
+	Image phStrip;
+	Color phColor;
 	
 	Rectangle pHGuessBox; // Rectangle "Holding" the labels and buttons for guessing the pH
-	int pHGuessBoxX = pHScaleX + pHScaleWidth; // x-Loc
+	int pHGuessBoxX = backgroundHeight / 2;; // x-Loc
 	int pHGuessBoxY = backgroundHeight / 2; // y-Loc
 	int pHGuessBoxWidth = 300;
 	int pHGuessBoxHeight = 500;
@@ -57,6 +51,7 @@ public class WSView extends MinigameView{
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 		importImages();
 		setUpListeners();
+		
 		
 	} 
 	
@@ -79,7 +74,7 @@ public class WSView extends MinigameView{
 			background = background_lab;
 			break;
 		case WS_PH :
-			background = background_lab;			
+			background = background_lab;
 			break;
 		default:
 			break;
@@ -126,15 +121,18 @@ public class WSView extends MinigameView{
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
+		//gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
 		for (Mover m : movers) {
-			if(m.getValue().compareTo("PHStrip") != 0) { // draw all objects except PHStrip (no image)
 				draw(m);
 			}
-		}
 	}
 	
-	
+	public void updatepHColor(String phColor){
+		ColorInput ci = new ColorInput();
+	//	ColorInput(double x, double y, double width, double height, Paint paint)
+		
+		
+	}
 	public void drawpHGuessBox() {
 		pHGuessBox = new Rectangle();
 		pHGuessBox.setX(pHGuessBoxX);
@@ -145,22 +143,13 @@ public class WSView extends MinigameView{
 		root.getChildren().add(pHGuessBox);
 	}
 	
-	
-	/*
-	void setUpLab() {
-		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(pHScale, pHScaleX, pHScaleY, pHScaleWidth, pHScaleHeight);
-	}
-	*/
-	
-
 	@Override
 	void importImages() {
 		background_collect = new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.png");
 		background_lab = new Image("backgrounds/lab_background.png");
 		testTube = new Image("Mover/testtube.png");
-		pHScale = new Image("Backgrounds/pH_scale.png");
+		phStrip=new Image("Mover/pHStrip.png");
 		
 	}
 }
