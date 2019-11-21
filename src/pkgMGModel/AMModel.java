@@ -26,6 +26,8 @@ public class AMModel extends MinigameModel {
 	//button tracking for dragging animals during matching
 	private String btnSourceID = "";
 	
+	private int points = 100;
+	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
 		createAnimals();
@@ -37,18 +39,21 @@ public class AMModel extends MinigameModel {
 	@Override
 	public void update(MouseEvent me) {
 		System.out.println(me.getEventType());
-		if (me.getEventType() == MouseEvent.DRAG_DETECTED) {
+		if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
 			try {
 				btnSourceID = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
 		}
 		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
 			for (Mover m : movers) {
+				System.out.println(m.getX() + "  " + me.getY());
 				if (isCollision(m, me)) {
+					System.out.println("MATCHED " + m.getValue() + btnSourceID );
 					MatchingAnimal ma = (MatchingAnimal) m;
 					if (!ma.isMatched && ma.isMatch()) {
 						System.out.println("MATCHED");
-						score += 1;
+						score += points;
+						System.out.println("Score = " + score);
 					}				
 				}
 			}
@@ -69,39 +74,48 @@ public class AMModel extends MinigameModel {
 		animals.add(new MatchingAnimal(100, 100, 50, 50, "Snowy Grouper", new String[] {
 				"I can grow to up to 70 pounds!",
 				"I am very rare to find in the Delaware Bay!",
-				"I have pearly-white spots!"})); 
+				"I have pearly-white spots!",
+				"I am a Snowy Grouper!"})); 
 		animals.add(new MatchingAnimal(400, 400, 50, 50, "White-Tailed Deer",new String[] {
 				"While I live on land, I can swim up to 15 mph!",
 				"I use my tail to communicate with others!",
-				"I can grow to almost 4 ft tall!"}));
+				"I can grow to almost 4 ft tall!",
+				"I am a White-Tailed Deer"}));
 		animals.add(new MatchingAnimal(300, 350, 50, 50, "Mussel", new String[] {
 				"I attach to rocks with little threads I make that I call my beard!",
 				"I can survive above water by trapping water in with my shell!",
-				"I have a shiny black shell!"})); 
+				"I have a shiny black shell!",
+				"I am a Mussel!"})); 
 		animals.add(new MatchingAnimal(200, 700, 50, 50, "Blue Crab", new String[] {
 				"I eat small fish, snails, mussels, and plants!",
 				"I have learned to use my hind legs to help me swim!",
-				"I can grow up to 1 to 2 pounds!"})); 
+				"I can grow up to 1 to 2 pounds!",
+				"I am a Blue Crab!"})); 
 		animals.add(new MatchingAnimal(200, 500, 50, 50, "Oyster", new String[] {
 				"I feed on plankton by filtering water through my gills!",
 				"We cluster together on hard surfaces underwater on what we call beds",
-				"I can produce a beautiful pearl!"})); 
+				"I can produce a beautiful pearl!",
+				"I am an oyster!"})); 
 		animals.add(new MatchingAnimal(400, 700, 50, 50, "Horseshoe Crab", new String[]{
 				"I have existed for 220 million years. I'm almost a dinosaur!",
 				"I eat mollusks and crustaceans on the ocean floor!",
-				"I must shed (molt) my shell in order to grow!"}));
+				"I must shed (molt) my shell in order to grow!",
+				"I am a Horseshoe Crab!"}));
 		animals.add(new MatchingAnimal(250, 350, 50, 50, "Black Sea Bass", new String[] {
 				"In the fall, I migrate off-shore into coastal waters and the ocean",
 				"I can grow up to 2 feet and 9 pounds!",
-				"I sometimes have a long streamer coming off the top of my tail!"}));
+				"I sometimes have a long streamer coming off the top of my tail!",
+				"I am a Black Sea Bass!"}));
 		animals.add(new MatchingAnimal(600, 400, 50, 50, "Muskrat", new String[] {
 				"I am pretty small. I only weigh up to 4 pounds!",
 				"My tail is long and skinny!",
-				"I build my home by piling plants like cattails on top of tree stumps!"}));
+				"I build my home by piling plants like cattails on top of tree stumps!",
+				"I am a Muskrat!"}));
 		animals.add(new MatchingAnimal(700, 500, 50, 50, "Beaver", new String[] {
 				"My tail is flat and wide!",
 				"I usually grow up to be between 35 and 60 pounds",
-				"I build a dam as my home made of mud, logs, and sticks!"}));
+				"I build a dam as my home made of mud, logs, and sticks!",
+				"I am a Beaver!"}));
 	}
 	
 	/**
@@ -121,24 +135,7 @@ public class AMModel extends MinigameModel {
 		}
 		return new ArrayList<Mover>(tempMA);
 		
-	}
-	
-	/**
-	 * Determines whether the MouseEvent's location is currently within an ellipse created from the mover's imageWidth and 
-	 * imageHeight attributes. If it is, return <code>True</code>, else <code>false</code>
-	 * 
-	 * @author	Ryan Peters
-	 * @param m		Mover to test if the mouse is over it in terms of the view/image
-	 * @param me	MouseEvent from <code>View</code> of the current mouse position on screen 
-	 * @return
-	 */
-	public boolean isCollision(Mover m, MouseEvent me) {
-		double xDist = (Math.pow(m.getX() - me.getX(), 2) / Math.pow(m.getImageWidth() / 2, 2));
-		double yDist = (Math.pow(m.getY() - me.getY(), 2) / Math.pow(m.getImageHeight() / 2, 2));
-		double dist = xDist + yDist;
-		return dist < 1;
-	}
-	
+	}	
 	
 	public class MatchingAnimal extends Mover {
 		

@@ -53,9 +53,9 @@ public class AMView extends MinigameView{
 		if (!areButtonsMade) {
 			setUpListeners();
 			storeClues(movers);
-			areButtonsMade = true;
-			createScoreLabel(score);
+			areButtonsMade = true;	
 		}
+		createScoreLabel(score);
 		draw(movers);
 	}
 
@@ -150,11 +150,7 @@ public class AMView extends MinigameView{
 		private String[] clues;
 		private InfiniteIterator infit = new InfiniteIterator();
 		ClueList(String value, String[] clues) {
-			this.clues = new String[1 + clues.length];
-			this.clues[0] = value;
-			for (int i = 1; i < clues.length + 1; i++) {
-				this.clues[i] = clues[i-1];
-			}
+			this.clues = clues;
 		}
 		
 		public InfiniteIterator getIterator() {
