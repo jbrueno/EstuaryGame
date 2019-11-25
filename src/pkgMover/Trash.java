@@ -28,9 +28,7 @@ public class Trash extends SCMover{
 		return score - scoreChange;
 	}
 	
-	public void changeSpeed(int speed) {
-		setXIncr(speed);
-	}
+	
 
 
 

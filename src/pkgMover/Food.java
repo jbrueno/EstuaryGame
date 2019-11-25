@@ -11,6 +11,7 @@ public class Food extends SCMover {
 	 * constructor to be used within the SC model. It only allows input for the canvas width, because 
 	 * all other factors should be the same given the game design
 	 * 
+	 * @author HM
 	 * @param canvasWidth
 	 */
 	public Food(int canvasWidth, int y, int speed) {
@@ -19,30 +20,18 @@ public class Food extends SCMover {
 		this.collisionSpeedChange = 3;
 		this.setImageWidthAndHeight(100, 100);
 	}
-	
-	/**
-	 * the value that the speed of the xIncr of the terrapin will change after collision with 
-	 * this mover
-	 * 
-	 * @return in value of the speed change that will be added to the xIncr
-	 */
-	public int getCollisionSpeedChange() {
-		return collisionSpeedChange;
-	}
 
 	/**
 	 * Changes the current score based on the score change for the food object.
 	 * Adds scoreChange to current score
 	 * 
+	 * @author HM
 	 */
 	@Override
 	public int changeScore(int score) {
 		return score + scoreChange;
 	}
-	
-	public void changeSpeed(int speed) {
-		setXIncr(speed);
-	}
+
 
 
 	

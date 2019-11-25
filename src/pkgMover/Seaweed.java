@@ -2,10 +2,6 @@ package pkgMover;
 
 public class Seaweed extends SCMover{
 	
-	int speedChange = 1;
-	int scoreChange = 0;
-	int imageHeight = 100;
-	int imageWidth = 100;
 	
 	public Seaweed(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
@@ -23,30 +19,10 @@ public class Seaweed extends SCMover{
 		super(canvasWidth, canvasHeight, 100, 100, speed, 0, "Seaweed");
 	}
 	
-	/**
-	 * Changes the value of the speed of the mover it collides with 
-	 * 
-	 * @return int by which the speed will be changed upon collision
-	 */
-	public int getSCSpeedChange() {
-		return speedChange;
-	}
-	
-	/**
-	 * Changes the score of the SC game after collision with this mover, which will be a 0 change in score
-	 * 
-	 * @return int by which the score will be changed upon collision with this mover
-	 */
-	public int getSCScoreChange() {
-		return scoreChange;
-	}
-
 	@Override
 	public int changeScore(int score) {
 		return score;
 	}
 
-	public void changeSpeed(int speed) {
-		setXIncr(speed);
-	}
+	
 }

@@ -22,6 +22,12 @@ public class TrashTest {
 		assertTrue(t.getxIncr() == -100);
 	}
 	
+	@Test
+	public void trashConstructor_test() {
+		Trash t = new Trash(0, 0, 0, 0, 0, 0, "Trash");
+		assertTrue(t instanceof Trash);
+	}
+	
 	
 
 }

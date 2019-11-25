@@ -3,9 +3,6 @@ package pkgMover;
 public class Terrapin extends Mover {
 	
 	double airAmount;
-	int maxDist = 100;
-	int maxSpeed = 1;
-	
 
 	public Terrapin(int x, int y, int xIncr, int yIncr) {
 		super(x, y, 200, 200, xIncr, yIncr,"Terrapin");
@@ -54,7 +51,6 @@ public class Terrapin extends Mover {
 		setY(getY() + getYIncr());
 		setX(getX() + getxIncr());
 	}
-
 
 	
 	public double getAirAmount() {
