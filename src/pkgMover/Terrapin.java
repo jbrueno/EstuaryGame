@@ -25,36 +25,30 @@ public class Terrapin extends Mover {
 		System.out.println("breath taken");
 	}
 	
+	/**
+	 * called whenever the terrapin is under water, on each tick it reduces the air level of the terrapin
+	 *  
+	 * @author HM
+	 */
 	public void holdBreath() {
 		airAmount = airAmount - 0.5;
 		System.out.println("Terrapin breath level: " + airAmount);
 	}
 	
+
 	/**
-	 * change xIncr
+	 * Overriden terrapin move function that takes in the x and y coordinates of the mouse pointer.
+	 * The x is not considered because the terrapin's xIncr is always 0.
+	 * 
+	 * 
+	 * @author HM
 	 */
-	public void changeXIncr(int xChange) {
-		setXIncr(this.getxIncr() + xChange);
-	}
-	
 	@Override
 	public void move(double targetX, double targetY) {
-		if (getX() > 25) {
-			setXIncr(0);
-		} else if (targetX < getX() && getX() > 0) {
-			setXIncr(-1 * getxIncr());
-		} else if (targetX > getX() && getX() < 0) {
-			setXIncr(-1 * getxIncr());
-		}
-		
-		if (targetY < getY() - 10) {
-			if (getYIncr() > 0) {
-				setYIncr(-1 * getYIncr());
-			}
-		} else if (targetY > getY() - 10) {
-			if (getYIncr() < 0) {
-				setYIncr(-1 * getYIncr());
-			}
+		if (targetY < getY() && getYIncr() > 0) {
+			setYIncr(-1 * getYIncr());
+		} else if (targetY > getY() && getYIncr() < 0) {
+			setYIncr(-1 * getYIncr());
 		}
 		
 		setY(getY() + getYIncr());

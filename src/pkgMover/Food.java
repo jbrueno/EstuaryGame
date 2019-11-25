@@ -1,11 +1,6 @@
 package pkgMover;
 
 public class Food extends SCMover {
-	
-	public int scoreChange = 100;
-	public int speedChange = -2;
-	public int imageWidth = 50;
-	public int imageHeight = 50;
 
 	public Food(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
@@ -20,17 +15,9 @@ public class Food extends SCMover {
 	 */
 	public Food(int canvasWidth, int y, int speed) {
 		super(canvasWidth, y, 50, 50, speed, 0, "Food");
-	}
-	
-	/**
-	 * the value by which the score in SC will change based on collision with this mover
-	 * 
-	 * @return int the value of the score change, it will be added to the score of the SCgame
-	 *
-	 * @return
-	 */
-	public int getScoreChange() {
-		return scoreChange;
+		this.scoreChange = 100;
+		this.collisionSpeedChange = 3;
+		this.setImageWidthAndHeight(100, 100);
 	}
 	
 	/**
@@ -39,10 +26,15 @@ public class Food extends SCMover {
 	 * 
 	 * @return in value of the speed change that will be added to the xIncr
 	 */
-	public int getSpeedChange() {
-		return speedChange;
+	public int getCollisionSpeedChange() {
+		return collisionSpeedChange;
 	}
 
+	/**
+	 * Changes the current score based on the score change for the food object.
+	 * Adds scoreChange to current score
+	 * 
+	 */
 	@Override
 	public int changeScore(int score) {
 		return score + scoreChange;

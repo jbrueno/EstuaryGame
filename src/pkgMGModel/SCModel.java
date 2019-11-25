@@ -180,6 +180,6 @@ public class SCModel extends MinigameModel{
 	}
 	
 	public void changeCurrentSpeed(SCMover m) {
-		currentItemSpeed += m.getSpeedChange();
+		currentItemSpeed += m.getCollisionSpeedChange();
 	}
 }
