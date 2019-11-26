@@ -31,6 +31,7 @@ public class WSView extends MinigameView{
 	Image background; // used to switch between different backgrounds
 	Image background_collect;
 	Button btnReturn;
+	Button btnFill;
 	
 	
 	// WS_PH
@@ -83,7 +84,7 @@ public class WSView extends MinigameView{
 		this.scene = scene;
 		this.gc = gc;
 		
-		scene.addEventFilter(MouseEvent.ANY, eventHandler);
+		scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
 		importImages();
 		setUpListeners();
 		
@@ -98,14 +99,16 @@ public class WSView extends MinigameView{
 		}
 		updateScoreLabel(score);
 		
-		System.out.println("gs: " + gs);
+		//System.out.println("gs: " + gs);
 		
 		switch (gs) {
 		case WS_COLLECT :
 			background = background_collect;
+			drawFillButton();
 			break;
 		case WS_PH :
 			if(!labIsSetUp) {
+				root.getChildren().remove(btnFill);
 				background = background_lab;
 				drawpHLabel();
 				drawpHDisplay();
@@ -127,7 +130,16 @@ public class WSView extends MinigameView{
 	}
 
 	
-	
+	void drawFillButton() {
+		btnFill = new Button("fill");
+		btnFill.setLayoutX(50);
+		btnFill.setLayoutY(50);
+		btnFill.setOnMouseClicked(e -> {
+			me=e;
+			System.out.println("VIEW: " + me.getEventType());
+		});
+		root.getChildren().add(btnFill);
+	}
 	
 	
 	@Override

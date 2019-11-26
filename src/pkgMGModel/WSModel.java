@@ -27,6 +27,9 @@ public class WSModel extends MinigameModel{
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
 	
+	private String btnSourceID = "";
+	
+	
 	// WS_PH
 	
 	Mover pHStrip;
@@ -100,14 +103,17 @@ public class WSModel extends MinigameModel{
 		
 			//double startx, double starty, double endx, double endy)
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
+			
+			//System.out.println(me.getEventType());
 		
-			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED) {
 				fillBottle();
 			}
 			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
 			}
+			
 			break;
 		
 		
@@ -119,7 +125,7 @@ public class WSModel extends MinigameModel{
 			
 
 			pHStrip.move(me.getX(),me.getY());
-			System.out.println(pHStrip.getX() + ", " + pHStrip.getY());
+	//		System.out.println(pHStrip.getX() + ", " + pHStrip.getY());
 
 
 			dipStrip(); 
