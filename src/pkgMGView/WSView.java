@@ -31,8 +31,9 @@ public class WSView extends MinigameView{
 	Image background; // used to switch between different backgrounds
 	Image background_collect;
 	Button btnReturn;
-	Button btnFill;
 	Button btnLab;
+	Button btnFill;
+	boolean collectIsSetUp=false;
 	
 	// WS_PH
 	float pH; // Actual pH of Water
@@ -74,6 +75,7 @@ public class WSView extends MinigameView{
 	Button btnSubmit;
 	int btnSubmitX = btnIncreasepHX;
 	int btnSubmitY = btnDecreasepHY + 50;
+
 	
 	
 	
@@ -103,8 +105,11 @@ public class WSView extends MinigameView{
 		
 		switch (gs) {
 		case WS_COLLECT :
-			background = background_collect;
-			drawFillButton();
+			if(!collectIsSetUp) {
+				background = background_collect;
+				drawFillButton();
+				collectIsSetUp=true;
+			}
 			break;
 		case WS_PH :
 			if(!labIsSetUp) {
@@ -127,22 +132,6 @@ public class WSView extends MinigameView{
 		
 		draw(movers);
 
-	}
-
-	
-	void drawFillButton() {
-		btnFill = new Button();
-		btnFill.setText("fill");
-		btnFill.setLayoutX(50);
-		btnFill.setLayoutY(50);
-		btnFill.setOnMouseClicked(e -> {
-			me=e;
-			btnFill.setLayoutX(50);
-			btnFill.setLayoutY(150);
-			btnFill.setText("to laB!");
-		});
-		//btnFill.setText("to laB!");
-		root.getChildren().add(btnFill);
 	}
 	
 	
@@ -174,6 +163,8 @@ public class WSView extends MinigameView{
 			root.getChildren().remove(btnIncreasepH);
 			root.getChildren().remove(btnDecreasepH);
 			root.getChildren().remove(btnSubmit);
+			root.getChildren().remove(btnFill);
+			root.getChildren().remove(btnLab);
 			
 		});
 		root.getChildren().add(btnReturn);
@@ -189,6 +180,25 @@ public class WSView extends MinigameView{
 		}
 	}
 
+	void drawFillButton() {
+		btnFill = new Button("FILL");
+		btnFill.setLayoutX(50);
+		btnFill.setLayoutY(50);
+		btnFill.setOnMousePressed(e -> {
+			me=e;
+		});
+		
+		btnLab = new Button("lab");
+		btnLab.setLayoutX(50);
+		btnLab.setLayoutY(150);
+		btnLab.setOnMouseClicked(e -> {
+			me=e;
+		});
+		
+		root.getChildren().add(btnFill);
+		root.getChildren().add(btnLab);
+		
+	}
 	
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
