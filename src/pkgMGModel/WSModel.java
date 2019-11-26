@@ -3,6 +3,8 @@ package pkgMGModel;
 import java.util.Random;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -109,7 +111,7 @@ public class WSModel extends MinigameModel{
 			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED) {
 				fillBottle();
 			}
-			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED) {
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
 			}

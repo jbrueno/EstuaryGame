@@ -32,7 +32,7 @@ public class WSView extends MinigameView{
 	Image background_collect;
 	Button btnReturn;
 	Button btnFill;
-	
+	Button btnLab;
 	
 	// WS_PH
 	float pH; // Actual pH of Water
@@ -131,13 +131,17 @@ public class WSView extends MinigameView{
 
 	
 	void drawFillButton() {
-		btnFill = new Button("fill");
+		btnFill = new Button();
+		btnFill.setText("fill");
 		btnFill.setLayoutX(50);
 		btnFill.setLayoutY(50);
 		btnFill.setOnMouseClicked(e -> {
 			me=e;
-			System.out.println("VIEW: " + me.getEventType());
+			btnFill.setLayoutX(50);
+			btnFill.setLayoutY(150);
+			btnFill.setText("to laB!");
 		});
+		//btnFill.setText("to laB!");
 		root.getChildren().add(btnFill);
 	}
 	
