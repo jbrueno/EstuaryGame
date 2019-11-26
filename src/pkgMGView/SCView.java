@@ -39,10 +39,10 @@ public class SCView extends MinigameView  {
 	final Game theGame = Game.SIDESCROLLER;
 	Image background;
 	Node background2;
-	Image terrapin;
-	Image trash;
-	Image food;
-	Image seaweed;
+	Image Terrapin;
+	Image Trash;
+	Image Food;
+	Image Seaweed;
 	int seaweedHeight = 150;
 	int seaweedWidth = 150;
 	int trashHeight = 100;
@@ -152,13 +152,13 @@ public class SCView extends MinigameView  {
 		background = new Image("/backgrounds/sidescroller_background.png");
 		background2 = new ImageView("/backgrounds/sidescroller_background.png");
 		
-		terrapin = new Image("/Mover/bogturtle_right_0.png");
+		Terrapin = new Image("/Mover/bogturtle_right_0.png");
 		
-		trash = new Image("/Mover/can.png");
+		Trash = new Image("/Mover/can.png");
 		
-		food = new Image("/Mover/clam_left_2.png");
+		Food = new Image("/Mover/clam_left_2.png");
 		
-		seaweed = new Image("/Mover/cordgrass.png");
+		Seaweed = new Image("/Mover/cordgrass.png");
 	}
 
 	@Override
@@ -166,13 +166,17 @@ public class SCView extends MinigameView  {
 		
 		for (Mover m : movers) {
 			if (m instanceof Terrapin) {
-				gc.drawImage(terrapin, m.getX(), m.getY());
+				draw(m);
+		//	}
+				//gc.drawImage(terrapin, m.getX(), m.getY());
+				/*
 			} else if (m instanceof Trash) {
 				gc.drawImage(trash, m.getX(), m.getY(), trashWidth, trashHeight);
 			} else if (m instanceof Food) {
 				gc.drawImage(food, m.getX(), m.getY(), foodWidth, foodHeight);
 			} else if (m instanceof Seaweed) {
 				gc.drawImage(seaweed, m.getX(), m.getY(), seaweedWidth, seaweedHeight);
+			}*/
 			}
 		}
 		 
