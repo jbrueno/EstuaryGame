@@ -48,5 +48,7 @@ public abstract class SCMover extends Mover {
 		return xCol && yCol;
 
 	}
+	
+	
 
 }
