@@ -35,7 +35,7 @@ public class WSView extends MinigameView{
 	final int btnFillX = backgroundWidth*9/10;
 	final int btnFillY = backgroundHeight/3;
 	Button btnLab;
-	final double btnLabX=btnFillX;
+	final double btnLabX = btnFillX;
 	final double btnLabY = btnFillY+50;
 	boolean collectIsSetUp=false;
 	
@@ -50,6 +50,8 @@ public class WSView extends MinigameView{
 	Button phStripBox;
 	Image phBox;
 	ImageView ivphBox;
+	int phStripBoxX=0;
+	int phStripBoxY=backgroundHeight/5;
 	
 	Label pHLabel; // Label "Holding" the labels and buttons for guessing the pH
 	int pHLabelX = backgroundWidth/2; // x-Loc
@@ -232,7 +234,7 @@ public class WSView extends MinigameView{
 	
 	//updates the pHDisplay label to display most up to date guess
 	public void updatepHDisplay() {
-		System.out.println("guesspH: " + guesspH);
+	//	System.out.println("guesspH: " + guesspH);
 		pHDisplay.setText(""+guesspH);
 	}
 	
@@ -274,9 +276,10 @@ public class WSView extends MinigameView{
 		
 		phStripBox = new Button("", ivphBox);
 		phStripBox.setStyle("-fx-background-color: transparent;");
-		phStripBox.setLayoutX(0);
-		phStripBox.setLayoutY(50);
+		phStripBox.setLayoutX(phStripBoxX);
+		phStripBox.setLayoutY(phStripBoxY);
 		phStripBox.setOnMousePressed(e -> {
+			me=e;
 			scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
 		});
 		root.getChildren().add(phStripBox);
@@ -287,8 +290,8 @@ public class WSView extends MinigameView{
 	void importImages() {
 		phBox=new Image("Mover/phBox.png");
 		ivphBox=new ImageView(phBox);
-		 ivphBox.setFitHeight(50);
-		    ivphBox.setFitWidth(50);
+		 ivphBox.setFitHeight(150);
+		    ivphBox.setFitWidth(150);
 		background_collect = new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.png");
 		background_lab = new Image("backgrounds/lab_background.png");
