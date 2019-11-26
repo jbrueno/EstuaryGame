@@ -82,7 +82,7 @@ public class WSModel extends MinigameModel{
 			setPH();
 			pHStrip = new pHStrip(phX, phY, 0, 0, "pHStrip");
 			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
-			//movers.add(pHStrip);
+			movers.add(pHStrip);
 			movers.add(testTube);
 			break;
 		default:
@@ -107,7 +107,7 @@ public class WSModel extends MinigameModel{
 			
 			//System.out.println(me.getEventType());
 		
-			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				fillBottle();
 				System.out.println(me.getClickCount());
 			}
@@ -212,10 +212,7 @@ public class WSModel extends MinigameModel{
 		public pHStrip(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
-		
-		public void setColor(String color) {
-			
-		}
+
 	}
 	
 	

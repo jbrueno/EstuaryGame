@@ -31,8 +31,12 @@ public class WSView extends MinigameView{
 	Image background; // used to switch between different backgrounds
 	Image background_collect;
 	Button btnReturn;
-	Button btnLab;
 	Button btnFill;
+	final int btnFillX = backgroundWidth*9/10;
+	final int btnFillY = backgroundHeight/3;
+	Button btnLab;
+	final double btnLabX=btnFillX;
+	final double btnLabY = btnFillY+50;
 	boolean collectIsSetUp=false;
 	
 	// WS_PH
@@ -42,20 +46,16 @@ public class WSView extends MinigameView{
 	Image phStrip;
 	Color phColor;
 	boolean labIsSetUp = false;
-	// pHScale Image dimensions & location
-	Image pHScale;
-	int pHScaleX = 300;
-	int pHScaleY = 0;
-	int pHScaleWidth = backgroundWidth - (pHScaleX * 2);
-	int pHScaleHeight = backgroundHeight / 5;
-
+	
+	Button phStripBox;
+	Image phBox;
+	ImageView ivphBox;
+	
 	Label pHLabel; // Label "Holding" the labels and buttons for guessing the pH
-	int pHLabelX = pHScaleX + pHScaleWidth; // x-Loc
+	int pHLabelX = backgroundWidth/2; // x-Loc
 	int pHLabelY = backgroundHeight / 2; // y-Loc
 	int pHLabelWidth = 300;
 	int pHLabelHeight = 200;
-	
-	
 	
 	Label pHDisplay;
 	int pHDisplayX = pHLabelX + 25;
@@ -86,7 +86,7 @@ public class WSView extends MinigameView{
 		this.scene = scene;
 		this.gc = gc;
 		
-		scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
+		scene.addEventFilter(MouseEvent.MOUSE_ENTERED, eventHandler);
 		importImages();
 		setUpListeners();
 		
@@ -114,7 +114,9 @@ public class WSView extends MinigameView{
 		case WS_PH :
 			if(!labIsSetUp) {
 				root.getChildren().remove(btnFill);
+				root.getChildren().remove(btnLab);
 				background = background_lab;
+				drawpHBox();
 				drawpHLabel();
 				drawpHDisplay();
 				drawpHButtons();
@@ -181,16 +183,16 @@ public class WSView extends MinigameView{
 	}
 
 	void drawFillButton() {
-		btnFill = new Button("FILL");
-		btnFill.setLayoutX(50);
-		btnFill.setLayoutY(50);
+		btnFill = new Button("fill");
+		btnFill.setLayoutX(btnFillX);
+		btnFill.setLayoutY(btnFillY);
 		btnFill.setOnMousePressed(e -> {
 			me=e;
 		});
 		
-		btnLab = new Button("lab");
-		btnLab.setLayoutX(50);
-		btnLab.setLayoutY(150);
+		btnLab = new Button("to the lab");
+		btnLab.setLayoutX(btnLabX);
+		btnLab.setLayoutY(btnLabY);
 		btnLab.setOnMouseClicked(e -> {
 			me=e;
 		});
@@ -265,16 +267,28 @@ public class WSView extends MinigameView{
 					
 				});
 				root.getChildren().add(btnSubmit);
-				
-				
-				
-				
+
 	}
 	
+	void drawpHBox() {
+		
+		phStripBox = new Button("", ivphBox);
+		phStripBox.setStyle("-fx-background-color: transparent;");
+		phStripBox.setLayoutX(0);
+		phStripBox.setLayoutY(50);
+		phStripBox.setOnMousePressed(e -> {
+			scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
+		});
+		root.getChildren().add(phStripBox);
+	}
 
 
 	@Override
 	void importImages() {
+		phBox=new Image("Mover/phBox.png");
+		ivphBox=new ImageView(phBox);
+		 ivphBox.setFitHeight(50);
+		    ivphBox.setFitWidth(50);
 		background_collect = new Image("backgrounds/WaterSample.png");
 		bottle = new Image("Mover/Bottle.png");
 		background_lab = new Image("backgrounds/lab_background.png");
