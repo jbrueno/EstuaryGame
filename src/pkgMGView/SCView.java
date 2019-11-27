@@ -152,22 +152,23 @@ public class SCView extends MinigameView  {
 		background = new Image("/backgrounds/sidescroller_background.png");
 		background2 = new ImageView("/backgrounds/sidescroller_background.png");
 		
-		Terrapin = new Image("/Mover/bogturtle_right_0.png");
+		Terrapin = new Image("/Mover/Terrapin.png");
 		
-		Trash = new Image("/Mover/can.png");
+		Trash = new Image("/Mover/Trash.png");
 		
-		Food = new Image("/Mover/clam_left_2.png");
+		Food = new Image("/Mover/Food.png");
 		
-		Seaweed = new Image("/Mover/cordgrass.png");
+		Seaweed = new Image("/Mover/Seaweed.png");
 	}
 
 	@Override
 	public void draw(ArrayList<Mover> movers) {
 		
-		for (Mover m : movers) {
-			if (m instanceof Terrapin) {
-				draw(m);
-		//	}
+		for (Mover m : movers) {	
+			draw(m);
+		}
+	}
+		//	if (m instanceof Terrapin) {
 				//gc.drawImage(terrapin, m.getX(), m.getY());
 				/*
 			} else if (m instanceof Trash) {
@@ -176,11 +177,11 @@ public class SCView extends MinigameView  {
 				gc.drawImage(food, m.getX(), m.getY(), foodWidth, foodHeight);
 			} else if (m instanceof Seaweed) {
 				gc.drawImage(seaweed, m.getX(), m.getY(), seaweedWidth, seaweedHeight);
-			}*/
 			}
+			//}
 		}
 		 
-	}
+	}*/
 	
 	
 	public void makeScoreBox() {

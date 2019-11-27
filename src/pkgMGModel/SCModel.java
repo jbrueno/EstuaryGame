@@ -41,9 +41,9 @@ public class SCModel extends MinigameModel{
 		gs = GameState.INPROGRESS;
 		score = 0;
 		
-		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "cordgrass");
-		Seaweed s2 = new Seaweed(backgroundWidth/4, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "cordgrass");
-		Food f = new Food(backgroundWidth, backgroundHeight/2, 50, 50, currentItemSpeed, itemYSpeed, "clam_left_2");
+		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "Seaweed");
+		Seaweed s2 = new Seaweed(backgroundWidth/4, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "Seaweed");
+		Food f = new Food(backgroundWidth, backgroundHeight/2, 50, 50, currentItemSpeed, itemYSpeed, "Food");
 
 		items.add(s);
 		items.add(s2);
