@@ -53,10 +53,6 @@ public class SCModel extends MinigameModel{
 		for (Mover sc : items) {
 			movers.add(sc);
 		}
-		movers.add(s);
-		movers.add(s2);
-		movers.add(f);
-		movers.add(terry);
 	}
 
 	
