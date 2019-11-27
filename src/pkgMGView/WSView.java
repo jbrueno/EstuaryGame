@@ -90,7 +90,7 @@ public class WSView extends MinigameView{
 		
 		scene.addEventFilter(MouseEvent.MOUSE_ENTERED, eventHandler);
 		importImages();
-		setUpListeners();
+	//	setUpListeners();
 		
 	} 
 	
@@ -153,15 +153,16 @@ public class WSView extends MinigameView{
 	
 	
 
-	@Override
+	/*@Override
 	void setUpListeners() {
 		
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
 		btnReturn.setOnAction(e -> {
+			clearFX();
 			game = Game.MAINSCREEN;
-			removeScoreLabel();
+		/*	removeScoreLabel();
 			root.getChildren().remove(pHLabel);
 			root.getChildren().remove(pHDisplay);
 			root.getChildren().remove(btnIncreasepH);
@@ -172,7 +173,7 @@ public class WSView extends MinigameView{
 			
 		});
 		root.getChildren().add(btnReturn);
-	}
+	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {

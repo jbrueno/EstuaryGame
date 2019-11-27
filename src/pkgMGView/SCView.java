@@ -132,7 +132,7 @@ public class SCView extends MinigameView  {
 		
 	}
 
-	@Override
+	/*@Override
 	void setUpListeners() {
 		
 		
@@ -145,7 +145,7 @@ public class SCView extends MinigameView  {
 		});
 		root.getChildren().add(btnReturn);
 		
-	}
+	}*/
 
 	@Override
 	void importImages() {

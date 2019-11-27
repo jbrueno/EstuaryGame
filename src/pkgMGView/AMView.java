@@ -71,7 +71,7 @@ public class AMView extends MinigameView{
 		
 	}
 
-	@Override
+	/*@Override
 	void setUpListeners() {
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
@@ -81,7 +81,7 @@ public class AMView extends MinigameView{
 			removeScoreLabel();
 		});
 		root.getChildren().add(btnReturn);
-	}
+	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {

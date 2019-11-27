@@ -42,6 +42,7 @@ public abstract class MinigameView {
 	final Game theGame; // final in each subclass
 	boolean areButtonsMade = false;
 	Text scoreBox = new Text();
+	Button btnReturn;
 
 	Image gameOver;
 	int goX = (backgroundWidth / 2) - 250;
@@ -67,7 +68,7 @@ public abstract class MinigameView {
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
-	abstract void setUpListeners();
+	//abstract void setUpListeners();
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 
@@ -108,6 +109,18 @@ public abstract class MinigameView {
 	public Image loadImage(Mover m) {
 		Image img = new Image("Mover/" + m.getValue() + ".png");
 		return img;
+	}
+	
+	void setUpListeners() {
+		
+		btnReturn = new Button("Return");
+		btnReturn.setLayoutX(0);
+		btnReturn.setLayoutY(0);
+		btnReturn.setOnAction(e -> {
+			clearFX();
+			game = Game.MAINSCREEN;
+		});
+		root.getChildren().add(btnReturn);
 	}
 
 	public double getAngle(Direction d) {
