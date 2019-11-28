@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
+import pkgEnum.GameState;
 import pkgMover.DataNode;
 import pkgMover.Mover;
 import pkgMover.MatchingAnimal;
@@ -28,38 +29,57 @@ public class AMModel extends MinigameModel {
 	
 	private int points = 100;
 	
+	//flag used to determine if all MA's have been matched
+	boolean flag = false;
+	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
 		createAnimals();
 		movers = chooseAnimals();
 		System.out.println(movers);
+		gs = GameState.INPROGRESS;
 	}
 
 	
 	@Override
 	public void update(MouseEvent me) {
-		if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-			try {
-				btnSourceID = ((Button) me.getSource()).getId();
-				System.out.println("SOURCE SET TO: " + btnSourceID);
-			} catch (ClassCastException e) {}
-		}
-		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-			System.out.println("DRAG DROPPED");
-			for (Mover m : movers) {
-				if (isCollision(m, me)) {
-					System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
-					MatchingAnimal ma = (MatchingAnimal) m;
-					if (!ma.isMatched && ma.isMatch()) {
-						System.out.println("MATCHED");
-						score += points;
-						System.out.println("Score = " + score);
-					}				
+		switch (gs) {
+			case INPROGRESS: 
+				if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+					try {
+						btnSourceID = ((Button) me.getSource()).getId();
+						System.out.println("SOURCE SET TO: " + btnSourceID);
+					} catch (ClassCastException e) {}
 				}
-			}
+				if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+					System.out.println("DRAG DROPPED");
+					flag = true;
+					for (Mover m : movers) {
+						MatchingAnimal ma = (MatchingAnimal) m;
+						
+						if (!ma.isMatched) {
+							flag = false;
+						}
+						
+						if (isCollision(ma, me)) {
+							System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
+							if (!ma.isMatched && ma.isMatch()) {
+								System.out.println("MATCHED");
+								score += points;
+								System.out.println("Score = " + score);
+							}				
+						}
+						
+					}
+					
+					if (flag) {
+						gs = GameState.BONUS;
+						System.out.println("GS SWITCHED");
+					}					
+				}				
+		default:
+			break;		
 		}
-		
-		
 	}
 	
 	/**
@@ -170,6 +190,10 @@ public class AMModel extends MinigameModel {
 		
 		public String[] getClues() {
 			return clues;
+		}
+		
+		public boolean getIsMatched() {
+			return isMatched;
 		}
 	}	
 }
