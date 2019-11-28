@@ -1,5 +1,7 @@
 package pkgMover;
 
+import java.util.Objects;
+
 import pkgEnum.Direction;
 
 public abstract class Mover/* extends DataNode*/{
@@ -142,6 +144,20 @@ public abstract class Mover/* extends DataNode*/{
 	}
 	public String toString() {
 		return getValue() + ": " + x + " " + y; 
+	}
+	
+	@Override 
+	public int hashCode() {
+		return Objects.hash(value);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Mover) {
+			Mover m = (Mover) o;
+			return this.value.equals(m.getValue());
+		}
+		return false;
 	}
 	
 	
