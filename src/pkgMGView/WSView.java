@@ -109,44 +109,43 @@ public class WSView extends MinigameView{
 		//System.out.println("gs: " + gs);
 		
 		switch (gs) {
-		case WS_COLLECT :
-			if(!collectIsSetUp) {
-				background = background_collect;
-				drawFillButton();
-				addButtons(buttonList);
-				collectIsSetUp=true;
-			}
-			break;
-		case WS_PHTUTORIAL :
-			//background=background_lab;
-			if(!fxcleard) {
-				removeButtons(buttonList);
-				fxcleard=true;
-				background=background_lab;
-			
-			}
-		//	background=background_lab;
-			break;
-		case WS_PH :
-			if(!labIsSetUp) {
-				root.getChildren().remove(btnFill);
-				root.getChildren().remove(btnLab);
+			case WS_COLLECT :
+				if(!collectIsSetUp) {
+					background = background_collect;
+					drawFillButton();
+					addButtons(buttonList);
+					collectIsSetUp=true;
+				}
+				break;
+			case WS_PHTUTORIAL :
+				//background=background_lab;
+				if(!fxcleard) {
+					removeButtons(buttonList);
+					fxcleard=true;
+					background=background_lab;
+				
+				}
+			//	background=background_lab;
+				break;
+			case WS_PH :
+				if(!labIsSetUp) {
+					root.getChildren().remove(btnFill);
+					root.getChildren().remove(btnLab);
+					background = background_lab;
+					drawpHBox();
+					drawpHLabel();
+					drawpHDisplay();
+					drawpHButtons();
+					//addButtons(buttonList);
+					labIsSetUp = true;
+				}
+				updatepHDisplay();
+				break;
+			case WS_TEMP :
 				background = background_lab;
-				drawpHBox();
-				drawpHLabel();
-				drawpHDisplay();
-				drawpHButtons();
-				//addButtons(buttonList);
-				labIsSetUp = true;
-			}
-			updatepHDisplay();
-			break;
-		case WS_TEMP :
-			background = background_lab;
-			break;	
-		default:
-			break;
-		
+				break;	
+			default:
+				break;
 		}
 		
 		draw(movers);
