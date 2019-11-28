@@ -80,7 +80,7 @@ public class HSCView extends MinigameView {
 
 	}
 
-	void setUpListeners() {
+	/*void setUpListeners() {
 		btnReturn = new Button("Return");
 		btnReturn.setLayoutX(0);
 		btnReturn.setLayoutY(0);
@@ -88,7 +88,7 @@ public class HSCView extends MinigameView {
 			game = game.MAINSCREEN;
 		});
 		root.getChildren().add(btnReturn);
-	}
+	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {

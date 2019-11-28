@@ -12,8 +12,8 @@ import pkgMover.Food;
 import pkgMover.Mover;
 import pkgMover.SCMover;
 import pkgMover.Seaweed;
-import pkgMover.Terrapin;
 import pkgMover.Trash;
+import pkgMover.Terrapin;
 
 public class SCModel extends MinigameModel{
 	
@@ -49,13 +49,10 @@ public class SCModel extends MinigameModel{
 		items.add(s2);
 		items.add(f);
 		
-		movers.removeAll(getMovers());
-		
-		for (SCMover sc : items) {
+		//movers.removeAll(getMovers());
+		for (Mover sc : items) {
 			movers.add(sc);
 		}
-		
-		movers.add(terry);
 	}
 
 	
@@ -180,6 +177,6 @@ public class SCModel extends MinigameModel{
 	}
 	
 	public void changeCurrentSpeed(SCMover m) {
-		currentItemSpeed += m.getSpeedChange();
+		currentItemSpeed += m.getCollisionSpeedChange();
 	}
 }

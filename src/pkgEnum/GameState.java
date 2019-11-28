@@ -1,9 +1,5 @@
 package pkgEnum;
 
 public enum GameState {
-	//hello
-	
-
-	
-	START, INPROGRESS, FINISHED, BONUS, WS_COLLECT, WS_TEMP, WS_PH;
+	START, INPROGRESS, FINISHED, BONUS, WS_PHTUTORIAL, WS_COLLECT, WS_TEMP, WS_PH;
 }

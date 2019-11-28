@@ -9,8 +9,7 @@ package pkgMover;
 
 public abstract class SCMover extends Mover {
 	
-	int speedChange;
-	int scoreChange;
+	int collisionSpeedChange;
 
 	public SCMover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
@@ -31,8 +30,8 @@ public abstract class SCMover extends Mover {
 	 * 
 	 * @return int that is the value that the speed of the terrapin will change after collision with this object
 	 */
-	public int getSpeedChange() {
-		return speedChange;
+	public int getCollisionSpeedChange() {
+		return collisionSpeedChange;
 	}
 	
 	public abstract int changeScore(int score);
@@ -49,5 +48,7 @@ public abstract class SCMover extends Mover {
 		return xCol && yCol;
 
 	}
+	
+	
 
 }

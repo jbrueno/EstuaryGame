@@ -3,6 +3,8 @@ package pkgMGModel;
 import java.util.Random;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -27,13 +29,13 @@ public class WSModel extends MinigameModel{
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
 	
+	
 	// WS_PH
 	
 	Mover pHStrip;
+	boolean gotStrip=false;
 	final int pHStripWidth = 30;
 	final int pHStripHeight = 100;
-	final int phX =50;
-	final int phY= 50;
 	
 	final int pHMax=9;
 	final int pHMin=5;
@@ -76,9 +78,8 @@ public class WSModel extends MinigameModel{
 			break;
 		case WS_PH : 
 			setPH();
-			pHStrip = new pHStrip(phX, phY, 0, 0, "pHStrip");
+			pHStrip = new pHStrip(0, 0, 0, 0, "pHStrip");
 			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
-			movers.add(pHStrip);
 			movers.add(testTube);
 			break;
 		default:
@@ -99,42 +100,57 @@ public class WSModel extends MinigameModel{
 		
 			//double startx, double starty, double endx, double endy)
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
-		
-			if(Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			
+			//System.out.println(me.getEventType());
+			
+			//JUST FOR TUTORIAL TESTING///
+			if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+				movers.remove(Bottle);
+				gs=GameState.WS_PHTUTORIAL;
+			}
+			/////////
+			
+			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				fillBottle();
 			}
-			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
 				movers.remove(Bottle);
-				gs=GameState.WS_PH;
+				gs=GameState.WS_PHTUTORIAL;
 			}
+			
 			break;
 		
-		
+		case WS_PHTUTORIAL:
+			if(!labSet) { // if lab is not set up
+				addObjects(gs);
+				labSet = true;
+			}
+			break;
 		case WS_PH :
 			if(!labSet) { // if lab is not set up
 				addObjects(gs);
 				labSet = true;
 			}
 			
-
-			pHStrip.move(me.getX(),me.getY());
-			System.out.println(pHStrip.getX() + ", " + pHStrip.getY());
-
-
+			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+				if(!gotStrip) {
+					movers.add(pHStrip);
+					movers.add(testTube);
+					gotStrip=true;
+				}
+			}
+			//pHStrip.move(me.getX(),me.getY());
 			dipStrip(); 
-
 			break;
-		
-		
-			
+
 		case WS_TEMP :
 			break;
-		
-		
-		
+
 		default :
 			break;
 		}// end of switch
+		
+		System.out.println("gs: " + gs);
 	}	
 		
 	
@@ -161,6 +177,7 @@ public class WSModel extends MinigameModel{
 		Random rand = new Random();
 		pH=rand.nextInt((pHMax - pHMin) + 1) + pHMin;
 	}
+
 	
 	/**
 	 * @author Abrenner
@@ -197,10 +214,7 @@ public class WSModel extends MinigameModel{
 		public pHStrip(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
-		
-		public void setColor(String color) {
-			
-		}
+
 	}
 	
 	

@@ -42,6 +42,7 @@ public abstract class MinigameView {
 	final Game theGame; // final in each subclass
 	boolean areButtonsMade = false;
 	Text scoreBox = new Text();
+	Button btnReturn;
 
 	Image gameOver;
 	int goX = (backgroundWidth / 2) - 250;
@@ -62,12 +63,12 @@ public abstract class MinigameView {
 	int displayTimeY = 15;
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
-
+	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
-	abstract void setUpListeners();
+	//abstract void setUpListeners();
 	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 
@@ -108,6 +109,18 @@ public abstract class MinigameView {
 	public Image loadImage(Mover m) {
 		Image img = new Image("Mover/" + m.getValue() + ".png");
 		return img;
+	}
+	
+	void setUpListeners() {
+		
+		btnReturn = new Button("Return");
+		btnReturn.setLayoutX(0);
+		btnReturn.setLayoutY(0);
+		btnReturn.setOnAction(e -> {
+			clearFX();
+			game = Game.MAINSCREEN;
+		});
+		root.getChildren().add(btnReturn);
 	}
 
 	public double getAngle(Direction d) {
@@ -185,7 +198,7 @@ public abstract class MinigameView {
 	 */
 
 	public void draw(Mover m) {
-		gc.drawImage(loadImage(m), m.getTranslatedX(), m.getTranslatedY(), m.getImageWidth(), m.getImageWidth());
+		gc.drawImage(loadImage(m), m.getTranslatedX(), m.getTranslatedY(), m.getImageWidth(), m.getImageHeight());
 	}
 
 	public GraphicsContext getGC() {
@@ -303,7 +316,7 @@ public abstract class MinigameView {
 		backToMain.setLayoutX(backgroundWidth/2 - 100);
 		backToMain.setLayoutY(backgroundHeight/2 + 200);
 		backToMain.setOnAction(e -> {
-			game = game.MAINSCREEN;
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(backToMain);
 	}
@@ -317,5 +330,16 @@ public abstract class MinigameView {
 		b.setDisable(true);
 	}
 
+	public void addButtons(ArrayList<Button> buttons) {
+		for(Button b : buttons) {
+			root.getChildren().add(b);
+		}
+	}
+	
+	public void removeButtons(ArrayList<Button> buttons) {
+		for(Button b : buttons) {
+			root.getChildren().remove(b);
+		}
+	}
 
 }
