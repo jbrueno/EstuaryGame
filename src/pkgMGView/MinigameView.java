@@ -63,7 +63,7 @@ public abstract class MinigameView {
 	int displayTimeY = 15;
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
-
+	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);
@@ -316,7 +316,7 @@ public abstract class MinigameView {
 		backToMain.setLayoutX(backgroundWidth/2 - 100);
 		backToMain.setLayoutY(backgroundHeight/2 + 200);
 		backToMain.setOnAction(e -> {
-			game = game.MAINSCREEN;
+			game = Game.MAINSCREEN;
 		});
 		root.getChildren().add(backToMain);
 	}
@@ -330,5 +330,16 @@ public abstract class MinigameView {
 		b.setDisable(true);
 	}
 
+	public void addButtons(ArrayList<Button> buttons) {
+		for(Button b : buttons) {
+			root.getChildren().add(b);
+		}
+	}
+	
+	public void removeButtons(ArrayList<Button> buttons) {
+		for(Button b : buttons) {
+			root.getChildren().remove(b);
+		}
+	}
 
 }
