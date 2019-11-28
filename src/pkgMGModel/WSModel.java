@@ -103,18 +103,30 @@ public class WSModel extends MinigameModel{
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
 			//System.out.println(me.getEventType());
-		
+			
+			//JUST FOR TUTORIAL TESTING///
+			if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+				movers.remove(Bottle);
+				gs=GameState.WS_PHTUTORIAL;
+			}
+			/////////
+			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				fillBottle();
 			}
 			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
 				movers.remove(Bottle);
-				gs=GameState.WS_PH;
+				gs=GameState.WS_PHTUTORIAL;
 			}
 			
 			break;
 		
-		
+		case WS_PHTUTORIAL:
+			if(!labSet) { // if lab is not set up
+				addObjects(gs);
+				labSet = true;
+			}
+			break;
 		case WS_PH :
 			if(!labSet) { // if lab is not set up
 				addObjects(gs);
@@ -128,7 +140,7 @@ public class WSModel extends MinigameModel{
 					gotStrip=true;
 				}
 			}
-			pHStrip.move(me.getX(),me.getY());
+			//pHStrip.move(me.getX(),me.getY());
 			dipStrip(); 
 			break;
 
@@ -138,6 +150,8 @@ public class WSModel extends MinigameModel{
 		default :
 			break;
 		}// end of switch
+		
+		System.out.println("gs: " + gs);
 	}	
 		
 	

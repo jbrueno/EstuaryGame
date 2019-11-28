@@ -39,6 +39,9 @@ public class WSView extends MinigameView{
 	final double btnLabY = btnFillY+50;
 	boolean collectIsSetUp=false;
 	
+	//WS_PHTUTORIAL
+	Label phTutorialLabel;
+	
 	// WS_PH
 	float pH; // Actual pH of Water
 	Image background_lab;
@@ -79,7 +82,7 @@ public class WSView extends MinigameView{
 	int btnSubmitY = btnDecreasepHY + 50;
 
 	
-	
+	boolean fxcleard=false;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
@@ -110,8 +113,19 @@ public class WSView extends MinigameView{
 			if(!collectIsSetUp) {
 				background = background_collect;
 				drawFillButton();
+				addButtons(buttonList);
 				collectIsSetUp=true;
 			}
+			break;
+		case WS_PHTUTORIAL :
+			//background=background_lab;
+			if(!fxcleard) {
+				removeButtons(buttonList);
+				fxcleard=true;
+				background=background_lab;
+			
+			}
+		//	background=background_lab;
 			break;
 		case WS_PH :
 			if(!labIsSetUp) {
@@ -122,6 +136,7 @@ public class WSView extends MinigameView{
 				drawpHLabel();
 				drawpHDisplay();
 				drawpHButtons();
+				//addButtons(buttonList);
 				labIsSetUp = true;
 			}
 			updatepHDisplay();
@@ -182,7 +197,9 @@ public class WSView extends MinigameView{
 
 		for (Mover m : movers) {
 				draw(m);
+				
 		}
+		
 	}
 
 	void drawFillButton() {
@@ -199,12 +216,26 @@ public class WSView extends MinigameView{
 		btnLab.setOnMouseClicked(e -> {
 			me=e;
 		});
+		//adds buttons to list
+		buttonList.add(btnFill);
+		buttonList.add(btnLab);
 		
-		root.getChildren().add(btnFill);
-		root.getChildren().add(btnLab);
+		//draws buttonlist
+		//addButtons(buttonList);
 		
 	}
 	
+	public void drawTutorial() {
+		pHLabel = new Label("click me!");
+		pHLabel.setLayoutX(50);
+		pHLabel.setLayoutY(50);
+		pHLabel.setMinWidth(pHLabelWidth);
+		pHLabel.setMinHeight(pHLabelHeight);
+		
+		
+		pHLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY ,Insets.EMPTY )));
+		root.getChildren().add(pHLabel);
+	}
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
 	public void drawpHLabel() {
