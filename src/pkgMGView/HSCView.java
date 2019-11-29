@@ -31,6 +31,7 @@ public class HSCView extends MinigameView {
 	Image imgHSC;
 	Group lighting = new Group();
 	boolean areMade = false;
+	private boolean lightingRemoved = false;
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.HSCCOUNT);
@@ -48,21 +49,25 @@ public class HSCView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		createLightFX();
+		
 
 		//setUpListeners();
 		createScoreLabel(score);
 		createTimer(time);
 
 		if (gs == GameState.INPROGRESS) {
+			createLightFX();
 			draw(movers);
 		}
 
 		if (gs == GameState.FINISHED) {
-			lighting.getChildren().clear();
-			root.getChildren().remove(lighting);
+			if (!lightingRemoved) {
+				lighting.getChildren().clear();
+				root.getChildren().remove(lighting);
+				backToMainButton();
+				lightingRemoved = true;
+			}
 			drawGameOver();
-			backToMainButton();
 		}
 
 	}
