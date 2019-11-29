@@ -32,6 +32,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -40,7 +41,6 @@ import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;
 
 public class AMView extends MinigameView{
-	Button btnReturn;
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
@@ -58,7 +58,7 @@ public class AMView extends MinigameView{
 	final private int optionYBuffer = 100;
 	final private int optionsSpacing = 50;
 	final private int optionWidth = 200;
-	final private int optionHeight = 100;
+	final private int optionHeight = 30;
 	final private int optionBtnWidth = 200;
 	final private int optionBtnHeight = 150;
 	final private String question = "Who am I?";
@@ -66,6 +66,8 @@ public class AMView extends MinigameView{
 	private ArrayList<Button> optionButtons;
 	private GridPane bqGP = new GridPane();
 	final private int panePadding = 50;
+	private boolean bqGuessed = false;
+	private boolean buttonsDisabled = false;
 	
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.ANIMALMATCHING);
@@ -84,7 +86,6 @@ public class AMView extends MinigameView{
 		switch (gs) {
 			case INPROGRESS:
 				if (!areButtonsMade) {
-					setUpListeners();
 					storeClues(movers);
 					areButtonsMade = true;	
 				}
@@ -106,15 +107,18 @@ public class AMView extends MinigameView{
 				draw(movers);
 				
 				//pseudo-handler for ENTERED/EXITED_TARGET to remove highlightness from any Button (just one usually)
-				if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET || me.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
+				if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED) {
 					for (Node n : root.getChildren()) {
 						try {
 							VBox vbox = (VBox) n;
 							for (Node nn : vbox.getChildren()) {
 								Button b = (Button) nn;
-								b.setBorder(Border.EMPTY);
+								if (b.getBorder() != Border.EMPTY) {
+									b.setText(clueBank.get(b.getId()).getIterator().next());
+									b.setBorder(Border.EMPTY);
+								}
 							}
-						} catch (ClassCastException e) {}
+						} catch (ClassCastException e) {} catch (NullPointerException e) {}
 					}
 				}
 				
@@ -126,7 +130,29 @@ public class AMView extends MinigameView{
 					isBonusQuizMade = true;
 					setUpBonusQuiz(movers);
 				}
+				createScoreLabel(score);
 				
+				if (bqGuessed) {
+					if (!buttonsDisabled) {
+						for (Node n : root.getChildren()) {
+							try {
+								VBox vbox = (VBox) n;
+								for (Node nn : vbox.getChildren()) {
+									Button b = (Button) nn;
+									b.setDisable(true);
+								}
+							} catch (ClassCastException e) {}
+						}
+						buttonsDisabled = true;
+						
+						backToMainButton();
+					}
+					
+					drawGameOver();
+					
+					
+				break;	
+				}
 				
 			default:
 				break;
@@ -197,7 +223,7 @@ public class AMView extends MinigameView{
 		//format question
 		Label qLabel = new Label(question);
 		qLabel.setFont(new Font("Arial", 50));
-		qLabel.setAlignment(Pos.CENTER);
+		qLabel.setTextAlignment(TextAlignment.CENTER);
 		GridPane.setHalignment(qLabel, HPos.CENTER);
 		bqGP.add(qLabel, 0, 0);
 		
@@ -241,7 +267,10 @@ public class AMView extends MinigameView{
 			b.setId(m.getValue());
 			setBQButtonStyle(b);
 			b.setOnMouseClicked(e -> {
+				me = e;
+				System.out.println(me.getEventType() + " " + me.getSource());
 				b.setStyle("-fx-background-color: rgba(255,0,0,0.25);");
+				bqGuessed = true;
 			});
 			b.setPrefHeight(optionBtnHeight);
 			b.setPrefWidth(optionBtnWidth);
@@ -250,9 +279,14 @@ public class AMView extends MinigameView{
 		
 		Button bChosen = new Button(splitWordOnCaps(chosenMover.getValue()));
 		bChosen.setText(splitWordOnCaps(chosenMover.getValue()));
+		bChosen.setId(chosenMover.getValue());
 		setBQButtonStyle(bChosen);
 		bChosen.setOnMouseClicked(e -> {
-			bChosen.setStyle("-fx-background-color: rgba(0,255,0,0.25);");
+			me = e;
+			System.out.println(me.getEventType() + " " + me.getSource());
+			bChosen.setStyle("-fx-background-color: white; -fx-text-fill: green;-fx-font-weight: bold;fx-font-size: 15");
+			bqGuessed = true;
+			
 		});
 		bChosen.setPrefHeight(optionBtnHeight);
 		bChosen.setPrefWidth(optionBtnWidth);
@@ -263,21 +297,23 @@ public class AMView extends MinigameView{
 	}
 	
 	private void setMatchingButtonStyle(Button b) {
-		//set background as white and bold the text
-		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;");
+		//set background as white and bold the text, increase font size
+		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-font-size: 13;");
 		//keep text in button
 		b.setWrapText(true);
 		//center align text
-		b.setAlignment(Pos.CENTER);
+		b.setTextAlignment(TextAlignment.CENTER);
+		//set padding
+		b.setPadding(new Insets(2,2,2,2));
 	}
 	
 	private void setBQButtonStyle(Button b) {
-		//set background as white and bold the text
-		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-border-color: black");
+		//set background as white and bold the text, give black border, increase font size
+		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-font-size: 15;");
 		//keep text in button
 		b.setWrapText(true);
 		//center align text
-		b.setAlignment(Pos.CENTER);
+		b.setTextAlignment(TextAlignment.CENTER);
 	}
 	
 	private String splitWordOnCaps(String v) {

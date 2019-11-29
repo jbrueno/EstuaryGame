@@ -30,6 +30,7 @@ public class AMModel extends MinigameModel {
 	
 	private int POINTS_MATCHING = 100;
 	final private int POINTS_BQ = 300;
+	private boolean bqPointsGotten = false;
 	private boolean guessed = false;
 	private String correctMoverID;
 	
@@ -47,6 +48,8 @@ public class AMModel extends MinigameModel {
 	
 	@Override
 	public void update(MouseEvent me) {
+		
+		
 		switch (gs) {
 			case INPROGRESS: 
 				if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
@@ -56,7 +59,6 @@ public class AMModel extends MinigameModel {
 					} catch (ClassCastException e) {}
 				}
 				if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-					System.out.println("DRAG DROPPED");
 					flag = true;
 					for (Mover m : movers) {
 						MatchingAnimal ma = (MatchingAnimal) m;
@@ -70,7 +72,6 @@ public class AMModel extends MinigameModel {
 							} 
 						}
 						
-						System.out.println(ma + " " + ma.isMatched);
 						if (!ma.isMatched) {
 							flag = false;
 						}
@@ -88,13 +89,12 @@ public class AMModel extends MinigameModel {
 				if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 					try {
 						btnSourceID = ((Button) me.getSource()).getId();
+						
+						if (btnSourceID.equals(correctMoverID) && !bqPointsGotten) {
+							score += POINTS_BQ;
+							bqPointsGotten = true;
+						} 
 					} catch (ClassCastException e) {}
-					
-					if (btnSourceID.equals(correctMoverID)) {
-						score += POINTS_BQ;
-					} 
-					
-					guessed = true;
 				}
 				
 				
