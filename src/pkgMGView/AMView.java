@@ -98,30 +98,20 @@ public class AMView extends MinigameView{
 							b = (Button) n;
 							if (ma.getIsMatched() && b.getId().equals(ma.getValue())) {
 								disableButton(b);
+								b.setText((clueBank.get(b.getId())).getLast());
 								b.setBorder(Border.EMPTY);
 							}
-						}
-					} catch (ClassCastException e) {}
-				}
-				createScoreLabel(score);
-				draw(movers);
-				
-				//pseudo-handler for ENTERED/EXITED_TARGET to remove highlightness from any Button (just one usually)
-				if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED) {
-					for (Node n : root.getChildren()) {
-						try {
-							VBox vbox = (VBox) n;
-							for (Node nn : vbox.getChildren()) {
-								Button b = (Button) nn;
+							if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED ) {
 								if (b.getBorder() != Border.EMPTY) {
 									b.setText(clueBank.get(b.getId()).getIterator().next());
 									b.setBorder(Border.EMPTY);
 								}
 							}
-						} catch (ClassCastException e) {} catch (NullPointerException e) {}
-					}
+						}
+					} catch (ClassCastException e) {} catch (NullPointerException e) {}
 				}
-				
+				createScoreLabel(score);
+				draw(movers);				
 				break;
 			case BONUS:
 				if (!isBonusQuizMade) {
@@ -342,9 +332,8 @@ public class AMView extends MinigameView{
 			this.clues = clues;
 		}
 		
-		public InfiniteIterator getIterator() {
-			return infit;
-		}
+		public InfiniteIterator getIterator() {return infit;}
+		public String getLast() {return this.clues[clues.length - 1];}
 		
 		private class InfiniteIterator implements Iterator{
 			int cursor;
