@@ -21,13 +21,17 @@ public class AMModel extends MinigameModel {
 	//all possible MatchingAnimals to be chosen from
 	private ArrayList<MatchingAnimal> animals = new ArrayList<MatchingAnimal>();
 	
-	//max number of matching animals to be chosen as the ones for the game
-	final private int maxMAs = 7;
+	//max number of matching animals to be chosen as the ones for a game
+	final private int MAX_MATCH_ANIMALS = 7;
+	final private int MAX_BQMOVERS = 3; //bq = bonus quiz
 	
 	//button tracking for dragging animals during matching
 	private String btnSourceID = "";
 	
-	private int points = 100;
+	private int POINTS_MATCHING = 100;
+	final private int POINTS_BQ = 300;
+	private boolean guessed = false;
+	private String correctMoverID;
 	
 	//flag used to determine if all MA's have been matched
 	boolean flag = false;
@@ -35,7 +39,7 @@ public class AMModel extends MinigameModel {
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
 		createAnimals();
-		movers = chooseAnimals();
+		movers = reduceUntil(new ArrayList<Mover>(animals), MAX_MATCH_ANIMALS);
 		System.out.println(movers);
 		gs = GameState.INPROGRESS;
 	}
@@ -57,26 +61,43 @@ public class AMModel extends MinigameModel {
 					for (Mover m : movers) {
 						MatchingAnimal ma = (MatchingAnimal) m;
 						
-						if (!ma.isMatched) {
-							flag = false;
-						}
-						
 						if (isCollision(ma, me)) {
 							System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
 							if (!ma.isMatched && ma.isMatch()) {
 								System.out.println("MATCHED");
-								score += points;
+								score += POINTS_MATCHING;
 								System.out.println("Score = " + score);
-							}				
+							} 
+						}
+						
+						System.out.println(ma + " " + ma.isMatched);
+						if (!ma.isMatched) {
+							flag = false;
 						}
 						
 					}
 					
 					if (flag) {
 						gs = GameState.BONUS;
-						System.out.println("GS SWITCHED");
+						movers = reduceUntil(movers, MAX_BQMOVERS);
+						correctMoverID = movers.get(0).getValue();
 					}					
-				}				
+				}	
+				break;
+			case BONUS:
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+					try {
+						btnSourceID = ((Button) me.getSource()).getId();
+					} catch (ClassCastException e) {}
+					
+					if (btnSourceID.equals(correctMoverID)) {
+						score += POINTS_BQ;
+					} 
+					
+					guessed = true;
+				}
+				
+				
 		default:
 			break;		
 		}
@@ -88,7 +109,7 @@ public class AMModel extends MinigameModel {
 	 *Possibly change to loading from a file (making sure that when a new one is added, that an associated image
 	 *file in Mover/ exists.
 	 *
-	 *@author Ryan Peters, Andrew Brenner
+	 *@author Ryan Peters
 	 */
 	public void createAnimals() {
 		animals.add(new MatchingAnimal(300, 100, 200, 130, "SnowyGrouper", new String[] {
@@ -139,23 +160,23 @@ public class AMModel extends MinigameModel {
 	}
 	
 	/**
-	 * Randomly choose <code>maxMAs</code> number of MatchingAnimals from <code>animals</code> attribute so each
-	 * Matching Game is unique. Uses a HashSet to prevent duplicates, spawning a random number to index <code>animals</code>, and 
-	 * attempts to add this <code>tempMA</code> until the size reaches <code>maxMAs</code>
-	 * <p>
-	 * Method is to be only called once during construction of this class
+	 * Randomly choose <code>size</code> number of Movers from <code>arr</code>, returning an <code>ArrayList</code> 
+	 * with no duplicates.
 	 * 
 	 * @author Ryan Peters
-	 * @return	ArrayList<MatchingAnimal>	list of size <code>maxMAs</code> to be used for the game
+	 * @param	ArrayList<Mover> 	Original list of Movers to be reduced from
+	 * @param	int size			Number of Movers to be in the returned list
+	 * @return	ArrayList<Mover>	list of size <code>size</code> randomly chosen from <code>arr</code>
 	 */
-	private ArrayList<Mover> chooseAnimals() {
-		Set<MatchingAnimal> tempMA = new HashSet<MatchingAnimal>();
-		while (tempMA.size() < maxMAs) {
-			tempMA.add(animals.get(r.nextInt(animals.size())));
+	private ArrayList<Mover> reduceUntil(ArrayList<Mover> arr, int size) {
+		HashSet<Mover> newArr = new HashSet<Mover>();
+		while (newArr.size() < size) {
+			newArr.add(arr.get(r.nextInt(arr.size())));
 		}
-		return new ArrayList<Mover>(tempMA);
-		
-	}	
+		return new ArrayList<Mover>(newArr);
+	}
+	
+	
 	
 	public class MatchingAnimal extends Mover {
 		

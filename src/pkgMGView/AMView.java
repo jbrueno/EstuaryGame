@@ -1,22 +1,33 @@
 package pkgMGView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Timer;
 
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -37,6 +48,21 @@ public class AMView extends MinigameView{
 	private Button selectedButton;
 	
 	
+	//bonus quiz attributes
+	private boolean isBonusQuizMade = false;
+	private HBox optionsBox = new HBox();
+	final private int optionYBuffer = 100;
+	final private int optionsSpacing = 50;
+	final private int optionWidth = 200;
+	final private int optionHeight = 100;
+	final private int optionBtnWidth = 200;
+	final private int optionBtnHeight = 150;
+	final private String question = "Who am I?";
+	private Mover chosenMover;
+	private ArrayList<Button> optionButtons;
+	private GridPane bqGP = new GridPane();
+	final private int panePadding = 50;
+	
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.ANIMALMATCHING);
 		game = theGame;
@@ -50,38 +76,44 @@ public class AMView extends MinigameView{
 	
 
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		if (!areButtonsMade) {
-			setUpListeners();
-			storeClues(movers);
-			areButtonsMade = true;	
+		//gs = GameState.BONUS;
+		switch (gs) {
+			case INPROGRESS:
+				if (!areButtonsMade) {
+					setUpListeners();
+					storeClues(movers);
+					areButtonsMade = true;	
+				}
+				
+				for (Mover m : movers) {
+					MatchingAnimal ma = (MatchingAnimal) m;
+					try {
+						Button b;
+						for (Node n : clueBox.getChildren()) {
+							b = (Button) n;
+							if (ma.getIsMatched() && b.getId().equals(ma.getValue())) {
+								disableButton(b);
+							}
+						}
+					} catch (ClassCastException e) {}
+				}
+				createScoreLabel(score);
+				draw(movers);
+				break;
+			case BONUS:
+				if (!isBonusQuizMade) {
+					gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+					clearRootExceptCanvas();
+					isBonusQuizMade = true;
+					setUpBonusQuiz(movers);
+				}
+				
+				
+			default:
+				break;
 		}
-		createScoreLabel(score);
-		draw(movers);
-	}
-
-	@Override
-	void startTimer(int ms) {
-		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	void stopTimer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/*@Override
-	void setUpListeners() {
-		btnReturn = new Button("Return");
-		btnReturn.setLayoutX(0);
-		btnReturn.setLayoutY(0);
-		btnReturn.setOnAction(e -> {
-			game = Game.MAINSCREEN;
-			removeScoreLabel();
-		});
-		root.getChildren().add(btnReturn);
-	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {
@@ -89,9 +121,6 @@ public class AMView extends MinigameView{
 		gc.drawImage(background, 0, 0);
 		for (Mover m : movers) {
 			draw(m);
-			//TEMPORARY UNTIL IMAGES ARE GOTTEN!
-			//gc.strokeOval(m.getX() - m.getImageWidth() / 2, m.getY() - m.getImageHeight() / 2, 
-					//m.getImageWidth() * Math.sqrt(2), m.getImageHeight() * Math.sqrt(2));
 		}
 	}
 	
@@ -112,19 +141,19 @@ public class AMView extends MinigameView{
 			b.setText(clueBank.get(b.getId()).getIterator().next());
 			b.setPrefHeight(clueHeight);
 			b.setPrefWidth(clueWidth);
-			b.setWrapText(true);
-			b.setAlignment(Pos.CENTER);
+			setMatchingButtonStyle(b);
 			b.setOnMouseClicked(e -> {selectedButton = b;});
 			b.setOnDragDetected(e -> {me = e;});
 			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
 			b.setOnMouseDragged(e -> {me = e;});
-			b.setStyle("-fx-font-weight: bold");
 			clueBox.getChildren().add(b);
 		}
 		
 		btnHint = new Button("HINT");
 		btnHint.setPrefHeight(clueHeight);
 		btnHint.setPrefWidth(clueWidth);
+		btnHint.setId("hint");
+		setMatchingButtonStyle(btnHint);
 		btnHint.setOnMouseClicked(e -> {
 			if (selectedButton != null) {
 				selectedButton.setText(clueBank.get(selectedButton.getId()).getIterator().next());
@@ -141,11 +170,108 @@ public class AMView extends MinigameView{
 		background = new Image("backgrounds/background_animalmatching.png");
 	}
 	
+	private void setUpBonusQuiz(ArrayList<Mover> movers) {
+		//format question
+		Label qLabel = new Label(question);
+		qLabel.setFont(new Font("Arial", 50));
+		qLabel.setAlignment(Pos.CENTER);
+		GridPane.setHalignment(qLabel, HPos.CENTER);
+		bqGP.add(qLabel, 0, 0);
+		
+		//format image
+		optionButtons = chooseOptions(movers);
+		ImageView chosenImg = new ImageView(loadImage(chosenMover));
+		chosenImg.setFitHeight(400);
+		chosenImg.setFitWidth(400);
+		chosenImg.setPreserveRatio(true);
+		GridPane.setHalignment(chosenImg, HPos.CENTER);
+		bqGP.add(chosenImg, 0,1);
+		
+		//format multiple choice box/buttons
+		optionsBox.setAlignment(Pos.CENTER);
+		optionsBox.setSpacing(clueSpacing*2);
+		optionsBox.getChildren().addAll(optionButtons);
+		GridPane.setHalignment(optionsBox, HPos.CENTER);
+		bqGP.add(optionsBox, 0, 2);
+		
+		//format gridpane 
+		bqGP.setPrefHeight(backgroundHeight);
+		bqGP.setPrefWidth(backgroundWidth);
+		ColumnConstraints column = new ColumnConstraints();
+	    column.setPercentWidth(100);
+	    bqGP.getColumnConstraints().add(column);
+	    bqGP.setPadding(new Insets(panePadding, panePadding, panePadding, panePadding));
+	    bqGP.setVgap(panePadding/2);
+		
+		root.getChildren().add(bqGP);		
+	}
+	
+	private ArrayList<Button> chooseOptions(ArrayList<Mover> movers) {
+		//first mover is always the correct answer (until shuffle; this way model-view know the same info)
+		chosenMover = movers.get(0);
+		movers.remove(0);
+		
+		ArrayList<Button> btns = new ArrayList<Button>();
+		for (Mover m : movers) {
+			
+			Button b = new Button(splitWordOnCaps(m.getValue()));
+			b.setId(m.getValue());
+			setBQButtonStyle(b);
+			b.setOnMouseClicked(e -> {
+				b.setStyle("-fx-background-color: rgba(255,0,0,0.25);");
+			});
+			b.setPrefHeight(optionBtnHeight);
+			b.setPrefWidth(optionBtnWidth);
+			btns.add(b);
+		}
+		
+		Button bChosen = new Button(splitWordOnCaps(chosenMover.getValue()));
+		bChosen.setText(splitWordOnCaps(chosenMover.getValue()));
+		setBQButtonStyle(bChosen);
+		bChosen.setOnMouseClicked(e -> {
+			bChosen.setStyle("-fx-background-color: rgba(0,255,0,0.25);");
+		});
+		bChosen.setPrefHeight(optionBtnHeight);
+		bChosen.setPrefWidth(optionBtnWidth);
+		btns.add(bChosen);
+		
+		Collections.shuffle(btns);
+		return btns;
+	}
+	
+	private void setMatchingButtonStyle(Button b) {
+		//set background as white and bold the text
+		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;");
+		//keep text in button
+		b.setWrapText(true);
+		//center align text
+		b.setAlignment(Pos.CENTER);
+	}
+	
+	private void setBQButtonStyle(Button b) {
+		//set background as white and bold the text
+		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-border-color: black");
+		//keep text in button
+		b.setWrapText(true);
+		//center align text
+		b.setAlignment(Pos.CENTER);
+	}
+	
+	private String splitWordOnCaps(String v) {
+		String[] words = v.split("(?=[A-Z])");
+		String word = "";
+		for (String w : words) {
+			word = word + w + " ";			
+		}
+		return word.trim();
+	}
+	
+	
 	/**
 	 * A nested class that holds the clues with an iterator that loops through the list of clues continuously
 	 * <p>
 	 * In gameplay, we want the player to be able to "scroll" through the clues by clicking them then clicking "Hint" button.
-	 * This way, there is less logic to handle for a for-loop or other implementation (I hope)
+	 * This way, there is less logic to handle for a for-loop or other implementation 
 	 * 
 	 * @author Ryan Peters
 	 *
@@ -172,5 +298,12 @@ public class AMView extends MinigameView{
 
 			public boolean hasNext() {return true;}
 		}
-	}	
+	}
+
+
+
+	@Override
+	void startTimer(int ms) {}
+	@Override
+	void stopTimer() {}	
 }
