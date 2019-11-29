@@ -4,6 +4,7 @@ package pkgMGView;
 //testing branch
 //test
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Timer;
@@ -75,6 +76,9 @@ public abstract class MinigameView {
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
+	//pre-loaded images database
+	HashMap<String,Image> imgDB = new HashMap<String,Image>();
+	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);
 	abstract void stopTimer();
@@ -93,28 +97,35 @@ public abstract class MinigameView {
 	public MinigameView(Game theGame) {
 		this.theGame = theGame;
 	}
-
+	
 	/**
 	 * Finds and returns image associated with given Mover object
 	 * @param pkgName package to determine where image is located
 	 * @param m Mover - used to grab value attribute (name of image)
 	 * @return Image img - image associated with that particular Mover object
 	 */
-	public Image loadImage(String pkgName, Mover m) {
-		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); 
+	public Image loadImage(Mover m) {
+		return loadImage(m.getValue(), "Mover/");
+	}
+	
+	public Image loadBackgroundImage(String bgName) {
+		return loadImage(bgName,"backgrounds/");
+	}
+	
+	public Image loadButtonImage(String btnName) {
+		return loadImage(btnName,"Buttons/");
+	}
+	public Image loadImage(String key, String dir) {
+		Image img;
+		if (imgDB.containsKey(key)) {
+			return imgDB.get(key);
+		} 
+		System.out.println(dir + key + ".png");
+		img = new Image(dir + key + ".png");
+		imgDB.put(key, img);
 		return img;
 	}
 
-	
-	/**
-	 * Finds and returns image associated with given Mover object
-	 * @param m Mover - used to grab value attribute (name of image)
-	 * @return Image img - image associated with that particular Mover object
-	 */
-	public Image loadImage(Mover m) {
-		Image img = new Image("Mover/" + m.getValue() + ".png");
-		return img;
-	}
 	
 	void setUpListeners() {
 		
