@@ -20,8 +20,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -93,12 +97,27 @@ public class AMView extends MinigameView{
 							b = (Button) n;
 							if (ma.getIsMatched() && b.getId().equals(ma.getValue())) {
 								disableButton(b);
+								b.setBorder(Border.EMPTY);
 							}
 						}
 					} catch (ClassCastException e) {}
 				}
 				createScoreLabel(score);
 				draw(movers);
+				
+				//pseudo-handler for ENTERED/EXITED_TARGET to remove highlightness from any Button (just one usually)
+				if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET || me.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
+					for (Node n : root.getChildren()) {
+						try {
+							VBox vbox = (VBox) n;
+							for (Node nn : vbox.getChildren()) {
+								Button b = (Button) nn;
+								b.setBorder(Border.EMPTY);
+							}
+						} catch (ClassCastException e) {}
+					}
+				}
+				
 				break;
 			case BONUS:
 				if (!isBonusQuizMade) {
@@ -143,7 +162,11 @@ public class AMView extends MinigameView{
 			b.setPrefWidth(clueWidth);
 			setMatchingButtonStyle(b);
 			b.setOnMouseClicked(e -> {selectedButton = b;});
-			b.setOnDragDetected(e -> {me = e;});
+			b.setOnDragDetected(e -> {
+				me = e;
+				b.setBorder(new Border(new BorderStroke(Color.BLUE, 
+			            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+			});
 			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
 			b.setOnMouseDragged(e -> {me = e;});
 			clueBox.getChildren().add(b);
