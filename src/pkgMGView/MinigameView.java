@@ -3,6 +3,8 @@ package pkgMGView;
 //testing branch
 //test
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Timer;
 
 import javafx.collections.ObservableList;
@@ -43,6 +45,7 @@ public abstract class MinigameView {
 	boolean areButtonsMade = false;
 	Text scoreBox = new Text();
 	Button btnReturn;
+	Random r = new Random();
 
 	Image gameOver;
 	int goX = (backgroundWidth / 2) - 250;
@@ -341,5 +344,25 @@ public abstract class MinigameView {
 			root.getChildren().remove(b);
 		}
 	}
+	
+	
+	/**
+	 * Removes all children from <code>root</code> that aren't the canvas. 
+	 * <p>
+	 * Used for switching between FX's within the MinigameViews themselves rather than from one game to the other. Since <code>canvas</code>
+	 * is stored locally in View, we have no ability to access it, so we handle it this way instead.
+	 * 
+	 * @author Ryan Peters
+	 */
+	public void clearRootExceptCanvas() {
+		Iterator<Node> it = root.getChildren().iterator();
+		while (it.hasNext()) {
+			Node n = it.next();
+			if (!(n instanceof Canvas)) {
+				it.remove();
+			}
+		}
+	}
+	
 
 }
