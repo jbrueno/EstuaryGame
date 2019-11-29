@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import pkgEnum.Direction;
@@ -82,13 +83,16 @@ public class MainScreenView extends MinigameView {
 		btnSC = new Button("Side Scroller");
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
-		btnHSCC = new Button("Horseshoe Crab Count");
+		btnHSCC = new Button("", new ImageView(loadButtonImage("btnHSCC")));
+		setButtonBackgroundWhite(btnHSCC);
 		formatCircleButton(btnHSCC, 417.0, 587.0);
 		
-		btnAM = new Button("Animal Matching");
+		btnAM = new Button("", new ImageView(loadButtonImage("btnAM")));
+		setButtonBackgroundWhite(btnAM);
 		formatCircleButton(btnAM, 852.0, 202.0);
 		
-		btnWS = new Button("Water Sampling");
+		btnWS = new Button("",new ImageView(loadButtonImage("btnWS")));
+		setButtonBackgroundWhite(btnWS);
 		formatCircleButton(btnWS, 498.0, 85.0);
 		
 		root.getChildren().add(btnSC);
@@ -152,6 +156,10 @@ public class MainScreenView extends MinigameView {
 		} else {
 			draw(movers);
 		}
+	}
+	
+	private void setButtonBackgroundWhite(Button b) {
+		b.setStyle("-fx-background-color: white");
 	}
 
 }
