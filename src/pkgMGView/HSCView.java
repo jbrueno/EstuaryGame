@@ -29,7 +29,6 @@ import pkgMover.Mover;
 public class HSCView extends MinigameView {
 
 	Image imgHSC;
-	Button btnReturn;
 	Group lighting = new Group();
 	boolean areMade = false;
 
@@ -79,16 +78,6 @@ public class HSCView extends MinigameView {
 		// TODO Auto-generated method stub
 
 	}
-
-	/*void setUpListeners() {
-		btnReturn = new Button("Return");
-		btnReturn.setLayoutX(0);
-		btnReturn.setLayoutY(0);
-		btnReturn.setOnAction(e -> {
-			game = game.MAINSCREEN;
-		});
-		root.getChildren().add(btnReturn);
-	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {
