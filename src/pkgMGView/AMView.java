@@ -82,7 +82,6 @@ public class AMView extends MinigameView{
 	
 
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		//gs = GameState.BONUS;
 		switch (gs) {
 			case INPROGRESS:
 				if (!areButtonsMade) {
