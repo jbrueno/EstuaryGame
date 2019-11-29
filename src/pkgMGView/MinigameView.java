@@ -1,5 +1,6 @@
 package pkgMGView;
 
+
 //testing branch
 //test
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Timer;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -19,6 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
@@ -52,14 +57,16 @@ public abstract class MinigameView {
 	int goY = (backgroundHeight / 2) - 150;
 	int goWidth = 500;
 	int goHeight = 300;
-
+	int backToMainWidth = 500;
+	int backToMainHeight = 50;
+	int buffer = 25;
 	// ** need to modify update() to update total Score by getting sum of MiniGames
 	// **
 	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
 	int totalScore; // Overall score, sum of miniGameScores
 	Label scoreLabel = new Label();
-	final double scoreLabelX = backgroundWidth - 200;
-	final double scoreLabelY = 0;
+	int scoreLabelWidth = 150;
+	int scoreLabelHeight = 100;
 
 	Label displayTime = new Label();
 	int displayTimeX = (backgroundWidth / 2) - 150;
@@ -97,11 +104,6 @@ public abstract class MinigameView {
 		Image img = new Image(pkgName + "/" + m.getValue() + ".png"); 
 		return img;
 	}
-
-	/*
-	 * public Image loadImage(String pkgName, String imgName) { Image img = new
-	 * Image(pkgName + "/" + imgName + ".gif"); return img; }
-	 */
 
 	
 	/**
@@ -248,11 +250,13 @@ public abstract class MinigameView {
 	 *              with total score)
 	 */
 	public void createScoreLabel(int score) {
-		scoreLabel.setLayoutX(scoreLabelX);
-		scoreLabel.setLayoutY(scoreLabelY);
+		scoreLabel.setLayoutX(backgroundWidth - scoreLabelWidth - buffer);
+		scoreLabel.setLayoutY(buffer/2);
 		scoreLabel.setFont(new Font("Arial", 30));
 		scoreLabel.setTextFill(Color.PEACHPUFF);
 		scoreLabel.setText("Score: " + score);
+		scoreLabel.setTextAlignment(TextAlignment.CENTER);
+		scoreLabel.setStyle("-fx-font-weight: bold");
 		root.getChildren().remove(scoreLabel);
 		root.getChildren().add(scoreLabel);
 	}
@@ -311,16 +315,28 @@ public abstract class MinigameView {
 	
 	/**
 	 * Displays a button that returns the user back to the MainScreen once the game is over
+	 * Drawn in the bottom right corner and pulsates to draw attention to.
 	 * 
-	 * @author jbrueno
+	 * @author jbrueno, Ryan Peters
 	 */
 	public void backToMainButton() {
 		Button backToMain = new Button("Back to Main Screen");
-		backToMain.setLayoutX(backgroundWidth/2 - 100);
-		backToMain.setLayoutY(backgroundHeight/2 + 200);
+		backToMain.setLayoutX(backgroundWidth/2 - backToMainWidth/2);
+		backToMain.setLayoutY(backgroundHeight - backToMainHeight*2 - buffer);
+		backToMain.setPrefWidth(backToMainWidth);
+		backToMain.setPrefHeight(backToMainHeight);
+		backToMain.setTextAlignment(TextAlignment.CENTER);
+		backToMain.setStyle("-fx-background-color: blue;-fx-font-weight: bold;-fx-font-size: 30;-fx-text-fill: white");
 		backToMain.setOnAction(e -> {
 			game = Game.MAINSCREEN;
 		});
+		
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), backToMain);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.5);
+        fadeTransition.setCycleCount(Animation.INDEFINITE);
+        fadeTransition.setAutoReverse(true);
+        fadeTransition.play();
 		root.getChildren().add(backToMain);
 	}
 	
