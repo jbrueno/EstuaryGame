@@ -7,7 +7,6 @@ public class Trash extends SCMover{
 		// TODO Auto-generated constructor stub
 		this.scoreChange = 50;
 		this.collisionSpeedChange = 3;
-		this.setImageWidthAndHeight(100, 100);
 	}
 	
 	/**
@@ -16,11 +15,10 @@ public class Trash extends SCMover{
 	 * 
 	 * @param canvasWidth
 	 */
-	public Trash(int canvasWidth, int y, int speed) {
-		super(canvasWidth, y, 100, 100, speed, 0, "Trash");
+	public Trash(int x, int y, int speed) {
+		super(x, y, 100, 100, speed, 0, "Trash");
 		this.scoreChange = 50;
 		this.collisionSpeedChange = 3;
-		this.setImageWidthAndHeight(100, 100);
 	}
 
 	@Override

@@ -15,10 +15,9 @@ public class Food extends SCMover {
 	 * @param canvasWidth
 	 */
 	public Food(int canvasWidth, int y, int speed) {
-		super(canvasWidth, y, 50, 50, speed, 0, "Food");
+		super(canvasWidth, y, 100, 100, speed, 0, "Food");
 		this.scoreChange = 100;
 		this.collisionSpeedChange = 3;
-		this.setImageWidthAndHeight(100, 100);
 	}
 
 	/**

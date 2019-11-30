@@ -5,8 +5,7 @@ public class Terrapin extends Mover {
 		double airAmount;
 
 		public Terrapin(int x, int y, int xIncr, int yIncr) {
-			super(x, y, 200, 200, xIncr, yIncr,"Terrapin");
-			setImageWidthAndHeight(150, 150);
+			super(x, y, 240, 120, xIncr, yIncr,"Terrapin");
 			this.airAmount = 100;
 			this.setXIncr(0);
 		}

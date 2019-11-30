@@ -64,11 +64,6 @@ public abstract class Mover/* extends DataNode*/{
 	public int getImageHeight() {
 		return imageHeight;
 	}
-	
-	public void setImageWidthAndHeight(int x, int y) {
-		this.imageWidth = x;
-		this.imageHeight = y;
-	}
 
 	public double getXIncr() {
 		return xIncr;
