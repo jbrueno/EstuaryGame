@@ -19,7 +19,7 @@ public class SeaweedTest {
 	public void changeSpeed_test() {
 		Seaweed s = new Seaweed(100, 100, -10);
 		s.changeSpeed(-100);
-		assertTrue(s.getxIncr() == -100);
+		assertTrue(s.getXIncr() == -100);
 	}
 	
 	@Test

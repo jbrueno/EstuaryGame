@@ -27,7 +27,7 @@ public class TerrapinTest {
 		assertTrue(t.getYIncr() < 0);
 		t.move(200, 200);
 		assertTrue(t.getYIncr() > 0);
-		assertTrue(t.getxIncr() == 0);
+		assertTrue(t.getXIncr() == 0);
 		
 		
 	}

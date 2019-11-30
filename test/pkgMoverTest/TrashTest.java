@@ -19,7 +19,7 @@ public class TrashTest {
 	public void changeSpeed_test() {
 		Trash t = new Trash (100, 100, -10);
 		t.changeSpeed(-100);
-		assertTrue(t.getxIncr() == -100);
+		assertTrue(t.getXIncr() == -100);
 	}
 	
 	@Test

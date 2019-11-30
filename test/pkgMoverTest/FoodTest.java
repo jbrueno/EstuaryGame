@@ -20,7 +20,7 @@ public class FoodTest {
 	public void changeSpeed_test() {
 		Food f = new Food (100, 100, -10);
 		f.changeSpeed(-100);
-		assertTrue(f.getxIncr() == -100);
+		assertTrue(f.getXIncr() == -100);
 	}
 	
 	@Test
