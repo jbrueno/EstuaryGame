@@ -143,7 +143,7 @@ public class SCModel extends MinigameModel{
 
 	
 	public void addNewMover() {
-		int newMover = new Random().nextInt(10);
+		int newMover = r.nextInt(10);
 		if (newMover < 4)  {
 			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed);
 			System.out.println("seaweed added");
