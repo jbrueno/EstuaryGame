@@ -49,7 +49,7 @@ public class Terrapin extends Mover {
 			}
 			
 			setY(getY() + getYIncr());
-			setX(getX() + getxIncr());
+			setX(getX() + getXIncr());
 		}
 
 		

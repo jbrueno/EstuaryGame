@@ -70,7 +70,7 @@ public abstract class Mover/* extends DataNode*/{
 		this.imageHeight = y;
 	}
 
-	public double getxIncr() {
+	public double getXIncr() {
 		return xIncr;
 	}
 	
