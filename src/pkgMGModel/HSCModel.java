@@ -54,7 +54,7 @@ public class HSCModel extends MinigameModel {
 		int buffer = r.nextInt(10);
 
 		if (isOffScreen(m)) {
-			m.setValue("HSC");
+			((HSC) m ).unTag();
 			if (m.getX() < -iWidth) {
 				m.setX(backgroundWidth + buffer);
 				m.setY(r.nextInt(backgroundHeight));
@@ -107,6 +107,7 @@ public class HSCModel extends MinigameModel {
 		boolean tagged;
 		static final int hscWidth = 200;
 		static final int hscHeight = 136;
+		final int DEFAULT_SPEED_INCREASE = 2;
 
 		public HSC(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 200, 136, xIncr, yIncr, "HSC");
@@ -120,6 +121,28 @@ public class HSCModel extends MinigameModel {
 		public void tag() {
 			this.tagged = true;
 			super.setValue("HSCTagged");
+			increaseSpeed();
+		}
+		
+		public void unTag() {
+			this.tagged = false;
+			super.setValue("HSC");
+		}
+		
+		private void increaseSpeed() {
+			System.out.println((int) (super.getXIncr()/2.0));
+			System.out.println((int) (super.getYIncr()/2.0));
+			if (super.getXIncr() >= 0) {
+				super.setXIncr(super.getXIncr() + r.nextInt((int) (1 + super.getXIncr()/2.0)) + DEFAULT_SPEED_INCREASE);
+			} else {
+				super.setXIncr(super.getXIncr() - r.nextInt((int) Math.abs(-1 + super.getXIncr()/2.0)) - DEFAULT_SPEED_INCREASE);
+			}
+			
+			if (super.getYIncr() >= 0) {
+				super.setYIncr(super.getYIncr() + r.nextInt((int) (1 + super.getYIncr()/2.0)) + DEFAULT_SPEED_INCREASE);
+			} else {
+				super.setYIncr(super.getYIncr() - r.nextInt((int) Math.abs(-1 + super.getYIncr()/2.0)) - DEFAULT_SPEED_INCREASE);
+			}
 		}
 	}
 
