@@ -49,14 +49,11 @@ public class HSCView extends MinigameView {
 
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		
-
-		//setUpListeners();
-		createScoreLabel(score);
-		createTimer(time);
 
 		if (gs == GameState.INPROGRESS) {
 			createLightFX();
+			createScoreLabel(score);
+			createTimer(time);
 			draw(movers);
 		}
 
@@ -65,6 +62,8 @@ public class HSCView extends MinigameView {
 				lighting.getChildren().clear();
 				root.getChildren().remove(lighting);
 				backToMainButton();
+				createScoreLabel(score);
+				createTimer(time);
 				lightingRemoved = true;
 			}
 			drawGameOver();
