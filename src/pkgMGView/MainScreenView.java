@@ -80,7 +80,8 @@ public class MainScreenView extends MinigameView {
 	}
 	
 	private void setUpButtons() {
-		btnSC = new Button("Side Scroller");
+		btnSC = new Button("",new ImageView(loadButtonImage("btnSC")));
+		setButtonBackgroundWhite(btnSC);
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
 		btnHSCC = new Button("", new ImageView(loadButtonImage("btnHSCC")));
