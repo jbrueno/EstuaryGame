@@ -24,8 +24,9 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight-100;
 	
 	int waterLevel = backgroundHeight/2;
-	int shallowLevel=backgroundHeight*3/5;
-	int correctLevel=backgroundHeight*7/10;
+	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
+	final private int CORRECT_LEVEL = 395; //center of the gradient guide
+	final private int MAX_COLLECT_POINTS = 200;
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
 	
@@ -85,9 +86,6 @@ public class WSModel extends MinigameModel{
 		default:
 			break;
 		}
-		
-		
-		
 	}
 	
 	@Override
@@ -111,6 +109,7 @@ public class WSModel extends MinigameModel{
 			/////////
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				System.out.println("FILLING BOTTLE");
 				fillBottle();
 			}
 			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
@@ -166,16 +165,24 @@ public class WSModel extends MinigameModel{
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
-		if(Bottle.getY()>=shallowLevel && Bottle.getY()<correctLevel) {
-			score+=50;
-		} else if (Bottle.getY()>=correctLevel && Bottle.getY()<deepLevel) {
-			score+=100;
-		}
+		score += calculateCollectSore();
 	}
 	
 	public void setPH() {
-		Random rand = new Random();
-		pH=rand.nextInt((pHMax - pHMin) + 1) + pHMin;
+		pH=r.nextInt((pHMax - pHMin) + 1) + pHMin;
+	}
+	
+	/*
+	 * Calculates the Collecting Water Score by mapping the Bottle's current height within the gradient image on the background.
+	 * The closer the bottle is to the middle, the more points you get, maximum being <code>MAX_COLLECT_POINTS</code>.
+	 * 
+	 * @author Ryan Peters
+	 * @returns	score
+	 */
+	private int calculateCollectSore() {
+		if (Bottle.getY() < waterLevel) {return 0;}
+		int cScore = (int) (MAX_COLLECT_POINTS -  (2 * Math.abs(CORRECT_LEVEL - Bottle.getY())));
+		return (cScore < 0) ? 0 : cScore;
 	}
 
 	
