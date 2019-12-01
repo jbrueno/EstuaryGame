@@ -117,16 +117,6 @@ public class WSView extends MinigameView{
 					collectIsSetUp=true;
 				}
 				break;
-			case WS_PHTUTORIAL :
-				//background=background_lab;
-				if(!fxcleard) {
-					removeButtons(buttonList);
-					fxcleard=true;
-					background=background_lab;
-				
-				}
-			//	background=background_lab;
-				break;
 			case WS_PH :
 				if(!labIsSetUp) {
 					root.getChildren().remove(btnFill);
@@ -147,6 +137,7 @@ public class WSView extends MinigameView{
 			default:
 				break;
 		}
+		
 		draw(movers);
 
 	}

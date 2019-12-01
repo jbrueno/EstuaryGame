@@ -104,7 +104,7 @@ public class WSModel extends MinigameModel{
 			//JUST FOR TUTORIAL TESTING///
 			if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
 				movers.remove(Bottle);
-				gs=GameState.WS_PHTUTORIAL;
+				gs=GameState.WS_PH;
 			}
 			/////////
 			
@@ -114,17 +114,11 @@ public class WSModel extends MinigameModel{
 			}
 			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
 				movers.remove(Bottle);
-				gs=GameState.WS_PHTUTORIAL;
+				gs=GameState.WS_PH;
 			}
 			
 			break;
 		
-		case WS_PHTUTORIAL:
-			if(!labSet) { // if lab is not set up
-				addObjects(gs);
-				labSet = true;
-			}
-			break;
 		case WS_PH :
 			if(!labSet) { // if lab is not set up
 				addObjects(gs);
