@@ -147,7 +147,6 @@ public class WSView extends MinigameView{
 			default:
 				break;
 		}
-		
 		draw(movers);
 
 	}

@@ -16,8 +16,8 @@ public class WSModel extends MinigameModel{
 	 
 	// WS_COLLECT
 	Mover Bottle;
-	final int bottleImageWidth = 75;
-	final int bottleImageHeight = 75;
+	final int bottleImageWidth = 268;
+	final int bottleImageHeight = 100;
 	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
