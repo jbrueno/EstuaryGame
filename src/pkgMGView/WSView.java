@@ -40,7 +40,16 @@ public class WSView extends MinigameView{
 	boolean collectIsSetUp=false;
 	
 	//WS_PHTUTORIAL
-	Label phTutorialLabel;
+	Label pHTutorialLabel;
+	int pHTutorialX = 0;
+	int pHTutorialY = backgroundHeight*2/5;
+	int tutorialStep = 0;
+	
+	Button btnPlay;
+	final double btnPlayX = backgroundWidth*4/5;
+	final double btnPlayY = backgroundHeight*4/5;
+	boolean play=false;
+
 	
 	// WS_PH
 	float pH; // Actual pH of Water
@@ -117,6 +126,25 @@ public class WSView extends MinigameView{
 					collectIsSetUp=true;
 				}
 				break;
+			case WS_PHTUTORIAL:
+				if(!labIsSetUp) {
+					root.getChildren().remove(btnFill);
+					root.getChildren().remove(btnLab);
+					background = background_lab;
+					drawpHBox();
+					drawpHLabel();
+					drawpHDisplay();
+					drawpHButtons();
+					setUpTutorial();
+					labIsSetUp = true;
+				}
+				updateTutorialStep(me);
+				drawTutorial(tutorialStep);
+				updatepHDisplay();
+				if(play) {
+					gs=GameState.WS_PH;
+				}
+				break;
 			case WS_PH :
 				if(!labIsSetUp) {
 					root.getChildren().remove(btnFill);
@@ -139,7 +167,7 @@ public class WSView extends MinigameView{
 		}
 		
 		draw(movers);
-
+		System.out.println(gs);
 	}
 	
 	
@@ -154,30 +182,6 @@ public class WSView extends MinigameView{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-
-	/*@Override
-	void setUpListeners() {
-		
-		btnReturn = new Button("Return");
-		btnReturn.setLayoutX(0);
-		btnReturn.setLayoutY(0);
-		btnReturn.setOnAction(e -> {
-			clearFX();
-			game = Game.MAINSCREEN;
-		/*	removeScoreLabel();
-			root.getChildren().remove(pHLabel);
-			root.getChildren().remove(pHDisplay);
-			root.getChildren().remove(btnIncreasepH);
-			root.getChildren().remove(btnDecreasepH);
-			root.getChildren().remove(btnSubmit);
-			root.getChildren().remove(btnFill);
-			root.getChildren().remove(btnLab);
-			
-		});
-		root.getChildren().add(btnReturn);
-	}*/
 
 	@Override
 	void draw(ArrayList<Mover> movers) {
@@ -213,17 +217,52 @@ public class WSView extends MinigameView{
 		//addButtons(buttonList);
 		
 	}
+	public void setUpTutorial() {
+		pHTutorialLabel = new Label();
+		pHTutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
+		pHTutorialLabel.setFont(new Font("Arial", 25));
+		root.getChildren().add(pHTutorialLabel);
+	}
 	
-	public void drawTutorial() {
-		pHLabel = new Label("click me!");
-		pHLabel.setLayoutX(50);
-		pHLabel.setLayoutY(50);
-		pHLabel.setMinWidth(pHLabelWidth);
-		pHLabel.setMinHeight(pHLabelHeight);
-		
-		
-		pHLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY ,Insets.EMPTY )));
-		root.getChildren().add(pHLabel);
+	public void updateTutorialStep(MouseEvent m) {
+		if (m.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			tutorialStep=1;
+		} else if (tutorialStep==1 && 
+		//TODO FIX MAGIC NUMBERS
+			m.getX() >= 365 &&
+			m.getX() <= 485 &&
+			m.getY() >= 425 &&
+			m.getY() <= 680) {
+				tutorialStep=2;
+		}
+	}
+	public void drawTutorial(int step) {
+
+		switch(step) {
+		case 0:
+			pHTutorialLabel.setText("Click box to get pH testing strip!");
+			break;
+		case 1:
+			pHTutorialX=backgroundWidth/2;
+			pHTutorialY=backgroundHeight/10;
+			pHTutorialLabel.setText("Move mouse to dip strip in water!");
+			break;
+		case 2:
+			pHTutorialX=backgroundWidth*4/5;
+			pHTutorialY=backgroundHeight/2;
+			pHTutorialLabel.setText("Match pH with scale \nand enter your guess!");
+			
+			btnPlay=new Button("Ready to Play!");
+			btnPlay.setLayoutX(btnPlayX);
+			btnPlay.setLayoutY(btnPlayY);
+			btnPlay.setOnMousePressed(e -> {
+				me=e;
+			});
+			root.getChildren().add(btnPlay);
+			break;
+		}
+		pHTutorialLabel.setLayoutX(pHTutorialX);
+		pHTutorialLabel.setLayoutY(pHTutorialY);
 	}
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
@@ -299,7 +338,7 @@ public class WSView extends MinigameView{
 		phStripBox.setStyle("-fx-background-color: transparent;");
 		phStripBox.setLayoutX(phStripBoxX);
 		phStripBox.setLayoutY(phStripBoxY);
-		phStripBox.setOnMousePressed(e -> {
+		phStripBox.setOnMouseClicked(e -> {
 			me=e;
 			scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
 		});

@@ -61,10 +61,8 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-
-	//	gs = GameState.WS_COLLECT; 
-
-		gs = GameState.WS_COLLECT; /////
+		//gs = GameState.WS_COLLECT;
+		gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -76,6 +74,12 @@ public class WSModel extends MinigameModel{
 		case WS_COLLECT :
 			Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
 			movers.add(Bottle);
+			break;
+		case WS_PHTUTORIAL:
+			setPH();
+			pHStrip = new pHStrip(0, 0, 0, 0, "pHStrip");
+			testTube = new testTube(testTubeX, testTubeY, 0, 0, "testtube");
+			movers.add(testTube);
 			break;
 		case WS_PH : 
 			setPH();
@@ -118,21 +122,40 @@ public class WSModel extends MinigameModel{
 			}
 			
 			break;
-		
-		case WS_PH :
+		case WS_PHTUTORIAL :
 			if(!labSet) { // if lab is not set up
 				addObjects(gs);
 				labSet = true;
 			}
 			
-			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+			if(me.getEventType()==MouseEvent.MOUSE_CLICKED) {
 				if(!gotStrip) {
 					movers.add(pHStrip);
 					movers.add(testTube);
 					gotStrip=true;
 				}
 			}
-			//pHStrip.move(me.getX(),me.getY());
+			pHStrip.move(me.getX(),me.getY());
+			dipStrip(); 
+			
+			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+				gs=GameState.WS_PH;
+			}
+			break;
+		case WS_PH :
+			if(!labSet) { // if lab is not set up
+				addObjects(gs);
+				labSet = true;
+			}
+			
+			if(me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+				if(!gotStrip) {
+					movers.add(pHStrip);
+					movers.add(testTube);
+					gotStrip=true;
+				}
+			}
+			pHStrip.move(me.getX(),me.getY());
 			dipStrip(); 
 			break;
 
@@ -143,7 +166,6 @@ public class WSModel extends MinigameModel{
 			break;
 		}// end of switch
 		
-		System.out.println("gs: " + gs);
 	}	
 		
 	
