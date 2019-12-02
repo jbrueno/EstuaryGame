@@ -39,15 +39,10 @@ public class SCModel extends MinigameModel{
 		terry = new Terrapin(100, backgroundHeight/2, 0, 10);
 		time = 600;
 		
-		gs = GameState.INPROGRESS;
+		gs = GameState.TUTORIAL;
 		score = 0;
 		
-		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, seaweedHeight, seaweedHeight, currentItemSpeed, itemYSpeed, "Seaweed");
-		Seaweed s2 = new Seaweed(backgroundWidth/4, backgroundHeight - seaweedY, seaweedHeight, seaweedHeight, currentItemSpeed, itemYSpeed, "Seaweed");
 		Food f = new Food(backgroundWidth, backgroundHeight/2, seaweedHeight/2, seaweedHeight/2, currentItemSpeed, itemYSpeed, "Food");
-
-		items.add(s);
-		items.add(s2);
 		items.add(f);
 		
 		//movers.removeAll(getMovers());
@@ -70,14 +65,15 @@ public class SCModel extends MinigameModel{
 	 */
 	@Override
 	public void update(MouseEvent me) {
-		if (! timerSet) {
-			setUpTimer();
-			timerSet = true;
-		}
+		switch(gs) {
+			case INPROGRESS:
+				if (! timerSet) {
+					setUpTimer();
+					timerSet = true;
+				}
 		
-		
-		if (terry.getY() <= waterThreshold) {
-			terry.breathe();
+				if (terry.getY() <= waterThreshold) {
+					terry.breathe();
 		} else {
 			if (terry.getAirAmount() > 0) {
 				terry.holdBreath();

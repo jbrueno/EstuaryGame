@@ -99,6 +99,7 @@ public abstract class MinigameView {
 	
 	//TUTORIAL
 	abstract void drawTutorial(int step);
+	abstract void updateTutorialStep(MouseEvent me);
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);

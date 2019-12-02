@@ -56,6 +56,7 @@ public class SCView extends MinigameView  {
 	double breathBarY = 50;
 	double breathBarHeight = 10;
 	int lungCapacity = 100;
+	boolean tutorialSet = false;
 	//private ParallelTransition parallelTransition;
 	
 
@@ -81,6 +82,7 @@ public class SCView extends MinigameView  {
 
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		
+		
 		updateScoreLabel(score);
 		createTimer(time);
 		
@@ -105,6 +107,7 @@ public class SCView extends MinigameView  {
 			}
 		}
 		
+		
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
 		} else if (gs == GameState.FINISHED) {
@@ -112,6 +115,12 @@ public class SCView extends MinigameView  {
 				backToMainButton();
 			}
 			drawGameOver();
+		} else if (gs == GameState.TUTORIAL) {
+			draw(movers);
+			if (!tutorialSet) {
+				setUpTutorial();
+				tutorialSet = true;
+			}
 			
 		}
 		 
@@ -134,21 +143,6 @@ public class SCView extends MinigameView  {
 		
 	}
 
-	/*@Override
-	void setUpListeners() {
-		
-		
-		btnReturn = new Button("Return");
-		btnReturn.setLayoutX(0);
-		btnReturn.setLayoutY(0);
-		btnReturn.setOnAction(e -> {
-			game = Game.MAINSCREEN;
-			removeScoreLabel();
-		});
-		root.getChildren().add(btnReturn);
-		
-	}*/
-
 	@Override
 	void importImages() {
 		background = new Image("/backgrounds/sidescroller_background.png");
@@ -165,25 +159,10 @@ public class SCView extends MinigameView  {
 
 	@Override
 	public void draw(ArrayList<Mover> movers) {
-		
 		for (Mover m : movers) {	
 			draw(m);
 		}
 	}
-		//	if (m instanceof Terrapin) {
-				//gc.drawImage(terrapin, m.getX(), m.getY());
-				/*
-			} else if (m instanceof Trash) {
-				gc.drawImage(trash, m.getX(), m.getY(), trashWidth, trashHeight);
-			} else if (m instanceof Food) {
-				gc.drawImage(food, m.getX(), m.getY(), foodWidth, foodHeight);
-			} else if (m instanceof Seaweed) {
-				gc.drawImage(seaweed, m.getX(), m.getY(), seaweedWidth, seaweedHeight);
-			}
-			//}
-		}
-		 
-	}*/
 	
 	
 	public void makeScoreBox() {
@@ -226,6 +205,11 @@ public class SCView extends MinigameView  {
 	@Override
 	void drawTutorial(int step) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	void updateTutorialStep(MouseEvent me) {
 		
 	}
 	
