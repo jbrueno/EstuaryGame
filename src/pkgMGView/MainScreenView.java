@@ -26,6 +26,11 @@ public class MainScreenView extends MinigameView {
 	private Button btnWS; //water sampling 
 	private int btnSize = 45;
 	
+	private boolean amPlayed = false;
+	private boolean hsccPlayed = false;
+	private boolean scPlayed = false;
+	private boolean wsPlayed = false;
+	
 	public MainScreenView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.MAINSCREEN);
 		game = theGame;
@@ -59,22 +64,22 @@ public class MainScreenView extends MinigameView {
 		
 		btnSC.setOnAction(e -> {
 				game = Game.SIDESCROLLER;
-				disableButton(btnSC);
+				scPlayed = true;
 		});
 		
 		btnHSCC.setOnAction(e -> {
 				game = Game.HSCCOUNT;
-				disableButton(btnHSCC);
+				hsccPlayed = true;
 		});
 		
 		btnAM.setOnAction(e -> {
 			game = Game.ANIMALMATCHING;
-			disableButton(btnAM);
+			amPlayed = true;
 		});
 		
 		btnWS.setOnAction(e -> {
 			game = Game.WATERSAMPLING;
-			disableButton(btnWS);
+			wsPlayed = true;
 		});
 		
 	}
@@ -82,24 +87,25 @@ public class MainScreenView extends MinigameView {
 	private void setUpButtons() {
 		btnSC = new Button("",new ImageView(loadButtonImage("btnSC")));
 		setButtonBackgroundWhite(btnSC);
+		btnSC.setDisable(scPlayed);
 		formatCircleButton(btnSC, 909.0, 482.0);
 		
 		btnHSCC = new Button("", new ImageView(loadButtonImage("btnHSCC")));
 		setButtonBackgroundWhite(btnHSCC);
+		btnHSCC.setDisable(hsccPlayed);
 		formatCircleButton(btnHSCC, 417.0, 587.0);
 		
 		btnAM = new Button("", new ImageView(loadButtonImage("btnAM")));
 		setButtonBackgroundWhite(btnAM);
+		btnAM.setDisable(amPlayed);
 		formatCircleButton(btnAM, 852.0, 202.0);
 		
 		btnWS = new Button("",new ImageView(loadButtonImage("btnWS")));
 		setButtonBackgroundWhite(btnWS);
+		btnWS.setDisable(wsPlayed);
 		formatCircleButton(btnWS, 498.0, 85.0);
 		
-		root.getChildren().add(btnSC);
-		root.getChildren().add(btnHSCC);
-		root.getChildren().add(btnAM);
-		root.getChildren().add(btnWS);
+		root.getChildren().addAll(btnSC, btnHSCC, btnAM, btnWS);
 	}
 	
 	/**
