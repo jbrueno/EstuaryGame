@@ -50,6 +50,7 @@ public class AMView extends MinigameView{
 	private HashMap<String, ClueList> clueBank;
 	private Button btnHint;
 	private Button selectedButton;
+	private Button draggingButton;
 	
 	
 	//bonus quiz attributes
@@ -82,6 +83,7 @@ public class AMView extends MinigameView{
 	
 
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
+		System.out.println(me.getEventType());
 		switch (gs) {
 			case INPROGRESS:
 				if (!areButtonsMade) {
@@ -101,6 +103,7 @@ public class AMView extends MinigameView{
 								b.setBorder(Border.EMPTY);
 							}
 							if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED ) {
+								draggingButton.setVisible(false);
 								if (b.getBorder() != Border.EMPTY) {
 									b.setText(clueBank.get(b.getId()).getIterator().next());
 									b.setBorder(Border.EMPTY);
@@ -109,6 +112,11 @@ public class AMView extends MinigameView{
 						}
 					} catch (ClassCastException e) {} catch (NullPointerException e) {}
 				}
+				
+				if (draggingButton != null) {
+					
+				}
+				
 				createScoreLabel(score);
 				draw(movers);				
 				break;
@@ -166,6 +174,8 @@ public class AMView extends MinigameView{
 		clueBox.setTranslateY(clueYBuffer);
 		clueBox.setSpacing(clueSpacing);
 		
+		makeDraggingButton();
+		
 		
 		for (Mover m : movers) {
 			AMModel.MatchingAnimal ma = (AMModel.MatchingAnimal) m;
@@ -183,7 +193,14 @@ public class AMView extends MinigameView{
 			            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 			});
 			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
-			b.setOnMouseDragged(e -> {me = e;});
+			b.setOnMouseDragged(e -> {
+				me = e;
+				draggingButton.setVisible(true);
+				draggingButton.setText(b.getText());
+				draggingButton.setStyle(b.getStyle());
+				draggingButton.setLayoutX(me.getSceneX());
+				draggingButton.setLayoutY(me.getSceneY());
+			});
 			clueBox.getChildren().add(b);
 		}
 		
@@ -305,6 +322,16 @@ public class AMView extends MinigameView{
 		b.setTextAlignment(TextAlignment.CENTER);
 	}
 	
+	/**
+	 * Splits a CamelCase word into its individual words
+	 * <p>
+	 * Used in parsing the mover's <code>value</code> attribute (normally used to load images) into the animal name in the
+	 * Matching Game.
+	 * 
+	 * @author Ryan Peters
+	 * @param v		inputted CamelCase word
+	 * @return		the CamelCase word split into its individual words
+	 */
 	private String splitWordOnCaps(String v) {
 		String[] words = v.split("(?=[A-Z])");
 		String word = "";
@@ -312,6 +339,24 @@ public class AMView extends MinigameView{
 			word = word + w + " ";			
 		}
 		return word.trim();
+	}
+	
+	
+	/**
+	 * Initializes the button copy that follows the mouse when draggin a clue to the animal/mover on screen. The button
+	 * is invisible by default until a drag occurs and has the same formatting as a clue button.
+	 * 
+	 * @author Ryan Peters 
+	 * @see storeClues(ArrayList<Mover> movers)
+	 */
+	private void makeDraggingButton() {
+		draggingButton = new Button();
+		draggingButton.setVisible(false);
+		draggingButton.setPrefHeight(clueHeight);
+		draggingButton.setPrefWidth(clueWidth);
+		setMatchingButtonStyle(draggingButton);
+		draggingButton.setDisable(true);
+		root.getChildren().add(draggingButton);
 	}
 	
 	
