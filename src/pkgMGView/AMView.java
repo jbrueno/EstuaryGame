@@ -40,6 +40,14 @@ import pkgMover.Mover;
 import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;
 
+/**
+ * The View for Animal Matching minigame. All handling of this class is done by the <code>View</code> when this View is loaded into 
+ * <code>currGame</code> as the current game for updating/playing.
+ * 
+ * @author Ryan Peters
+ * @see MinigameView
+ *
+ */
 public class AMView extends MinigameView{
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
@@ -49,7 +57,7 @@ public class AMView extends MinigameView{
 	private VBox clueBox;
 	private HashMap<String, ClueList> clueBank;
 	private Button btnHint;
-	private Button selectedButton;
+	private Button selectedButton = new Button();
 	private Button draggingButton;
 	
 	
@@ -70,6 +78,13 @@ public class AMView extends MinigameView{
 	private boolean bqGuessed = false;
 	private boolean buttonsDisabled = false;
 	
+	/**
+	 * Constructor which saves local copies of GraphicsContext, Root, and Scene from <code>View</code> so that
+	 * graphics may be loaded upon them.
+	 * @param gc	<code>GraphicsContext</code> from <code>View</code>
+	 * @param root	<code>root</code> from <code>View</code>
+	 * @param scene	<code>scene</code> from <code>View</code>
+	 */
 	public AMView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.ANIMALMATCHING);
 		game = theGame;
@@ -82,8 +97,18 @@ public class AMView extends MinigameView{
 	}
 	
 
+	/**
+	 * The main method for AMView that calls all other methods used within the class. Takes the GameState <code>gs</code> and runs/loads
+	 *  the proper set of GUI for that game including all images dictated by <code>movers</code> from <code>AMModel</code>
+	 *  
+	 *  @author Ryan Peters
+	 *  @param movers	list of Movers for drawing and loading in GUI
+	 *  @param gs		Enum used to determine which part of the game should be loaded
+	 *  @param score	number of points user has accumulated for this game so far
+	 *  @param time		current amount of time left to be displayed on timer (not used in this game)
+	 */
+	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		System.out.println(me.getEventType());
 		switch (gs) {
 			case INPROGRESS:
 				if (!areButtonsMade) {
@@ -102,12 +127,13 @@ public class AMView extends MinigameView{
 								b.setText((clueBank.get(b.getId())).getLast());
 								b.setBorder(Border.EMPTY);
 							}
-							if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED ) {
-								draggingButton.setVisible(false);
+							if (me.getEventType() == MouseEvent.MOUSE_DRAGGED || me.getEventType() == MouseEvent.DRAG_DETECTED ) {
 								if (b.getBorder() != Border.EMPTY) {
 									b.setText(clueBank.get(b.getId()).getIterator().next());
 									b.setBorder(Border.EMPTY);
 								}
+							} else {
+								draggingButton.setVisible(false);
 							}
 						}
 					} catch (ClassCastException e) {} catch (NullPointerException e) {}
@@ -120,6 +146,7 @@ public class AMView extends MinigameView{
 				createScoreLabel(score);
 				draw(movers);				
 				break;
+				
 			case BONUS:
 				if (!isBonusQuizMade) {
 					gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
@@ -157,6 +184,13 @@ public class AMView extends MinigameView{
 		
 	}
 
+	/**
+	 * Clears the <code>Canvas</code> and then draws each Mover.
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of Movers to be drawn 
+	 * @see MinigameView.update()
+	 */
 	@Override
 	void draw(ArrayList<Mover> movers) {
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
@@ -166,6 +200,14 @@ public class AMView extends MinigameView{
 		}
 	}
 	
+	/**
+	 * On first tick of the game only (handled in <code>update()</code>), store all Movers as Buttons within an <code>VBox</code>
+	 * called <code>clueBox</code>. Also, sets up Hint Button <code>btnHint</code> and <code>draggingButton</code>, that button that
+	 * follows the mouse when dragging from clue to image.
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of Movers for the clues to be 
+	 */
 	private void storeClues(ArrayList<Mover> movers) {
 		clueBank = new HashMap<String, ClueList>();
 		clueBox = new VBox();
@@ -186,18 +228,20 @@ public class AMView extends MinigameView{
 			b.setPrefHeight(clueHeight);
 			b.setPrefWidth(clueWidth);
 			setMatchingButtonStyle(b);
-			b.setOnMouseClicked(e -> {selectedButton = b;});
-			b.setOnDragDetected(e -> {
-				me = e;
+			//show selected button
+			b.setOnMouseClicked(e -> {
+				selectedButton.setBorder(Border.EMPTY);
+				selectedButton = b;
 				b.setBorder(new Border(new BorderStroke(Color.BLUE, 
 			            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 			});
+			b.setOnDragDetected(e -> {me = e;});
 			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
+			//update draggingButton/copy of selectedButton
 			b.setOnMouseDragged(e -> {
 				me = e;
 				draggingButton.setVisible(true);
 				draggingButton.setText(b.getText());
-				draggingButton.setStyle(b.getStyle());
 				draggingButton.setLayoutX(me.getSceneX());
 				draggingButton.setLayoutY(me.getSceneY());
 			});
@@ -219,12 +263,25 @@ public class AMView extends MinigameView{
 		root.getChildren().add(clueBox);
 	}
  
-
+	/**
+	 * Loads all predefined/known images initially needed for the game. Others are loaded in during runtime
+	 * 
+	 * @author Ryan Peters
+	 * @see MiniGameView
+	 */
 	@Override
 	void importImages() {
-		background = new Image("backgrounds/background_animalmatching.png");
+		background = loadBackgroundImage("background_animalmatching");
 	}
 	
+	/**
+	 * Creates the Bonus Quiz prompted at the end of the matching. Initializes question <code>Label</code>, question image 
+	 * <code>chosenImg</code>, and multiple choice Buttons all within a 1-column <code>GridPane</code> <code>bqGP</code>.
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of Movers to be passed in chooseOptions()
+	 * @see chooseOptions(ArrayList<Mover> movers)
+	 */
 	private void setUpBonusQuiz(ArrayList<Mover> movers) {
 		//format question
 		Label qLabel = new Label(question);
@@ -261,6 +318,20 @@ public class AMView extends MinigameView{
 		root.getChildren().add(bqGP);		
 	}
 	
+	/**
+	 * From the given animals (<code>movers</code>), picks the first <code>Mover</code> as the answer (<code>chosenmover</code>)
+	 * by default so that the answer is known AMView-relative. Then, from the other Movers, pick 2 more as wrong answers randomly.
+	 * Makes these 3 Movers into buttons that can be selected with the appropriate color set if picked and ID. Finally, randomizes the 
+	 * buttons so that the first Button is not always the answer.
+	 * <p>
+	 * Used in setting up the Bonus Quiz. Each button represents a multiple-choice answer the user must choose from corresponding to the 
+	 * image draw center-screen.
+	 * 
+	 * @author	Ryan Peters
+	 * @param movers	list of <code>Mover</code>s to draw Multiple-Choice answers from
+	 * @return		list of Multiple-Choice Buttons for the user to choose from
+	 * @see	setUpBonusQuiz(ArrayList<Mover> movers)
+	 */
 	private ArrayList<Button> chooseOptions(ArrayList<Mover> movers) {
 		//first mover is always the correct answer (until shuffle; this way model-view know the same info)
 		chosenMover = movers.get(0);
@@ -274,7 +345,6 @@ public class AMView extends MinigameView{
 			setBQButtonStyle(b);
 			b.setOnMouseClicked(e -> {
 				me = e;
-				System.out.println(me.getEventType() + " " + me.getSource());
 				b.setStyle("-fx-background-color: rgba(255,0,0,0.25);");
 				bqGuessed = true;
 			});
@@ -302,6 +372,14 @@ public class AMView extends MinigameView{
 		return btns;
 	}
 	
+	/**
+	 * The default style for a Matching button in the main game, including the Hint Button <code>btnHint</code> and
+	 * <code>draggingButton</code>
+	 * 
+	 * @author Ryan Peters
+	 * @param b		Button to be formatted 
+	 * @see storeClues(ArrayList<Mover> movers)
+	 */
 	private void setMatchingButtonStyle(Button b) {
 		//set background as white and bold the text, increase font size
 		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-font-size: 13;");
@@ -313,6 +391,13 @@ public class AMView extends MinigameView{
 		b.setPadding(new Insets(2,2,2,2));
 	}
 	
+	/**
+	 * The default style for a BQ (Bonus Quiz) button
+	 * 
+	 * @author Ryan Peters
+	 * @param b		Button to be formatted
+	 * @see chooseOptions(ArrayList<Mover> movers)
+	 */
 	private void setBQButtonStyle(Button b) {
 		//set background as white and bold the text, give black border, increase font size
 		b.setStyle("-fx-background-color: #ffffff;-fx-font-weight: bold;-fx-font-size: 15;");
@@ -379,6 +464,12 @@ public class AMView extends MinigameView{
 		public InfiniteIterator getIterator() {return infit;}
 		public String getLast() {return this.clues[clues.length - 1];}
 		
+		/**
+		 * An iterator that loops back to the beginning of the list when it reaches the end so that it always continues.
+		 * 
+		 * @author Ryan Peters
+		 *
+		 */
 		private class InfiniteIterator implements Iterator{
 			int cursor;
 			InfiniteIterator() {cursor = 0;}
