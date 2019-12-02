@@ -88,6 +88,7 @@ public abstract class MinigameView {
 	final double btnPlayY = backgroundHeight*3/5;
 	boolean btnPlayAdded=false;
 	boolean play=false;
+	boolean isBackToMainDrawn = false;
 	/////STUFF FOR TUTORIALS////
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
