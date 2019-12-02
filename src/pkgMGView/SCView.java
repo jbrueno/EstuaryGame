@@ -108,8 +108,10 @@ public class SCView extends MinigameView  {
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
 		} else if (gs == GameState.FINISHED) {
+			if (!isBackToMainDrawn) {
+				backToMainButton();
+			}
 			drawGameOver();
-			backToMainButton();
 			
 		}
 		
