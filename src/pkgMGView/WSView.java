@@ -48,6 +48,7 @@ public class WSView extends MinigameView{
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth*4/5;
 	final double btnPlayY = backgroundHeight*4/5;
+	boolean btnPlayAdded=false;
 	boolean play=false;
 
 	
@@ -146,6 +147,15 @@ public class WSView extends MinigameView{
 				}
 				break;
 			case WS_PH :
+				System.out.println("play: "+play);
+				if(play) {
+					System.out.println("removing");
+					root.getChildren().remove(btnPlay);
+					root.getChildren().remove(pHTutorialLabel);
+					//play=false;
+				}
+				System.out.println("label:" + root.getChildren().contains(pHTutorialLabel));
+				System.out.println("button:" + root.getChildren().contains(btnPlay));
 				if(!labIsSetUp) {
 					root.getChildren().remove(btnFill);
 					root.getChildren().remove(btnLab);
@@ -157,6 +167,7 @@ public class WSView extends MinigameView{
 					//addButtons(buttonList);
 					labIsSetUp = true;
 				}
+				
 				updatepHDisplay();
 				break;
 			case WS_TEMP :
@@ -252,17 +263,26 @@ public class WSView extends MinigameView{
 			pHTutorialY=backgroundHeight/2;
 			pHTutorialLabel.setText("Match pH with scale \nand enter your guess!");
 			
-			btnPlay=new Button("Ready to Play!");
-			btnPlay.setLayoutX(btnPlayX);
-			btnPlay.setLayoutY(btnPlayY);
-			btnPlay.setOnMouseClicked(e -> {
-				me=e;
-			});
-			root.getChildren().add(btnPlay);
+			if(!btnPlayAdded) {
+				drawPlayButton();
+				btnPlayAdded=true;
+			}
 			break;
 		}
 		pHTutorialLabel.setLayoutX(pHTutorialX);
 		pHTutorialLabel.setLayoutY(pHTutorialY);
+	}
+	
+	public void drawPlayButton() {
+		btnPlay=new Button();
+		btnPlay.setText("Let's play!");
+		btnPlay.setLayoutX(btnPlayX);
+		btnPlay.setLayoutY(btnPlayY);
+		btnPlay.setOnMouseClicked(e -> {
+			me=e;
+			play=true;
+		});
+		root.getChildren().add(btnPlay);
 	}
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water

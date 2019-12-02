@@ -58,6 +58,7 @@ public class WSModel extends MinigameModel{
 	// water = 425y
 	// bottom = 680y
 	boolean labSet = false;
+	boolean pHSet = false;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
@@ -94,7 +95,7 @@ public class WSModel extends MinigameModel{
 	
 	@Override
 	public void update(MouseEvent me) {		
-		System.out.println(gs);
+	//	System.out.println(gs);
 		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
 		switch (gs) {
 		case START :
@@ -149,7 +150,14 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
-			if(me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			if(!pHSet) {
+				pHStrip.setValue("pHStrip");
+				movers.remove(pHStrip);
+				gotStrip=false;
+				pHSet=true;
+			}
+			
+			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 				if(!gotStrip) {
 					movers.add(pHStrip);
 					movers.add(testTube);
