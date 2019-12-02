@@ -26,6 +26,19 @@ import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
+	
+	//TUTORIAL
+	Label tutorialLabel;
+	int pHTutorialX = 0;
+	int pHTutorialY = backgroundHeight*2/5;
+	int tutorialStep = 0;
+	
+	Button btnPlay;
+	final double btnPlayX = backgroundWidth*4/5;
+	final double btnPlayY = backgroundHeight*4/5;
+	boolean btnPlayAdded=false;
+	boolean play=false;
+	
 	// WS_COLLECT
 	Image bottle;
 	Image background; // used to switch between different backgrounds
@@ -38,18 +51,6 @@ public class WSView extends MinigameView{
 	final double btnLabX = btnFillX;
 	final double btnLabY = btnFillY+50;
 	boolean collectIsSetUp=false;
-	
-	//WS_PHTUTORIAL
-	Label pHTutorialLabel;
-	int pHTutorialX = 0;
-	int pHTutorialY = backgroundHeight*2/5;
-	int tutorialStep = 0;
-	
-	Button btnPlay;
-	final double btnPlayX = backgroundWidth*4/5;
-	final double btnPlayY = backgroundHeight*4/5;
-	boolean btnPlayAdded=false;
-	boolean play=false;
 
 	
 	// WS_PH
@@ -109,6 +110,8 @@ public class WSView extends MinigameView{
 	
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
+		//System.out.println("play: "+ play);
+		//System.out.println(gs);
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
@@ -119,16 +122,32 @@ public class WSView extends MinigameView{
 		//System.out.println("gs: " + gs);
 		
 		switch (gs) {
-			case WS_COLLECT :
+			case WS_COLLECTTUTORIAL:
 				if(!collectIsSetUp) {
 					background = background_collect;
 					drawFillButton();
 					addButtons(buttonList);
 					collectIsSetUp=true;
+					setUpTutorial();
+				}
+				
+				updateTutorialStep(me);
+				drawTutorial(tutorialStep);
+				if(play) {	
+					root.getChildren().remove(tutorialLabel);
+					btnPlay.setText("to the Lab");
+					gs=GameState.WS_COLLECT;
+					}
+				break;
+			case WS_COLLECT :
+				if(play) {
+					root.getChildren().remove(tutorialLabel);
+					play=false;
 				}
 				break;
 			case WS_PHTUTORIAL:
 				if(!labIsSetUp) {
+					root.getChildren().remove(btnPlay);
 					root.getChildren().remove(btnFill);
 					root.getChildren().remove(btnLab);
 					background = background_lab;
@@ -151,8 +170,8 @@ public class WSView extends MinigameView{
 				if(play) {
 					
 					root.getChildren().remove(btnPlay);
-					root.getChildren().remove(pHTutorialLabel);
-					//play=false;
+					root.getChildren().remove(tutorialLabel);
+					play=false;
 				}
 		
 				/*if(!labIsSetUp) {
@@ -213,63 +232,96 @@ public class WSView extends MinigameView{
 			me=e;
 		});
 		
-		btnLab = new Button("to the lab");
-		btnLab.setLayoutX(btnLabX);
-		btnLab.setLayoutY(btnLabY);
-		btnLab.setOnMouseClicked(e -> {
-			me=e;
-		});
 		//adds buttons to list
 		buttonList.add(btnFill);
-		buttonList.add(btnLab);
+	//	buttonList.add(btnLab);
 		
 		//draws buttonlist
 		//addButtons(buttonList);
 		
 	}
 	public void setUpTutorial() {
-		pHTutorialLabel = new Label();
-		pHTutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
-		pHTutorialLabel.setFont(new Font("Arial", 25));
-		root.getChildren().add(pHTutorialLabel);
+		tutorialLabel = new Label();
+		tutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
+		tutorialLabel.setFont(new Font("Arial", 25));
+		root.getChildren().add(tutorialLabel);
 	}
 	
 	public void updateTutorialStep(MouseEvent m) {
-		if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
-			tutorialStep=1;
-		} else if (tutorialStep==1 && 
+		System.out.println(tutorialStep);
+		switch(tutorialStep) {
+		case 0: if(m.getEventType()==MouseEvent.MOUSE_PRESSED) {
+					tutorialStep=1;
+				}
+				break;
+		case 1: if (m.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			tutorialStep=2;
+				}
+			break;
+		case 2: if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
+			tutorialStep=3;
+		}
+		case 3: if(
 		//TODO FIX MAGIC NUMBERS
 			m.getX() >= 365 &&
 			m.getX() <= 485 &&
 			m.getY() >= 425 &&
 			m.getY() <= 680) {
-				tutorialStep=2;
+				tutorialStep=4;
+			}
+			break;
+		case 4: 
+			break;
 		}
 	}
+	
 	public void drawTutorial(int step) {
 
 		switch(step) {
-		case 0:
-			pHTutorialLabel.setText("Click box to get pH testing strip!");
+	/*	case 0:
+			pHtutorialLabel.setText("Click box to get pH testing strip!");
 			break;
 		case 1:
 			pHTutorialX=backgroundWidth/2;
 			pHTutorialY=backgroundHeight/10;
-			pHTutorialLabel.setText("Move mouse to dip strip in water!");
+			pHtutorialLabel.setText("Move mouse to dip strip in water!");
 			break;
 		case 2:
 			pHTutorialX=backgroundWidth*4/5;
 			pHTutorialY=backgroundHeight/2;
-			pHTutorialLabel.setText("Match pH with scale \nand enter your guess!");
+			pHtutorialLabel.setText("Match pH with scale \nand enter your guess!");
 			
 			if(!btnPlayAdded) {
 				drawPlayButton();
 				btnPlayAdded=true;
 			}
-			break;
-		}
-		pHTutorialLabel.setLayoutX(pHTutorialX);
-		pHTutorialLabel.setLayoutY(pHTutorialY);
+			break;*/
+		
+		case 0: tutorialLabel.setText("Click fill button!");
+				break;
+		case 1: if(!btnPlayAdded) {
+					drawPlayButton();
+					btnPlayAdded=true;
+				}
+				break;
+		case 2: tutorialLabel.setText("Click box to get pH testing strip!");
+				btnPlayAdded=false;
+				break;
+		case 3: pHTutorialX=backgroundWidth/2;
+				pHTutorialY=backgroundHeight/10;
+				tutorialLabel.setText("Move mouse to dip strip in water!");
+				break;
+		case 4: pHTutorialX=backgroundWidth*4/5;
+				pHTutorialY=backgroundHeight/2;
+				tutorialLabel.setText("Match pH with scale \nand enter your guess!");
+		
+				if(!btnPlayAdded) {
+					drawPlayButton();
+					btnPlayAdded=true;
+				}
+			}
+		tutorialLabel.setLayoutX(pHTutorialX);
+		tutorialLabel.setLayoutY(pHTutorialY);
 	}
 	
 	public void drawPlayButton() {

@@ -13,7 +13,9 @@ import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
-	 
+	// WS_COLLECTTUTORIAL
+	boolean collectSet=false;
+	
 	// WS_COLLECT
 	Mover Bottle;
 	final int bottleImageWidth = 268;
@@ -33,6 +35,8 @@ public class WSModel extends MinigameModel{
 	
 	// WS_PH
 	
+	boolean labSet = false;
+	boolean pHSet = false;
 	Mover pHStrip;
 	boolean gotStrip=false;
 	final int pHStripWidth = 30;
@@ -57,13 +61,12 @@ public class WSModel extends MinigameModel{
 	// right = 485x
 	// water = 425y
 	// bottom = 680y
-	boolean labSet = false;
-	boolean pHSet = false;
+
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		//gs = GameState.WS_COLLECT;
-		gs= GameState.WS_PHTUTORIAL;
+		gs = GameState.WS_COLLECTTUTORIAL;
+	//	gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -72,6 +75,10 @@ public class WSModel extends MinigameModel{
 	public void addObjects(GameState gs) {
 		
 		switch (gs) {
+		case WS_COLLECTTUTORIAL:
+			Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
+			movers.add(Bottle);
+			break;
 		case WS_COLLECT :
 			Bottle = new Bottle(bottleX, maxHeight, 0, 15, "Bottle");
 			movers.add(Bottle);
@@ -99,20 +106,30 @@ public class WSModel extends MinigameModel{
 		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
 		switch (gs) {
 		case START :
-			gs = GameState.WS_COLLECT;
-		case WS_COLLECT :
-		
-			//double startx, double starty, double endx, double endy)
+			gs = GameState.WS_COLLECTTUTORIAL;
+		case WS_COLLECTTUTORIAL:
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
-			//System.out.println(me.getEventType());
-			
-			//JUST FOR TUTORIAL TESTING///
-			/*if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				System.out.println("FILLING BOTTLE");
+				fillBottle();
+			}
+			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
 				movers.remove(Bottle);
-				gs=GameState.WS_PH;
-			}*/
-			/////////
+				gs=GameState.WS_COLLECT;
+			}
+			
+			break;
+		case WS_COLLECT :
+			if(!collectSet) {
+				filled=false;
+				Bottle.setValue("Bottle");
+				movers.remove(Bottle);
+				movers.add(Bottle);
+				collectSet=true;
+			}
+			//double startx, double starty, double endx, double endy)
+			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				System.out.println("FILLING BOTTLE");
@@ -191,13 +208,16 @@ public class WSModel extends MinigameModel{
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
-		score += calculateCollectSore();
+		
+		if (gs!=GameState.WS_COLLECTTUTORIAL){
+			score += calculateCollectSore();
+		}
 	}
 	
 	public void setPH() {
 		Random random = new Random();
 		pH=random.nextInt((pHMax - pHMin) + 1) + pHMin;
-		System.out.println(pH);
+		//System.out.println(pH);
 	}
 	
 	/*
