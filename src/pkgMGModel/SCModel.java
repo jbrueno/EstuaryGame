@@ -21,11 +21,12 @@ public class SCModel extends MinigameModel{
 	ArrayList<SCMover> items =  new ArrayList<SCMover>();
 	private final double waterThreshold = 150;
 	final long startNanoTime = System.nanoTime();
-	int seaweedY = 150;
+	int seaweedY = 50;
 	double breathLostOnTick = 0.5;
-	int currentItemSpeed = -10;
+	int currentItemSpeed = -25;
 	final int itemYSpeed = 0;
 	boolean timerSet = false;
+	int seaweedHeight = 100;
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -41,9 +42,9 @@ public class SCModel extends MinigameModel{
 		gs = GameState.INPROGRESS;
 		score = 0;
 		
-		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "Seaweed");
-		Seaweed s2 = new Seaweed(backgroundWidth/4, backgroundHeight - seaweedY, 100, 100, currentItemSpeed, itemYSpeed, "Seaweed");
-		Food f = new Food(backgroundWidth, backgroundHeight/2, 50, 50, currentItemSpeed, itemYSpeed, "Food");
+		Seaweed s = new Seaweed(backgroundWidth/2, backgroundHeight - seaweedY, seaweedHeight, seaweedHeight, currentItemSpeed, itemYSpeed, "Seaweed");
+		Seaweed s2 = new Seaweed(backgroundWidth/4, backgroundHeight - seaweedY, seaweedHeight, seaweedHeight, currentItemSpeed, itemYSpeed, "Seaweed");
+		Food f = new Food(backgroundWidth, backgroundHeight/2, seaweedHeight/2, seaweedHeight/2, currentItemSpeed, itemYSpeed, "Food");
 
 		items.add(s);
 		items.add(s2);
@@ -145,7 +146,7 @@ public class SCModel extends MinigameModel{
 	public void addNewMover() {
 		int newMover = r.nextInt(10);
 		if (newMover < 4)  {
-			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed);
+			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight);
 			System.out.println("seaweed added");
 			items.add(s);
 		} else if (newMover < 8) {

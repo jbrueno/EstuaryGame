@@ -16,9 +16,10 @@ public class Trash extends SCMover{
 	 * @param canvasWidth
 	 */
 	public Trash(int x, int y, int speed) {
-		super(x, y, 100, 100, speed, 0, "Trash");
+		super(x, y, 50, 100, speed, 0, "Trash");
 		this.scoreChange = 50;
 		this.collisionSpeedChange = 3;
+		
 	}
 
 	@Override

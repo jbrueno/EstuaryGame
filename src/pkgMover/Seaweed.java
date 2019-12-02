@@ -15,8 +15,8 @@ public class Seaweed extends SCMover{
 	 * @param canvasWidth where the SCMover will start
 	 * @param canvasHeight to determine where the seaweed will be placed
 	 */
-	public Seaweed(int canvasWidth, int canvasHeight, int speed) {
-		super(canvasWidth, canvasHeight, 100, 100, speed, 0, "Seaweed");
+	public Seaweed(int canvasWidth, int canvasHeight, int speed, int imageHeight) {
+		super(canvasWidth, canvasHeight, 100, imageHeight, speed, 0, "Seaweed");
 	}
 	
 	@Override
