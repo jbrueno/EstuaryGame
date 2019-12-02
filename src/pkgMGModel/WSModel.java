@@ -62,8 +62,8 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		gs = GameState.WS_COLLECT;
-		//gs= GameState.WS_PHTUTORIAL;
+		//gs = GameState.WS_COLLECT;
+		gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -151,6 +151,7 @@ public class WSModel extends MinigameModel{
 			}
 			
 			if(!pHSet) {
+				setPH();
 				pHStrip.setValue("pHStrip");
 				movers.remove(pHStrip);
 				gotStrip=false;
@@ -194,7 +195,9 @@ public class WSModel extends MinigameModel{
 	}
 	
 	public void setPH() {
-		pH=r.nextInt((pHMax - pHMin) + 1) + pHMin;
+		Random random = new Random();
+		pH=random.nextInt((pHMax - pHMin) + 1) + pHMin;
+		System.out.println(pH);
 	}
 	
 	/*

@@ -147,16 +147,15 @@ public class WSView extends MinigameView{
 				}
 				break;
 			case WS_PH :
-				System.out.println("play: "+play);
+				
 				if(play) {
-					System.out.println("removing");
+					
 					root.getChildren().remove(btnPlay);
 					root.getChildren().remove(pHTutorialLabel);
 					//play=false;
 				}
-				System.out.println("label:" + root.getChildren().contains(pHTutorialLabel));
-				System.out.println("button:" + root.getChildren().contains(btnPlay));
-				if(!labIsSetUp) {
+		
+				/*if(!labIsSetUp) {
 					root.getChildren().remove(btnFill);
 					root.getChildren().remove(btnLab);
 					background = background_lab;
@@ -166,7 +165,7 @@ public class WSView extends MinigameView{
 					drawpHButtons();
 					//addButtons(buttonList);
 					labIsSetUp = true;
-				}
+				}*/
 				
 				updatepHDisplay();
 				break;
