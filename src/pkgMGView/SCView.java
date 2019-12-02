@@ -114,7 +114,7 @@ public class SCView extends MinigameView  {
 			drawGameOver();
 			
 		}
-		
+		 
 		System.out.println("SCVIEW GAMESTATE IS " + gs);
 		
 		
