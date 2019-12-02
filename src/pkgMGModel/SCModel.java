@@ -74,56 +74,59 @@ public class SCModel extends MinigameModel{
 		
 				if (terry.getY() <= waterThreshold) {
 					terry.breathe();
-		} else {
-			if (terry.getAirAmount() > 0) {
-				terry.holdBreath();
-			} else {
-				gs = GameState.FINISHED;
-			}
-		}
-		
-		try {
-			terry.move(me.getX(), me.getY());
-		} catch (NullPointerException e) {
-			System.out.println("caught null pointer exception");
-		}
- 		
-		
-
-		Iterator<SCMover> itemsIt = items.iterator();
-		boolean collisionOccured = false;
-		while (itemsIt.hasNext()) {
-			SCMover m = (SCMover) itemsIt.next();
-			if (m.getX() < 0) {
-				itemsIt.remove();
-			} else {
-				m.move();
-				if (m.collison(terry)) {
-					collisionOccured = true;
-					System.out.println("collision with " + m);
-					changeCurrentSpeed(m);
-					score = m.changeScore(score);
-					if (!(m instanceof Seaweed)) {
-						itemsIt.remove();
+				} else {
+					if (terry.getAirAmount() > 0) {
+						terry.holdBreath();
+					} else {
+						gs = GameState.FINISHED;
 					}
-					System.out.println("score is now: " + score);
-				} 
-			}
+				}
+		
+				try {
+					terry.move(me.getX(), me.getY());
+				} catch (NullPointerException e) {
+					System.out.println("caught null pointer exception");
+				}
+ 		
+				Iterator<SCMover> itemsIt = items.iterator();
+				boolean collisionOccured = false;
+				while (itemsIt.hasNext()) {
+					SCMover m = (SCMover) itemsIt.next();
+					if (m.getX() < 0) {
+						itemsIt.remove();
+					} else {
+						m.move();
+						if (m.collison(terry)) {
+							collisionOccured = true;
+							System.out.println("collision with " + m);
+							changeCurrentSpeed(m);
+							score = m.changeScore(score);
+							if (!(m instanceof Seaweed)) {
+								itemsIt.remove();
+							}
+						System.out.println("score is now: " + score);
+						} 
+					}
 
-		}
-		if (collisionOccured) {
-			changeSpeeds();
-		}
-		if (items.size() <= 3) {
-			addNewMover();
-			movers.removeAll(getMovers());
-			movers.addAll(items);
-			movers.add(terry);
-		}
+				}
+				
+				if (collisionOccured) {
+					changeSpeeds();
+				}
+				
+				if (items.size() <= 3) {
+					addNewMover();
+					movers.removeAll(getMovers());
+					movers.addAll(items);
+					movers.add(terry);
+				}
+				
+			case TUTORIAL:
+				
 		
 		
-		
-		System.out.println(items);
+				
+		}
 	}
 	
 	public boolean terryCollision(Mover m) {

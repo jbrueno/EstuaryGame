@@ -128,6 +128,12 @@ public class HSCView extends MinigameView {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	void updateTutorialStep(MouseEvent me) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

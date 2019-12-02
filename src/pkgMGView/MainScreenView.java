@@ -175,4 +175,10 @@ public class MainScreenView extends MinigameView {
 		
 	}
 
+	@Override
+	void updateTutorialStep(MouseEvent me) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

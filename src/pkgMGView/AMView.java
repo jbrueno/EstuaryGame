@@ -495,5 +495,12 @@ public class AMView extends MinigameView{
 	void drawTutorial(int step) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	void updateTutorialStep(MouseEvent me) {
+		// TODO Auto-generated method stub
+		
 	}	
 }

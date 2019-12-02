@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.DataNode;
@@ -63,6 +64,12 @@ public class LeaderboardView extends MinigameView{
 
 	@Override
 	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void updateTutorialStep(MouseEvent me) {
 		// TODO Auto-generated method stub
 		
 	}
