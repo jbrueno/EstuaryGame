@@ -61,4 +61,10 @@ public class LeaderboardView extends MinigameView{
 		
 	}
 
+	@Override
+	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

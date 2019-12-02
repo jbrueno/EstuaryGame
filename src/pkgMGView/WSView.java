@@ -28,9 +28,9 @@ import pkgMover.Mover;
 public class WSView extends MinigameView{
 	
 	//TUTORIAL
-	Label tutorialLabel;
-	int pHTutorialX = 0;
-	int pHTutorialY = backgroundHeight*2/5;
+	/*Label tutorialLabel;
+	int tutorialX = 0;
+	int tutorialY = backgroundHeight*2/5;
 	int tutorialStep = 0;
 	
 	Button btnPlay;
@@ -38,6 +38,7 @@ public class WSView extends MinigameView{
 	final double btnPlayY = backgroundHeight*4/5;
 	boolean btnPlayAdded=false;
 	boolean play=false;
+	*/
 	
 	// WS_COLLECT
 	Image bottle;
@@ -240,12 +241,6 @@ public class WSView extends MinigameView{
 		//addButtons(buttonList);
 		
 	}
-	public void setUpTutorial() {
-		tutorialLabel = new Label();
-		tutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
-		tutorialLabel.setFont(new Font("Arial", 25));
-		root.getChildren().add(tutorialLabel);
-	}
 	
 	public void updateTutorialStep(MouseEvent m) {
 		System.out.println(tutorialStep);
@@ -261,12 +256,11 @@ public class WSView extends MinigameView{
 		case 2: if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			tutorialStep=3;
 		}
-		case 3: if(
-		//TODO FIX MAGIC NUMBERS
-			m.getX() >= 365 &&
-			m.getX() <= 485 &&
-			m.getY() >= 425 &&
-			m.getY() <= 680) {
+		case 3: //TODO FIX MAGIC NUMBERS
+				if(m.getX() >= 365 &&
+				m.getX() <= 485 &&
+				m.getY() >= 425 &&
+				m.getY() <= 680) {
 				tutorialStep=4;
 			}
 			break;
@@ -278,25 +272,6 @@ public class WSView extends MinigameView{
 	public void drawTutorial(int step) {
 
 		switch(step) {
-	/*	case 0:
-			pHtutorialLabel.setText("Click box to get pH testing strip!");
-			break;
-		case 1:
-			pHTutorialX=backgroundWidth/2;
-			pHTutorialY=backgroundHeight/10;
-			pHtutorialLabel.setText("Move mouse to dip strip in water!");
-			break;
-		case 2:
-			pHTutorialX=backgroundWidth*4/5;
-			pHTutorialY=backgroundHeight/2;
-			pHtutorialLabel.setText("Match pH with scale \nand enter your guess!");
-			
-			if(!btnPlayAdded) {
-				drawPlayButton();
-				btnPlayAdded=true;
-			}
-			break;*/
-		
 		case 0: tutorialLabel.setText("Click fill button!");
 				break;
 		case 1: if(!btnPlayAdded) {
@@ -307,12 +282,12 @@ public class WSView extends MinigameView{
 		case 2: tutorialLabel.setText("Click box to get pH testing strip!");
 				btnPlayAdded=false;
 				break;
-		case 3: pHTutorialX=backgroundWidth/2;
-				pHTutorialY=backgroundHeight/10;
+		case 3: tutorialX=backgroundWidth/2;
+				tutorialY=backgroundHeight/10;
 				tutorialLabel.setText("Move mouse to dip strip in water!");
 				break;
-		case 4: pHTutorialX=backgroundWidth*4/5;
-				pHTutorialY=backgroundHeight/2;
+		case 4: tutorialX=backgroundWidth*4/5;
+				tutorialY=backgroundHeight/2;
 				tutorialLabel.setText("Match pH with scale \nand enter your guess!");
 		
 				if(!btnPlayAdded) {
@@ -320,21 +295,11 @@ public class WSView extends MinigameView{
 					btnPlayAdded=true;
 				}
 			}
-		tutorialLabel.setLayoutX(pHTutorialX);
-		tutorialLabel.setLayoutY(pHTutorialY);
+		tutorialLabel.setLayoutX(tutorialX);
+		tutorialLabel.setLayoutY(tutorialY);
 	}
 	
-	public void drawPlayButton() {
-		btnPlay=new Button();
-		btnPlay.setText("Let's play!");
-		btnPlay.setLayoutX(btnPlayX);
-		btnPlay.setLayoutY(btnPlayY);
-		btnPlay.setOnMouseClicked(e -> {
-			me=e;
-			play=true;
-		});
-		root.getChildren().add(btnPlay);
-	}
+	
 	// draws label to screen
 	// Label "holds" the pHDisplay label and two buttons for user to guess the pH of water
 	public void drawpHLabel() {

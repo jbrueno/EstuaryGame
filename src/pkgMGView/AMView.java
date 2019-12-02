@@ -352,5 +352,12 @@ public class AMView extends MinigameView{
 	@Override
 	void startTimer(int ms) {}
 	@Override
-	void stopTimer() {}	
+	void stopTimer() {}
+
+
+	@Override
+	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

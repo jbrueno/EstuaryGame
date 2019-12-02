@@ -14,6 +14,7 @@ import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,6 +23,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -72,12 +76,28 @@ public abstract class MinigameView {
 	Label displayTime = new Label();
 	int displayTimeX = (backgroundWidth / 2) - 150;
 	int displayTimeY = 15;
+	
+	/////TUTORIAL STUFF//////
+	Label tutorialLabel;
+	int tutorialX = 0;
+	int tutorialY = backgroundHeight*2/5;
+	int tutorialStep = 0;
+	
+	Button btnPlay;
+	final double btnPlayX = backgroundWidth*4/5;
+	final double btnPlayY = backgroundHeight*3/5;
+	boolean btnPlayAdded=false;
+	boolean play=false;
+	/////STUFF FOR TUTORIALS////
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	//pre-loaded images database
 	HashMap<String,Image> imgDB = new HashMap<String,Image>();
+	
+	//TUTORIAL
+	abstract void drawTutorial(int step);
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
 	abstract void startTimer(int ms);
@@ -390,6 +410,27 @@ public abstract class MinigameView {
 			}
 		}
 	}
+	
+/////TUTORIAL STUFF//////
+	public void setUpTutorial() {
+		tutorialLabel = new Label();
+		tutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
+		tutorialLabel.setFont(new Font("Arial", 25));
+		root.getChildren().add(tutorialLabel);
+	}
+	
+	public void drawPlayButton() {
+		btnPlay=new Button();
+		btnPlay.setText("Let's play!");
+		btnPlay.setLayoutX(btnPlayX);
+		btnPlay.setLayoutY(btnPlayY);
+		btnPlay.setOnMouseClicked(e -> {
+			me=e;
+			play=true;
+		});
+		root.getChildren().add(btnPlay);
+	}
+	/////STUFF FOR TUTORIALS////
 	
 
 }

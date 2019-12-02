@@ -219,6 +219,13 @@ public class SCView extends MinigameView  {
 	public MouseEvent getMouseEvent() {
 		return me;
 	}
+
+
+	@Override
+	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 //	public void createBackgroundAnimation() {
 //		TranslateTransition translateTransition = 

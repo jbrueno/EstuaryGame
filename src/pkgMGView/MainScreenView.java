@@ -163,4 +163,10 @@ public class MainScreenView extends MinigameView {
 		b.setStyle("-fx-background-color: white");
 	}
 
+	@Override
+	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -122,6 +122,12 @@ public class HSCView extends MinigameView {
 		lighting.getChildren().add(rect);
 		
 	}
+
+	@Override
+	void drawTutorial(int step) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
