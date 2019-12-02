@@ -61,8 +61,8 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-		//gs = GameState.WS_COLLECT;
-		gs= GameState.WS_PHTUTORIAL;
+		gs = GameState.WS_COLLECT;
+		//gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -94,6 +94,7 @@ public class WSModel extends MinigameModel{
 	
 	@Override
 	public void update(MouseEvent me) {		
+		System.out.println(gs);
 		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
 		switch (gs) {
 		case START :
@@ -106,10 +107,10 @@ public class WSModel extends MinigameModel{
 			//System.out.println(me.getEventType());
 			
 			//JUST FOR TUTORIAL TESTING///
-			if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			/*if (me.getEventType()==MouseEvent.MOUSE_CLICKED) {
 				movers.remove(Bottle);
 				gs=GameState.WS_PH;
-			}
+			}*/
 			/////////
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED) {
@@ -118,7 +119,7 @@ public class WSModel extends MinigameModel{
 			}
 			if(filled && Bottle.getY()< waterLevel && me.getEventType() == MouseEvent.MOUSE_CLICKED){
 				movers.remove(Bottle);
-				gs=GameState.WS_PH;
+				gs=GameState.WS_PHTUTORIAL;
 			}
 			
 			break;
@@ -128,7 +129,7 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
-			if(me.getEventType()==MouseEvent.MOUSE_CLICKED) {
+			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 				if(!gotStrip) {
 					movers.add(pHStrip);
 					movers.add(testTube);
@@ -138,7 +139,7 @@ public class WSModel extends MinigameModel{
 			pHStrip.move(me.getX(),me.getY());
 			dipStrip(); 
 			
-			if(me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+			if(gotStrip && me.getEventType()==MouseEvent.MOUSE_CLICKED) {
 				gs=GameState.WS_PH;
 			}
 			break;

@@ -167,7 +167,7 @@ public class WSView extends MinigameView{
 		}
 		
 		draw(movers);
-		System.out.println(gs);
+	//	System.out.println(gs);
 	}
 	
 	
@@ -225,7 +225,7 @@ public class WSView extends MinigameView{
 	}
 	
 	public void updateTutorialStep(MouseEvent m) {
-		if (m.getEventType()==MouseEvent.MOUSE_CLICKED) {
+		if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			tutorialStep=1;
 		} else if (tutorialStep==1 && 
 		//TODO FIX MAGIC NUMBERS
@@ -255,7 +255,7 @@ public class WSView extends MinigameView{
 			btnPlay=new Button("Ready to Play!");
 			btnPlay.setLayoutX(btnPlayX);
 			btnPlay.setLayoutY(btnPlayY);
-			btnPlay.setOnMousePressed(e -> {
+			btnPlay.setOnMouseClicked(e -> {
 				me=e;
 			});
 			root.getChildren().add(btnPlay);
@@ -338,7 +338,7 @@ public class WSView extends MinigameView{
 		phStripBox.setStyle("-fx-background-color: transparent;");
 		phStripBox.setLayoutX(phStripBoxX);
 		phStripBox.setLayoutY(phStripBoxY);
-		phStripBox.setOnMouseClicked(e -> {
+		phStripBox.setOnMousePressed(e -> {
 			me=e;
 			scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
 		});
