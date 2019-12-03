@@ -93,8 +93,6 @@ public abstract class MinigameView {
 	private int promptWidth = 500;
 	private int promptHeight = 10;
 	
-	Label prompt2;
-	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
 	final double btnPlayY = 400;
@@ -103,6 +101,7 @@ public abstract class MinigameView {
 	boolean btnPlayAdded=false;
 	boolean play=false;
 	boolean isBackToMainDrawn = false;
+	String btnPlayId="Play";
 	/////STUFF FOR TUTORIALS////
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
@@ -463,6 +462,7 @@ public abstract class MinigameView {
 	
 	public void drawPlayButton() {
 		btnPlay = new Button("Let's Play");
+		btnPlay.setId(btnPlayId);
 		btnPlay.setLayoutX(backgroundWidth/2 - btnPlayWidth/2);
 		btnPlay.setLayoutY(btnPlayY);
 		btnPlay.setPrefSize(btnPlayWidth, btnPlayHeight);
@@ -470,7 +470,7 @@ public abstract class MinigameView {
 				+ "-fx-border-color: black; -fx-border-width: 3");
 		btnPlay.setAlignment(Pos.CENTER);
 		btnPlay.setTextAlignment(TextAlignment.CENTER);
-		btnPlay.setOnMouseClicked(e -> {
+		btnPlay.setOnMousePressed(e -> {
 			me=e;
 			play=true;
 		});
