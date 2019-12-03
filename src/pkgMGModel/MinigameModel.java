@@ -138,6 +138,10 @@ public abstract class MinigameModel {
 		return dist < 1;
 	}
 	
+	public boolean isCollision(Mover m1, Mover m2) {
+		return isCollision(m1, m2.getX(), m2.getY());
+	}
+	
 
 	public boolean isCollision(Mover m, MouseEvent me) {
 		return isCollision(m, me.getX(), me.getY());

@@ -5,6 +5,7 @@ public class Food extends SCMover {
 	public Food(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		// TODO Auto-generated constructor stub
+		this.collisionSpeedChange = -3;
 	}
 	
 	/**
@@ -17,7 +18,7 @@ public class Food extends SCMover {
 	public Food(int canvasWidth, int y, int speed) {
 		super(canvasWidth, y, 50, 50, speed, 0, "Food");
 		this.scoreChange = 100;
-		this.collisionSpeedChange = 3;
+		this.collisionSpeedChange = -3;
 	}
 
 	/**
@@ -31,9 +32,10 @@ public class Food extends SCMover {
 		return score + scoreChange;
 	}
 
-
-
-	
-	
-
 }
+
+
+
+	
+	
+

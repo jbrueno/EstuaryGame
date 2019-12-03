@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
@@ -27,6 +28,9 @@ public class SCModel extends MinigameModel{
 	final int itemYSpeed = 0;
 	boolean timerSet = false;
 	int seaweedHeight = 100;
+	int tutorialStep = 0;
+	boolean tutorialPlay = false;
+	boolean set = false;
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -36,10 +40,10 @@ public class SCModel extends MinigameModel{
 	 */
 	public SCModel(){
 		g = Game.SIDESCROLLER;
-		terry = new Terrapin(100, backgroundHeight/2, 0, 10);
+		terry = new Terrapin(200, backgroundHeight/2, 0, 10);
 		time = 600;
 		
-		gs = GameState.TUTORIAL;
+		gs = GameState.SC_TUTORIAL_FOOD;
 		score = 0;
 		
 		Food f = new Food(backgroundWidth, backgroundHeight/2, seaweedHeight/2, seaweedHeight/2, currentItemSpeed, itemYSpeed, "Food");
@@ -49,6 +53,7 @@ public class SCModel extends MinigameModel{
 		for (Mover sc : items) {
 			movers.add(sc);
 		}
+		movers.add(terry);
 	}
 
 	
@@ -82,12 +87,9 @@ public class SCModel extends MinigameModel{
 					}
 				}
 		
-				try {
-					terry.move(me.getX(), me.getY());
-				} catch (NullPointerException e) {
-					System.out.println("caught null pointer exception");
-				}
- 		
+				terry.move(me.getX(), me.getY());
+				
+				
 				Iterator<SCMover> itemsIt = items.iterator();
 				boolean collisionOccured = false;
 				while (itemsIt.hasNext()) {
@@ -96,7 +98,7 @@ public class SCModel extends MinigameModel{
 						itemsIt.remove();
 					} else {
 						m.move();
-						if (m.collison(terry)) {
+						if (isCollision(m, terry)) {
 							collisionOccured = true;
 							System.out.println("collision with " + m);
 							changeCurrentSpeed(m);
@@ -120,35 +122,141 @@ public class SCModel extends MinigameModel{
 					movers.addAll(items);
 					movers.add(terry);
 				}
+				break;
 				
+			case SC_TUTORIAL_FOOD:
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
+					tutorialPlay = true;
+					System.out.println(me.getEventType());
+				} 
+				
+				System.out.println(tutorialPlay);
+				
+				if (tutorialPlay) {
+					if (isCollision(terry, items.get(0))) {
+						movers.remove(items.get(0));
+						items.remove(0);
+						tutorialPlay = false;
+						gs = GameState.SC_TUTORIAL_TRASH;
+					} else if (items.get(0).getX() < 0) {
+						movers.removeAll(items);
+						items.clear();
+						items.add(new Food(backgroundWidth, backgroundHeight/2, currentItemSpeed));
+						movers.addAll(items);
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+				}
+				break;
+			case SC_TUTORIAL_TRASH:
+				System.out.println(me.getSource());
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
+					tutorialPlay = true;
+				}
+				
+
+				if (tutorialPlay) {
+					if (!set) {
+						items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed));
+						movers.addAll(items);
+						set = true;
+					} else {
+
+						for (Mover m : items) {
+							if (isCollision(terry, m)) {
+								movers.remove(m);
+								items.remove(m);
+								Trash t = new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed);
+								movers.add(t);
+								items.add(t);
+							} else if (m.getX() < 0) {
+								movers.removeAll(items);
+								items.clear();
+								tutorialPlay = false;
+								gs = GameState.SC_TUTORIAL_SEAWEED;
+								set = false;
+							} else {
+								m.move();
+								terry.move(me.getX(), me.getY());
+							}
+						}
+					}
+				}
+				break;
+			case SC_TUTORIAL_SEAWEED:
+				System.out.println(me.getSource());
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
+					tutorialPlay = true;
+				} 
+
+				if (tutorialPlay) {
+					if (!set) {
+						items.removeAll(items);
+						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed));
+						movers.addAll(items);
+						set = true;
+					}
+					
+					if (items.get(0).getX() < 0) {
+						movers.removeAll(items);
+						items.clear();
+						tutorialPlay = false;
+						gs = GameState.SC_TUTORIAL_BREATH;
+						set = false;
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+				}
+				break;
+			case SC_TUTORIAL_BREATH:
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
+					tutorialPlay = true;
+				}
+
+				if (tutorialPlay) {
+					terry.move(me.getX(), me.getY());
+					if (terry.getY() < waterThreshold) {
+						terry.breathe();
+						gs = GameState.TUTORIAL;
+					} else {
+						terry.setAirAmount(50);
+					}
+				}
+				break;
 			case TUTORIAL:
-				
-		
-		
-				
+				if (items.size() <= 3) {
+					addNewMover();
+					movers.removeAll(getMovers());
+					movers.addAll(items);
+					movers.add(terry);
+					for (Mover m : items) {
+						m.move();
+					}
+				}
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
+					gs = GameState.INPROGRESS;
+				}
+				break;
+		default:
+			break;
 		}
-	}
-	
-	public boolean terryCollision(Mover m) {
-		boolean collision = false;
-		if (terry.getX() >= m.getX() - m.getImageWidth() 
-			&& terry.getX() <= m.getX() + m.getImageWidth()
-			&& terry.getY() >= m.getY() - m.getImageHeight() 
-			&& terry.getY() <= m.getY() + m.getImageWidth()) {
-			collision = true;
-		}
-		return collision;
-			
+
 	}
 
 	
 	public void addNewMover() {
 		int newMover = r.nextInt(10);
-		if (newMover < 4)  {
-			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight);
+		if (newMover < 2)  {
+			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed);
 			System.out.println("seaweed added");
 			items.add(s);
-		} else if (newMover < 8) {
+		} else if (newMover < 7) {
 			int y =  new Random().nextInt((int) (backgroundHeight - waterThreshold));
 			Food f = new Food(backgroundWidth, backgroundHeight - y, currentItemSpeed);
 			System.out.println("food added");
@@ -168,6 +276,23 @@ public class SCModel extends MinigameModel{
 		
 	}
 	
+	public boolean okClicked(MouseEvent me) {
+		boolean clicked = false;
+		if (me.getX() < backgroundWidth/2 + 20 && me.getX() > backgroundWidth/2 - 20) {
+			System.out.println("in width");
+			if (me.getY() < backgroundHeight/2 + 10 && me.getY() > backgroundHeight/2 - 10) {
+				System.out.println("in height");
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED) {
+					System.out.println("mouse clicked");
+					clicked = true;
+				}
+			}
+		} 
+		
+		System.out.println("ok clicked: " + clicked);
+		return clicked;
+	}
+	
 	private void changeSpeeds() {
 		Iterator<SCMover> itemIt = items.iterator();
 		while (itemIt.hasNext()) {
@@ -177,6 +302,6 @@ public class SCModel extends MinigameModel{
 	}
 	
 	public void changeCurrentSpeed(SCMover m) {
-		currentItemSpeed += m.getCollisionSpeedChange();
+		currentItemSpeed = currentItemSpeed + m.getCollisionSpeedChange();
 	}
 }
