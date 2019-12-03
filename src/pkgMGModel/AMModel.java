@@ -35,69 +35,36 @@ public class AMModel extends MinigameModel {
 	private String correctMoverID;
 	
 	//flag used to determine if all MA's have been matched
-	boolean flag = false;
+	private boolean flag = false;
+	
+	//tutorial attributes
+	private boolean isTutorialSetUp = false;
+	private final int TUTORIAL_MAX_ANIMALS = 2;
 	
 	public AMModel() {
 		g = Game.ANIMALMATCHING;
 		createAnimals();
-		movers = reduceUntil(new ArrayList<Mover>(animals), MAX_MATCH_ANIMALS);
+		movers = reduceUntil(new ArrayList<Mover>(animals), TUTORIAL_MAX_ANIMALS);
 		System.out.println(movers);
-		gs = GameState.INPROGRESS;
+		gs = GameState.TUTORIAL;
 	}
 
 	
 	@Override
-	public void update(MouseEvent me) {
-		
-		
+	public void update(MouseEvent me) {		
 		switch (gs) {
+			case TUTORIAL:
+				tutorialUpdate(me);
+				break;
+			case TRANSITION1:
+				transition1Update(me);
+				break;
 			case INPROGRESS: 
-				if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-					try {
-						btnSourceID = ((Button) me.getSource()).getId();
-						System.out.println("SOURCE SET TO: " + btnSourceID);
-					} catch (ClassCastException e) {}
-				}
-				if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
-					flag = true;
-					for (Mover m : movers) {
-						MatchingAnimal ma = (MatchingAnimal) m;
-						
-						if (isCollision(ma, me)) {
-							System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
-							if (!ma.isMatched && ma.isMatch()) {
-								System.out.println("MATCHED");
-								score += POINTS_MATCHING;
-								System.out.println("Score = " + score);
-							} 
-						}
-						
-						if (!ma.isMatched) {
-							flag = false;
-						}
-						
-					}
-					
-					if (flag) {
-						gs = GameState.BONUS;
-						movers = reduceUntil(movers, MAX_BQMOVERS);
-						correctMoverID = movers.get(0).getValue();
-					}					
-				}	
+				inProgressUpdate(me);
 				break;
 			case BONUS:
-				if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-					try {
-						btnSourceID = ((Button) me.getSource()).getId();
-						
-						if (btnSourceID.equals(correctMoverID) && !bqPointsGotten) {
-							score += POINTS_BQ;
-							bqPointsGotten = true;
-						} 
-					} catch (ClassCastException e) {}
-				}
-				
-				
+				bonusUpdate(me);
+				break;
 		default:
 			break;		
 		}
@@ -176,6 +143,98 @@ public class AMModel extends MinigameModel {
 		return new ArrayList<Mover>(newArr);
 	}
 	
+	private void inProgressUpdate(MouseEvent me) {
+		if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+			try {
+				btnSourceID = ((Button) me.getSource()).getId();
+				System.out.println("SOURCE SET TO: " + btnSourceID);
+			} catch (ClassCastException e) {}
+		}
+		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+			flag = true;
+			for (Mover m : movers) {
+				MatchingAnimal ma = (MatchingAnimal) m;
+				
+				if (isCollision(ma, me)) {
+					System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
+					if (!ma.isMatched && ma.isMatch()) {
+						System.out.println("MATCHED");
+						score += POINTS_MATCHING;
+						System.out.println("Score = " + score);
+					} 
+				}
+				
+				if (!ma.isMatched) {
+					flag = false;
+				}
+				
+			}
+			
+			if (flag) {
+				gs = GameState.BONUS;
+				movers = reduceUntil(movers, MAX_BQMOVERS);
+				correctMoverID = movers.get(0).getValue();
+			}					
+		}	
+	}
+	
+	private void bonusUpdate(MouseEvent me) {
+		if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			try {
+				btnSourceID = ((Button) me.getSource()).getId();
+				
+				if (btnSourceID.equals(correctMoverID) && !bqPointsGotten) {
+					score += POINTS_BQ;
+					bqPointsGotten = true;
+				} 
+			} catch (ClassCastException e) {}
+		}
+	}
+	
+	private void tutorialUpdate(MouseEvent me) {
+		if(!isTutorialSetUp) {
+			movers = reduceUntil(new ArrayList<Mover>(animals), TUTORIAL_MAX_ANIMALS);
+			isTutorialSetUp = true;
+		}
+		
+		if (me.getEventType() == MouseEvent.DRAG_DETECTED || me.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+			try {
+				btnSourceID = ((Button) me.getSource()).getId();
+			} catch (ClassCastException e) {}
+		}
+		
+		if (me.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET) {
+			flag = true; //checking if all ma's are matched
+			for (Mover m : movers) {
+				MatchingAnimal ma = (MatchingAnimal) m;
+				
+				if (isCollision(ma, me)) {
+					if (ma.isMatch()) {
+						gs = GameState.TRANSITION1;
+					}
+				}
+			}				
+		}
+	}
+	
+	/**
+	 * <code>GameState.TRANSITION1</code> is an intermediate state inbetween two playable game states (TUTORIAL, INPROGRESS, BONUS)
+	 * Only changes the game's state <code>gs</code> when a button has been pressed.
+	 * 
+	 * @author Ryan Peters
+	 * @param me	most recent MouseEvent originating from View
+	 */
+	private void transition1Update(MouseEvent me) {
+		try {
+			Button b = (Button) me.getSource();
+			gs = GameState.INPROGRESS;
+			for (Mover m : movers) {
+				((MatchingAnimal) m).unMatch();
+			}
+			movers = reduceUntil(new ArrayList<Mover>(animals), MAX_MATCH_ANIMALS);
+		} catch (ClassCastException e) {}
+	}
+	
 	
 	
 	public class MatchingAnimal extends Mover {
@@ -207,6 +266,10 @@ public class AMModel extends MinigameModel {
 		public boolean isMatch() {
 			isMatched = btnSourceID.equals(super.getValue());
 			return isMatched;			
+		}
+		
+		public void unMatch() {
+			this.isMatched = false;
 		}
 		
 		public String[] getClues() {

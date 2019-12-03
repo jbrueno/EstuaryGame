@@ -55,7 +55,7 @@ public class AMView extends MinigameView{
 	final private int clueHeight = 70;
 	final private int clueSpacing = 10;
 	private VBox clueBox;
-	private HashMap<String, ClueList> clueBank;
+	private HashMap<String, ClueList> clueBank = new HashMap<String, ClueList>();
 	private Button btnHint;
 	private Button selectedButton = new Button();
 	private Button draggingButton;
@@ -77,6 +77,13 @@ public class AMView extends MinigameView{
 	final private int panePadding = 50;
 	private boolean bqGuessed = false;
 	private boolean buttonsDisabled = false;
+	
+	//tutorial attributes
+	private int promptYBuffer = 10;
+	private int promptWidth = 500;
+	private int promptHeight = 10;
+	private boolean transition1SetUp = false;
+	private Label prompt;
 	
 	/**
 	 * Constructor which saves local copies of GraphicsContext, Root, and Scene from <code>View</code> so that
@@ -110,12 +117,57 @@ public class AMView extends MinigameView{
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		switch (gs) {
+			case TUTORIAL:
+				if (!isTutorialSetUp) {
+						storeTutorialMoverAsButton(movers);
+						setUpTutorial();
+						isTutorialSetUp = true;
+				}
+				
+				if (me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED) {
+					draggingButton.setVisible(false);
+				}
+				
+				for (Mover m : movers) {
+					AMModel.MatchingAnimal ma = (AMModel.MatchingAnimal) m;
+					for (Node n : clueBox.getChildren()) {
+						Button b = (Button) n;
+						if (ma.getIsMatched() && b.getId().equals(ma.getValue())) {
+							disableButton(b);
+							b.setText((clueBank.get(b.getId())).getLast());
+							b.setBorder(Border.EMPTY);
+						}
+					}
+				}
+				
+				
+				draw(movers);
+				break;
+			case TRANSITION1:
+				if (!transition1SetUp) {
+					prompt.setText("Good job! Let's try some more!");
+					drawPlayButton();
+					for (Node n : clueBox.getChildren()) {
+						try {
+							((Button) n).setDisable(true);
+						} catch (ClassCastException e) {}
+						
+					}
+					transition1SetUp = true;
+				}
+				
+				if(me.getEventType() != MouseEvent.MOUSE_DRAGGED && me.getEventType() != MouseEvent.DRAG_DETECTED) {
+					draggingButton.setVisible(false);
+				}
+				break;
 			case INPROGRESS:
 				if (!areButtonsMade) {
+					clearRootExceptCanvas();
 					storeClues(movers);
 					areButtonsMade = true;	
 				}
 				
+				//reorder loops for less calls (later)
 				for (Mover m : movers) {
 					MatchingAnimal ma = (MatchingAnimal) m;
 					try {
@@ -129,7 +181,6 @@ public class AMView extends MinigameView{
 							}
 							if (me.getEventType() == MouseEvent.MOUSE_DRAGGED || me.getEventType() == MouseEvent.DRAG_DETECTED ) {
 								if (b.getBorder() != Border.EMPTY) {
-									b.setText(clueBank.get(b.getId()).getIterator().next());
 									b.setBorder(Border.EMPTY);
 								}
 							} else {
@@ -137,10 +188,6 @@ public class AMView extends MinigameView{
 							}
 						}
 					} catch (ClassCastException e) {} catch (NullPointerException e) {}
-				}
-				
-				if (draggingButton != null) {
-					
 				}
 				
 				createScoreLabel(score);
@@ -156,6 +203,7 @@ public class AMView extends MinigameView{
 				}
 				createScoreLabel(score);
 				
+				//call optionsBox directly; reorder loops
 				if (bqGuessed) {
 					if (!buttonsDisabled) {
 						for (Node n : root.getChildren()) {
@@ -181,7 +229,7 @@ public class AMView extends MinigameView{
 			default:
 				break;
 		}
-		
+		System.out.println(me.getEventType());
 	}
 
 	/**
@@ -209,7 +257,6 @@ public class AMView extends MinigameView{
 	 * @param movers	list of Movers for the clues to be 
 	 */
 	private void storeClues(ArrayList<Mover> movers) {
-		clueBank = new HashMap<String, ClueList>();
 		clueBox = new VBox();
 		clueBox.setAlignment(Pos.CENTER_RIGHT);
 		clueBox.setTranslateX(backgroundWidth - clueXBuffer);
@@ -218,49 +265,13 @@ public class AMView extends MinigameView{
 		
 		makeDraggingButton();
 		
-		
 		for (Mover m : movers) {
-			AMModel.MatchingAnimal ma = (AMModel.MatchingAnimal) m;
-			clueBank.put(ma.getValue(), new ClueList(ma.getValue(), ma.getClues()));
-			Button b = new Button();
-			b.setId(ma.getValue());
-			b.setText(clueBank.get(b.getId()).getIterator().next());
-			b.setPrefHeight(clueHeight);
-			b.setPrefWidth(clueWidth);
-			setMatchingButtonStyle(b);
-			//show selected button
-			b.setOnMouseClicked(e -> {
-				selectedButton.setBorder(Border.EMPTY);
-				selectedButton = b;
-				b.setBorder(new Border(new BorderStroke(Color.BLUE, 
-			            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
-			});
-			b.setOnDragDetected(e -> {me = e;});
-			b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
-			//update draggingButton/copy of selectedButton
-			b.setOnMouseDragged(e -> {
-				me = e;
-				draggingButton.setVisible(true);
-				draggingButton.setText(b.getText());
-				draggingButton.setLayoutX(me.getSceneX());
-				draggingButton.setLayoutY(me.getSceneY());
-			});
-			clueBox.getChildren().add(b);
+			clueBox.getChildren().add(createMatchingAnimalButton((AMModel.MatchingAnimal) m));
 		}
 		
-		btnHint = new Button("HINT");
-		btnHint.setPrefHeight(clueHeight);
-		btnHint.setPrefWidth(clueWidth);
-		btnHint.setId("hint");
-		setMatchingButtonStyle(btnHint);
-		btnHint.setOnMouseClicked(e -> {
-			if (selectedButton != null) {
-				selectedButton.setText(clueBank.get(selectedButton.getId()).getIterator().next());
-			}
-		});
+		btnHint = createHintButton();
 		clueBox.getChildren().add(btnHint);
-		
-		root.getChildren().add(clueBox);
+		root.getChildren().addAll(clueBox);
 	}
  
 	/**
@@ -444,6 +455,84 @@ public class AMView extends MinigameView{
 		root.getChildren().add(draggingButton);
 	}
 	
+	
+	private void storeTutorialMoverAsButton(ArrayList<Mover> movers) {
+		System.out.println(movers.get(0));
+		AMModel.MatchingAnimal ma1 = (AMModel.MatchingAnimal) movers.get(0);
+		
+		clueBox = new VBox();
+		clueBox.setAlignment(Pos.CENTER_RIGHT);
+		clueBox.setTranslateX(backgroundWidth - clueXBuffer);
+		clueBox.setTranslateY(clueYBuffer);
+		clueBox.setSpacing(clueSpacing);
+		
+		
+		makeDraggingButton();
+		
+		clueBox.getChildren().addAll(createMatchingAnimalButton(ma1), createHintButton());
+		root.getChildren().add(clueBox);
+	}
+	
+	
+	private Button createMatchingAnimalButton(AMModel.MatchingAnimal ma) {
+		clueBank.put(ma.getValue(), new ClueList(ma.getValue(), ma.getClues()));
+		Button b = new Button();
+		b.setId(ma.getValue());
+		b.setText(clueBank.get(b.getId()).getIterator().next());
+		b.setPrefHeight(clueHeight);
+		b.setPrefWidth(clueWidth);
+		setMatchingButtonStyle(b);
+		//show selected button
+		b.setOnMouseClicked(e -> {
+			selectedButton.setBorder(Border.EMPTY);
+			selectedButton = b;
+			b.setBorder(new Border(new BorderStroke(Color.BLUE, 
+		            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		});
+		b.setOnDragDetected(e -> {me = e;});
+		b.setOnMouseDragReleased(e -> {me = (MouseEvent) e;});
+		//update draggingButton/copy of selectedButton
+		b.setOnMouseDragged(e -> {
+			me = e;
+			draggingButton.setVisible(true);
+			draggingButton.setText(b.getText());
+			draggingButton.setLayoutX(me.getSceneX() - draggingButton.getPrefWidth()/2);
+			draggingButton.setLayoutY(me.getSceneY() - draggingButton.getPrefHeight()/2);
+		});
+		return b;
+	}
+	
+	private Button createHintButton() {
+		Button b = new Button("HINT");
+		b.setPrefHeight(clueHeight);
+		b.setPrefWidth(clueWidth);
+		b.setId("hint");
+		setMatchingButtonStyle(b);
+		b.setOnMouseClicked(e -> {
+			if (selectedButton != null) {
+				selectedButton.setText(clueBank.get(selectedButton.getId()).getIterator().next());
+			}
+		});
+		
+		return b;
+	}
+	
+	@Override
+	public void setUpTutorial() {
+		super.setUpTutorial();
+		
+		prompt = new Label("Drag the Clue to Match it to the Correct Animal");
+		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color:black;-fx-border-width:3");
+		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
+		prompt.setLayoutY(promptYBuffer);
+		prompt.setPrefSize(promptWidth, promptHeight);
+		prompt.setWrapText(true);
+		prompt.setTextAlignment(TextAlignment.CENTER);
+		prompt.setAlignment(Pos.CENTER);
+		
+		root.getChildren().add(prompt);
+	}
 	
 	/**
 	 * A nested class that holds the clues with an iterator that loops through the list of clues continuously
