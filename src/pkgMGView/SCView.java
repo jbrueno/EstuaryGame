@@ -205,6 +205,10 @@ public class SCView extends MinigameView  {
 	@Override
 	void drawTutorial(int step) {
 		// TODO Auto-generated method stub
+		switch(step) {
+		case 0:
+			
+		}
 		
 	}
 	

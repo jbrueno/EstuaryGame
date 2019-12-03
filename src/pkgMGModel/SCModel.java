@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
@@ -28,6 +29,7 @@ public class SCModel extends MinigameModel{
 	boolean timerSet = false;
 	int seaweedHeight = 100;
 	int tutorialStep = 0;
+	boolean tutorialPlay = false;
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -43,7 +45,7 @@ public class SCModel extends MinigameModel{
 		gs = GameState.TUTORIAL;
 		score = 0;
 		
-		Food f = new Food(backgroundWidth, backgroundHeight/2, seaweedHeight/2, seaweedHeight/2, currentItemSpeed, itemYSpeed, "Food");
+		Food f = new Food(backgroundWidth, backgroundHeight/2, seaweedHeight/2, seaweedHeight/2, currentItemSpeed/2, 		itemYSpeed, "Food");
 		items.add(f);
 		
 		//movers.removeAll(getMovers());
@@ -124,46 +126,89 @@ public class SCModel extends MinigameModel{
 			case TUTORIAL:
 				switch(tutorialStep) {
 				case 0:
-					if (items.size() == 0) {
-						items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed));
-						tutorialStep++;
-					} else {
-						for (Mover m : items) {
-							m.move();
+					if (me.getSource() instanceof Button) {
+						tutorialPlay = true;
+					}
+					
+					if (tutorialPlay) {
+						if (isCollision(terry, items.get(0))) {
+							movers.remove(items.get(0));
+							items.remove(0);
+							tutorialStep++;
+							tutorialPlay = false;
+						} else if (items.get(0).getX() < 0) {
+							movers.remove(items.get(0));
+							items.remove(0);
+							items.add(new Food(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
+							movers.addAll(items);
+						} else {
+							items.get(0).move();
+							terry.move(me.getX(), me.getY());
 						}
-						terry.move(me.getX(), me.getY());
 					}
 					break;
 				case 1:
-					if (items.size() == 0) {
-						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight));
-						tutorialStep++;
-					} else {
-						for (Mover m : items) {
-							m.move();
+					if (me.getSource() instanceof Button) {
+						tutorialPlay = true;
+						items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
+						movers.addAll(items);
+					}
+					
+					if (tutorialPlay) {
+						if (isCollision(terry, items.get(0))) {
+							movers.remove(items.get(0));
+							items.remove(0);
+							tutorialStep++;
+							tutorialPlay = false;
+						} else if (items.get(0).getX() < 0) {
+							movers.remove(items.get(0));
+							items.remove(0);
+							items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
+							movers.addAll(items);
+						} else {
+							items.get(0).move();
+							terry.move(me.getX(), me.getY());
 						}
-						terry.move(me.getX(), me.getY());
 					}
 					break;
 				case 2:
-					if (items.size() == 0) {
-						tutorialStep++;
-					} else {
-						for (Mover m : items) {
-							m.move();
+					if (me.getSource() instanceof Button) {
+						tutorialPlay = true;
+						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed/2, seaweedHeight));
+						movers.addAll(items);
+					}
+					
+					if (tutorialPlay) {
+						if (items.get(0).getX() < 0) {
+							movers.remove(items.get(0));
+							items.remove(0);
+							tutorialStep++;
+							tutorialPlay = false;
+						} else {
+							items.get(0).move();
+							terry.move(me.getX(), me.getY());
 						}
-						terry.move(me.getX(), me.getY());
 					}
 					break;
 				case 3:
-					if (terry.getY() <= waterThreshold) {
-						terry.breathe();
-						tutorialStep++;
-					} else {
-						terry.setAirAmount(50);
+					if (me.getSource() instanceof Button) {
+						tutorialPlay = true;
 					}
+					
+					if (tutorialPlay) {
+						terry.move(me.getX(), me.getY());
+						if (terry.getY() < waterThreshold) {
+							terry.breathe();
+							tutorialStep++;
+						} else {
+							terry.setAirAmount(50);
+						}
+					}
+					break;
 				case 4:
-					gs = GameState.INPROGRESS;
+					if (me.getSource() instanceof Button) {
+						gs = GameState.INPROGRESS;
+					}
 					break;
 				}
 		}
