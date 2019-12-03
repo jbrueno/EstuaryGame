@@ -59,6 +59,10 @@ public class SCView extends MinigameView  {
 	boolean tutorialSet = false;
 	boolean okButton = false;
 	Button ok;
+	private boolean setTrash;
+	private boolean setSeaweed;
+	private boolean setBreath;
+	private boolean setPlay;
 	//private ParallelTransition parallelTransition;
 
 	
@@ -114,6 +118,7 @@ public class SCView extends MinigameView  {
 		
 		switch(gs) {
 		case INPROGRESS:
+			root.getChildren().remove(btnPlay);
 			draw(movers);
 			break;
 		case FINISHED:
@@ -123,25 +128,6 @@ public class SCView extends MinigameView  {
 			drawGameOver();
 			break;
 		case SC_TUTORIAL_FOOD:
-			
-		case SC_TUTORIAL_TRASH:
-		case SC_TUTORIAL_SEAWEED:
-		case SC_TUTORIAL_BREATH:
-		case TUTORIAL:
-		}
-		
-		if (gs == GameState.INPROGRESS) {
-			draw(movers);
-		} else if (gs == GameState.FINISHED) {
-			if (!isBackToMainDrawn) {
-				backToMainButton();
-			}
-			drawGameOver();
-		} else if (gs == GameState.SC_TUTORIAL_FOOD) {
-			draw(movers);
-			if (movers.size() == 1) {
-				tutorialStep++;
-			}
 			if (!tutorialSet) {
 				setUpTutorial();
 				drawOKButton();
@@ -149,11 +135,95 @@ public class SCView extends MinigameView  {
 				tutorialSet = true;
 			}
 			
-			drawTutorial(tutorialStep);
+			if (okButton) {
+				root.getChildren().remove(ok);
+				System.out.println("ok removed");
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(0);
+			break;
+		case SC_TUTORIAL_TRASH:
+			if (!setTrash) {
+				drawOKButton();
+				setTrash = true;
+				root.getChildren().add(ok);
+			}
+			
+		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(1);
+			break;
+		case SC_TUTORIAL_SEAWEED:
+			if (!setSeaweed) {
+				drawOKButton();
+				setSeaweed= true;
+				root.getChildren().add(ok);
+			}
+			
+			
+		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(2);
+			break;
+		case SC_TUTORIAL_BREATH:
+			if (!setBreath) {
+				drawOKButton();
+				setBreath = true;
+				root.getChildren().add(ok);
+			}
+		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(3);
+			break;
+		case TUTORIAL:
+			if (!setPlay) {
+				drawPlayButton();
+				setPlay = true;
+				root.getChildren().add(btnPlay);
+			}
+			
+			if (play) {
+				root.getChildren().remove(btnPlay);
+			}
+			drawTutorial(4);
+			break;
 		}
+	
 		
 	
 		
+	}
+	
+	
+	
+	public void clearButton(ArrayList<Mover> movers) {
+		root.getChildren().removeAll();
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		
+		
+		gc.clearRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
+		
+		for (Mover m : movers) {
+			if (m instanceof Terrapin) {
+				Terrapin t = (Terrapin)m;
+				gc.fillRect(breathBarX, breathBarY, t.getAirAmount(), breathBarHeight);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -233,20 +303,22 @@ public class SCView extends MinigameView  {
 		switch(step) {
 		case 0:
 			tutorialLabel.setText("Eat food!");
-			if (!okButton) {
-				drawOKButton();
-				okButton = true;
-			}
 			ok.setVisible(true);
+			break;
 		case 1:
 			tutorialLabel.setText("Avoid trash!");
 			ok.setVisible(true);
+			break;
 		case 2:
 			tutorialLabel.setText("Seaweed slows you down!");
 			ok.setVisible(true);
-		case 4:
+			break;
+		case 3:
 			tutorialLabel.setText("Don't run out of breath!");
 			ok.setVisible(true);
+			break;
+		case 4:
+			tutorialLabel.setVisible(false);
 		}
 		
 	}
@@ -257,12 +329,30 @@ public class SCView extends MinigameView  {
 	}
 	
 	public void drawOKButton() {
+		okButton = false;
 		ok = new Button("Ok!");
 		ok.setLayoutX(backgroundWidth/2);
 		ok.setLayoutY(backgroundHeight/2);
 		ok.setOnMousePressed(e -> {
+			System.out.println(okButton);
+			System.out.println("Ok clicked");
+			okButton = true;
 			ok.setVisible(false);
+			System.out.println(okButton);
 		});
+	}
+	
+	@Override
+	public void drawPlayButton() {
+		play = false;
+		btnPlay=new Button();
+		btnPlay.setText("Let's play!");
+		btnPlay.setLayoutX(backgroundWidth/2);
+		btnPlay.setLayoutY(backgroundHeight/2);
+		btnPlay.setOnMouseClicked(e -> {
+			play=true;
+		});
+		
 	}
 	
 //	public void createBackgroundAnimation() {

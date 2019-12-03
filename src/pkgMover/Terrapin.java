@@ -8,6 +8,7 @@ public class Terrapin extends Mover {
 			super(x, y, 240, 120, xIncr, yIncr,"Terrapin");
 			this.airAmount = 100;
 			this.setXIncr(0);
+			
 		}
 		
 		/**
