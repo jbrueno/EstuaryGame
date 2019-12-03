@@ -302,19 +302,19 @@ public class SCView extends MinigameView  {
 		// TODO Auto-generated method stub
 		switch(step) {
 		case 0:
-			tutorialLabel.setText("Follow the mouse, and eat food!");
+			prompt.setText("Follow the mouse, and eat food!");
 			ok.setVisible(true);
 			break;
 		case 1:
-			tutorialLabel.setText("Avoid trash!");
+			prompt.setText("Avoid trash!");
 			ok.setVisible(true);
 			break;
 		case 2:
-			tutorialLabel.setText("Seaweed slows you down!");
+			prompt.setText("Seaweed slows you down!");
 			ok.setVisible(true);
 			break;
 		case 3:
-			tutorialLabel.setText("Put your head above water to breathe before you run out of air!");
+			prompt.setText("Put your head above water to breathe before you run out of air!");
 			ok.setVisible(true);
 			break;
 		case 4:
