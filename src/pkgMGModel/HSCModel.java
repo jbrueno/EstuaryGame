@@ -18,7 +18,7 @@ public class HSCModel extends MinigameModel {
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
-		gs = GameState.INPROGRESS;
+		gs = GameState.TUTORIAL;
 		createHSCrabs();
 		time = 300;
 	}
@@ -54,7 +54,7 @@ public class HSCModel extends MinigameModel {
 		int buffer = r.nextInt(10);
 
 		if (isOffScreen(m)) {
-			((HSC) m ).unTag();
+			((HSC) m).unTag();
 			if (m.getX() < -iWidth) {
 				m.setX(backgroundWidth + buffer);
 				m.setY(r.nextInt(backgroundHeight));
@@ -71,6 +71,15 @@ public class HSCModel extends MinigameModel {
 		}
 	}
 
+	public boolean tutorialHSCrabClicked(MouseEvent me) {
+		if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if (me.getX() <= (backgroundWidth / 2 + 200) && me.getX() > backgroundWidth / 2
+					&& me.getY() >= backgroundHeight / 2 && me.getY() <= (backgroundHeight / 2 + 136)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * For each horseshoe crab, move() based on xIncr,yIncr
@@ -81,26 +90,38 @@ public class HSCModel extends MinigameModel {
 	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
-		if(!timerSet) {
-			setUpTimer();
-			timerSet = true;
-		}
-		
-		for (Mover m : movers) {
-			spawnHSCrabs(m);
-			if (me.getEventType() == MouseEvent.MOUSE_CLICKED  || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-				if (isCollision(m, me) && !((HSC) m).getTagged()) {
-					((HSC) m).tag();
-					score += points;
-					numTagged++;
-				}
+
+		switch (gs) {
+		case TUTORIAL:
+			if (tutorialHSCrabClicked(me)) {
+				gs = GameState.TUTORIAL2;
 			}
-			m.move();
+			break;
+		case TUTORIAL2:
+			if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				gs = GameState.INPROGRESS;
+			}
+			break;
+		case INPROGRESS:
+			if (!timerSet) {
+				setUpTimer();
+				timerSet = true;
+			}
+			for (Mover m : movers) {
+				spawnHSCrabs(m);
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+					if (isCollision(m, me) && !((HSC) m).getTagged()) {
+						((HSC) m).tag();
+						score += points;
+						numTagged++;
+					}
+				}
+				m.move();
+			}
+			break;
 		}
 
 	}
-
-	
 
 	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {
@@ -123,25 +144,29 @@ public class HSCModel extends MinigameModel {
 			super.setValue("HSCTagged");
 			increaseSpeed();
 		}
-		
+
 		public void unTag() {
 			this.tagged = false;
 			super.setValue("HSC");
 		}
-		
+
 		private void increaseSpeed() {
-			System.out.println((int) (super.getXIncr()/2.0));
-			System.out.println((int) (super.getYIncr()/2.0));
+			System.out.println((int) (super.getXIncr() / 2.0));
+			System.out.println((int) (super.getYIncr() / 2.0));
 			if (super.getXIncr() >= 0) {
-				super.setXIncr(super.getXIncr() + r.nextInt((int) (1 + super.getXIncr()/2.0)) + DEFAULT_SPEED_INCREASE);
+				super.setXIncr(
+						super.getXIncr() + r.nextInt((int) (1 + super.getXIncr() / 2.0)) + DEFAULT_SPEED_INCREASE);
 			} else {
-				super.setXIncr(super.getXIncr() - r.nextInt((int) Math.abs(-1 + super.getXIncr()/2.0)) - DEFAULT_SPEED_INCREASE);
+				super.setXIncr(super.getXIncr() - r.nextInt((int) Math.abs(-1 + super.getXIncr() / 2.0))
+						- DEFAULT_SPEED_INCREASE);
 			}
-			
+
 			if (super.getYIncr() >= 0) {
-				super.setYIncr(super.getYIncr() + r.nextInt((int) (1 + super.getYIncr()/2.0)) + DEFAULT_SPEED_INCREASE);
+				super.setYIncr(
+						super.getYIncr() + r.nextInt((int) (1 + super.getYIncr() / 2.0)) + DEFAULT_SPEED_INCREASE);
 			} else {
-				super.setYIncr(super.getYIncr() - r.nextInt((int) Math.abs(-1 + super.getYIncr()/2.0)) - DEFAULT_SPEED_INCREASE);
+				super.setYIncr(super.getYIncr() - r.nextInt((int) Math.abs(-1 + super.getYIncr() / 2.0))
+						- DEFAULT_SPEED_INCREASE);
 			}
 		}
 	}
@@ -154,4 +179,3 @@ public class HSCModel extends MinigameModel {
 	}
 
 }
-
