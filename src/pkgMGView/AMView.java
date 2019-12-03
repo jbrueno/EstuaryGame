@@ -79,11 +79,12 @@ public class AMView extends MinigameView{
 	private boolean buttonsDisabled = false;
 	
 	//tutorial attributes
-	private int promptYBuffer = 10;
+	/*private int promptYBuffer = 10;
 	private int promptWidth = 500;
 	private int promptHeight = 10;
+	private Label prompt;*/
+	
 	private boolean transition1SetUp = false;
-	private Label prompt;
 	
 	/**
 	 * Constructor which saves local copies of GraphicsContext, Root, and Scene from <code>View</code> so that
@@ -520,8 +521,9 @@ public class AMView extends MinigameView{
 	@Override
 	public void setUpTutorial() {
 		super.setUpTutorial();
+		prompt.setText("Drag the Clue to Match it to the Correct Animal");
 		
-		prompt = new Label("Drag the Clue to Match it to the Correct Animal");
+	/*	prompt = new Label("Drag the Clue to Match it to the Correct Animal");
 		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
 				+ "-fx-border-color:black;-fx-border-width:3");
 		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
@@ -532,6 +534,7 @@ public class AMView extends MinigameView{
 		prompt.setAlignment(Pos.CENTER);
 		
 		root.getChildren().add(prompt);
+		*/
 	}
 	
 	/**

@@ -92,9 +92,6 @@ public class WSView extends MinigameView{
 	Button btnSubmit;
 	int btnSubmitX = btnIncreasepHX;
 	int btnSubmitY = btnDecreasepHY + 50;
-
-	
-	boolean fxcleard=false;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
@@ -120,8 +117,6 @@ public class WSView extends MinigameView{
 		}
 		updateScoreLabel(score);
 		
-		//System.out.println("gs: " + gs);
-		
 		switch (gs) {
 			case WS_COLLECTTUTORIAL:
 				if(!collectIsSetUp) {
@@ -136,6 +131,7 @@ public class WSView extends MinigameView{
 				drawTutorial(tutorialStep);
 				if(play) {	
 					root.getChildren().remove(tutorialLabel);
+					root.getChildren().remove(prompt);
 					btnPlay.setText("to the Lab");
 					gs=GameState.WS_COLLECT;
 					}
@@ -272,31 +268,25 @@ public class WSView extends MinigameView{
 	public void drawTutorial(int step) {
 
 		switch(step) {
-		case 0: tutorialLabel.setText("Click fill button!");
+		case 0: prompt.setText("We need to collect water to test it! \nClick the fill button to fill your Van Dorn bottle!");
 				break;
 		case 1: if(!btnPlayAdded) {
 					drawPlayButton();
 					btnPlayAdded=true;
 				}
 				break;
-		case 2: tutorialLabel.setText("Click box to get pH testing strip!");
+		case 2: prompt.setText("Click box to get pH testing strip!");
 				btnPlayAdded=false;
 				break;
-		case 3: tutorialX=backgroundWidth/2;
-				tutorialY=backgroundHeight/10;
-				tutorialLabel.setText("Move mouse to dip strip in water!");
+		case 3: prompt.setText("Move mouse to dip strip in water!");
 				break;
-		case 4: tutorialX=backgroundWidth*4/5;
-				tutorialY=backgroundHeight/2;
-				tutorialLabel.setText("Match pH with scale \nand enter your guess!");
+		case 4: prompt.setText("Match pH with scale \nand enter your guess!");
 		
 				if(!btnPlayAdded) {
 					drawPlayButton();
 					btnPlayAdded=true;
 				}
 			}
-		tutorialLabel.setLayoutX(tutorialX);
-		tutorialLabel.setLayoutY(tutorialY);
 	}
 	
 	

@@ -88,6 +88,13 @@ public abstract class MinigameView {
 	int tutorialStep = 0;
 	boolean isTutorialSetUp = false;
 	
+	Label prompt;
+	private int promptYBuffer = 10;
+	private int promptWidth = 500;
+	private int promptHeight = 10;
+	
+	Label prompt2;
+	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
 	final double btnPlayY = 400;
@@ -438,6 +445,20 @@ public abstract class MinigameView {
 	    fadeTransition.play();		
 		
 		root.getChildren().add(tutorialLabel);
+		
+		prompt = new Label();
+		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color:black;-fx-border-width:3");
+		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
+		prompt.setLayoutY(promptYBuffer);
+		//prompt.setPrefSize(promptWidth, promptHeight);
+		prompt.setWrapText(true);
+		prompt.setTextAlignment(TextAlignment.CENTER);
+		prompt.setAlignment(Pos.CENTER);
+		
+		
+		
+		root.getChildren().add(prompt);
 	}
 	
 	public void drawPlayButton() {
