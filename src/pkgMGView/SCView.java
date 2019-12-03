@@ -52,7 +52,7 @@ public class SCView extends MinigameView  {
 	double mouseX;
 	double mouseY;
 	int gameLength;
-	double breathBarX = backgroundWidth - 190;
+	double breathBarX = backgroundWidth - 155;
 	double breathBarY = 50;
 	double breathBarHeight = 10;
 	int lungCapacity = 100;
@@ -91,8 +91,6 @@ public class SCView extends MinigameView  {
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		
 		
-		updateScoreLabel(score);
-		createTimer(time);
 		
 		if (!areButtonsMade) {
 			setUpListeners();
@@ -118,6 +116,8 @@ public class SCView extends MinigameView  {
 		
 		switch(gs) {
 		case INPROGRESS:
+			updateScoreLabel(score);
+			createTimer(time);
 			root.getChildren().remove(btnPlay);
 			draw(movers);
 			break;
@@ -302,7 +302,7 @@ public class SCView extends MinigameView  {
 		// TODO Auto-generated method stub
 		switch(step) {
 		case 0:
-			tutorialLabel.setText("Eat food!");
+			tutorialLabel.setText("Follow the mouse, and eat food!");
 			ok.setVisible(true);
 			break;
 		case 1:
@@ -314,7 +314,7 @@ public class SCView extends MinigameView  {
 			ok.setVisible(true);
 			break;
 		case 3:
-			tutorialLabel.setText("Don't run out of breath!");
+			tutorialLabel.setText("Put your head above water to breathe before you run out of air!");
 			ok.setVisible(true);
 			break;
 		case 4:

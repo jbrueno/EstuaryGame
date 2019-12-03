@@ -89,7 +89,7 @@ public class SCModel extends MinigameModel{
 		
 				terry.move(me.getX(), me.getY());
 				
- 		
+				
 				Iterator<SCMover> itemsIt = items.iterator();
 				boolean collisionOccured = false;
 				while (itemsIt.hasNext()) {
@@ -195,7 +195,7 @@ public class SCModel extends MinigameModel{
 				if (tutorialPlay) {
 					if (!set) {
 						items.removeAll(items);
-						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight));
+						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed));
 						movers.addAll(items);
 						set = true;
 					}
@@ -230,6 +230,15 @@ public class SCModel extends MinigameModel{
 				}
 				break;
 			case TUTORIAL:
+				if (items.size() <= 3) {
+					addNewMover();
+					movers.removeAll(getMovers());
+					movers.addAll(items);
+					movers.add(terry);
+					for (Mover m : items) {
+						m.move();
+					}
+				}
 				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
 					gs = GameState.INPROGRESS;
 				}
@@ -243,11 +252,11 @@ public class SCModel extends MinigameModel{
 	
 	public void addNewMover() {
 		int newMover = r.nextInt(10);
-		if (newMover < 4)  {
-			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight);
+		if (newMover < 2)  {
+			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed);
 			System.out.println("seaweed added");
 			items.add(s);
-		} else if (newMover < 8) {
+		} else if (newMover < 7) {
 			int y =  new Random().nextInt((int) (backgroundHeight - waterThreshold));
 			Food f = new Food(backgroundWidth, backgroundHeight - y, currentItemSpeed);
 			System.out.println("food added");
@@ -293,6 +302,6 @@ public class SCModel extends MinigameModel{
 	}
 	
 	public void changeCurrentSpeed(SCMover m) {
-		currentItemSpeed += m.getCollisionSpeedChange();
+		currentItemSpeed = currentItemSpeed + m.getCollisionSpeedChange();
 	}
 }
