@@ -27,6 +27,7 @@ public class SCModel extends MinigameModel{
 	final int itemYSpeed = 0;
 	boolean timerSet = false;
 	int seaweedHeight = 100;
+	int tutorialStep = 0;
 	 
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
@@ -49,6 +50,7 @@ public class SCModel extends MinigameModel{
 		for (Mover sc : items) {
 			movers.add(sc);
 		}
+		movers.add(terry);
 	}
 
 	
@@ -82,11 +84,8 @@ public class SCModel extends MinigameModel{
 					}
 				}
 		
-				try {
-					terry.move(me.getX(), me.getY());
-				} catch (NullPointerException e) {
-					System.out.println("caught null pointer exception");
-				}
+				terry.move(me.getX(), me.getY());
+				
  		
 				Iterator<SCMover> itemsIt = items.iterator();
 				boolean collisionOccured = false;
@@ -96,7 +95,7 @@ public class SCModel extends MinigameModel{
 						itemsIt.remove();
 					} else {
 						m.move();
-						if (m.collison(terry)) {
+						if (isCollision(m, terry)) {
 							collisionOccured = true;
 							System.out.println("collision with " + m);
 							changeCurrentSpeed(m);
@@ -120,26 +119,58 @@ public class SCModel extends MinigameModel{
 					movers.addAll(items);
 					movers.add(terry);
 				}
+				break;
 				
 			case TUTORIAL:
-				
-		
-		
-				
+				switch(tutorialStep) {
+				case 0:
+					if (items.size() == 0) {
+						items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed));
+						tutorialStep++;
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+					break;
+				case 1:
+					if (items.size() == 0) {
+						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight));
+						tutorialStep++;
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+					break;
+				case 2:
+					if (items.size() == 0) {
+						tutorialStep++;
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+					break;
+				case 3:
+					if (terry.getY() <= waterThreshold) {
+						terry.breathe();
+						tutorialStep++;
+					} else {
+						terry.setAirAmount(50);
+					}
+				case 4:
+					gs = GameState.INPROGRESS;
+					break;
+				}
 		}
+				
+		
 	}
 	
-	public boolean terryCollision(Mover m) {
-		boolean collision = false;
-		if (terry.getX() >= m.getX() - m.getImageWidth() 
-			&& terry.getX() <= m.getX() + m.getImageWidth()
-			&& terry.getY() >= m.getY() - m.getImageHeight() 
-			&& terry.getY() <= m.getY() + m.getImageWidth()) {
-			collision = true;
-		}
-		return collision;
-			
-	}
 
 	
 	public void addNewMover() {

@@ -55,6 +55,10 @@ public class Terrapin extends Mover {
 		public double getAirAmount() {
 			return airAmount;
 		}
+		
+		public void setAirAmount(int air) {
+			airAmount = air;
+		}
 
 		
 	}
