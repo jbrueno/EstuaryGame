@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -27,32 +28,27 @@ import pkgMover.Mover;
 
 public class WSView extends MinigameView{
 	
-	//TUTORIAL
-	/*Label tutorialLabel;
-	int tutorialX = 0;
-	int tutorialY = backgroundHeight*2/5;
-	int tutorialStep = 0;
-	
-	Button btnPlay;
-	final double btnPlayX = backgroundWidth*4/5;
-	final double btnPlayY = backgroundHeight*4/5;
-	boolean btnPlayAdded=false;
-	boolean play=false;
-	*/
-	
 	// WS_COLLECT
 	Image bottle;
 	Image background; // used to switch between different backgrounds
 	Image background_collect;
 	Button btnReturn;
 	Button btnFill;
+	String btnFillId="Fill";
 	final int btnFillX = backgroundWidth*9/10;
 	final int btnFillY = backgroundHeight/3;
 	Button btnLab;
+	String btnLabId="Lab";
+	boolean btnLabAdded=false;
 	final double btnLabX = btnFillX;
 	final double btnLabY = btnFillY+50;
+	
+	boolean collectTutorialIsSetUp=false;
+	boolean filledIsPressed=false;
+	boolean playIsPressed=false;
+	String sourceId="";
+	
 	boolean collectIsSetUp=false;
-
 	
 	// WS_PH
 	float pH; // Actual pH of Water
@@ -60,9 +56,14 @@ public class WSView extends MinigameView{
 	Image testTube;
 	Image phStrip;
 	Color phColor;
-	boolean labIsSetUp = false;
+	
+	boolean phTutorialIsSetUp = false;
+	boolean boxPressed = false;
+	boolean submitPressed = false;
+	boolean phIsSetUp=false;
 	
 	Button phStripBox;
+	String phStripBoxId="phStripBox";
 	Image phBox;
 	ImageView ivphBox;
 	int phStripBoxX=0;
@@ -79,9 +80,11 @@ public class WSView extends MinigameView{
 	int pHDisplayY = pHLabelY + 25;
 	int pHDisplayWidth = pHLabelWidth * 3/5; // leave room for buttons
 	int pHDisplayHeight = pHLabelHeight - 50; 
-	float guesspH = 7; // user's guess for what actual pH is, set to 7 as starting point
+	double guesspH = 7; // user's guess for what actual pH is, set to 7 as starting point
 	
 	Button btnIncreasepH;
+	String btnIncreasepHId="plus";
+	String btnDecreasepHId="minus";
 	int btnIncreasepHX = pHDisplayX + pHDisplayWidth + 10;
 	int btnIncreasepHY = pHDisplayY;
 	
@@ -90,11 +93,9 @@ public class WSView extends MinigameView{
 	int btnDecreasepHY = btnIncreasepHY + 50;
 	
 	Button btnSubmit;
+	String btnSubmitId="Submit";
 	int btnSubmitX = btnIncreasepHX;
 	int btnSubmitY = btnDecreasepHY + 50;
-
-	
-	boolean fxcleard=false;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
@@ -105,50 +106,55 @@ public class WSView extends MinigameView{
 		
 		scene.addEventFilter(MouseEvent.MOUSE_ENTERED, eventHandler);
 		importImages();
-	//	setUpListeners();
 		
 	} 
 	
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		//System.out.println("play: "+ play);
-		//System.out.println(gs);
 		if (!areButtonsMade) {
 			setUpListeners();
 			areButtonsMade = true;
 			createScoreLabel(score);
 		}
 		updateScoreLabel(score);
-		
-		//System.out.println("gs: " + gs);
-		
+		setSourceId();
 		switch (gs) {
 			case WS_COLLECTTUTORIAL:
-				if(!collectIsSetUp) {
+				
+				if(!collectTutorialIsSetUp) {
 					background = background_collect;
 					drawFillButton();
 					addButtons(buttonList);
-					collectIsSetUp=true;
 					setUpTutorial();
+					collectTutorialIsSetUp=true;
 				}
 				
-				updateTutorialStep(me);
-				drawTutorial(tutorialStep);
-				if(play) {	
-					root.getChildren().remove(tutorialLabel);
-					btnPlay.setText("to the Lab");
-					gs=GameState.WS_COLLECT;
-					}
+				if(!filledIsPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
+						sourceId == btnFillId) {
+					prompt.setText("Good job! Let's collect some more water!");
+					drawPlayButton();
+					filledIsPressed=true;
+				}
+				
 				break;
 			case WS_COLLECT :
-				if(play) {
+				if(!collectIsSetUp) {
 					root.getChildren().remove(tutorialLabel);
-					play=false;
+					root.getChildren().remove(prompt);
+					root.getChildren().remove(btnPlay);
+					collectIsSetUp=true;
 				}
+				
+				if(!btnLabAdded && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
+						sourceId == btnFillId) {
+					root.getChildren().add(btnLab);
+					btnLabAdded=true;
+				}
+				
 				break;
 			case WS_PHTUTORIAL:
-				if(!labIsSetUp) {
-					root.getChildren().remove(btnPlay);
+				
+				if(!phTutorialIsSetUp) {
 					root.getChildren().remove(btnFill);
 					root.getChildren().remove(btnLab);
 					background = background_lab;
@@ -157,35 +163,49 @@ public class WSView extends MinigameView{
 					drawpHDisplay();
 					drawpHButtons();
 					setUpTutorial();
-					labIsSetUp = true;
+					
+				//TODO create separate function for set text + loc
+					prompt.setText("Now we need to test the water's pH."
+							+ "\nClick the box to get a pH strip!");
+					prompt.setLayoutX(0);
+					prompt.setLayoutY(phStripBoxY+200);
+					
+					phTutorialIsSetUp = true;
 				}
-				updateTutorialStep(me);
-				drawTutorial(tutorialStep);
+				
+				if(!boxPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
+						sourceId == phStripBoxId) {
+					prompt.setText("Now move your mouse to dip the strip in the water.");
+					prompt.setLayoutX(backgroundWidth*1/3);
+					prompt.setLayoutY(backgroundHeight/8);
+					boxPressed=true;
+				}
+				
+				//fix this, maybe water should be a label
+				if(boxPressed && me.getX()>= 365 &&
+					me.getX() <= 485 &&
+					me.getY() >= 425 &&
+					me.getY() <= 680) {
+						prompt.setText("Great! Use the pH scale above to find the ph."
+								+ "\nEnter your guess and press submit!");
+						prompt.setLayoutX(backgroundWidth*1/3);
+						prompt.setLayoutY(backgroundHeight/3);	
+				}
+				
+				if(!submitPressed && sourceId==btnSubmitId) {
+					drawPlayButton();
+					submitPressed=true;
+				}
 				updatepHDisplay();
-				if(play) {
-					gs=GameState.WS_PH;
-				}
 				break;
 			case WS_PH :
 				
-				if(play) {
-					
+				if(!phIsSetUp) {
 					root.getChildren().remove(btnPlay);
 					root.getChildren().remove(tutorialLabel);
-					play=false;
+					root.getChildren().remove(prompt);
+					phIsSetUp=false;
 				}
-		
-				/*if(!labIsSetUp) {
-					root.getChildren().remove(btnFill);
-					root.getChildren().remove(btnLab);
-					background = background_lab;
-					drawpHBox();
-					drawpHLabel();
-					drawpHDisplay();
-					drawpHButtons();
-					//addButtons(buttonList);
-					labIsSetUp = true;
-				}*/
 				
 				updatepHDisplay();
 				break;
@@ -200,6 +220,13 @@ public class WSView extends MinigameView{
 	//	System.out.println(gs);
 	}
 	
+	void setSourceId() {
+		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+			try {
+				sourceId = ((Button) me.getSource()).getId();
+			} catch (ClassCastException e) {}
+		}
+	}
 	
 	@Override
 	void startTimer(int ms) {
@@ -226,25 +253,35 @@ public class WSView extends MinigameView{
 	}
 
 	void drawFillButton() {
-		btnFill = new Button("fill");
+		btnFill = new Button("Fill");
+		btnFill.setId(btnFillId);
 		btnFill.setLayoutX(btnFillX);
 		btnFill.setLayoutY(btnFillY);
 		btnFill.setOnMousePressed(e -> {
 			me=e;
 		});
 		
-		//adds buttons to list
 		buttonList.add(btnFill);
-	//	buttonList.add(btnLab);
 		
-		//draws buttonlist
-		//addButtons(buttonList);
+		btnLab = new Button("To the Lab!");
+		btnLab.setId(btnLabId);
+		btnLab.setLayoutX(btnFillX);
+		btnLab.setLayoutY(btnFillY+50);
+		btnLab.setOnMousePressed(e -> {
+			me=e;
+		});
 		
 	}
 	
+	public void setUpTutorial() {
+		super.setUpTutorial();
+		prompt.setText("We need to test the pH of the estuary's water!"
+				+ "\nPress Fill to fill up your Van Dorn bottle at the right depth!");
+	}
+	
 	public void updateTutorialStep(MouseEvent m) {
-		System.out.println(tutorialStep);
-		switch(tutorialStep) {
+		//System.out.println(tutorialStep);
+		/*switch(tutorialStep) {
 		case 0: if(m.getEventType()==MouseEvent.MOUSE_PRESSED) {
 					tutorialStep=1;
 				}
@@ -266,37 +303,32 @@ public class WSView extends MinigameView{
 			break;
 		case 4: 
 			break;
-		}
+		}*/
 	}
 	
 	public void drawTutorial(int step) {
-
+/*
 		switch(step) {
-		case 0: tutorialLabel.setText("Click fill button!");
+		case 0: prompt.setText("We need to collect water to test it! \nClick the fill button to fill your Van Dorn bottle!");
 				break;
 		case 1: if(!btnPlayAdded) {
 					drawPlayButton();
 					btnPlayAdded=true;
 				}
 				break;
-		case 2: tutorialLabel.setText("Click box to get pH testing strip!");
+		case 2: prompt.setText("Click box to get pH testing strip!");
 				btnPlayAdded=false;
 				break;
-		case 3: tutorialX=backgroundWidth/2;
-				tutorialY=backgroundHeight/10;
-				tutorialLabel.setText("Move mouse to dip strip in water!");
+		case 3: prompt.setText("Move mouse to dip strip in water!");
 				break;
-		case 4: tutorialX=backgroundWidth*4/5;
-				tutorialY=backgroundHeight/2;
-				tutorialLabel.setText("Match pH with scale \nand enter your guess!");
+		case 4: prompt.setText("Match pH with scale \nand enter your guess!");
 		
 				if(!btnPlayAdded) {
 					drawPlayButton();
 					btnPlayAdded=true;
 				}
 			}
-		tutorialLabel.setLayoutX(tutorialX);
-		tutorialLabel.setLayoutY(tutorialY);
+			*/
 	}
 	
 	
@@ -337,32 +369,43 @@ public class WSView extends MinigameView{
 	// user guessing pH button
 	public void drawpHButtons() {
 				btnIncreasepH = new Button("^");
+				btnIncreasepH.setId(btnIncreasepHId);
 				btnIncreasepH.setLayoutX(btnIncreasepHX);
 				btnIncreasepH.setLayoutY(btnIncreasepHY);
-				btnIncreasepH.setOnAction(e -> {
+				btnIncreasepH.setOnMousePressed(e -> {
+					me=e;
 					if(guesspH < 14) {
-						guesspH++;
+						guesspH+=0.5;
 					}
+				});
+				btnIncreasepH.setOnMouseClicked(e -> {
+					me=e;
+				});
+				btnIncreasepH.setOnMouseReleased(e -> {
+					me=e;
 				});
 				root.getChildren().add(btnIncreasepH);
-
 				
 				btnDecreasepH = new Button("v");
+				btnDecreasepH.setId(btnDecreasepHId);
 				btnDecreasepH.setLayoutX(btnDecreasepHX);
 				btnDecreasepH.setLayoutY(btnDecreasepHY);
-				btnDecreasepH.setOnAction(e -> {
+				btnDecreasepH.setOnMousePressed(e -> {
+					me=e;
 					if(guesspH > 0) {
-						guesspH--;
+						guesspH-=0.5;
 					}
 				});
+			
 				root.getChildren().add(btnDecreasepH);
 				
 				
 				btnSubmit = new Button("Submit");
+				btnSubmit.setId(btnSubmitId);
 				btnSubmit.setLayoutX(btnSubmitX);
 				btnSubmit.setLayoutY(btnSubmitY);
-				btnSubmit.setOnAction(e -> {
-					
+				btnSubmit.setOnMousePressed(e -> {
+					me=e;
 				});
 				root.getChildren().add(btnSubmit);
 
@@ -371,6 +414,7 @@ public class WSView extends MinigameView{
 	void drawpHBox() {
 		
 		phStripBox = new Button("", ivphBox);
+		phStripBox.setId(phStripBoxId);
 		phStripBox.setStyle("-fx-background-color: transparent;");
 		phStripBox.setLayoutX(phStripBoxX);
 		phStripBox.setLayoutY(phStripBoxY);

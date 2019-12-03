@@ -88,6 +88,11 @@ public abstract class MinigameView {
 	int tutorialStep = 0;
 	boolean isTutorialSetUp = false;
 	
+	Label prompt;
+	private int promptYBuffer = 10;
+	private int promptWidth = 500;
+	private int promptHeight = 10;
+	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
 	final double btnPlayY = 400;
@@ -96,6 +101,7 @@ public abstract class MinigameView {
 	boolean btnPlayAdded=false;
 	boolean play=false;
 	boolean isBackToMainDrawn = false;
+	String btnPlayId="Play";
 	/////STUFF FOR TUTORIALS////
 
 	ArrayList<DataNode> dns = new ArrayList<DataNode>();
@@ -438,10 +444,25 @@ public abstract class MinigameView {
 	    fadeTransition.play();		
 		
 		root.getChildren().add(tutorialLabel);
+		
+		prompt = new Label();
+		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color:black;-fx-border-width:3");
+		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
+		prompt.setLayoutY(promptYBuffer);
+		//prompt.setPrefSize(promptWidth, promptHeight);
+		prompt.setWrapText(true);
+		prompt.setTextAlignment(TextAlignment.CENTER);
+		prompt.setAlignment(Pos.CENTER);
+		
+		
+		
+		root.getChildren().add(prompt);
 	}
 	
 	public void drawPlayButton() {
 		btnPlay = new Button("Let's Play");
+		btnPlay.setId(btnPlayId);
 		btnPlay.setLayoutX(backgroundWidth/2 - btnPlayWidth/2);
 		btnPlay.setLayoutY(btnPlayY);
 		btnPlay.setPrefSize(btnPlayWidth, btnPlayHeight);
@@ -449,7 +470,7 @@ public abstract class MinigameView {
 				+ "-fx-border-color: black; -fx-border-width: 3");
 		btnPlay.setAlignment(Pos.CENTER);
 		btnPlay.setTextAlignment(TextAlignment.CENTER);
-		btnPlay.setOnMouseClicked(e -> {
+		btnPlay.setOnMousePressed(e -> {
 			me=e;
 			play=true;
 		});
