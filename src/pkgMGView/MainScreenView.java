@@ -158,7 +158,7 @@ public class MainScreenView extends MinigameView {
 			areButtonsMade = true;
 		}
 		
-		if (gs == GameState.FINISHED) {
+		if (amPlayed && wsPlayed && scPlayed && hsccPlayed) {
 			game = Game.LEADERBOARD;
 		} else {
 			draw(movers);
