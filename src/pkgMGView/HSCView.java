@@ -20,6 +20,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import pkgEnum.GameState;
 import pkgEnum.Game;
@@ -29,9 +30,14 @@ import pkgMover.Mover;
 public class HSCView extends MinigameView {
 
 	Image imgHSC;
+	Image imgHSCTagged;
 	Group lighting = new Group();
 	boolean areMade = false;
 	private boolean lightingRemoved = false;
+	Label info1 = new Label();
+	Label info2 = new Label();
+	Label info3 = new Label();
+	Label info4 = new Label();
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.HSCCOUNT);
@@ -50,14 +56,23 @@ public class HSCView extends MinigameView {
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 
-		if (gs == GameState.INPROGRESS) {
+		switch (gs) {
+		case TUTORIAL:
+			createLightFX();
+			drawTutorial(1);
+			break;
+		case TUTORIAL2:
+			createLightFX();
+			drawTutorial(2);
+			break;
+		case INPROGRESS:
+			removeTutorialLabels();
 			createLightFX();
 			createScoreLabel(score);
 			createTimer(time);
 			draw(movers);
-		}
-
-		if (gs == GameState.FINISHED) {
+			break;
+		case FINISHED:
 			if (!lightingRemoved) {
 				lighting.getChildren().clear();
 				root.getChildren().remove(lighting);
@@ -67,8 +82,11 @@ public class HSCView extends MinigameView {
 				lightingRemoved = true;
 			}
 			drawGameOver();
-		}
+			break;
 
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -96,6 +114,7 @@ public class HSCView extends MinigameView {
 	void importImages() {
 		background = new Image("backgrounds/TempHSC.png");
 		imgHSC = new Image("Mover/HSC.png");
+		imgHSCTagged = new Image("Mover/HSCTagged.png");
 		gameOver = new Image("numbers/gameOver.png");
 	}
 
@@ -108,7 +127,7 @@ public class HSCView extends MinigameView {
 	 * @author jbrueno
 	 */
 	public void createLightFX() {
-		
+
 		lighting.getChildren().clear();
 		root.getChildren().remove(lighting);
 		root.getChildren().add(lighting);
@@ -120,20 +139,79 @@ public class HSCView extends MinigameView {
 		rect.setOpacity(0.985);
 
 		lighting.getChildren().add(rect);
-		
+
 	}
 
 	@Override
 	void drawTutorial(int step) {
-		// TODO Auto-generated method stub
-		
+		switch (step) {
+		case 1:
+			gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+			gc.drawImage(imgHSC, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
+
+			info1.setLayoutX(220);
+			info1.setLayoutY(10);
+			info1.setFont(new Font("Arial", 30));
+			info1.setTextFill(Color.PEACHPUFF);
+			info1.setText("Move your flashlight around to find the horseshoe crab!");
+			info1.setStyle("-fx-font-weight: bold");
+			root.getChildren().remove(info1);
+			root.getChildren().add(info1);
+
+			info2.setLayoutX(backgroundWidth / 3.15);
+			info2.setLayoutY(50);
+			info2.setFont(new Font("Arial", 30));
+			info2.setTextFill(Color.PEACHPUFF);
+			info2.setText("Click the horseshoe crab to tag it!");
+			info2.setStyle("-fx-font-weight: bold");
+			root.getChildren().remove(info2);
+			root.getChildren().add(info2);
+
+			break;
+		case 2:
+			root.getChildren().remove(info1);
+			root.getChildren().remove(info2);
+			
+			gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+			gc.drawImage(imgHSCTagged, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
+
+			info3.setLayoutX(150);
+			info3.setLayoutY(20);
+			info3.setFont(new Font("Arial", 30));
+			info3.setTextFill(Color.PEACHPUFF);
+			info3.setText("You have 30 seconds to tag as many horseshoe crabs as possible!");
+			info3.setStyle("-fx-font-weight: bold");
+			root.getChildren().remove(info3);
+			root.getChildren().add(info3);
+			
+			info4.setLayoutX(450);
+			info4.setLayoutY(60);
+			info4.setFont(new Font("Arial", 30));
+			info4.setTextFill(Color.PEACHPUFF);
+			info4.setText("Click anywhere to start!");
+			info4.setStyle("-fx-font-weight: bold");
+			root.getChildren().remove(info4);
+			root.getChildren().add(info4);
+
+			break;
+		default:
+			break;
+		}
+	}
+	
+	void removeTutorialLabels() {
+		root.getChildren().remove(info3);
+		root.getChildren().remove(info4);
 	}
 
 	@Override
 	void updateTutorialStep(MouseEvent me) {
-		// TODO Auto-generated method stub
-		
+		/*if(me.getEventType() == MouseEvent.MOUSE_CLICKED) { // me.getEventType() == MouseEvent.MOUSE_PRESSED || 
+			if(me.getX() <= (backgroundWidth/2 + 200) && me.getX() > backgroundWidth/2
+					&& me.getY() >= backgroundHeight/2 && me.getY() <= (backgroundHeight/2 + 136)) {
+				step++;
+			}
+		}*/
 	}
-	
 
 }

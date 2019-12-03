@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -79,13 +80,19 @@ public abstract class MinigameView {
 	
 	/////TUTORIAL STUFF//////
 	Label tutorialLabel;
+	int tLabelHeight = 100;
+	int tLabelWidth = 200;
 	int tutorialX = 0;
 	int tutorialY = backgroundHeight*2/5;
+	int tLabelBorderPadding = 25;
 	int tutorialStep = 0;
+	boolean isTutorialSetUp = false;
 	
 	Button btnPlay;
-	final double btnPlayX = backgroundWidth*4/5;
-	final double btnPlayY = backgroundHeight*3/5;
+	final double btnPlayX = backgroundWidth/2;
+	final double btnPlayY = 400;
+	int btnPlayWidth = 200;
+	int btnPlayHeight = 30;
 	boolean btnPlayAdded=false;
 	boolean play=false;
 	boolean isBackToMainDrawn = false;
@@ -142,7 +149,6 @@ public abstract class MinigameView {
 		if (imgDB.containsKey(key)) {
 			return imgDB.get(key);
 		} 
-		System.out.println(dir + key + ".png");
 		img = new Image(dir + key + ".png");
 		imgDB.put(key, img);
 		return img;
@@ -415,21 +421,39 @@ public abstract class MinigameView {
 	
 /////TUTORIAL STUFF//////
 	public void setUpTutorial() {
-		tutorialLabel = new Label();
-		tutorialLabel.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY ,Insets.EMPTY )));
-		tutorialLabel.setFont(new Font("Arial", 25));
+		tutorialLabel = new Label("TUTORIAL");
+		tutorialLabel.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 40;");
+		tutorialLabel.setTextAlignment(TextAlignment.CENTER);
+		tutorialLabel.setAlignment(Pos.CENTER);
+		tutorialLabel.setPrefSize(tLabelWidth, tLabelHeight);
+		tutorialLabel.setLayoutX(tLabelBorderPadding);
+		tutorialLabel.setLayoutY(tLabelBorderPadding);
+		
+		
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), tutorialLabel);
+	    fadeTransition.setFromValue(1.0);
+	    fadeTransition.setToValue(0.25);
+	    fadeTransition.setCycleCount(Animation.INDEFINITE);
+	    fadeTransition.setAutoReverse(true);
+	    fadeTransition.play();		
+		
 		root.getChildren().add(tutorialLabel);
 	}
 	
 	public void drawPlayButton() {
-		btnPlay=new Button();
-		btnPlay.setText("Let's play!");
-		btnPlay.setLayoutX(btnPlayX);
+		btnPlay = new Button("Let's Play");
+		btnPlay.setLayoutX(backgroundWidth/2 - btnPlayWidth/2);
 		btnPlay.setLayoutY(btnPlayY);
+		btnPlay.setPrefSize(btnPlayWidth, btnPlayHeight);
+		btnPlay.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color: black; -fx-border-width: 3");
+		btnPlay.setAlignment(Pos.CENTER);
+		btnPlay.setTextAlignment(TextAlignment.CENTER);
 		btnPlay.setOnMouseClicked(e -> {
 			me=e;
 			play=true;
 		});
+		
 		root.getChildren().add(btnPlay);
 	}
 	/////STUFF FOR TUTORIALS////
