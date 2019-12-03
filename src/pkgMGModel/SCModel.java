@@ -123,98 +123,113 @@ public class SCModel extends MinigameModel{
 				}
 				break;
 				
-			case TUTORIAL:
-				switch(tutorialStep) {
-				case 0:
-					if (me.getSource() instanceof Button) {
-						tutorialPlay = true;
-					}
-					
-					if (tutorialPlay) {
-						if (isCollision(terry, items.get(0))) {
-							movers.remove(items.get(0));
-							items.remove(0);
-							tutorialStep++;
-							tutorialPlay = false;
-						} else if (items.get(0).getX() < 0) {
-							movers.remove(items.get(0));
-							items.remove(0);
-							items.add(new Food(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
-							movers.addAll(items);
-						} else {
-							items.get(0).move();
-							terry.move(me.getX(), me.getY());
+			case SC_TUTORIAL_FOOD:
+				System.out.println(me.getSource());
+				try {
+					Button b = (Button) me.getSource();
+					tutorialPlay = true;
+				} catch (ClassCastException e) {}
+				
+				if (tutorialPlay) {
+					if (isCollision(terry, items.get(0))) {
+						movers.remove(items.get(0));
+						items.remove(0);
+						tutorialPlay = false;
+						gs = GameState.SC_TUTORIAL_TRASH;
+					} else if (items.get(0).getX() < 0) {
+						movers.removeAll(items);
+						items.clear();
+						items.add(new Food(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
+						movers.addAll(items);
+					} else {
+						for (Mover m : items) {
+							m.move();
 						}
+						terry.move(me.getX(), me.getY());
 					}
-					break;
-				case 1:
-					if (me.getSource() instanceof Button) {
-						tutorialPlay = true;
+				}
+				break;
+			case SC_TUTORIAL_TRASH:
+				System.out.println(me.getSource());
+				try {
+					Button b = (Button) me.getSource();
+					tutorialPlay = true;
+					items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
+					movers.addAll(items);
+				} catch (ClassCastException e) {}
+
+				if (tutorialPlay) {
+					if (isCollision(terry, items.get(0))) {
+						movers.remove(items.get(0));
+						items.remove(0);
 						items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
 						movers.addAll(items);
-					}
-					
-					if (tutorialPlay) {
-						if (isCollision(terry, items.get(0))) {
-							movers.remove(items.get(0));
-							items.remove(0);
-							tutorialStep++;
-							tutorialPlay = false;
-						} else if (items.get(0).getX() < 0) {
-							movers.remove(items.get(0));
-							items.remove(0);
-							items.add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed/2));
-							movers.addAll(items);
-						} else {
-							items.get(0).move();
-							terry.move(me.getX(), me.getY());
+					} else if (items.get(0).getX() < 0) {
+						movers.removeAll(items);
+						items.clear();
+						tutorialPlay = false;
+						gs = GameState.SC_TUTORIAL_SEAWEED;
+					} else {
+						for (Mover m : items) {
+							m.move();
 						}
-					}
-					break;
-				case 2:
-					if (me.getSource() instanceof Button) {
-						tutorialPlay = true;
-						items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed/2, seaweedHeight));
-						movers.addAll(items);
-					}
-					
-					if (tutorialPlay) {
-						if (items.get(0).getX() < 0) {
-							movers.remove(items.get(0));
-							items.remove(0);
-							tutorialStep++;
-							tutorialPlay = false;
-						} else {
-							items.get(0).move();
-							terry.move(me.getX(), me.getY());
-						}
-					}
-					break;
-				case 3:
-					if (me.getSource() instanceof Button) {
-						tutorialPlay = true;
-					}
-					
-					if (tutorialPlay) {
 						terry.move(me.getX(), me.getY());
-						if (terry.getY() < waterThreshold) {
-							terry.breathe();
-							tutorialStep++;
-						} else {
-							terry.setAirAmount(50);
-						}
 					}
-					break;
-				case 4:
-					if (me.getSource() instanceof Button) {
-						gs = GameState.INPROGRESS;
-					}
-					break;
 				}
+				break;
+			case SC_TUTORIAL_SEAWEED:
+				System.out.println(me.getSource());
+				try {
+					Button b = (Button) me.getSource();
+					tutorialPlay = true;
+					items.add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed, seaweedHeight));
+					movers.addAll(items);
+				} catch (ClassCastException e) {}
+
+				if (tutorialPlay) {
+					if (items.get(0).getX() < 0) {
+						movers.removeAll(items);
+						items.clear();
+						tutorialPlay = false;
+						gs = GameState.SC_TUTORIAL_BREATH;
+					} else {
+						for (Mover m : items) {
+							m.move();
+						}
+						terry.move(me.getX(), me.getY());
+					}
+				}
+				break;
+			case SC_TUTORIAL_BREATH:
+				System.out.println(me.getSource());
+				try {
+					Button b = (Button) me.getSource();
+					tutorialPlay = true;
+				} catch (ClassCastException e) {}
+
+				if (tutorialPlay) {
+					terry.move(me.getX(), me.getY());
+					if (terry.getY() < waterThreshold) {
+						terry.breathe();
+						gs = GameState.TUTORIAL;
+					} else {
+						terry.setAirAmount(50);
+					}
+				}
+				break;
+			case TUTORIAL:
+				try {
+					Button b = (Button) me.getSource();
+					gs = GameState.INPROGRESS;
+				} catch (ClassCastException e) {}
+				break;
 		}
-				
-		
+
+
 	}
+
+
+	
 	
 
 	
@@ -242,6 +257,23 @@ public class SCModel extends MinigameModel{
 	public void handleBorderCollision(Mover m) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean okClicked(MouseEvent me) {
+		boolean clicked = false;
+		if (me.getX() < backgroundWidth/2 + 20 && me.getX() > backgroundWidth/2 - 20) {
+			System.out.println("in width");
+			if (me.getY() < backgroundHeight/2 + 10 && me.getY() > backgroundHeight/2 - 10) {
+				System.out.println("in height");
+				if (me.getEventType() == MouseEvent.MOUSE_CLICKED) {
+					System.out.println("mouse clicked");
+					clicked = true;
+				}
+			}
+		} 
+		
+		System.out.println("ok clicked: " + clicked);
+		return clicked;
 	}
 	
 	private void changeSpeeds() {

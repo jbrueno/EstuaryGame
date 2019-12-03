@@ -57,8 +57,9 @@ public class SCView extends MinigameView  {
 	double breathBarHeight = 10;
 	int lungCapacity = 100;
 	boolean tutorialSet = false;
+	boolean okButton = false;
+	Button ok;
 	//private ParallelTransition parallelTransition;
-	
 
 	
 	
@@ -74,6 +75,9 @@ public class SCView extends MinigameView  {
 		startTimer(gameLength);
 		gc.fillRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
 		//createBackgroundAnimation();
+		tutorialStep = 0;
+		
+		
 
 	}
 	
@@ -108,6 +112,24 @@ public class SCView extends MinigameView  {
 		}
 		
 		
+		switch(gs) {
+		case INPROGRESS:
+			draw(movers);
+			break;
+		case FINISHED:
+			if (!isBackToMainDrawn) {
+				backToMainButton();
+			}
+			drawGameOver();
+			break;
+		case SC_TUTORIAL_FOOD:
+			
+		case SC_TUTORIAL_TRASH:
+		case SC_TUTORIAL_SEAWEED:
+		case SC_TUTORIAL_BREATH:
+		case TUTORIAL:
+		}
+		
 		if (gs == GameState.INPROGRESS) {
 			draw(movers);
 		} else if (gs == GameState.FINISHED) {
@@ -115,17 +137,20 @@ public class SCView extends MinigameView  {
 				backToMainButton();
 			}
 			drawGameOver();
-		} else if (gs == GameState.TUTORIAL) {
+		} else if (gs == GameState.SC_TUTORIAL_FOOD) {
 			draw(movers);
+			if (movers.size() == 1) {
+				tutorialStep++;
+			}
 			if (!tutorialSet) {
 				setUpTutorial();
+				drawOKButton();
+				root.getChildren().add(ok);
 				tutorialSet = true;
 			}
 			
+			drawTutorial(tutorialStep);
 		}
-		 
-		System.out.println("SCVIEW GAMESTATE IS " + gs);
-		
 		
 	
 		
@@ -207,7 +232,21 @@ public class SCView extends MinigameView  {
 		// TODO Auto-generated method stub
 		switch(step) {
 		case 0:
-			
+			tutorialLabel.setText("Eat food!");
+			if (!okButton) {
+				drawOKButton();
+				okButton = true;
+			}
+			ok.setVisible(true);
+		case 1:
+			tutorialLabel.setText("Avoid trash!");
+			ok.setVisible(true);
+		case 2:
+			tutorialLabel.setText("Seaweed slows you down!");
+			ok.setVisible(true);
+		case 4:
+			tutorialLabel.setText("Don't run out of breath!");
+			ok.setVisible(true);
 		}
 		
 	}
@@ -215,6 +254,15 @@ public class SCView extends MinigameView  {
 	@Override
 	void updateTutorialStep(MouseEvent me) {
 		
+	}
+	
+	public void drawOKButton() {
+		ok = new Button("Ok!");
+		ok.setLayoutX(backgroundWidth/2);
+		ok.setLayoutY(backgroundHeight/2);
+		ok.setOnMousePressed(e -> {
+			ok.setVisible(false);
+		});
 	}
 	
 //	public void createBackgroundAnimation() {
