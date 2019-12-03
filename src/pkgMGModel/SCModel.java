@@ -98,7 +98,7 @@ public class SCModel extends MinigameModel{
 						itemsIt.remove();
 					} else {
 						m.move();
-						if (isCollision(m, terry)) {
+						if (isCollision(terry, m)) {
 							collisionOccured = true;
 							System.out.println("collision with " + m);
 							changeCurrentSpeed(m);
