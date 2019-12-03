@@ -193,6 +193,7 @@ public class SCView extends MinigameView  {
 				drawPlayButton();
 				setPlay = true;
 				root.getChildren().add(btnPlay);
+				root.getChildren().remove(prompt);
 			}
 			
 			if (play) {
