@@ -52,13 +52,18 @@ public class SCView extends MinigameView  {
 	double mouseX;
 	double mouseY;
 	int gameLength;
-	double breathBarX = backgroundWidth - 190;
+	double breathBarX = backgroundWidth - 155;
 	double breathBarY = 50;
 	double breathBarHeight = 10;
 	int lungCapacity = 100;
 	boolean tutorialSet = false;
+	boolean okButton = false;
+	Button ok;
+	private boolean setTrash;
+	private boolean setSeaweed;
+	private boolean setBreath;
+	private boolean setPlay;
 	//private ParallelTransition parallelTransition;
-	
 
 	
 	
@@ -74,6 +79,9 @@ public class SCView extends MinigameView  {
 		startTimer(gameLength);
 		gc.fillRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
 		//createBackgroundAnimation();
+		tutorialStep = 0;
+		
+		
 
 	}
 	
@@ -83,8 +91,6 @@ public class SCView extends MinigameView  {
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		
 		
-		updateScoreLabel(score);
-		createTimer(time);
 		
 		if (!areButtonsMade) {
 			setUpListeners();
@@ -108,27 +114,117 @@ public class SCView extends MinigameView  {
 		}
 		
 		
-		if (gs == GameState.INPROGRESS) {
+		switch(gs) {
+		case INPROGRESS:
+			updateScoreLabel(score);
+			createTimer(time);
+			root.getChildren().remove(btnPlay);
 			draw(movers);
-		} else if (gs == GameState.FINISHED) {
+			break;
+		case FINISHED:
 			if (!isBackToMainDrawn) {
 				backToMainButton();
 			}
 			drawGameOver();
-		} else if (gs == GameState.TUTORIAL) {
-			draw(movers);
+			break;
+		case SC_TUTORIAL_FOOD:
 			if (!tutorialSet) {
 				setUpTutorial();
+				drawOKButton();
+				root.getChildren().add(ok);
 				tutorialSet = true;
 			}
 			
-		}
-		 
-		System.out.println("SCVIEW GAMESTATE IS " + gs);
+			if (okButton) {
+				root.getChildren().remove(ok);
+				System.out.println("ok removed");
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(0);
+			break;
+		case SC_TUTORIAL_TRASH:
+			if (!setTrash) {
+				drawOKButton();
+				setTrash = true;
+				root.getChildren().add(ok);
+			}
+			
 		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(1);
+			break;
+		case SC_TUTORIAL_SEAWEED:
+			if (!setSeaweed) {
+				drawOKButton();
+				setSeaweed= true;
+				root.getChildren().add(ok);
+			}
+			
+			
+		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(2);
+			break;
+		case SC_TUTORIAL_BREATH:
+			if (!setBreath) {
+				drawOKButton();
+				setBreath = true;
+				root.getChildren().add(ok);
+			}
+		
+			if (okButton) {
+				root.getChildren().remove(ok);
+				okButton = false;
+			}
+			draw(movers);
+			drawTutorial(3);
+			break;
+		case TUTORIAL:
+			if (!setPlay) {
+				drawPlayButton();
+				setPlay = true;
+				root.getChildren().add(btnPlay);
+				root.getChildren().remove(prompt);
+			}
+			
+			if (play) {
+				root.getChildren().remove(btnPlay);
+			}
+			drawTutorial(4);
+			break;
+		}
+	
 		
 	
 		
+	}
+	
+	
+	
+	public void clearButton(ArrayList<Mover> movers) {
+		root.getChildren().removeAll();
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		
+		
+		gc.clearRect(breathBarX, breathBarY, lungCapacity, breathBarHeight);
+		
+		for (Mover m : movers) {
+			if (m instanceof Terrapin) {
+				Terrapin t = (Terrapin)m;
+				gc.fillRect(breathBarX, breathBarY, t.getAirAmount(), breathBarHeight);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -205,11 +301,58 @@ public class SCView extends MinigameView  {
 	@Override
 	void drawTutorial(int step) {
 		// TODO Auto-generated method stub
+		switch(step) {
+		case 0:
+			prompt.setText("Follow the mouse, and eat food!");
+			ok.setVisible(true);
+			break;
+		case 1:
+			prompt.setText("Avoid trash!");
+			ok.setVisible(true);
+			break;
+		case 2:
+			prompt.setText("Seaweed slows you down!");
+			ok.setVisible(true);
+			break;
+		case 3:
+			prompt.setText("Put your head above water to breathe before you run out of air!");
+			ok.setVisible(true);
+			break;
+		case 4:
+			tutorialLabel.setVisible(false);
+		}
 		
 	}
 	
 	@Override
 	void updateTutorialStep(MouseEvent me) {
+		
+	}
+	
+	public void drawOKButton() {
+		okButton = false;
+		ok = new Button("Ok!");
+		ok.setLayoutX(backgroundWidth/2);
+		ok.setLayoutY(backgroundHeight/2);
+		ok.setOnMousePressed(e -> {
+			System.out.println(okButton);
+			System.out.println("Ok clicked");
+			okButton = true;
+			ok.setVisible(false);
+			System.out.println(okButton);
+		});
+	}
+	
+	@Override
+	public void drawPlayButton() {
+		play = false;
+		btnPlay=new Button();
+		btnPlay.setText("Let's play!");
+		btnPlay.setLayoutX(backgroundWidth/2);
+		btnPlay.setLayoutY(backgroundHeight/2);
+		btnPlay.setOnMouseClicked(e -> {
+			play=true;
+		});
 		
 	}
 	

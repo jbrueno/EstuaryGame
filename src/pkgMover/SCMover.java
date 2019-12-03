@@ -41,13 +41,13 @@ public abstract class SCMover extends Mover {
 	}
 	
 	
-	public boolean collison(Mover m) {
+	/*public boolean collison(Mover m) {
 
 		boolean xCol = getX() < m.getX() + m.getImageWidth() && getX() > m.getX();
 		boolean yCol = getY() < m.getY() + m.getImageHeight() && getY() > m.getX();
 		return xCol && yCol;
 
-	}
+	}*/
 	
 	
 
