@@ -134,6 +134,7 @@ public class LeaderboardModel extends MinigameModel{
 		}
 		
 		public int getResultScore() {
+			System.out.println(super.getValue());
 			return Integer.parseInt(super.getValue().split(",")[1]);
 		}
 		

@@ -134,6 +134,7 @@ public class LeaderboardView extends MinigameView{
 	    	String inputName = input.getText();
 	    	if (!scoreSaved && saveScore(input.getText())) {
 	    		System.out.println("SAVING SCORE: " + input.getText());
+	    		System.out.println(inputName.toUpperCase() + "," + score);
 	    		btnSubmit.setId(inputName.toUpperCase() + "," + score);
 	    	}
 	    });
@@ -179,6 +180,7 @@ public class LeaderboardView extends MinigameView{
 			if (parseName(name)) {
 				input.setText("Name and Score saved!");
 				scoreSaved = true;
+				//makeLeaderBoard(mvrs, score);
 				return true;
 			}
 		} catch (LongerThan3Exception e) {
