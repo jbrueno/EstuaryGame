@@ -130,61 +130,25 @@ public class SCView extends MinigameView  {
 		case SC_TUTORIAL_FOOD:
 			if (!tutorialSet) {
 				setUpTutorial();
-				drawOKButton();
-				root.getChildren().add(ok);
 				tutorialSet = true;
 			}
 			
-			if (okButton) {
-				root.getChildren().remove(ok);
-				System.out.println("ok removed");
-				okButton = false;
-			}
+			
 			draw(movers);
 			drawTutorial(0);
 			break;
 		case SC_TUTORIAL_TRASH:
-			if (!setTrash) {
-				drawOKButton();
-				setTrash = true;
-				root.getChildren().add(ok);
-			}
 			
-		
-			if (okButton) {
-				root.getChildren().remove(ok);
-				okButton = false;
-			}
 			draw(movers);
 			drawTutorial(1);
 			break;
 		case SC_TUTORIAL_SEAWEED:
-			if (!setSeaweed) {
-				drawOKButton();
-				setSeaweed= true;
-				root.getChildren().add(ok);
-			}
 			
-			
-		
-			if (okButton) {
-				root.getChildren().remove(ok);
-				okButton = false;
-			}
 			draw(movers);
 			drawTutorial(2);
 			break;
 		case SC_TUTORIAL_BREATH:
-			if (!setBreath) {
-				drawOKButton();
-				setBreath = true;
-				root.getChildren().add(ok);
-			}
-		
-			if (okButton) {
-				root.getChildren().remove(ok);
-				okButton = false;
-			}
+			
 			draw(movers);
 			drawTutorial(3);
 			break;
@@ -303,20 +267,16 @@ public class SCView extends MinigameView  {
 		// TODO Auto-generated method stub
 		switch(step) {
 		case 0:
-			prompt.setText("Follow the mouse, and eat food!");
-			ok.setVisible(true);
+			prompt.setText("Click when ready: Follow the mouse, and eat food!");
 			break;
 		case 1:
-			prompt.setText("Avoid trash!");
-			ok.setVisible(true);
+			prompt.setText("Click when ready: Avoid trash!");
 			break;
 		case 2:
-			prompt.setText("Seaweed slows you down!");
-			ok.setVisible(true);
+			prompt.setText("Click when ready: Seaweed slows you down!");
 			break;
 		case 3:
-			prompt.setText("Put your head above water to breathe before you run out of air!");
-			ok.setVisible(true);
+			prompt.setText("Click when ready: Put your head above water to breathe before you run out of air!");
 			break;
 		case 4:
 			tutorialLabel.setVisible(false);
@@ -326,6 +286,7 @@ public class SCView extends MinigameView  {
 	
 	@Override
 	void updateTutorialStep(MouseEvent me) {
+		
 		
 	}
 	
