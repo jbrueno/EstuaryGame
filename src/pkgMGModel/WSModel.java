@@ -34,7 +34,6 @@ public class WSModel extends MinigameModel{
 	
 	
 	// WS_PH
-	
 	boolean labSet = false;
 	boolean pHSet = false;
 	Mover pHStrip;
@@ -60,16 +59,12 @@ public class WSModel extends MinigameModel{
 	final int testTubeRightSide = 485; // x-coord
 	final int testTubeWaterLevel = 425; // y-coord
 	final int testTubeBottom = 680;
-	// left = 365x
-	// right = 485x
-	// water = 425y
-	// bottom = 680y
 
 	
 	public WSModel() {
-		g = Game.WATERSAMPLING;
-	//	gs = GameState.WS_COLLECTTUTORIAL;
-		gs= GameState.WS_PHTUTORIAL;
+		g = Game.WATERSAMPLING;	
+		gs = GameState.WS_COLLECTTUTORIAL;
+		//gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -106,10 +101,7 @@ public class WSModel extends MinigameModel{
 	@Override
 	public void update(MouseEvent me) {		
 		buttonSelected(me);
-		//System.out.println(me.getEventType());
-		//System.out.println(gs);
-		// Switch statement to differentiate between GameStates {START, WS_COLLECT, WS_PH, WS_TEMP, FINISHED}
-		//System.out.println(gs);
+
 		switch (gs) {
 		case START :
 			gs = GameState.WS_COLLECTTUTORIAL;
@@ -196,9 +188,6 @@ public class WSModel extends MinigameModel{
 			}
 			break;
 
-		case WS_TEMP :
-			break;
-
 		default :
 			break;
 		}// end of switch
@@ -267,6 +256,7 @@ public class WSModel extends MinigameModel{
 	}
 	
 	public void buttonSelected(MouseEvent me) {
+
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
@@ -275,20 +265,18 @@ public class WSModel extends MinigameModel{
 	}
 	
 	public void checkGuess(MouseEvent me) {
-	//	System.out.println(me.getEventType());
+		System.out.println(me.getEventType());
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
 				
 				if (btnSourceId=="plus") {
 					pHGuess+=0.5;
-				}
-				
-				if (btnSourceId=="minus") {
+				} else if (btnSourceId=="minus") {
 					pHGuess-=0.5;
 				}
 				
-				System.out.println(pHGuess);
+				System.out.println("pHGuess is " + pHGuess);
 				
 			} catch (ClassCastException e) {}
 		}

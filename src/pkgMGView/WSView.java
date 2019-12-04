@@ -378,12 +378,16 @@ public class WSView extends MinigameView{
 						guesspH+=0.5;
 					}
 				});
+				
 				btnIncreasepH.setOnMouseClicked(e -> {
 					me=e;
 				});
-				btnIncreasepH.setOnMouseReleased(e -> {
+				
+				/*
+				  btnIncreasepH.setOnMouseReleased(e -> {
 					me=e;
 				});
+				*/
 				root.getChildren().add(btnIncreasepH);
 				
 				btnDecreasepH = new Button("v");
@@ -396,6 +400,12 @@ public class WSView extends MinigameView{
 						guesspH-=0.5;
 					}
 				});
+				
+				
+				btnDecreasepH.setOnMouseClicked(e -> {
+					me=e;
+				});
+				
 			
 				root.getChildren().add(btnDecreasepH);
 				
