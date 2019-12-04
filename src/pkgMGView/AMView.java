@@ -523,7 +523,7 @@ public class AMView extends MinigameView{
 		super.setUpTutorial();
 		prompt.setText("Drag the Clue to Match it to the Correct Animal");
 		
-	/*	prompt = new Label("Drag the Clue to Match it to the Correct Animal");
+		prompt = new Label("Drag the Clue to Match it to the Correct Animal");
 		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
 				+ "-fx-border-color:black;-fx-border-width:3");
 		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
@@ -534,7 +534,7 @@ public class AMView extends MinigameView{
 		prompt.setAlignment(Pos.CENTER);
 		
 		root.getChildren().add(prompt);
-		*/
+		
 	}
 	
 	/**
