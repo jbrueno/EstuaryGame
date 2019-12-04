@@ -1,5 +1,6 @@
 package pkgMGView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
@@ -83,8 +84,8 @@ public class WSView extends MinigameView{
 	double guesspH = 7; // user's guess for what actual pH is, set to 7 as starting point
 	
 	Button btnIncreasepH;
-	String btnIncreasepHId="plus";
-	String btnDecreasepHId="minus";
+	String btnIncreasepHId="0.5";
+	String btnDecreasepHId="-0.5";
 	int btnIncreasepHX = pHDisplayX + pHDisplayWidth + 10;
 	int btnIncreasepHY = pHDisplayY;
 	
@@ -375,7 +376,7 @@ public class WSView extends MinigameView{
 				btnIncreasepH.setOnMousePressed(e -> {
 					me=e;
 					if(guesspH < 14) {
-						guesspH+=0.5;
+						guesspH += Double.parseDouble(btnIncreasepHId);
 					}
 				});
 				btnIncreasepH.setOnMouseClicked(e -> {
@@ -393,7 +394,7 @@ public class WSView extends MinigameView{
 				btnDecreasepH.setOnMousePressed(e -> {
 					me=e;
 					if(guesspH > 0) {
-						guesspH-=0.5;
+						guesspH += Double.parseDouble(btnDecreasepHId);
 					}
 				});
 			

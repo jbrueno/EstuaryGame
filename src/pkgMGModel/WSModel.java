@@ -68,8 +68,8 @@ public class WSModel extends MinigameModel{
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;
-	//	gs = GameState.WS_COLLECTTUTORIAL;
-		gs= GameState.WS_PHTUTORIAL;
+		gs = GameState.WS_COLLECTTUTORIAL;
+		//gs= GameState.WS_PHTUTORIAL;
 		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
@@ -218,6 +218,7 @@ public class WSModel extends MinigameModel{
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
+		Bottle.setYIncr(-Bottle.getYIncr());
 		
 		if (gs!=GameState.WS_COLLECTTUTORIAL){
 			score += calculateCollectSore();
@@ -240,7 +241,7 @@ public class WSModel extends MinigameModel{
 	private int calculateCollectSore() {
 		if (Bottle.getY() < waterLevel) {return 0;}
 		int cScore = (int) (MAX_COLLECT_POINTS -  (2 * Math.abs(CORRECT_LEVEL - Bottle.getY())));
-		return (cScore < 0) ? 0 : cScore;
+		return (cScore < 0) ? 0 : Math.abs(MAX_COLLECT_POINTS - cScore);
 	}
 
 	
@@ -280,13 +281,7 @@ public class WSModel extends MinigameModel{
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
 				
-				if (btnSourceId=="plus") {
-					pHGuess+=0.5;
-				}
-				
-				if (btnSourceId=="minus") {
-					pHGuess-=0.5;
-				}
+				pHGuess += Double.parseDouble(btnSourceId);
 				
 				System.out.println(pHGuess);
 				
