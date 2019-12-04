@@ -89,9 +89,9 @@ public abstract class MinigameView {
 	boolean isTutorialSetUp = false;
 	
 	Label prompt;
-	private int promptYBuffer = 10;
-	private int promptWidth = 500;
-	private int promptHeight = 10;
+	int promptYBuffer = 10;
+	int promptWidth = 500;
+	int promptHeight = 10;
 	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
