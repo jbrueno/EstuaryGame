@@ -1,6 +1,5 @@
 package pkgMGModel;
-import java.util.ArrayList;
-// WS Model :)
+
 import java.util.Random;
 
 import javafx.event.EventHandler;
