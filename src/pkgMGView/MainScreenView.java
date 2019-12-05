@@ -95,7 +95,7 @@ public class MainScreenView extends MinigameView {
 			root.getChildren().add(labelSC);
 		});
 		btnSC.setOnMouseExited(e -> {
-			root.getChildren().remove(labelSC);
+			labelSC.setText("");
 		});
 		
 		
@@ -107,7 +107,7 @@ public class MainScreenView extends MinigameView {
 			root.getChildren().add(labelHSCC);
 		});
 		btnHSCC.setOnMouseExited(e -> {
-			root.getChildren().remove(labelHSCC);
+			labelHSCC.setText("");
 		});
 
 		
@@ -119,7 +119,7 @@ public class MainScreenView extends MinigameView {
 			root.getChildren().add(labelAM);
 		});
 		btnAM.setOnMouseExited(e -> {
-			root.getChildren().remove(labelAM);
+			labelAM.setText("");
 		});
 		
 		
@@ -131,7 +131,7 @@ public class MainScreenView extends MinigameView {
 			root.getChildren().add(labelWS);
 		});
 		btnWS.setOnMouseExited(e -> {
-			root.getChildren().remove(labelWS);
+			labelWS.setText("");
 		});
 		
 	}
