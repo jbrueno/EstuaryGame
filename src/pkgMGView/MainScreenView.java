@@ -24,7 +24,15 @@ public class MainScreenView extends MinigameView {
 	private Button btnHSCC; //horseshoe crab count
 	private Button btnAM; //animal matching
 	private Button btnWS; //water sampling 
-	private int btnSize = 45;
+	final private double btnSize = 45;
+	final private double btnSCx = 909.0;
+	final private double btnSCy = 482.0;
+	final private double btnHSCCx = 417.0;
+	final private double btnHSCCy = 587.0;
+	final private double btnAMx = 852.0;
+	final private double btnAMy = 202.0;
+	final private double btnWSx = 498.0;
+	final private double btnWSy = 85.0;
 	
 	private boolean amPlayed = false;
 	private boolean hsccPlayed = false;
@@ -88,22 +96,22 @@ public class MainScreenView extends MinigameView {
 		btnSC = new Button("",new ImageView(loadButtonImage("btnSC")));
 		setButtonBackgroundWhite(btnSC);
 		btnSC.setDisable(scPlayed);
-		formatCircleButton(btnSC, 909.0, 482.0);
+		formatCircleButton(btnSC, btnSCx, btnSCy);
 		
 		btnHSCC = new Button("", new ImageView(loadButtonImage("btnHSCC")));
 		setButtonBackgroundWhite(btnHSCC);
 		btnHSCC.setDisable(hsccPlayed);
-		formatCircleButton(btnHSCC, 417.0, 587.0);
+		formatCircleButton(btnHSCC, btnHSCCx, btnHSCCy);
 		
 		btnAM = new Button("", new ImageView(loadButtonImage("btnAM")));
 		setButtonBackgroundWhite(btnAM);
 		btnAM.setDisable(amPlayed);
-		formatCircleButton(btnAM, 852.0, 202.0);
+		formatCircleButton(btnAM, btnAMx, btnAMy);
 		
 		btnWS = new Button("",new ImageView(loadButtonImage("btnWS")));
 		setButtonBackgroundWhite(btnWS);
 		btnWS.setDisable(wsPlayed);
-		formatCircleButton(btnWS, 498.0, 85.0);
+		formatCircleButton(btnWS, btnSCx, btnSCy);
 		
 		root.getChildren().addAll(btnSC, btnHSCC, btnAM, btnWS);
 	}
