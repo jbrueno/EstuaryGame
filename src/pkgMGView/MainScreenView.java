@@ -50,7 +50,6 @@ public class MainScreenView extends MinigameView {
 	private Label labelWS;
 	private final int labelHeight = 50;
 	private final int labelWidth = 400;
-	// locations ...
 	
 	private boolean amPlayed = false;
 	private boolean hsccPlayed = false;
