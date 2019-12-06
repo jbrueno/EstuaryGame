@@ -38,7 +38,6 @@ import javafx.scene.paint.Color;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public abstract class MinigameView {

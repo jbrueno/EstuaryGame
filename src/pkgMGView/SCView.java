@@ -26,7 +26,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import pkgMover.Food;
 import pkgMover.Mover;
 import pkgMover.Seaweed;

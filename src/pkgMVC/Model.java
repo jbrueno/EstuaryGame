@@ -10,7 +10,6 @@ import pkgMGView.MainScreenView;
 import pkgMGView.MinigameView;
 import pkgMGView.SCView;
 import pkgMGView.WSView;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 import java.awt.event.KeyEvent;

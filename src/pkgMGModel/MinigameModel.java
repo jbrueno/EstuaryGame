@@ -3,14 +3,10 @@ package pkgMGModel;
 import pkgEnum.Game;
 import pkgMover.Mover;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import pkgMover.DataNode;
-
 import javafx.scene.input.MouseEvent;
 
 public abstract class MinigameModel {

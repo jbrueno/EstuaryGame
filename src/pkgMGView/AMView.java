@@ -35,7 +35,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;

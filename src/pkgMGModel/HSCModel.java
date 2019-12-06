@@ -6,16 +6,13 @@ import java.util.TimerTask;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel {
-	int points = 50;
-	boolean timerSet = false;
-	int HSCWidth = 200;
-	int HSCHeight = 136;
-	final int maxHSC = 10;
-	int maxSpeed = 10;
+	private int points = 50;
+	private boolean timerSet = false;
+	private final int MAX_HSC = 10;
+	private final int MAX_SPEED = 10;
 
 	public HSCModel() {
 		g = Game.HSCCOUNT;
@@ -34,9 +31,11 @@ public class HSCModel extends MinigameModel {
 	 * 
 	 */
 	private void createHSCrabs() {
-		for (int i = 0; i < maxHSC; i++) {
-			movers.add(new HSC(r.nextInt(backgroundWidth), r.nextInt(backgroundHeight), (r.nextInt() % maxSpeed) + 1,
-					(r.nextInt() % maxSpeed) + 1));
+		for (int i = 0; i < MAX_HSC; i++) {
+			movers.add(new HSC(r.nextInt(backgroundWidth), 
+					r.nextInt(backgroundHeight),
+					(r.nextInt() % MAX_SPEED) + 1,
+					(r.nextInt() % MAX_SPEED) + 1));
 		}
 	}
 
@@ -74,8 +73,8 @@ public class HSCModel extends MinigameModel {
 
 	private boolean tutorialHSCrabClicked(MouseEvent me) {
 		if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			if (me.getX() <= (backgroundWidth / 2 + HSCWidth) && me.getX() > backgroundWidth / 2
-					&& me.getY() >= backgroundHeight / 2 && me.getY() <= (backgroundHeight / 2 + HSCHeight)) {
+			if (me.getX() <= (backgroundWidth / 2 + HSC.hscWidth) && me.getX() > backgroundWidth / 2
+					&& me.getY() >= backgroundHeight / 2 && me.getY() <= (backgroundHeight / 2 + HSC.hscHeight)) {
 				return true;
 			}
 		}
@@ -130,7 +129,6 @@ public class HSCModel extends MinigameModel {
 		this.timerSet = timerSet;
 	}
 	
-	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {
 		boolean tagged;
 		static final int hscWidth = 200;

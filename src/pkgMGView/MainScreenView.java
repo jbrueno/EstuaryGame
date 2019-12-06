@@ -24,7 +24,6 @@ import javafx.scene.text.TextAlignment;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class MainScreenView extends MinigameView {

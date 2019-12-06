@@ -27,7 +27,6 @@ import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
 import pkgMGModel.WSModel.pHStrip;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
