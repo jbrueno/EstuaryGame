@@ -53,7 +53,7 @@ public class WSView extends MinigameView{
 	String sourceId="";
 	
 	boolean collectIsSetUp=false;
-	
+
 	// WS_PH
 	double pH; // Actual pH of Water
 	Image background_lab;
@@ -100,6 +100,7 @@ public class WSView extends MinigameView{
 	String btnSubmitId="Submit";
 	int btnSubmitX = btnIncreasepHX;
 	int btnSubmitY = btnDecreasepHY + 50;
+	private final int MAX_PH_SCORE = 500;
 	
 	Label displaypH;
 	
@@ -138,11 +139,13 @@ public class WSView extends MinigameView{
 				}
 				
 				if(!filledIsPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
-						sourceId == btnFillId) {
+						sourceId.equals(btnFillId)) {
 					prompt.setText("Good job! Let's collect some more water!");
 					drawPlayButton();
 					filledIsPressed=true;
 				}
+				
+				
 				
 				break;
 			case WS_COLLECT :
@@ -413,14 +416,16 @@ public class WSView extends MinigameView{
 		}
 		
 		if(pH==guesspH) {
-			drawScore=500;
-		} else drawScore =(int)( (Math.abs(pH-guesspH))*100) / (int)(Math.abs(pH-guesspH) );
-		displaypH=new Label("The correct pH is "+pH +"\nYour guess was " + guesspH 
-				+"\n+"+ drawScore + " points!");
+			drawScore= MAX_PH_SCORE;
+		} else {
+			drawScore = (int) (MAX_PH_SCORE - (((Math.abs(pH - guesspH) * 2) * 50)));
+		}
+		
+		displaypH = new Label("Correct pH: "+ pH +"\nYour's: " + guesspH + "\n+" + drawScore + " points!");
 
 		displaypH.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
 				+ "-fx-border-color:black;-fx-border-width:3");
-		displaypH.setLayoutX(backgroundWidth*2/3);
+		displaypH.setLayoutX((backgroundWidth*2/3) - 50);
 		displaypH.setLayoutY((backgroundHeight/2)-100);
 		displaypH.setWrapText(true);
 		displaypH.setTextAlignment(TextAlignment.CENTER);

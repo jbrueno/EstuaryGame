@@ -25,7 +25,7 @@ public class WSModel extends MinigameModel{
 	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
-	final int maxDepth = backgroundHeight-bottleImageHeight-100;
+	final int maxDepth = backgroundHeight-bottleImageHeight/2-50;
 	
 	int waterLevel = backgroundHeight/2;
 	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
@@ -61,11 +61,13 @@ public class WSModel extends MinigameModel{
 	final int testTubeRightSide = 485; // x-coord
 	final int testTubeWaterLevel = 425; // y-coord
 	final int testTubeBottom = 680;
-
+	
+	MouseEvent prevME = null;
+	private final int MAX_PH_SCORE = 500;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;	
-		gs= GameState.WS_PHTUTORIAL;
+		gs= GameState.WS_COLLECTTUTORIAL;
 		addObjects(gs);
 	}
 	
@@ -100,24 +102,25 @@ public class WSModel extends MinigameModel{
 	
 	@Override
 	public void update(MouseEvent me) {		
-		if(me!=null) {
+		if(me != null) {//get source id every tick
 			buttonSelected(me);
 		}
+		
+		System.out.println(me.getEventType());
 
 		switch (gs) {
 		case START :
 			gs = GameState.WS_COLLECTTUTORIAL;
 		case WS_COLLECTTUTORIAL:
-			//System.out.println(btnSourceId);
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
-			
-			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Fill") {
-				System.out.println("FILLING BOTTLE");
-				fillBottle();
-			}
-			if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Play"){
-				movers.remove(Bottle);
-				gs=GameState.WS_COLLECT;
+			if (me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				if (!filled && Bottle.getY() > waterLevel && btnSourceId.equals("Fill")) {
+					fillBottle();
+				}
+				if (filled && btnSourceId.equals("Play")) {
+					movers.remove(Bottle);
+					gs = GameState.WS_COLLECT;
+				}
 			}
 			
 			break;
@@ -125,21 +128,23 @@ public class WSModel extends MinigameModel{
 			if(!collectSet) {
 				filled=false;
 				Bottle.setValue("Bottle");
-				movers.remove(Bottle);
+				//movers.remove(Bottle);
 				movers.add(Bottle);
 				collectSet=true;
 			}
 			//double startx, double starty, double endx, double endy)
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
-			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Fill") {
-				System.out.println("FILLING BOTTLE");
-				fillBottle();
+			if (me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				if (!filled && Bottle.getY() > waterLevel && btnSourceId.equals("Fill")) {
+					fillBottle();
+				}
+				if (filled && btnSourceId.equals("Lab")) {
+					movers.remove(Bottle);
+					gs = GameState.WS_PHTUTORIAL;
+				}
 			}
-			if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Lab"){
-				movers.remove(Bottle);
-				gs=GameState.WS_PHTUTORIAL;
-			}
+			
 			
 			break;
 		case WS_PHTUTORIAL :
@@ -148,19 +153,24 @@ public class WSModel extends MinigameModel{
 				labSet = true;
 			}
 			
-			if(me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="phStripBox") {
-				if(!gotStrip) {
-					movers.add(pHStrip);
-					movers.add(testTube);
-					gotStrip=true;
+			if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+				if (btnSourceId.equals("phStripBox")) {
+					if(!gotStrip) {
+						movers.add(pHStrip);
+						movers.add(testTube);
+						gotStrip=true;
+					}
 				}
-			}
-			pHStrip.move(me.getX(),me.getY());
-			dipStrip(); 
+				
+				if(gotStrip && btnSourceId.equals("Play")) {
+					gs=GameState.WS_PH;
+				}
+			}			
 			
-			if(gotStrip && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Play") {
-				gs=GameState.WS_PH;
-			}
+			pHStrip.move(me.getX(),me.getY());
+			dipStrip();
+			
+
 			break;
 		case WS_PH :
 			
@@ -177,28 +187,32 @@ public class WSModel extends MinigameModel{
 				pHSet=true;
 			}
 			
-			if(me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="phStripBox") {
-				if(!gotStrip) {
-					movers.add(pHStrip);
-					movers.add(testTube);
-					gotStrip=true;
-				}
-			}
-			if(me!=null) {
-				pHStrip.move(me.getX(),me.getY());
-			}
-			dipStrip(); 
+			pHStrip.move(me.getX(),me.getY());
+			dipStrip();
 			
-			if(me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="plus") {
-				checkGuess(me);
-			}
+			if (me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 				
-			 if (me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Submit") {	
-				calculatePHScore();
-				guessSubmit=true;
-			 }
+				if (btnSourceId.equals("phStripBox")) {
+					if(!gotStrip) {
+						movers.add(pHStrip);
+						movers.add(testTube);
+						gotStrip=true;
+					}
+				}
+				
+				try { //if btnSourceId is a valid double, then it was either up or down arrow
+					Double.parseDouble(btnSourceId);
+					checkGuess(me);
+				} catch (NumberFormatException e) {}
+				
+				if (btnSourceId.equals("Submit")) {
+					calculatePHScore();
+					guessSubmit=true;
+				}
+				
+			}
 			
-			
+			prevME = me;
 			break;
 
 		default :
@@ -220,21 +234,21 @@ public class WSModel extends MinigameModel{
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
-		Bottle.setYIncr(-Bottle.getYIncr());
-		
+		if (Bottle.getYIncr() > 0) {
+			Bottle.setYIncr(-Bottle.getYIncr());
+		}
 		if (gs!=GameState.WS_COLLECTTUTORIAL){
 			score += calculateCollectSore();
 		}
 	}
 	
 	public void setPH() {
-		Random random = new Random();
-		pH=random.nextInt((pHMax - pHMin) + 1) + pHMin;
+		pH = r.nextInt((pHMax - pHMin) + 1) + pHMin;
 		
 		for (Mover m : movers) {
 			if(m instanceof pHStrip) {
-			pHStrip ma = (pHStrip) m;
-			ma.setpH(pH);
+				pHStrip ma = (pHStrip) m;
+				ma.setpH(pH);
 			}
 		}
 	}
@@ -278,7 +292,7 @@ public class WSModel extends MinigameModel{
 	
 	public void buttonSelected(MouseEvent me) {
 
-		if (me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId!="plus") {
+		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
@@ -286,7 +300,7 @@ public class WSModel extends MinigameModel{
 	}
 	
 	public void checkGuess(MouseEvent me) {
-		System.out.println(me.getEventType());
+		System.out.println("IM HERE");
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
@@ -303,9 +317,9 @@ public class WSModel extends MinigameModel{
 		System.out.println("PH:"+pH);
 		System.out.println("GUESS:"+pHGuess);
 		if(pHGuess == pH) {
-			score+=500;
+			score += MAX_PH_SCORE;
 		} else {
-			score=(int)( (Math.abs(pH-pHGuess))*100) / (int)(Math.abs(pH-pHGuess) );
+			score = (int) (MAX_PH_SCORE - (((Math.abs(pH - pHGuess) % 0.5) * 2))); //every 0.5 off, get 50 pts off
 			}
 		}
 	
