@@ -17,7 +17,7 @@ public class MainScreenModel extends MinigameModel{
 
 	@Override
 	public void update(MouseEvent me) {		
-		// TODO Auto-generated method stub
+		//no updates
 	}
 
 
