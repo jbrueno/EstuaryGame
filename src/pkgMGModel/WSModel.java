@@ -102,7 +102,9 @@ public class WSModel extends MinigameModel{
 	
 	@Override
 	public void update(MouseEvent me) {		
-		buttonSelected(me);
+		if(me!=null) {
+			buttonSelected(me);
+		}
 
 		switch (gs) {
 		case START :
@@ -177,21 +179,23 @@ public class WSModel extends MinigameModel{
 				pHSet=true;
 			}
 			
-			if(me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="phStripBox") {
+			if(me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="phStripBox") {
 				if(!gotStrip) {
 					movers.add(pHStrip);
 					movers.add(testTube);
 					gotStrip=true;
 				}
 			}
-			pHStrip.move(me.getX(),me.getY());
+			if(me!=null) {
+				pHStrip.move(me.getX(),me.getY());
+			}
 			dipStrip(); 
 			
-			if(me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="plus") {
+			if(me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="plus") {
 				checkGuess(me);
 			}
 				
-			 if (me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Submit") {	
+			 if (me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Submit") {	
 				calculatePHScore();
 				guessSubmit=true;
 			 }
@@ -290,6 +294,7 @@ public class WSModel extends MinigameModel{
 				
 				if (btnSourceId=="plus") {
 					pHGuess+=0.5;
+					me=null;
 		
 				} else if (btnSourceId=="minus") {
 					pHGuess-=0.5;

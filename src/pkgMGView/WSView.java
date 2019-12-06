@@ -102,6 +102,8 @@ public class WSView extends MinigameView{
 	
 	Label displaypH;
 	
+	boolean click;
+	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -235,7 +237,7 @@ public class WSView extends MinigameView{
 	}
 	
 	void setSourceId() {
-		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+		if (me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				sourceId = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
@@ -336,6 +338,7 @@ public class WSView extends MinigameView{
 	
 	// user guessing pH button
 	public void drawpHButtons() {
+		
 				btnIncreasepH = new Button("^");
 				btnIncreasepH.setId(btnIncreasepHId);
 				btnIncreasepH.setLayoutX(btnIncreasepHX);
@@ -344,6 +347,7 @@ public class WSView extends MinigameView{
 					me=e;
 					if(guesspH < 14) {
 						guesspH+=0.5;
+					//	me=null;
 					}
 				});
 				
