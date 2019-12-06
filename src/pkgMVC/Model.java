@@ -120,7 +120,7 @@ public class Model {
 	 * If on mainscreen, we need totalScore, which needs to be up to date
 	 */
 	public int getScore() {	
-		if (currGame == minigames.get(0) || currGame == minigames.get(5)) { // Mainscreen 
+		if (currGame == minigames.get(0) || currGame == minigames.get(5)) { // Mainscreen OR leaderboard
 			updateTotalScore(); // need to figure out a way to only update upon entering MainScreen, not continuously (like boolean areButtonsMade)
 			return totalScore;
 		} else {
