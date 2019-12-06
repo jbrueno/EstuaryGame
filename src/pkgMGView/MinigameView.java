@@ -104,7 +104,6 @@ public abstract class MinigameView {
 	String btnPlayId="Play";
 	/////STUFF FOR TUTORIALS////
 
-	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	//pre-loaded images database
@@ -265,10 +264,6 @@ public abstract class MinigameView {
 
 	public Game getGame() {
 		return this.game;
-	}
-
-	public ArrayList<DataNode> getDataNodes() {
-		return dns;
 	}
 
 	public int getTotalScore() {

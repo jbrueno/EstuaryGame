@@ -23,7 +23,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Class responsible for keeping track of the current MinigameModel <code>currGame</code> and passing in updates from the 
- * View into this <code>currGame</code>.
+ * View into the <code>currGame</code>.
  * 
  * 
  * @author Ryan Peters
@@ -34,7 +34,6 @@ public class Model {
 	private ArrayList<MinigameModel> minigames;
 	private MinigameModel currGame;	
 	int totalScore; // sum of all minigame scores
-	boolean totalUpdated = false;
 	int mgTime;
  
 	
@@ -53,7 +52,7 @@ public class Model {
 	 * @param g
 	 * @param me
 	 */
-	public void update(Game g, MouseEvent me, ArrayList<DataNode> dns) {
+	public void update(Game g, MouseEvent me) {
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
 		} 
@@ -104,10 +103,6 @@ public class Model {
 		minigames.add(new LeaderboardModel());
 		
 		currGame = minigames.get(0);	
-	}
-	
-	public ArrayList<DataNode> getDataNodes() {
-		return currGame.getDataNodes();
 	}
 	
 	public GameState getGameState() {
