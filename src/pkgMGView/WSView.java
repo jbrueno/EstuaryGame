@@ -294,55 +294,9 @@ public class WSView extends MinigameView{
 	}
 	
 	public void updateTutorialStep(MouseEvent m) {
-		//System.out.println(tutorialStep);
-		/*switch(tutorialStep) {
-		case 0: if(m.getEventType()==MouseEvent.MOUSE_PRESSED) {
-					tutorialStep=1;
-				}
-				break;
-		case 1: if (m.getEventType()==MouseEvent.MOUSE_CLICKED) {
-			tutorialStep=2;
-				}
-			break;
-		case 2: if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
-			tutorialStep=3;
-		}
-		case 3: //TODO FIX MAGIC NUMBERS
-				if(m.getX() >= 365 &&
-				m.getX() <= 485 &&
-				m.getY() >= 425 &&
-				m.getY() <= 680) {
-				tutorialStep=4;
-			}
-			break;
-		case 4: 
-			break;
-		}*/
 	}
 	
 	public void drawTutorial(int step) {
-/*
-		switch(step) {
-		case 0: prompt.setText("We need to collect water to test it! \nClick the fill button to fill your Van Dorn bottle!");
-				break;
-		case 1: if(!btnPlayAdded) {
-					drawPlayButton();
-					btnPlayAdded=true;
-				}
-				break;
-		case 2: prompt.setText("Click box to get pH testing strip!");
-				btnPlayAdded=false;
-				break;
-		case 3: prompt.setText("Move mouse to dip strip in water!");
-				break;
-		case 4: prompt.setText("Match pH with scale \nand enter your guess!");
-		
-				if(!btnPlayAdded) {
-					drawPlayButton();
-					btnPlayAdded=true;
-				}
-			}
-			*/
 	}
 	
 	
@@ -393,15 +347,11 @@ public class WSView extends MinigameView{
 					}
 				});
 				
-				btnIncreasepH.setOnMouseClicked(e -> {
+				 btnIncreasepH.setOnMouseReleased(e -> {
 					me=e;
+					System.out.println(me.getEventType());
 				});
-				
-				/*
-				  btnIncreasepH.setOnMouseReleased(e -> {
-					me=e;
-				});
-				*/
+	
 				root.getChildren().add(btnIncreasepH);
 				
 				btnDecreasepH = new Button("v");

@@ -186,16 +186,16 @@ public class WSModel extends MinigameModel{
 			}
 			pHStrip.move(me.getX(),me.getY());
 			dipStrip(); 
-			if(!guessSubmit) {
-				
+			
+			if(me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="plus") {
 				checkGuess(me);
-				System.out.println(pHGuess);
+			}
 				
 			 if (me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Submit") {	
 				calculatePHScore();
 				guessSubmit=true;
 			 }
-			}
+			
 			
 			break;
 
@@ -275,7 +275,7 @@ public class WSModel extends MinigameModel{
 	
 	public void buttonSelected(MouseEvent me) {
 
-		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+		if (me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId!="plus") {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
@@ -283,13 +283,14 @@ public class WSModel extends MinigameModel{
 	}
 	
 	public void checkGuess(MouseEvent me) {
-		//System.out.println(me.getEventType());
+		System.out.println(me.getEventType());
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
 				
 				if (btnSourceId=="plus") {
 					pHGuess+=0.5;
+		
 				} else if (btnSourceId=="minus") {
 					pHGuess-=0.5;
 				}
