@@ -92,10 +92,10 @@ public class MainScreenView extends MinigameView {
 			scPlayed = true;
 		});
 		btnSC.setOnMouseEntered(e -> {
-			root.getChildren().add(labelSC);
+			labelSC.setVisible(true);
 		});
 		btnSC.setOnMouseExited(e -> {
-			labelSC.setText("");
+			labelSC.setVisible(false);
 		});
 		
 		
@@ -104,10 +104,10 @@ public class MainScreenView extends MinigameView {
 			hsccPlayed = true;
 		});
 		btnHSCC.setOnMouseEntered(e -> {
-			root.getChildren().add(labelHSCC);
+			labelHSCC.setVisible(true);
 		});
 		btnHSCC.setOnMouseExited(e -> {
-			labelHSCC.setText("");
+			labelHSCC.setVisible(false);
 		});
 
 		
@@ -116,10 +116,10 @@ public class MainScreenView extends MinigameView {
 			amPlayed = true;
 		});
 		btnAM.setOnMouseEntered(e -> {
-			root.getChildren().add(labelAM);
+			labelAM.setVisible(true);
 		});
 		btnAM.setOnMouseExited(e -> {
-			labelAM.setText("");
+			labelAM.setVisible(false);
 		});
 		
 		
@@ -128,10 +128,10 @@ public class MainScreenView extends MinigameView {
 			wsPlayed = true;
 		});
 		btnWS.setOnMouseEntered(e -> {
-			root.getChildren().add(labelWS);
+			labelWS.setVisible(true);
 		});
 		btnWS.setOnMouseExited(e -> {
-			labelWS.setText("");
+			labelWS.setVisible(false);
 		});
 		
 	}
@@ -178,37 +178,44 @@ public class MainScreenView extends MinigameView {
 	
 	private void setUpLabels() {
 		
-		labelSC = new Label("Turtle Run");
-		labelSC.setPrefSize(labelWidth, labelHeight);
+		labelSC = new Label("Terrapin Run");
 		labelSC.setLayoutX(btnSCx + btnSize - (labelWidth / 2));
 		labelSC.setLayoutY(btnSCy - labelHeight);
-		labelSC.setFont(new Font("Arial", 26));
-		labelSC.setAlignment(Pos.CENTER);
-		labelSC.setTextFill(Color.WHITE);
+		formatMainScreenLabel(labelSC);
+
 		
 		labelHSCC = new Label("Horshoe Crab Tagging");
-		labelHSCC.setPrefSize(labelWidth, labelHeight);
 		labelHSCC.setLayoutX(btnHSCCx + btnSize - (labelWidth / 2));
 		labelHSCC.setLayoutY(btnHSCCy - labelHeight);
-		labelHSCC.setFont(new Font("Arial", 26));
-		labelHSCC.setAlignment(Pos.CENTER);
-		labelHSCC.setTextFill(Color.WHITE);
+		formatMainScreenLabel(labelHSCC);
+
 		
 		labelAM = new Label("Animal Matching");
-		labelAM.setPrefSize(labelWidth, labelHeight);
 		labelAM.setLayoutX(btnAMx + btnSize - (labelWidth / 2));
 		labelAM.setLayoutY(btnAMy - labelHeight);
-		labelAM.setFont(new Font("Arial", 26));
-		labelAM.setAlignment(Pos.CENTER);
-		labelAM.setTextFill(Color.WHITE);
+		formatMainScreenLabel(labelAM);
+
 		
 		labelWS = new Label("Water Sampling");
-		labelWS.setPrefSize(labelWidth, labelHeight);
 		labelWS.setLayoutX(btnWSx + btnSize - (labelWidth / 2));
 		labelWS.setLayoutY(btnWSy - labelHeight);
-		labelWS.setFont(new Font("Arial", 26));
-		labelWS.setAlignment(Pos.CENTER);
-		labelWS.setTextFill(Color.WHITE);
+		formatMainScreenLabel(labelWS);
+		
+		root.getChildren().addAll(labelWS, labelAM, labelHSCC, labelSC);
+	}
+	
+	/**
+	 * Formats the Label that appears above a Minigame Button
+	 * 
+	 * @author	Andrew Brenner, Ryan Peters
+	 * @param l		Label to be formatted
+	 */
+	private void formatMainScreenLabel(Label l) {
+		l.setPrefSize(labelWidth, labelHeight);
+		l.setFont(new Font("Arial", 26));
+		l.setAlignment(Pos.CENTER);
+		l.setTextFill(Color.WHITE);
+		l.setVisible(false);
 	}
 	
 	
