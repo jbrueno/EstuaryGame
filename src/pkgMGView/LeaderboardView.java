@@ -14,39 +14,43 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
-import pkgMGModel.LeaderboardModel;
 import pkgMGModel.LeaderboardModel.ResultMover;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
+/**
+ * The GUI view and handlers for Leaderboard. 
+ * The only interactions the user has is with the TextField for inputting their name and button for submitting it
+ * 
+ * @author Ryan Peters
+ *
+ */
 public class LeaderboardView extends MinigameView{
 	
+	//one-tick booleans
 	private boolean isLeaderBoardMade = false;
-	private ArrayList<Mover> mvrs;
+	private boolean scoreSaved = false;
+
 	private ArrayList<String> curseWords;
 	private final String CW_PATH = "Data/curseWords.txt";
-	private int score;
-	private boolean scoreSaved = false;
 	
+	//GUI elements
 	private GridPane gp;
 	private Label title;
 	private TextField input;
 	private Button btnSubmit;
 	private Label userScore;
 	
-	
+	//GUI elements attributes
 	private int panePadding = 25;
 	private String titleString = "LEADERBOARD";
-	private final String USER_SCORE_PREFIX = "Your Score is:\n";
+	private String userScorePrefix = "Your Score is:\n";
 	private String inputPrompt = "Enter a 3 Letter Name";
 	
 	
@@ -60,24 +64,40 @@ public class LeaderboardView extends MinigameView{
 		scene.addEventFilter(MouseEvent.ANY, eventHandler);
 	}
 	
+	
+	/**
+	 * Handle update actions needed per tick. On the first tick only, load the results from <code>movers</code> and create the leaderboard GUI.
+	 * <p>
+	 * All other actions are handled through the input TextField
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of ResultMovers containing the top 10 high scores (to be parsed)
+	 * @param gs		GameState enum from Model (ignored for LeaderboardView)
+	 * @param score		cumulative score from all Minigames reflective of the user's total score
+	 * @param time		amount of time (int) left (ignored for LeaderboardView)
+	 */
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-		mvrs = movers;
-		score = 1600;
-		this.score = score;
-		if (!isLeaderBoardMade) {
+		if (!isLeaderBoardMade) {//load leaderboard GUI
 			makeLeaderBoard(movers, score);
 			try {
 				curseWords = loadCurseWords();
 			} catch (IOException e) {}
 			isLeaderBoardMade = true;
-		}
-		if (me != null && me.getEventType() == MouseEvent.MOUSE_CLICKED) {
-			System.out.println(me.getSource());
-		}
-		 
+		}		 
 	}
 	
+	/**
+	 * Creates the GUI for Leaderboard. The GUI is a 4-column gridpane with a Label title <code>title</code> followed by
+	 * two Labels per row (left being name of past scores/users, right being the score of past scores/users), and the final
+	 * row consisting of a Label displaying the current user score, an input TextField for name, and a Submit button.
+	 * <p>
+	 * The first (0) and last (3) column are used as padding from the edges and should not contain any <code>Node</code>
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of ResultMovers loaded from csv file in LeaderboardModel 
+	 * @param score		user's total score to be displayed in last row 
+	 */
 	private void makeLeaderBoard(ArrayList<Mover> movers, int score) {
 		//set up gridpane
 		gp = new GridPane();
@@ -98,7 +118,8 @@ public class LeaderboardView extends MinigameView{
 	    
 	    
 	    //create title
-	    gp.add(createTitle(), 0, 0, 4, 1);
+        createTitle();
+	    gp.add(title, 0, 0, 4, 1);
 	    GridPane.setHalignment(title, HPos.CENTER);
 	    
 	    //create results
@@ -116,7 +137,7 @@ public class LeaderboardView extends MinigameView{
 	    }
 	    
 	    //create user score label
-	    userScore = new Label(USER_SCORE_PREFIX + Integer.toString(score));
+	    userScore = new Label(userScorePrefix + Integer.toString(score));
 	    userScore.setAlignment(Pos.CENTER);
 	    userScore.setWrapText(true);
 	    userScore.setTextAlignment(TextAlignment.CENTER);
@@ -144,15 +165,25 @@ public class LeaderboardView extends MinigameView{
 	    root.getChildren().add(gp);
 	}
 	
-	private Label createTitle() {
+	/**
+	 * Creates the Label (title) for the Leaderboard GUI with specific formatting saving it to the attribute <code>title</code>
+	 * 
+	 * @author Ryan Peters
+	 */
+	private void createTitle() {
 		title = new Label(titleString);
 		title.setTextAlignment(TextAlignment.CENTER);
 		title.setAlignment(Pos.CENTER);
 		formatLeaderboardLabel(title, 40);
-		
-		return title;
 	}
 	
+	/**
+	 * Creates the Label for the name of past user's on the high score list aligned to the left side
+	 * 
+	 * @author Ryan Peters
+	 * @param rm	the <code>ResultMover</code>
+	 * @return		the formatting Label to be inserted into the GUI
+	 */
 	private Label createName(ResultMover rm) {
 		Label lbl = new Label(rm.getResultName());
 		lbl.setTextAlignment(TextAlignment.LEFT);
@@ -161,6 +192,13 @@ public class LeaderboardView extends MinigameView{
 		return lbl;
 	}
 	
+	/**
+	 * Creates the label for the score ofthe past user's on the high score list aligned to the right side
+	 * 
+	 * @author		Ryan Peters
+	 * @param rm	the <code>ResultMover</code>
+	 * @return		the formatting Label to be inserted into the GUI
+	 */
 	private Label createScore(ResultMover rm) {
 		Label lbl = new Label(Integer.toString(rm.getResultScore()));
 		lbl.setTextAlignment(TextAlignment.RIGHT);
@@ -169,18 +207,31 @@ public class LeaderboardView extends MinigameView{
 		return lbl;
 	}
 	
+	/**
+	 * Formats the input Label with a preset style consistent throughout the Leaderboard GUI with the ability to set font size
+	 * 
+	 * @author 			Ryan Peters
+	 * @param lbl		Label to be formatted
+	 * @param fontSize	size of font to be set for the Label
+	 */
 	private void formatLeaderboardLabel(Label lbl, int fontSize) {
 		lbl.setStyle(" -fx-font-weight: bold; -fx-font-size: " + Integer.toString(fontSize));
 	}
 	
+	/**
+	 * Attempts to save the score and 3-letter name the user has input, returning true if the name was accepted, false if rejected.
+	 * Catches exceptions from <code>parseName(name)</code> that reflect a bad (described more in parseName() ) name and set's the 
+	 * input TextField with an appropriate message to the type of bad name.
+	 * 
+	 *  @author 	Ryan Peters
+	 *  @returns	true if score saved, false if not (dependent on whether user name passes tests)
+	 */
 	private boolean saveScore(String name) {
 
 		try {
-			if (parseName(name)) {
-				System.out.println("SCORE SAVED!");
+			if (checkName(name)) {
 				input.setText("Name and Score saved!");
 				scoreSaved = true;
-				//makeLeaderBoard(mvrs, score);
 				return true;
 			}
 		} catch (LongerThan3Exception e) {
@@ -189,9 +240,6 @@ public class LeaderboardView extends MinigameView{
 		} catch (IsCurseWordException e) {
 			input.setText("");
 			input.setPromptText("Appropriate names only");
-		} catch (IsAlreadyNameException e) {
-			input.setText("");
-			input.setPromptText("Choose another name");
 		} catch (IsNotLetterException e) {
 			input.setText("");
 			input.setPromptText("Must be only letters");
@@ -203,22 +251,31 @@ public class LeaderboardView extends MinigameView{
 		return false;
 	}
 	
-	private boolean parseName(String name) throws 
-			LongerThan3Exception, IsCurseWordException, IsAlreadyNameException, IsNotLetterException, ScoreAlreadySavedException {
+	/**
+	 * Determines whether the input String name from the user is a valid name according to the following specifications:
+	 * 		-the name has not already been saved into results
+	 * 		-the name is 3 long
+	 * 		-the name is not a known curse word (from curseWords.txt)
+	 * 		-the name is all letters (A-Z,a-z)
+	 * If the name violates any of these specifications, a relative custom exception is thrown where it is caught and handled by saveScore()
+	 * 		
+	 * @author 		Ryan Peters
+	 * @param name	user input name from TextField
+	 * @return		true if name is accepted, false is name violates a specification
+	 * @throws LongerThan3Exception
+	 * @throws IsCurseWordException
+	 * @throws IsAlreadyNameException
+	 * @throws IsNotLetterException
+	 * @throws ScoreAlreadySavedException
+	 */
+	private boolean checkName(String name) throws LongerThan3Exception, IsCurseWordException, IsNotLetterException, ScoreAlreadySavedException {
 		
 		if (scoreSaved) {
 			throw new ScoreAlreadySavedException();
 		}
 		
-		if (name.length() > 3) {
+		if (name.length() == 3) {
 			throw new LongerThan3Exception();
-		}
-		
-		for (Mover m : mvrs) {
-			ResultMover rm = (ResultMover) m;
-			if (name.toUpperCase().equals(rm.getResultName())) {
-				throw new IsAlreadyNameException();
-			}
 		}
 		
 		for (String w : curseWords) {
@@ -236,6 +293,13 @@ public class LeaderboardView extends MinigameView{
 		return true;
 	}
 	
+	/**
+	 * Loads the list of 3-letter (possible) "curse words" into an ArrayList. 
+	 * 
+	 * @author 		Ryan Peters
+	 * @return		list of curse words
+	 * @throws IOException
+	 */
 	private ArrayList<String> loadCurseWords() throws IOException{
 		File file = new File(CW_PATH); 
 		BufferedReader br = null;
@@ -255,7 +319,6 @@ public class LeaderboardView extends MinigameView{
 	
 	private class LongerThan3Exception extends Exception {}
 	private class IsCurseWordException extends Exception {}
-	private class IsAlreadyNameException extends Exception {}
 	private class IsNotLetterException extends Exception {}
 	private class ScoreAlreadySavedException extends Exception {}
 	
