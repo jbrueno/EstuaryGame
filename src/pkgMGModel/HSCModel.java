@@ -10,9 +10,10 @@ import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel {
-	int numTagged = 0;
 	int points = 50;
 	boolean timerSet = false;
+	int HSCWidth = 200;
+	int HSCHeight = 136;
 	final int maxHSC = 10;
 	int maxSpeed = 10;
 
@@ -61,7 +62,7 @@ public class HSCModel extends MinigameModel {
 			} else if (m.getX() > backgroundWidth) {
 				m.setX(buffer - (iWidth + buffer));
 				m.setY(r.nextInt(backgroundHeight));
-			} else if (m.getY() < -iHeight) {
+			} else if (m.getY() < -iHeight) { 
 				m.setX(r.nextInt(backgroundWidth));
 				m.setY(backgroundHeight + buffer);
 			} else if (m.getY() > backgroundHeight) {
@@ -71,10 +72,10 @@ public class HSCModel extends MinigameModel {
 		}
 	}
 
-	public boolean tutorialHSCrabClicked(MouseEvent me) {
+	private boolean tutorialHSCrabClicked(MouseEvent me) {
 		if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			if (me.getX() <= (backgroundWidth / 2 + 200) && me.getX() > backgroundWidth / 2
-					&& me.getY() >= backgroundHeight / 2 && me.getY() <= (backgroundHeight / 2 + 136)) {
+			if (me.getX() <= (backgroundWidth / 2 + HSCWidth) && me.getX() > backgroundWidth / 2
+					&& me.getY() >= backgroundHeight / 2 && me.getY() <= (backgroundHeight / 2 + HSCHeight)) {
 				return true;
 			}
 		}
@@ -85,9 +86,9 @@ public class HSCModel extends MinigameModel {
 	 * For each horseshoe crab, move() based on xIncr,yIncr
 	 * 
 	 * @author Ryan Peters @
+	 * @return 
 	 */
 
-	// TODO streamline collision function
 	@Override
 	public void update(MouseEvent me) {
 
@@ -113,16 +114,22 @@ public class HSCModel extends MinigameModel {
 					if (isCollision(m, me) && !((HSC) m).getTagged()) {
 						((HSC) m).tag();
 						score += points;
-						numTagged++;
 					}
 				}
 				m.move();
 			}
 			break;
 		}
-
 	}
 
+	public boolean getTimerSet() {
+		return timerSet;
+	}
+	
+	public void setTimerSet(boolean timerSet) {
+		this.timerSet = timerSet;
+	}
+	
 	// TODO combine HSCs, add boolean value tagged
 	public class HSC extends Mover {
 		boolean tagged;
@@ -151,8 +158,8 @@ public class HSCModel extends MinigameModel {
 		}
 
 		private void increaseSpeed() {
-			System.out.println((int) (super.getXIncr() / 2.0));
-			System.out.println((int) (super.getYIncr() / 2.0));
+			//System.out.println((int) (super.getXIncr() / 2.0));
+			//System.out.println((int) (super.getYIncr() / 2.0));
 			if (super.getXIncr() >= 0) {
 				super.setXIncr(
 						super.getXIncr() + r.nextInt((int) (1 + super.getXIncr() / 2.0)) + DEFAULT_SPEED_INCREASE);
@@ -168,13 +175,6 @@ public class HSCModel extends MinigameModel {
 				super.setYIncr(super.getYIncr() - r.nextInt((int) Math.abs(-1 + super.getYIncr() / 2.0))
 						- DEFAULT_SPEED_INCREASE);
 			}
-		}
-	}
-
-	public class Crosshairs extends Mover {
-
-		public Crosshairs(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
-			super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		}
 	}
 
