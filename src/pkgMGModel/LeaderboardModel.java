@@ -134,7 +134,7 @@ public class LeaderboardModel extends MinigameModel{
 		}
 		
 		public int getResultScore() {
-			System.out.println(super.getValue());
+			System.out.println("HERE: " + super.getValue());
 			return Integer.parseInt(super.getValue().split(",")[1]);
 		}
 		

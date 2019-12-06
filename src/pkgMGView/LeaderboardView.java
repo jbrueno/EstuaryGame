@@ -63,6 +63,7 @@ public class LeaderboardView extends MinigameView{
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		mvrs = movers;
+		score = 1600;
 		this.score = score;
 		if (!isLeaderBoardMade) {
 			makeLeaderBoard(movers, score);
@@ -126,16 +127,14 @@ public class LeaderboardView extends MinigameView{
 	    input = new TextField();
 	    input.setPromptText(inputPrompt);
 	    gp.add(input, 2, row);
-	    
 	    btnSubmit = new Button("SUBMIT");
-	    btnSubmit.setId("SUBMIT");
 	    btnSubmit.setOnMouseClicked(e -> {
-	    	me = e;
 	    	String inputName = input.getText();
 	    	if (!scoreSaved && saveScore(input.getText())) {
-	    		System.out.println("SAVING SCORE: " + input.getText());
-	    		System.out.println(inputName.toUpperCase() + "," + score);
 	    		btnSubmit.setId(inputName.toUpperCase() + "," + score);
+	    		isLeaderBoardMade = false; //causes next tick to reload new leaderboard (if new highscore from user)
+	    		gp.getChildren().clear();
+	    		me = e;
 	    	}
 	    });
 	    gp.add(btnSubmit, 3, row);
@@ -178,6 +177,7 @@ public class LeaderboardView extends MinigameView{
 
 		try {
 			if (parseName(name)) {
+				System.out.println("SCORE SAVED!");
 				input.setText("Name and Score saved!");
 				scoreSaved = true;
 				//makeLeaderBoard(mvrs, score);
