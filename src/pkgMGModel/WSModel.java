@@ -263,8 +263,7 @@ public class WSModel extends MinigameModel{
 	 */
 	private int calculateCollectSore() {
 		if (Bottle.getY() < waterLevel) {return 0;}
-		int cScore = (int) (MAX_COLLECT_POINTS -  (2 * Math.abs(CORRECT_LEVEL - Bottle.getY())));
-		return (cScore < 0) ? 0 : Math.abs(MAX_COLLECT_POINTS - cScore);
+		return (int) (MAX_COLLECT_POINTS - Math.abs(CORRECT_LEVEL - Bottle.getTranslatedY()));
 	}
 
 	
