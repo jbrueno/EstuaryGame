@@ -1,17 +1,9 @@
 package pkgMGModel;
 
-import java.util.Random;
-
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMGModel.AMModel.MatchingAnimal;
-import pkgMGModel.WSModel.pHStrip;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
@@ -28,7 +20,6 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight/2-50;
 	
 	int waterLevel = backgroundHeight/2;
-	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
 	final private int CORRECT_LEVEL = 395; //center of the gradient guide
 	final private int MAX_COLLECT_POINTS = 200;
 	int deepLevel=backgroundHeight*4/5;
@@ -238,7 +229,7 @@ public class WSModel extends MinigameModel{
 			Bottle.setYIncr(-Bottle.getYIncr());
 		}
 		if (gs!=GameState.WS_COLLECTTUTORIAL){
-			score += calculateCollectSore();
+			score += calculateCollectScore();
 		}
 	}
 	
@@ -261,7 +252,7 @@ public class WSModel extends MinigameModel{
 	 * @author Ryan Peters
 	 * @returns	score
 	 */
-	private int calculateCollectSore() {
+	private int calculateCollectScore() {
 		if (Bottle.getY() < waterLevel) {return 0;}
 		return (int) (MAX_COLLECT_POINTS - Math.abs(CORRECT_LEVEL - Bottle.getTranslatedY()));
 	}

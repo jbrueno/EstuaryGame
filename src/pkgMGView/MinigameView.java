@@ -113,10 +113,8 @@ public abstract class MinigameView {
 	abstract void updateTutorialStep(MouseEvent me);
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
-	abstract void startTimer(int ms);
-	abstract void stopTimer();
+
 	//abstract void setUpListeners();
-	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 
 	// EVENTHANDLER!! This sees all mouse events in minigames
@@ -171,47 +169,6 @@ public abstract class MinigameView {
 		root.getChildren().add(btnReturn);
 	}
 
-	public double getAngle(Direction d) {
-		double angle = 0;
-		switch (d) {
-		case NORTH: {
-			angle = -60.0;
-			break;
-		}
-		case NORTHEAST: {
-			angle = -30.0;
-			break;
-		}
-		case EAST: {
-			angle = 0.0;
-			break;
-		}
-		case SOUTHEAST: {
-			angle = 30.0;
-			break;
-		}
-		case SOUTH: {
-			angle = 60.0;
-			break;
-		}
-		case SOUTHWEST: {
-			// isFlipped = true;
-			angle = -30.0;
-			break;
-		}
-		case WEST: {
-			// isFlipped = true;
-			break;
-		}
-		case NORTHWEST: {
-			// isFlipped = true;
-			angle = 30.0;
-			break;
-		}
-		}
-		return angle;
-	}
-
 	public Group getRoot() {
 		return root;
 	}
@@ -240,11 +197,22 @@ public abstract class MinigameView {
 		root.getChildren().clear();
 		areButtonsMade = false;
 	}
-	/*
-	 * public void draw(Mover m) { gc.drawImage(loadImage("Mover", m.getValue()),
-	 * m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth()); }
-	 */
 
+	/**
+	 * Clears the <code>canvas</code> and then draws each Mover.
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of Movers to be drawn 
+	 * @see MinigameView.update()
+	 */
+	public void draw(ArrayList<Mover> movers) {
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		for (Mover m : movers) {
+			draw(m);
+		}
+	}
+	
 	public void draw(Mover m) {
 		gc.drawImage(loadImage(m), m.getTranslatedX(), m.getTranslatedY(), m.getImageWidth(), m.getImageHeight());
 	}

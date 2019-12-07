@@ -1,19 +1,14 @@
 package pkgMGView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +16,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
@@ -245,30 +239,6 @@ public class WSView extends MinigameView{
 				sourceId = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
 		}
-	}
-	
-	@Override
-	void startTimer(int ms) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void stopTimer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void draw(ArrayList<Mover> movers) {
-		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-
-		for (Mover m : movers) {
-				draw(m);
-				
-		}
-		
 	}
 
 	void drawFillButton() {

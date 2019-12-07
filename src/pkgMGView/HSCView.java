@@ -11,7 +11,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 //import com.sun.javafx.geom.Rectangle;
 //import com.sun.prism.paint.Color;
@@ -19,7 +18,6 @@ import java.util.Timer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import pkgEnum.GameState;
@@ -28,15 +26,19 @@ import pkgMover.Mover;
 
 public class HSCView extends MinigameView {
 
-	Image imgHSC;
-	Image imgHSCTagged;
-	Group lighting = new Group();
+	//1-tick boolean
 	boolean areMade = false;
 	private boolean lightingRemoved = false;
+	
+	//JAVAFX elements
+	Group lighting = new Group();
 	Label info1 = new Label();
 	Label info2 = new Label();
 	Label info3 = new Label();
 	Label info4 = new Label();
+	Image imgHSC;
+	Image imgHSCTagged;
+	
 
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.HSCCOUNT);
@@ -85,27 +87,6 @@ public class HSCView extends MinigameView {
 
 		default:
 			break;
-		}
-	}
-
-	@Override
-	void startTimer(int ms) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	void stopTimer() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	void draw(ArrayList<Mover> movers) {
-		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-		for (Mover m : movers) {
-			draw(m);
 		}
 	}
 

@@ -50,6 +50,7 @@ public class MainScreenView extends MinigameView {
 	private final int labelHeight = 50;
 	private final int labelWidth = 400;
 	
+	//game played booleans
 	private boolean amPlayed = false;
 	private boolean hsccPlayed = false;
 	private boolean scPlayed = false;
@@ -64,18 +65,6 @@ public class MainScreenView extends MinigameView {
 		this.gc = gc;
 
 		importImages();
-	}
-	
-	@Override
-	void startTimer(int ms) {
-		// TODO Auto-generated method stub
-		
-	}
- 
-	@Override
-	void stopTimer() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -228,7 +217,7 @@ public class MainScreenView extends MinigameView {
 	 * @see loadImage()
 	 */
 	@Override
-	void draw(ArrayList<Mover> movers) {
+	public void draw(ArrayList<Mover> movers) {
 		//dns is always empty; don't do anything with it
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
@@ -269,15 +258,9 @@ public class MainScreenView extends MinigameView {
 	}
 
 	@Override
-	void drawTutorial(int step) {
-		// TODO Auto-generated method stub
-		
-	}
+	void drawTutorial(int step) {}
 
 	@Override
-	void updateTutorialStep(MouseEvent me) {
-		// TODO Auto-generated method stub
-		
-	}
+	void updateTutorialStep(MouseEvent me) {}
 
 }
