@@ -21,12 +21,11 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight;
 	
 	int waterLevel = backgroundHeight/2;
-<<<<<<< HEAD
+
 	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
 	final private int CORRECT_LEVEL = backgroundHeight/2; //center of the gradient guide
-=======
-	final private int CORRECT_LEVEL = 395; //center of the gradient guide
->>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0.git
+
+
 	final private int MAX_COLLECT_POINTS = 200;
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
