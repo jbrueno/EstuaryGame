@@ -2,6 +2,7 @@ package pkgMover;
 
 import java.util.Objects;
 
+
 public abstract class Mover {
 	private double y;
 	private double x;
@@ -108,7 +109,7 @@ public abstract class Mover {
 	 */
 	public void move(double startx, double starty, double endx, double endy) {
 		this.move();
-		if( y>=endy && x>=endx|| y<=starty && y<=startx) {
+		if( y>=endy && x>=endx|| y<=starty && x<=startx) {
 			yIncr=yIncr*-1;
 			xIncr=xIncr*-1;
 		}
@@ -135,6 +136,7 @@ public abstract class Mover {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
 	public String toString() {
 		return getValue() + ": " + x + " " + y; 
 	}
