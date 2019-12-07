@@ -3,14 +3,10 @@ package pkgMGModel;
 import pkgEnum.Game;
 import pkgMover.Mover;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import pkgMover.DataNode;
-
 import javafx.scene.input.MouseEvent;
 
 public abstract class MinigameModel {
@@ -29,7 +25,6 @@ public abstract class MinigameModel {
 	final int backgroundWidth = 1280;
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
-	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	Timer timer = new Timer();
 	int time;
 
@@ -85,10 +80,6 @@ public abstract class MinigameModel {
 
 	public Game getGame() {
 		return g;
-	}
-
-	public ArrayList<DataNode> getDataNodes() {
-		return dns;
 	}
 	
 	public GameState getGameState() {

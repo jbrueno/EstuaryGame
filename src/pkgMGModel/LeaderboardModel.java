@@ -6,12 +6,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgMover.Mover;
 
+/**
+ * Model for Leaderboard that loads scores, sending them to LeaderboardView, and saves scores from LeaderBoardView
+ * @author Ryan Peters
+ *
+ */
 public class LeaderboardModel extends MinigameModel{
 	
 	final private String HIGHSCORES_PATH = "Data/highScores.csv";
@@ -19,10 +23,17 @@ public class LeaderboardModel extends MinigameModel{
 	private boolean areResultedImported = false;
 	private boolean resultSaved = false;
 
-	public LeaderboardModel() {
-		 movers = new ArrayList<Mover>();
-	}
+	/**
+	 * Default constructor for LeaderboardModel
+	 */
+	public LeaderboardModel() {}
 	
+	/**
+	 * Per-tick handler/called every tick. On the first tick only, import results from csv file.
+	 * If Submit Button from LeaderboardView is clicked, save scores to the csv file
+	 * 
+	 * @author Ryan Peters
+	 */
 	@Override
 	public void update(MouseEvent me) {
 		if (!areResultedImported) {
@@ -47,7 +58,9 @@ public class LeaderboardModel extends MinigameModel{
 	}
 	
 	/**
-	 * Reads in stored CSV's 
+	 * Reads in stored values (name,score) from HIGHSCORES_PATH csv into an array of Strings to be stored into ResultMovers elsewhere
+	 * 
+	 * @author Ryan Peters
 	 * @return	list of scores
 	 * @throws IOException 
 	 */
@@ -72,6 +85,14 @@ public class LeaderboardModel extends MinigameModel{
 		return results;
 	}
 	
+	
+	/**
+	 * Takes an array of Strings and parses it into ResultMovers, packages for data transfer from Model to View for Leaderboard.
+	 * All ResultMovers are stored into an ArrayList which is then sorted by score-order (for listing on LeaderboardView)
+	 * 
+	 * @author Ryan Peters
+	 * @param results	array of Strings[] of the type name,score
+	 */
 	private void createResults(String[] results) {
 		ArrayList<ResultMover> rms = new ArrayList<ResultMover>();
 		for (String result : results) {
@@ -81,6 +102,12 @@ public class LeaderboardModel extends MinigameModel{
 		movers = new ArrayList<Mover>(rms);
 	}
 	
+	/**
+	 * Writes the high scores (movers) to the HIGHSCORES_PATH csv file
+	 * 
+	 * @author Ryan Peters
+	 * @throws IOException
+	 */
 	private void saveHighScores() throws IOException {
 		FileWriter csvWriter = null;
 		try {
@@ -98,6 +125,14 @@ public class LeaderboardModel extends MinigameModel{
 		}
 	}
 	
+	/**
+	 * Adds a new ResultMover to movers, sorts the movers, truncates the list to only 10, and writes to csv file.
+	 * In other words, add a new result in order to the list and if its the top 10, it will be saved and written
+	 * 
+	 * 
+	 * @author Ryan Peters
+	 * @param rm	the new ResultMover to add
+	 */
 	private void addNewResult(ResultMover rm) {
 		ArrayList<ResultMover> rms = new ArrayList<ResultMover>();
 		for (Mover m : movers) {
@@ -106,7 +141,7 @@ public class LeaderboardModel extends MinigameModel{
 		rms.add(rm);
 		Collections.sort(rms);
 		
-		movers = new ArrayList<Mover>(rms.subList(0, 10));
+		movers = new ArrayList<Mover>(rms.subList(0, MAX_NUM_SCORES));
 
 		try {
 			saveHighScores();
@@ -119,7 +154,8 @@ public class LeaderboardModel extends MinigameModel{
 	
 	
 	/**
-	 * Pseudo-mover that serves to transport high score data from Model to View only
+	 * Pseudo-mover that serves to transport high score data from Model to View and back
+	 * The value field is set to the result = name,score
 	 * 
 	 * @author Ryan Peters
 	 *

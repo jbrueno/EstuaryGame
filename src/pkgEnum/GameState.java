@@ -7,6 +7,3 @@ public enum GameState {
   TRANSITION1, TRANSITION2, TUTORIAL2;
 
 }
-
-//test
-//yet another test

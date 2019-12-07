@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMGView.*;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -41,14 +40,13 @@ import java.util.Timer;
 public class View {
 	private ArrayList<MinigameView> mgvs;
 	private MinigameView currGame;
-	int score;
 	
 	private Stage stage;
 	private Scene scene;
 	private Group root;
 	private GraphicsContext gc;
-	private int canvasWidth = 1280;
-	private int canvasHeight = 768;
+	private final int CANVAS_WIDTH = 1280;
+	private final int CANVAS_HEIGHT = 768;
 	private Game game;
 	private Canvas canvas;
 		
@@ -58,7 +56,7 @@ public class View {
         this.scene = new Scene(root);
         stage.setScene(scene);
 
-        canvas = new Canvas(canvasWidth, canvasHeight);
+        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.getChildren().add(canvas); 
         
         gc = canvas.getGraphicsContext2D();
@@ -76,7 +74,7 @@ public class View {
 	 * @param gs
 	 * @see MinigameView.update()
 	 */
-	public void update(ArrayList<Mover> movers, GameState gs, ArrayList<DataNode> dns, int score, int time) {
+	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 	//	System.out.println(currGame.getGame()); //testing current Game
 
 		currGame.update(movers, gs, score, time);
@@ -146,10 +144,4 @@ public class View {
 	public MinigameView retrieveMGV(Game g) {
 		return mgvs.get(g.ordinal());
 	}	
-	
-	
-	public ArrayList<DataNode> getDataNodes() {
-		return currGame.getDataNodes();
-	}
-	
 }

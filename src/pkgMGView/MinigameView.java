@@ -38,7 +38,6 @@ import javafx.scene.paint.Color;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public abstract class MinigameView {
@@ -89,9 +88,9 @@ public abstract class MinigameView {
 	boolean isTutorialSetUp = false;
 	
 	Label prompt;
-	private int promptYBuffer = 10;
-	private int promptWidth = 500;
-	private int promptHeight = 10;
+	int promptYBuffer = 10;
+	int promptWidth = 500;
+	int promptHeight = 10;
 	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
@@ -104,7 +103,6 @@ public abstract class MinigameView {
 	String btnPlayId="Play";
 	/////STUFF FOR TUTORIALS////
 
-	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	//pre-loaded images database
@@ -265,10 +263,6 @@ public abstract class MinigameView {
 
 	public Game getGame() {
 		return this.game;
-	}
-
-	public ArrayList<DataNode> getDataNodes() {
-		return dns;
 	}
 
 	public int getTotalScore() {

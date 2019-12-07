@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 import pkgMover.MatchingAnimal;
 import javafx.scene.input.MouseEvent;

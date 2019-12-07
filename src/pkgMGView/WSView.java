@@ -1,9 +1,11 @@
 package pkgMGView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -21,9 +23,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
+import pkgMGModel.WSModel.pHStrip;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
@@ -37,6 +40,7 @@ public class WSView extends MinigameView{
 	String btnFillId="Fill";
 	final int btnFillX = backgroundWidth*9/10;
 	final int btnFillY = backgroundHeight/3;
+	
 	Button btnLab;
 	String btnLabId="Lab";
 	boolean btnLabAdded=false;
@@ -49,9 +53,9 @@ public class WSView extends MinigameView{
 	String sourceId="";
 	
 	boolean collectIsSetUp=false;
-	
+
 	// WS_PH
-	float pH; // Actual pH of Water
+	double pH; // Actual pH of Water
 	Image background_lab;
 	Image testTube;
 	Image phStrip;
@@ -83,8 +87,8 @@ public class WSView extends MinigameView{
 	double guesspH = 7; // user's guess for what actual pH is, set to 7 as starting point
 	
 	Button btnIncreasepH;
-	String btnIncreasepHId="plus";
-	String btnDecreasepHId="minus";
+	String btnIncreasepHId="0.5";
+	String btnDecreasepHId="-0.5";
 	int btnIncreasepHX = pHDisplayX + pHDisplayWidth + 10;
 	int btnIncreasepHY = pHDisplayY;
 	
@@ -96,6 +100,11 @@ public class WSView extends MinigameView{
 	String btnSubmitId="Submit";
 	int btnSubmitX = btnIncreasepHX;
 	int btnSubmitY = btnDecreasepHY + 50;
+	private final int MAX_PH_SCORE = 500;
+	
+	Label displaypH;
+	
+	boolean click;
 	
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
@@ -130,11 +139,13 @@ public class WSView extends MinigameView{
 				}
 				
 				if(!filledIsPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
-						sourceId == btnFillId) {
+						sourceId.equals(btnFillId)) {
 					prompt.setText("Good job! Let's collect some more water!");
 					drawPlayButton();
 					filledIsPressed=true;
 				}
+				
+				
 				
 				break;
 			case WS_COLLECT :
@@ -193,18 +204,27 @@ public class WSView extends MinigameView{
 				}
 				
 				if(!submitPressed && sourceId==btnSubmitId) {
+					
 					drawPlayButton();
 					submitPressed=true;
 				}
 				updatepHDisplay();
 				break;
 			case WS_PH :
-				
+				submitPressed=false;
 				if(!phIsSetUp) {
 					root.getChildren().remove(btnPlay);
 					root.getChildren().remove(tutorialLabel);
 					root.getChildren().remove(prompt);
 					phIsSetUp=false;
+				}
+				
+				if(!submitPressed && sourceId==btnSubmitId) {
+					drawCorrectpH(movers);
+					disableButton(btnIncreasepH);
+					disableButton(btnDecreasepH);
+					disableButton(btnSubmit);
+					submitPressed=true;
 				}
 				
 				updatepHDisplay();
@@ -221,7 +241,7 @@ public class WSView extends MinigameView{
 	}
 	
 	void setSourceId() {
-		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
+		if (me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				sourceId = ((Button) me.getSource()).getId();
 			} catch (ClassCastException e) {}
@@ -280,55 +300,9 @@ public class WSView extends MinigameView{
 	}
 	
 	public void updateTutorialStep(MouseEvent m) {
-		//System.out.println(tutorialStep);
-		/*switch(tutorialStep) {
-		case 0: if(m.getEventType()==MouseEvent.MOUSE_PRESSED) {
-					tutorialStep=1;
-				}
-				break;
-		case 1: if (m.getEventType()==MouseEvent.MOUSE_CLICKED) {
-			tutorialStep=2;
-				}
-			break;
-		case 2: if (m.getEventType()==MouseEvent.MOUSE_PRESSED) {
-			tutorialStep=3;
-		}
-		case 3: //TODO FIX MAGIC NUMBERS
-				if(m.getX() >= 365 &&
-				m.getX() <= 485 &&
-				m.getY() >= 425 &&
-				m.getY() <= 680) {
-				tutorialStep=4;
-			}
-			break;
-		case 4: 
-			break;
-		}*/
 	}
 	
 	public void drawTutorial(int step) {
-/*
-		switch(step) {
-		case 0: prompt.setText("We need to collect water to test it! \nClick the fill button to fill your Van Dorn bottle!");
-				break;
-		case 1: if(!btnPlayAdded) {
-					drawPlayButton();
-					btnPlayAdded=true;
-				}
-				break;
-		case 2: prompt.setText("Click box to get pH testing strip!");
-				btnPlayAdded=false;
-				break;
-		case 3: prompt.setText("Move mouse to dip strip in water!");
-				break;
-		case 4: prompt.setText("Match pH with scale \nand enter your guess!");
-		
-				if(!btnPlayAdded) {
-					drawPlayButton();
-					btnPlayAdded=true;
-				}
-			}
-			*/
 	}
 	
 	
@@ -368,6 +342,7 @@ public class WSView extends MinigameView{
 	
 	// user guessing pH button
 	public void drawpHButtons() {
+		
 				btnIncreasepH = new Button("^");
 				btnIncreasepH.setId(btnIncreasepHId);
 				btnIncreasepH.setLayoutX(btnIncreasepHX);
@@ -375,15 +350,15 @@ public class WSView extends MinigameView{
 				btnIncreasepH.setOnMousePressed(e -> {
 					me=e;
 					if(guesspH < 14) {
-						guesspH+=0.5;
+						guesspH += Double.parseDouble(btnIncreasepHId);
 					}
 				});
-				btnIncreasepH.setOnMouseClicked(e -> {
+				
+				 btnIncreasepH.setOnMouseReleased(e -> {
 					me=e;
+					System.out.println(me.getEventType());
 				});
-				btnIncreasepH.setOnMouseReleased(e -> {
-					me=e;
-				});
+	
 				root.getChildren().add(btnIncreasepH);
 				
 				btnDecreasepH = new Button("v");
@@ -393,9 +368,15 @@ public class WSView extends MinigameView{
 				btnDecreasepH.setOnMousePressed(e -> {
 					me=e;
 					if(guesspH > 0) {
-						guesspH-=0.5;
+						guesspH += Double.parseDouble(btnDecreasepHId);
 					}
 				});
+				
+				
+				btnDecreasepH.setOnMouseClicked(e -> {
+					me=e;
+				});
+				
 			
 				root.getChildren().add(btnDecreasepH);
 				
@@ -423,6 +404,33 @@ public class WSView extends MinigameView{
 			scene.addEventFilter(MouseEvent.MOUSE_MOVED, eventHandler);
 		});
 		root.getChildren().add(phStripBox);
+	}
+	
+	void drawCorrectpH(ArrayList<Mover> movers) {
+		int drawScore;
+		for (Mover m : movers) {
+			if(m instanceof pHStrip) {
+			pHStrip ma = (pHStrip) m;
+			pH=(ma.getpH());
+			}
+		}
+		
+		if(pH==guesspH) {
+			drawScore= MAX_PH_SCORE;
+		} else {
+			drawScore = (int) (MAX_PH_SCORE - (((Math.abs(pH - guesspH) * 2) * 50)));
+		}
+		
+		displaypH = new Label("Correct pH: "+ pH +"\nYour's: " + guesspH + "\n+" + drawScore + " points!");
+
+		displaypH.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color:black;-fx-border-width:3");
+		displaypH.setLayoutX((backgroundWidth*2/3) - 50);
+		displaypH.setLayoutY((backgroundHeight/2)-100);
+		displaypH.setWrapText(true);
+		displaypH.setTextAlignment(TextAlignment.CENTER);
+		displaypH.setAlignment(Pos.CENTER);
+		root.getChildren().add(displaypH);
 	}
 
 
