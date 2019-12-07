@@ -23,7 +23,7 @@ public abstract class MinigameModel {
 	GameState gs = GameState.START;
 	final int backgroundHeight = 768;
 	final int backgroundWidth = 1280;
-	ArrayList<Mover> movers = new ArrayList<Mover>();
+	public ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
 	Timer timer = new Timer();
 	int time;
@@ -84,6 +84,10 @@ public abstract class MinigameModel {
 	
 	public GameState getGameState() {
 		return gs;
+	}
+	
+	public void setGameState(GameState gs) {
+		this.gs=gs;
 	}
 	
 	public int getScore() {
