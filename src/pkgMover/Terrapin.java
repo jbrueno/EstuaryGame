@@ -42,21 +42,36 @@ public class Terrapin extends Mover {
 		 */
 		@Override
 		public void move(double targetX, double targetY) {
+			System.out.println(getY());
+			System.out.println(targetY > getY());
+			System.out.println(getYIncr() < 0);
 			if (targetY < getY() && getYIncr() > 0) {
 				setYIncr(-1 * getYIncr());
 			} else if (targetY > getY() && getYIncr() < 0) {
 				setYIncr(-1 * getYIncr());
 			}
 			
+			System.out.println("X INCREASE: " + getXIncr());
+			
 			setY(getY() + getYIncr());
-			setX(getX() + getXIncr());
+			setXIncr(0);
+			setX(0);
 		}
 
-		
+		/**
+		 * returns the Terrapin's current air level
+		 * 
+		 * @return double that represents the current air level
+		 */
 		public double getAirAmount() {
 			return airAmount;
 		}
 		
+		/**
+		 * sets the air amount of the terrapin
+		 * 
+		 * @param air desired air level
+		 */
 		public void setAirAmount(int air) {
 			airAmount = air;
 		}
