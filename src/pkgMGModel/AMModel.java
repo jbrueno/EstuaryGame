@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 import pkgMover.MatchingAnimal;
 import javafx.scene.input.MouseEvent;
@@ -246,11 +245,6 @@ public class AMModel extends MinigameModel {
 		public MatchingAnimal(int x, int y, int imageWidth, int imageHeight, String value, String[] clues) {
 			super(x, y, imageWidth, imageHeight, 0, 0, value);
 			this.clues = clues; 
-		}
-	 
-		
-		public String toString() {
-			return super.getValue() + ": " + super.getX() + ", " + super.getY();
 		}
 		
 		/**

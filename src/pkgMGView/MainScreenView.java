@@ -3,19 +3,27 @@ import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.text.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public class MainScreenView extends MinigameView {
@@ -24,8 +32,25 @@ public class MainScreenView extends MinigameView {
 	private Button btnHSCC; //horseshoe crab count
 	private Button btnAM; //animal matching
 	private Button btnWS; //water sampling 
-	private int btnSize = 45;
+	final private double btnSize = 45;
+	final private double btnSCx = 909.0;
+	final private double btnSCy = 482.0;
+	final private double btnHSCCx = 417.0;
+	final private double btnHSCCy = 587.0;
+	final private double btnAMx = 852.0;
+	final private double btnAMy = 202.0;
+	final private double btnWSx = 498.0;
+	final private double btnWSy = 85.0;
 	
+	// minigame titles
+	private Label labelSC;
+	private Label labelHSCC;
+	private Label labelAM;
+	private Label labelWS;
+	private final int labelHeight = 50;
+	private final int labelWidth = 400;
+	
+	//game played booleans
 	private boolean amPlayed = false;
 	private boolean hsccPlayed = false;
 	private boolean scPlayed = false;
@@ -41,18 +66,6 @@ public class MainScreenView extends MinigameView {
 
 		importImages();
 	}
-	
-	@Override
-	void startTimer(int ms) {
-		// TODO Auto-generated method stub
-		
-	}
- 
-	@Override
-	void stopTimer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setUpListeners() {
@@ -63,23 +76,50 @@ public class MainScreenView extends MinigameView {
     	});
 		
 		btnSC.setOnAction(e -> {
-				game = Game.SIDESCROLLER;
-				scPlayed = true;
+			game = Game.SIDESCROLLER;
+			scPlayed = true;
+		});
+		btnSC.setOnMouseEntered(e -> {
+			labelSC.setVisible(true);
+		});
+		btnSC.setOnMouseExited(e -> {
+			labelSC.setVisible(false);
 		});
 		
+		
 		btnHSCC.setOnAction(e -> {
-				game = Game.HSCCOUNT;
-				hsccPlayed = true;
+			game = Game.HSCCOUNT;
+			hsccPlayed = true;
 		});
+		btnHSCC.setOnMouseEntered(e -> {
+			labelHSCC.setVisible(true);
+		});
+		btnHSCC.setOnMouseExited(e -> {
+			labelHSCC.setVisible(false);
+		});
+
 		
 		btnAM.setOnAction(e -> {
 			game = Game.ANIMALMATCHING;
 			amPlayed = true;
 		});
+		btnAM.setOnMouseEntered(e -> {
+			labelAM.setVisible(true);
+		});
+		btnAM.setOnMouseExited(e -> {
+			labelAM.setVisible(false);
+		});
+		
 		
 		btnWS.setOnAction(e -> {
 			game = Game.WATERSAMPLING;
 			wsPlayed = true;
+		});
+		btnWS.setOnMouseEntered(e -> {
+			labelWS.setVisible(true);
+		});
+		btnWS.setOnMouseExited(e -> {
+			labelWS.setVisible(false);
 		});
 		
 	}
@@ -88,22 +128,23 @@ public class MainScreenView extends MinigameView {
 		btnSC = new Button("",new ImageView(loadButtonImage("btnSC")));
 		setButtonBackgroundWhite(btnSC);
 		btnSC.setDisable(scPlayed);
-		formatCircleButton(btnSC, 909.0, 482.0);
+		formatCircleButton(btnSC, btnSCx, btnSCy);
 		
 		btnHSCC = new Button("", new ImageView(loadButtonImage("btnHSCC")));
 		setButtonBackgroundWhite(btnHSCC);
 		btnHSCC.setDisable(hsccPlayed);
-		formatCircleButton(btnHSCC, 417.0, 587.0);
+		formatCircleButton(btnHSCC, btnHSCCx, btnHSCCy);
 		
 		btnAM = new Button("", new ImageView(loadButtonImage("btnAM")));
 		setButtonBackgroundWhite(btnAM);
 		btnAM.setDisable(amPlayed);
-		formatCircleButton(btnAM, 852.0, 202.0);
+		formatCircleButton(btnAM, btnAMx, btnAMy);
+		
 		
 		btnWS = new Button("",new ImageView(loadButtonImage("btnWS")));
 		setButtonBackgroundWhite(btnWS);
 		btnWS.setDisable(wsPlayed);
-		formatCircleButton(btnWS, 498.0, 85.0);
+		formatCircleButton(btnWS, btnWSx, btnWSy);
 		
 		root.getChildren().addAll(btnSC, btnHSCC, btnAM, btnWS);
 	}
@@ -121,6 +162,52 @@ public class MainScreenView extends MinigameView {
 		b.setMinSize(btnSize * 2, btnSize * 2);
 		b.setMaxSize(btnSize* 2, btnSize * 2);
 	}
+	
+	
+	private void setUpLabels() {
+		
+		labelSC = new Label("Terrapin Run");
+		labelSC.setLayoutX(btnSCx + btnSize - (labelWidth / 2));
+		labelSC.setLayoutY(btnSCy - labelHeight);
+		formatMainScreenLabel(labelSC);
+
+		
+		labelHSCC = new Label("Horshoe Crab Tagging");
+		labelHSCC.setLayoutX(btnHSCCx + btnSize - (labelWidth / 2));
+		labelHSCC.setLayoutY(btnHSCCy - labelHeight);
+		formatMainScreenLabel(labelHSCC);
+
+		
+		labelAM = new Label("Animal Matching");
+		labelAM.setLayoutX(btnAMx + btnSize - (labelWidth / 2));
+		labelAM.setLayoutY(btnAMy - labelHeight);
+		formatMainScreenLabel(labelAM);
+
+		
+		labelWS = new Label("Water Sampling");
+		labelWS.setLayoutX(btnWSx + btnSize - (labelWidth / 2));
+		labelWS.setLayoutY(btnWSy - labelHeight);
+		formatMainScreenLabel(labelWS);
+		
+		root.getChildren().addAll(labelWS, labelAM, labelHSCC, labelSC);
+	}
+	
+	/**
+	 * Formats the Label that appears above a Minigame Button
+	 * 
+	 * @author	Andrew Brenner, Ryan Peters
+	 * @param l		Label to be formatted
+	 */
+	private void formatMainScreenLabel(Label l) {
+		l.setPrefSize(labelWidth, labelHeight);
+		l.setFont(new Font("Arial", 26));
+		l.setAlignment(Pos.CENTER);
+		l.setTextFill(Color.WHITE);
+		l.setVisible(false);
+	}
+	
+	
+	
 
 	
 	/**
@@ -130,7 +217,7 @@ public class MainScreenView extends MinigameView {
 	 * @see loadImage()
 	 */
 	@Override
-	void draw(ArrayList<Mover> movers) {
+	public void draw(ArrayList<Mover> movers) {
 		//dns is always empty; don't do anything with it
 		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
 		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
@@ -153,12 +240,13 @@ public class MainScreenView extends MinigameView {
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
 			setUpButtons();
+			setUpLabels();
 			setUpListeners();
 			createScoreLabel(score);
 			areButtonsMade = true;
 		}
 		
-		if (gs == GameState.FINISHED) {
+		if (amPlayed && wsPlayed && scPlayed && hsccPlayed) {
 			game = Game.LEADERBOARD;
 		} else {
 			draw(movers);
@@ -170,15 +258,9 @@ public class MainScreenView extends MinigameView {
 	}
 
 	@Override
-	void drawTutorial(int step) {
-		// TODO Auto-generated method stub
-		
-	}
+	void drawTutorial(int step) {}
 
 	@Override
-	void updateTutorialStep(MouseEvent me) {
-		// TODO Auto-generated method stub
-		
-	}
+	void updateTutorialStep(MouseEvent me) {}
 
 }

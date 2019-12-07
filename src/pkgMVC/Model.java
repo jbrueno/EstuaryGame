@@ -10,7 +10,6 @@ import pkgMGView.MainScreenView;
 import pkgMGView.MinigameView;
 import pkgMGView.SCView;
 import pkgMGView.WSView;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 import java.awt.event.KeyEvent;
@@ -23,7 +22,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Class responsible for keeping track of the current MinigameModel <code>currGame</code> and passing in updates from the 
- * View into this <code>currGame</code>.
+ * View into the <code>currGame</code>.
  * 
  * 
  * @author Ryan Peters
@@ -34,7 +33,6 @@ public class Model {
 	private ArrayList<MinigameModel> minigames;
 	private MinigameModel currGame;	
 	int totalScore; // sum of all minigame scores
-	boolean totalUpdated = false;
 	int mgTime;
  
 	
@@ -53,7 +51,7 @@ public class Model {
 	 * @param g
 	 * @param me
 	 */
-	public void update(Game g, MouseEvent me, ArrayList<DataNode> dns) {
+	public void update(Game g, MouseEvent me) {
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
 		} 
@@ -106,10 +104,6 @@ public class Model {
 		currGame = minigames.get(0);	
 	}
 	
-	public ArrayList<DataNode> getDataNodes() {
-		return currGame.getDataNodes();
-	}
-	
 	public GameState getGameState() {
 		return currGame.getGameState();
 	}
@@ -120,7 +114,7 @@ public class Model {
 	 * If on mainscreen, we need totalScore, which needs to be up to date
 	 */
 	public int getScore() {	
-		if (currGame == minigames.get(0)) { // Mainscreen 
+		if (currGame.getGame() == Game.MAINSCREEN || currGame.getGame() == Game.LEADERBOARD) {
 			updateTotalScore(); // need to figure out a way to only update upon entering MainScreen, not continuously (like boolean areButtonsMade)
 			return totalScore;
 		} else {

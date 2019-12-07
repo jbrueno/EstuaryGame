@@ -38,7 +38,6 @@ import javafx.scene.paint.Color;
 import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 
 public abstract class MinigameView {
@@ -88,6 +87,11 @@ public abstract class MinigameView {
 	int tutorialStep = 0;
 	boolean isTutorialSetUp = false;
 	
+	Label prompt;
+	int promptYBuffer = 10;
+	int promptWidth = 500;
+	int promptHeight = 10;
+	
 	Button btnPlay;
 	final double btnPlayX = backgroundWidth/2;
 	final double btnPlayY = 400;
@@ -96,9 +100,9 @@ public abstract class MinigameView {
 	boolean btnPlayAdded=false;
 	boolean play=false;
 	boolean isBackToMainDrawn = false;
+	String btnPlayId="Play";
 	/////STUFF FOR TUTORIALS////
 
-	ArrayList<DataNode> dns = new ArrayList<DataNode>();
 	ArrayList<Button> buttonList = new ArrayList<Button>();;
 	
 	//pre-loaded images database
@@ -109,10 +113,8 @@ public abstract class MinigameView {
 	abstract void updateTutorialStep(MouseEvent me);
 	
 	public abstract void update(ArrayList<Mover> movers, GameState gs, int score, int time);
-	abstract void startTimer(int ms);
-	abstract void stopTimer();
+
 	//abstract void setUpListeners();
-	abstract void draw(ArrayList<Mover> movers);
 	abstract void importImages();
 
 	// EVENTHANDLER!! This sees all mouse events in minigames
@@ -167,47 +169,6 @@ public abstract class MinigameView {
 		root.getChildren().add(btnReturn);
 	}
 
-	public double getAngle(Direction d) {
-		double angle = 0;
-		switch (d) {
-		case NORTH: {
-			angle = -60.0;
-			break;
-		}
-		case NORTHEAST: {
-			angle = -30.0;
-			break;
-		}
-		case EAST: {
-			angle = 0.0;
-			break;
-		}
-		case SOUTHEAST: {
-			angle = 30.0;
-			break;
-		}
-		case SOUTH: {
-			angle = 60.0;
-			break;
-		}
-		case SOUTHWEST: {
-			// isFlipped = true;
-			angle = -30.0;
-			break;
-		}
-		case WEST: {
-			// isFlipped = true;
-			break;
-		}
-		case NORTHWEST: {
-			// isFlipped = true;
-			angle = 30.0;
-			break;
-		}
-		}
-		return angle;
-	}
-
 	public Group getRoot() {
 		return root;
 	}
@@ -236,11 +197,22 @@ public abstract class MinigameView {
 		root.getChildren().clear();
 		areButtonsMade = false;
 	}
-	/*
-	 * public void draw(Mover m) { gc.drawImage(loadImage("Mover", m.getValue()),
-	 * m.getX(), m.getY(), m.getImageWidth(), m.getImageWidth()); }
-	 */
 
+	/**
+	 * Clears the <code>canvas</code> and then draws each Mover.
+	 * 
+	 * @author Ryan Peters
+	 * @param movers	list of Movers to be drawn 
+	 * @see MinigameView.update()
+	 */
+	public void draw(ArrayList<Mover> movers) {
+		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		for (Mover m : movers) {
+			draw(m);
+		}
+	}
+	
 	public void draw(Mover m) {
 		gc.drawImage(loadImage(m), m.getTranslatedX(), m.getTranslatedY(), m.getImageWidth(), m.getImageHeight());
 	}
@@ -259,10 +231,6 @@ public abstract class MinigameView {
 
 	public Game getGame() {
 		return this.game;
-	}
-
-	public ArrayList<DataNode> getDataNodes() {
-		return dns;
 	}
 
 	public int getTotalScore() {
@@ -438,10 +406,25 @@ public abstract class MinigameView {
 	    fadeTransition.play();		
 		
 		root.getChildren().add(tutorialLabel);
+		
+		prompt = new Label();
+		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
+				+ "-fx-border-color:black;-fx-border-width:3");
+		prompt.setLayoutX(backgroundWidth/2 - promptWidth/2);
+		prompt.setLayoutY(promptYBuffer);
+		//prompt.setPrefSize(promptWidth, promptHeight);
+		prompt.setWrapText(true);
+		prompt.setTextAlignment(TextAlignment.CENTER);
+		prompt.setAlignment(Pos.CENTER);
+		
+		
+		
+		root.getChildren().add(prompt);
 	}
 	
 	public void drawPlayButton() {
 		btnPlay = new Button("Let's Play");
+		btnPlay.setId(btnPlayId);
 		btnPlay.setLayoutX(backgroundWidth/2 - btnPlayWidth/2);
 		btnPlay.setLayoutY(btnPlayY);
 		btnPlay.setPrefSize(btnPlayWidth, btnPlayHeight);
@@ -449,7 +432,7 @@ public abstract class MinigameView {
 				+ "-fx-border-color: black; -fx-border-width: 3");
 		btnPlay.setAlignment(Pos.CENTER);
 		btnPlay.setTextAlignment(TextAlignment.CENTER);
-		btnPlay.setOnMouseClicked(e -> {
+		btnPlay.setOnMousePressed(e -> {
 			me=e;
 			play=true;
 		});

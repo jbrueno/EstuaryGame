@@ -2,7 +2,6 @@ package pkgMover;
 
 import java.util.Objects;
 
-import pkgEnum.Direction;
 
 public abstract class Mover {
 	private double y;
@@ -12,7 +11,7 @@ public abstract class Mover {
 	private double xIncr;
 	private double yIncr;
 	private String value;
-	public int scoreChange;
+	protected int scoreChange;
 	
 	 
 	/**
@@ -110,10 +109,6 @@ public abstract class Mover {
 	 */
 	public void move(double startx, double starty, double endx, double endy) {
 		this.move();
-		System.out.println(y>=endy);
-		System.out.println(x>=endx);
-		System.out.println(y<=starty);
-		System.out.println(y<=startx);
 		if( y>=endy && x>=endx|| y<=starty && x<=startx) {
 			yIncr=yIncr*-1;
 			xIncr=xIncr*-1;
@@ -159,11 +154,4 @@ public abstract class Mover {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-
 }

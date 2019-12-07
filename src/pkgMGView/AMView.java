@@ -35,7 +35,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import pkgEnum.GameState;
 import pkgEnum.Game;
-import pkgMover.DataNode;
 import pkgMover.Mover;
 import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;
@@ -49,6 +48,7 @@ import pkgMGModel.AMModel.MatchingAnimal;
  *
  */
 public class AMView extends MinigameView{
+	//main game attributes
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
@@ -76,14 +76,10 @@ public class AMView extends MinigameView{
 	private GridPane bqGP = new GridPane();
 	final private int panePadding = 50;
 	private boolean bqGuessed = false;
-	private boolean buttonsDisabled = false;
+	private boolean buttonsDisabled = false;	
 	
 	//tutorial attributes
-	private int promptYBuffer = 10;
-	private int promptWidth = 500;
-	private int promptHeight = 10;
 	private boolean transition1SetUp = false;
-	private Label prompt;
 	
 	/**
 	 * Constructor which saves local copies of GraphicsContext, Root, and Scene from <code>View</code> so that
@@ -230,22 +226,6 @@ public class AMView extends MinigameView{
 				break;
 		}
 		System.out.println(me.getEventType());
-	}
-
-	/**
-	 * Clears the <code>Canvas</code> and then draws each Mover.
-	 * 
-	 * @author Ryan Peters
-	 * @param movers	list of Movers to be drawn 
-	 * @see MinigameView.update()
-	 */
-	@Override
-	void draw(ArrayList<Mover> movers) {
-		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(background, 0, 0);
-		for (Mover m : movers) {
-			draw(m);
-		}
 	}
 	
 	/**
@@ -520,6 +500,7 @@ public class AMView extends MinigameView{
 	@Override
 	public void setUpTutorial() {
 		super.setUpTutorial();
+		prompt.setText("Drag the Clue to Match it to the Correct Animal");
 		
 		prompt = new Label("Drag the Clue to Match it to the Correct Animal");
 		prompt.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
@@ -532,6 +513,7 @@ public class AMView extends MinigameView{
 		prompt.setAlignment(Pos.CENTER);
 		
 		root.getChildren().add(prompt);
+		
 	}
 	
 	/**
@@ -572,24 +554,10 @@ public class AMView extends MinigameView{
 		}
 	}
 
+	@Override
+	void drawTutorial(int step) {}
 
 
 	@Override
-	void startTimer(int ms) {}
-	@Override
-	void stopTimer() {}
-
-
-	@Override
-	void drawTutorial(int step) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	void updateTutorialStep(MouseEvent me) {
-		// TODO Auto-generated method stub
-		
-	}	
+	void updateTutorialStep(MouseEvent me) {}
 }
