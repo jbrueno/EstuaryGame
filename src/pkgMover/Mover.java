@@ -110,10 +110,6 @@ public abstract class Mover {
 	 */
 	public void move(double startx, double starty, double endx, double endy) {
 		this.move();
-		System.out.println(y>=endy);
-		System.out.println(x>=endx);
-		System.out.println(y<=starty);
-		System.out.println(y<=startx);
 		if( y>=endy && x>=endx|| y<=starty && x<=startx) {
 			yIncr=yIncr*-1;
 			xIncr=xIncr*-1;
