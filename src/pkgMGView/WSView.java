@@ -121,9 +121,9 @@ public class WSView extends MinigameView{
 		}
 		updateScoreLabel(score);
 		setSourceId();
+		draw(movers);
 		switch (gs) {
 			case WS_COLLECTTUTORIAL:
-				
 				if(!collectTutorialIsSetUp) {
 					background = background_collect;
 					drawFillButton();
@@ -230,7 +230,6 @@ public class WSView extends MinigameView{
 		}
 		
 		draw(movers);
-	//	System.out.println(gs);
 	}
 	
 	void setSourceId() {
@@ -390,7 +389,7 @@ public class WSView extends MinigameView{
 			drawScore = (int) (MAX_PH_SCORE - (((Math.abs(pH - guesspH) * 2) * 50)));
 		}
 		
-		displaypH = new Label("Correct pH: "+ pH +"\nYour's: " + guesspH + "\n+" + drawScore + " points!");
+		displaypH = new Label("Correct pH: "+ pH +"\nYour guess: " + guesspH);
 
 		displaypH.setStyle("-fx-background-color: white; -fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 20;"
 				+ "-fx-border-color:black;-fx-border-width:3");
