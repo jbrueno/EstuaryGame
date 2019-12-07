@@ -2,9 +2,7 @@ package pkgMover;
 
 import java.util.Objects;
 
-import pkgEnum.Direction;
-
-public abstract class Mover/* extends DataNode*/{
+public abstract class Mover {
 	private double y;
 	private double x;
 	private int imageWidth;
@@ -12,7 +10,7 @@ public abstract class Mover/* extends DataNode*/{
 	private double xIncr;
 	private double yIncr;
 	private String value;
-	public int scoreChange;
+	protected int scoreChange;
 	
 	 
 	/**
@@ -154,11 +152,4 @@ public abstract class Mover/* extends DataNode*/{
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-
 }

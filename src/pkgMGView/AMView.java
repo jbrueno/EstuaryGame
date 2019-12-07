@@ -48,6 +48,7 @@ import pkgMGModel.AMModel.MatchingAnimal;
  *
  */
 public class AMView extends MinigameView{
+	//main game attributes
 	final private int clueXBuffer = 300;
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
@@ -75,14 +76,9 @@ public class AMView extends MinigameView{
 	private GridPane bqGP = new GridPane();
 	final private int panePadding = 50;
 	private boolean bqGuessed = false;
-	private boolean buttonsDisabled = false;
+	private boolean buttonsDisabled = false;	
 	
 	//tutorial attributes
-	/*private int promptYBuffer = 10;
-	private int promptWidth = 500;
-	private int promptHeight = 10;
-	private Label prompt;*/
-	
 	private boolean transition1SetUp = false;
 	
 	/**
@@ -230,22 +226,6 @@ public class AMView extends MinigameView{
 				break;
 		}
 		System.out.println(me.getEventType());
-	}
-
-	/**
-	 * Clears the <code>Canvas</code> and then draws each Mover.
-	 * 
-	 * @author Ryan Peters
-	 * @param movers	list of Movers to be drawn 
-	 * @see MinigameView.update()
-	 */
-	@Override
-	void draw(ArrayList<Mover> movers) {
-		gc.clearRect(0, 0, backgroundWidth, backgroundHeight);
-		gc.drawImage(background, 0, 0);
-		for (Mover m : movers) {
-			draw(m);
-		}
 	}
 	
 	/**
@@ -574,24 +554,10 @@ public class AMView extends MinigameView{
 		}
 	}
 
+	@Override
+	void drawTutorial(int step) {}
 
 
 	@Override
-	void startTimer(int ms) {}
-	@Override
-	void stopTimer() {}
-
-
-	@Override
-	void drawTutorial(int step) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	void updateTutorialStep(MouseEvent me) {
-		// TODO Auto-generated method stub
-		
-	}	
+	void updateTutorialStep(MouseEvent me) {}
 }

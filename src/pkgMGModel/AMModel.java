@@ -246,11 +246,6 @@ public class AMModel extends MinigameModel {
 			super(x, y, imageWidth, imageHeight, 0, 0, value);
 			this.clues = clues; 
 		}
-	 
-		
-		public String toString() {
-			return super.getValue() + ": " + super.getX() + ", " + super.getY();
-		}
 		
 		/**
 		 * Compares the ID of the button from which the drag originated to the endpoint of the drag. This will only be called

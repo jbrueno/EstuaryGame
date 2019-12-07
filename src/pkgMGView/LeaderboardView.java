@@ -328,7 +328,6 @@ public class LeaderboardView extends MinigameView{
 	void stopTimer() {}
 	void setUpListeners() {}
 	void importImages() {}
-	void draw(ArrayList<Mover> movers) {}
 	void drawTutorial(int step) {}
 	void updateTutorialStep(MouseEvent me) {}
 

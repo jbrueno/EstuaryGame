@@ -1,17 +1,9 @@
 package pkgMGModel;
 
-import java.util.Random;
-
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMGModel.AMModel.MatchingAnimal;
-import pkgMGModel.WSModel.pHStrip;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
@@ -29,8 +21,12 @@ public class WSModel extends MinigameModel{
 	final int maxDepth = backgroundHeight-bottleImageHeight;
 	
 	int waterLevel = backgroundHeight/2;
+<<<<<<< HEAD
 	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
 	final private int CORRECT_LEVEL = backgroundHeight/2; //center of the gradient guide
+=======
+	final private int CORRECT_LEVEL = 395; //center of the gradient guide
+>>>>>>> branch 'master' of https://github.com/CISC275-Fall2019/cisc275f19-project-cisc275f19-team-11-0.git
 	final private int MAX_COLLECT_POINTS = 200;
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
@@ -240,7 +236,7 @@ public class WSModel extends MinigameModel{
 			Bottle.setYIncr(-Bottle.getYIncr());
 		}
 		if (gs!=GameState.WS_COLLECTTUTORIAL){
-			score += calculateCollectSore();
+			score += calculateCollectScore();
 		}
 	}
 	
@@ -263,10 +259,9 @@ public class WSModel extends MinigameModel{
 	 * @author Ryan Peters
 	 * @returns	score
 	 */
-	private int calculateCollectSore() {
+	private int calculateCollectScore() {
 		if (Bottle.getY() < waterLevel) {return 0;}
-		int cScore = (int) (MAX_COLLECT_POINTS -  (2 * Math.abs(CORRECT_LEVEL - Bottle.getY())));
-		return (cScore < 0) ? 0 : Math.abs(MAX_COLLECT_POINTS - cScore);
+		return (int) (MAX_COLLECT_POINTS - Math.abs(CORRECT_LEVEL - Bottle.getTranslatedY()));
 	}
 
 	
