@@ -186,19 +186,18 @@ public class WSView extends MinigameView{
 				
 				if(!boxPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
 						sourceId == phStripBoxId) {
-					prompt.setText("Now move your mouse to dip the strip in the water.");
+					prompt.setText("Now move your mouse to dip the strip in the water. "
+							+ "\nMatch the pH with the scale above and enter your guess.");
 					prompt.setLayoutX(backgroundWidth*1/3);
 					prompt.setLayoutY(backgroundHeight/8);
 					boxPressed=true;
 				}
 				
 				//fix this, maybe water should be a label
-				if(boxPressed && me.getX()>= 365 &&
-					me.getX() <= 485 &&
-					me.getY() >= 425 &&
-					me.getY() <= 680) {
-						prompt.setText("Great! Use the pH scale above to find the ph."
-								+ "\nEnter your guess and press submit!");
+				if(boxPressed && me.getEventType()==MouseEvent.MOUSE_PRESSED &&
+						sourceId.equals("0.5") || sourceId.equals("-0.5")) {
+					
+						prompt.setText("Great! Now press submit!");
 						prompt.setLayoutX(backgroundWidth*1/3);
 						prompt.setLayoutY(backgroundHeight/3);	
 				}

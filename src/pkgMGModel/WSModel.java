@@ -18,6 +18,7 @@ public class WSModel extends MinigameModel{
 	// WS_COLLECTTUTORIAL
 	boolean collectSet=false;
 	String btnSourceId="";
+	
 	// WS_COLLECT
 	Mover Bottle;
 	final int bottleImageWidth = 268;
@@ -25,11 +26,11 @@ public class WSModel extends MinigameModel{
 	final int bottleX = backgroundWidth/2;
 	
 	final int maxHeight = bottleImageHeight;
-	final int maxDepth = backgroundHeight-bottleImageHeight/2-50;
+	final int maxDepth = backgroundHeight-bottleImageHeight;
 	
 	int waterLevel = backgroundHeight/2;
 	final private int COLLECT_SCORING_RANGE = 91; //half the height of the gradient guide
-	final private int CORRECT_LEVEL = 395; //center of the gradient guide
+	final private int CORRECT_LEVEL = backgroundHeight/2; //center of the gradient guide
 	final private int MAX_COLLECT_POINTS = 200;
 	int deepLevel=backgroundHeight*4/5;
 	boolean filled = false;
@@ -53,21 +54,22 @@ public class WSModel extends MinigameModel{
 	
 	Mover testTube;
 	final int testTubeImageWidth = 500;
-	final int testTubeSideFromBorder = 185;
 	final int testTubeImageHeight = 500;
+	final int testTubeWaterWidth = 120;
+	
 	final int testTubeX = backgroundWidth / 3;
-	final int testTubeY = backgroundHeight - 315;
-	final int testTubeLeftSide = 365; // x-coord
-	final int testTubeRightSide = 485; // x-coord
-	final int testTubeWaterLevel = 425; // y-coord
-	final int testTubeBottom = 680;
+	final int testTubeY = backgroundHeight * 5/8 ;
+	final int testTubeLeftSide = testTubeX - (testTubeWaterWidth/2); // x-coord
+	final int testTubeRightSide = testTubeX + (testTubeWaterWidth/2); // x-coord
+	final int testTubeWaterLevel = testTubeImageHeight*2/5; // y-coord
+	final int testTubeBottom = testTubeY+testTubeImageHeight/2;
 	
 	MouseEvent prevME = null;
 	private final int MAX_PH_SCORE = 500;
 	
 	public WSModel() {
 		g = Game.WATERSAMPLING;	
-		gs= GameState.WS_COLLECTTUTORIAL;
+		gs= GameState.WS_PHTUTORIAL;
 		addObjects(gs);
 	}
 	
@@ -106,7 +108,7 @@ public class WSModel extends MinigameModel{
 			buttonSelected(me);
 		}
 		
-		System.out.println(me.getEventType());
+		//System.out.println(me.getEventType());
 
 		switch (gs) {
 		case START :
@@ -274,6 +276,7 @@ public class WSModel extends MinigameModel{
 	 * changes boolean isDipped to true upon meeting criteria
 	 */
 	public void dipStrip() {
+		System.out.println("X: " + pHStrip.getX() + " Y: " + pHStrip.getY());
 		// setting up logic for dipping pHStrip within testTube bounds
 		if(pHStrip.getX() >= testTubeLeftSide &&
 			pHStrip.getX() <= testTubeRightSide &&
