@@ -8,6 +8,7 @@
 package pkgMover;
 
 public abstract class SCMover extends Mover {
+	private static final long serialVersionUID = 20L;
 	
 	int collisionSpeedChange;
 

@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import pkgEnum.GameState;
 import pkgMGModel.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 //beans
@@ -22,7 +23,11 @@ import pkgMover.Mover;
  * @author Ryan Peters
  *
  */
-public class Controller extends Application{
+public class Controller extends Application implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//data fields hold Model and View
 	private Model model;
 	private View view;    

@@ -25,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // NOTE: will not be needed once lab is complete
@@ -37,7 +38,8 @@ import java.util.Timer;
  * @author Ryan Peters
  *
  */
-public class View {
+public class View implements Serializable{
+	private static final long serialVersionUID = 3L;
 	private ArrayList<MinigameView> mgvs;
 	private MinigameView currGame;
 	

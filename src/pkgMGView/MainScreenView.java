@@ -21,13 +21,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
-import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.Mover;
 
 public class MainScreenView extends MinigameView {
-	
+	private static final long serialVersionUID = 8L;
 	private Button btnSC; //sidescroller
 	private Button btnHSCC; //horseshoe crab count
 	private Button btnAM; //animal matching
