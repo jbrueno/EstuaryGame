@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import pkgEnum.Direction;
 
-public abstract class Mover/* extends DataNode*/{
+public abstract class Mover {
 	private double y;
 	private double x;
 	private int imageWidth;
