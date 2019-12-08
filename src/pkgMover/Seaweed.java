@@ -1,8 +1,11 @@
 package pkgMover;
 
 public class Seaweed extends SCMover{
-	
-	
+	private static final long serialVersionUID = 28L;
+	int speedChange = 1;
+	int scoreChange = 0;
+	int imageHeight = 100;
+	int imageWidth = 100;
 	
 	public Seaweed(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);

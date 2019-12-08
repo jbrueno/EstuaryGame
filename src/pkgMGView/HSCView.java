@@ -25,7 +25,7 @@ import pkgEnum.Game;
 import pkgMover.Mover;
 
 public class HSCView extends MinigameView {
-
+	private static final long serialVersionUID = 6L;
 	//1-tick boolean
 	boolean areMade = false;
 	private boolean lightingRemoved = false;

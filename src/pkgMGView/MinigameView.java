@@ -1,6 +1,7 @@
 package pkgMGView;
 
 
+import java.io.Serializable;
 //testing branch
 //test
 import java.util.ArrayList;
@@ -35,12 +36,12 @@ import javafx.scene.control.Label;
 
 //import java.awt.Font;
 import javafx.scene.paint.Color;
-import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.Mover;
 
-public abstract class MinigameView {
+public abstract class MinigameView implements Serializable{
+	private static final long serialVersionUID = 4L;
 	Image background;
 	int backgroundWidth = 1280;
 	int backgroundHeight = 768;

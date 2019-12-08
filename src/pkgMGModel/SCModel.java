@@ -17,7 +17,7 @@ import pkgMover.Trash;
 import pkgMover.Terrapin;
 
 public class SCModel extends MinigameModel{
-	
+	private static final long serialVersionUID = 17L;
 	Terrapin terry;
 	ArrayList<SCMover> items =  new ArrayList<SCMover>();
 	private final double waterThreshold = 150;

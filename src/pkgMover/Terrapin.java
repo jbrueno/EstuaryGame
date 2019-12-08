@@ -1,7 +1,7 @@
 package pkgMover;
 
 public class Terrapin extends Mover {
-		
+	private static final long serialVersionUID = 29L;
 		double airAmount;
 
 		public Terrapin(int x, int y, int xIncr, int yIncr) {

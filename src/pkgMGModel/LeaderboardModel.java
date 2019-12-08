@@ -17,7 +17,7 @@ import pkgMover.Mover;
  *
  */
 public class LeaderboardModel extends MinigameModel{
-	
+	private static final long serialVersionUID = 14L;
 	final private String HIGHSCORES_PATH = "Data/highScores.csv";
 	final private int MAX_NUM_SCORES = 10;
 	private boolean areResultedImported = false;
@@ -161,6 +161,7 @@ public class LeaderboardModel extends MinigameModel{
 	 *
 	 */
 	public class ResultMover extends Mover implements Comparable<ResultMover>{
+		private static final long serialVersionUID = 23L;
 		public ResultMover(String result) {
 			super(0,0,0,0,0,0,result);
 		}
