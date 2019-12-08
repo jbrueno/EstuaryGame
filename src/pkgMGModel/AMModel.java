@@ -135,6 +135,10 @@ public class AMModel extends MinigameModel {
 	 * @return	ArrayList<Mover>	list of size <code>size</code> randomly chosen from <code>arr</code>
 	 */
 	private ArrayList<Mover> reduceUntil(ArrayList<Mover> arr, int size) {
+		if (size <= 0) {
+			return new ArrayList<Mover>();
+		}
+		
 		HashSet<Mover> newArr = new HashSet<Mover>();
 		while (newArr.size() < size) {
 			newArr.add(arr.get(r.nextInt(arr.size())));
@@ -218,7 +222,7 @@ public class AMModel extends MinigameModel {
 	
 	/**
 	 * <code>GameState.TRANSITION1</code> is an intermediate state inbetween two playable game states (TUTORIAL, INPROGRESS, BONUS)
-	 * Only changes the game's state <code>gs</code> when a button has been pressed.
+	 * Only changes the game's state <code>gs</code> when a button has been pressed as there is only one button in the View to click.
 	 * 
 	 * @author Ryan Peters
 	 * @param me	most recent MouseEvent originating from View
