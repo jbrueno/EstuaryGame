@@ -24,7 +24,7 @@ public class SCModel extends MinigameModel{
 	final long startNanoTime = System.nanoTime();
 	int seaweedY = 50;
 	double breathLostOnTick = 0.5;
-	int currentItemSpeed = -25;
+	private int currentItemSpeed = -25;
 	final int itemYSpeed = 0;
 	boolean timerSet = false;
 	int seaweedHeight = 100;
@@ -57,7 +57,7 @@ public class SCModel extends MinigameModel{
 		gs = GameState.SC_TUTORIAL_FOOD;
 		score = startScore;
 		
-		Food f = new Food(backgroundWidth, halfBackgroundHeight, foodWidthHeight, foodWidthHeight, currentItemSpeed, itemYSpeed, "Food");
+		Food f = new Food(backgroundWidth, halfBackgroundHeight, foodWidthHeight, foodWidthHeight, getCurrentItemSpeed(), itemYSpeed, "Food");
 		getItems().add(f);
 		
 		//movers.removeAll(getMovers());
@@ -140,7 +140,7 @@ public class SCModel extends MinigameModel{
 					} else if (getItems().get(0).getX() < 0) {
 						movers.removeAll(getItems());
 						getItems().clear();
-						getItems().add(new Food(backgroundWidth, backgroundHeight/2, currentItemSpeed));
+						getItems().add(new Food(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 					} else {
 						for (Mover m : getItems()) {
@@ -157,7 +157,7 @@ public class SCModel extends MinigameModel{
 
 				if (tutorialPlay) {
 					if (!set) {
-						getItems().add(new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed));
+						getItems().add(new Trash(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 						set = true;
 					} else {
@@ -165,7 +165,7 @@ public class SCModel extends MinigameModel{
 							if (isCollision(terry, m)) {
 								movers.remove(m);
 								getItems().remove(m);
-								Trash t = new Trash(backgroundWidth, backgroundHeight/2, currentItemSpeed);
+								Trash t = new Trash(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed());
 								movers.add(t);
 								getItems().add(t);
 							} else if (m.getX() < 0) {
@@ -190,7 +190,7 @@ public class SCModel extends MinigameModel{
 				if (tutorialPlay) {
 					if (!set) {
 						getItems().removeAll(getItems());
-						getItems().add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed));
+						getItems().add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 						set = true;
 					}
@@ -248,17 +248,17 @@ public class SCModel extends MinigameModel{
 	public void addNewItem() {
 		int newMover = r.nextInt(10);
 		if (newMover < randSeaweedThreshold)  {
-			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, currentItemSpeed);
+			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, getCurrentItemSpeed());
 			System.out.println("seaweed added");
 			getItems().add(s);
 		} else if (newMover < randFoodThreshold) {
 			int y =  new Random().nextInt((int) (backgroundHeight - waterThreshold));
-			Food f = new Food(backgroundWidth, backgroundHeight - y, currentItemSpeed);
+			Food f = new Food(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
 			System.out.println("food added");
 			getItems().add(f);
 		} else {
 			int y = new Random().nextInt((int) (backgroundHeight - waterThreshold));
-			Trash t = new Trash(backgroundWidth, backgroundHeight - y, currentItemSpeed);
+			Trash t = new Trash(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
 			System.out.println("trashed added");
 			getItems().add(t);
 		}
@@ -266,20 +266,31 @@ public class SCModel extends MinigameModel{
 		System.out.println("items size " + items.size());
 	}
 
-	private void changeSpeeds() {
+	public void changeSpeeds() {
 		Iterator<SCMover> itemIt = getItems().iterator();
 		while (itemIt.hasNext()) {
 			SCMover m = (SCMover) itemIt.next();
-			m.changeSpeed(currentItemSpeed);
+			m.changeSpeed(getCurrentItemSpeed());
 		}
 	}
 	
 	public void changeCurrentSpeed(SCMover m) {
-		currentItemSpeed = currentItemSpeed + m.getCollisionSpeedChange();
+		setCurrentItemSpeed(getCurrentItemSpeed() + m.getCollisionSpeedChange());
+		System.out.println(currentItemSpeed);
 	}
 
 
 	public ArrayList<SCMover> getItems() {
 		return items;
+	}
+
+
+	public int getCurrentItemSpeed() {
+		return currentItemSpeed;
+	}
+
+
+	public void setCurrentItemSpeed(int currentItemSpeed) {
+		this.currentItemSpeed = currentItemSpeed;
 	}
 }
