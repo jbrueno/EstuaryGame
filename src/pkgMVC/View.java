@@ -77,8 +77,6 @@ public class View implements Serializable{
 	 * @see MinigameView.update()
 	 */
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
-	//	System.out.println(currGame.getGame()); //testing current Game
-
 		currGame.update(movers, gs, score, time);
 	}
 	
@@ -146,4 +144,8 @@ public class View implements Serializable{
 	public MinigameView retrieveMGV(Game g) {
 		return mgvs.get(g.ordinal());
 	}	
+	
+	public Scene getScene() {
+		return scene;
+	}
 }

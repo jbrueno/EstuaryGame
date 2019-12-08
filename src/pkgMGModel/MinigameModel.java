@@ -29,7 +29,7 @@ public abstract class MinigameModel implements Serializable{
 	final int backgroundWidth = 1280;
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
-	Timer timer = new Timer();
+	SerTimer timer = new SerTimer();
 	int time;
 
 	public abstract void update(MouseEvent me);
@@ -142,5 +142,9 @@ public abstract class MinigameModel implements Serializable{
 		return isCollision(m, me.getX(), me.getY());
 	}
 	
+	
+	public class SerTimer extends Timer implements Serializable {
+		private static final long serialVersionUID = 40L;
+	}
 }
 

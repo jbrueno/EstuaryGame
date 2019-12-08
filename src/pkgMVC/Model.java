@@ -54,6 +54,7 @@ public class Model implements Serializable{
 	 * @param me
 	 */
 	public void update(Game g, MouseEvent me) {
+
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
 		} 
@@ -142,7 +143,4 @@ public class Model implements Serializable{
 	public int getTime() {
 		return currGame.getTime();
 	}
-	
-	
-	
 }
