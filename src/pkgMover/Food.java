@@ -1,12 +1,18 @@
 package pkgMover;
 
 public class Food extends SCMover {
+	
 	private static final long serialVersionUID = 27L;
+	private static final int FOODWIDTHHEIGHT = 50;
+	private static final int YINCR = 0;
+	private static final int SCORECHANGE = 100;
+	private static final int COLLISIONSPEEDCHANGE = -3;
+	
 	public Food(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		// TODO Auto-generated constructor stub
-		this.collisionSpeedChange = -3;
-		this.scoreChange = 100;
+		this.collisionSpeedChange = COLLISIONSPEEDCHANGE;
+		this.scoreChange = SCORECHANGE;
 	}
 	
 	/**
@@ -17,9 +23,9 @@ public class Food extends SCMover {
 	 * @param canvasWidth
 	 */
 	public Food(int canvasWidth, int y, int speed) {
-		super(canvasWidth, y, 50, 50, speed, 0, "Food");
-		this.scoreChange = 100;
-		this.collisionSpeedChange = -3;
+		super(canvasWidth, y, FOODWIDTHHEIGHT, FOODWIDTHHEIGHT, speed, YINCR, "Food");
+		this.scoreChange = SCORECHANGE;
+		this.collisionSpeedChange = COLLISIONSPEEDCHANGE;
 	}
 
 	/**

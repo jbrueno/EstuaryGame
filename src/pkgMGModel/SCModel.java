@@ -20,24 +20,22 @@ public class SCModel extends MinigameModel{
 	private static final long serialVersionUID = 17L;
 	Terrapin terry;
 	ArrayList<SCMover> items =  new ArrayList<SCMover>();
-	private final double waterThreshold = 150;
+	private static final double WATERTRESHOLD = 150;
 	final long startNanoTime = System.nanoTime();
-	int seaweedY = 50;
-	double breathLostOnTick = 0.5;
+	private static final int SEAWEEDY = 50;
 	private int currentItemSpeed = -25;
-	final int itemYSpeed = 0;
+	private static final int ITEMYSPEED = 0;
 	boolean timerSet = false;
-	int seaweedHeight = 100;
 	int tutorialStep = 0;
 	boolean tutorialPlay = false;
 	boolean set = false;
 	int terrapinX = 200;
-	int terrapinYIncr = 10;
-	int terrapinXIncr = 0;
+	final static int TERRAPINYINCR = 10;
+	final static int TERRAPINXINCR = 0;
 	int halfBackgroundHeight = backgroundHeight/2;
-	int foodWidthHeight = 50;
+	final static int FOODWIDTHHEIGHT = 50;
 	int gameTime = 600;
-	int startScore = 0;
+	final static int STARTSCORE = 0;
 	int airDeathThreshold = 0;
 	public int randSeaweedThreshold = 3;
 	public int randFoodThreshold = 7;
@@ -52,13 +50,13 @@ public class SCModel extends MinigameModel{
 	 */
 	public SCModel(){
 		g = Game.SIDESCROLLER;
-		terry = new Terrapin(terrapinX, halfBackgroundHeight, terrapinXIncr, terrapinYIncr);
+		terry = new Terrapin(terrapinX, halfBackgroundHeight, TERRAPINYINCR, TERRAPINYINCR);
 		time = gameTime;
 		
 		gs = GameState.SC_TUTORIAL_FOOD;
-		score = startScore;
+		score = STARTSCORE;
 		
-		Food f = new Food(backgroundWidth, halfBackgroundHeight, foodWidthHeight, foodWidthHeight, getCurrentItemSpeed(), itemYSpeed, "Food");
+		Food f = new Food(backgroundWidth, halfBackgroundHeight, FOODWIDTHHEIGHT, FOODWIDTHHEIGHT, getCurrentItemSpeed(), ITEMYSPEED, "Food");
 		getItems().add(f);
 		
 		//movers.removeAll(getMovers());
@@ -105,7 +103,7 @@ public class SCModel extends MinigameModel{
 					timerSet = true;
 				}
 		
-				if (terry.getY() <= waterThreshold) {
+				if (terry.getY() <= WATERTRESHOLD) {
 					terry.breathe();
 				} else {
 					if (terry.getAirAmount() > airDeathThreshold) {
@@ -216,7 +214,7 @@ public class SCModel extends MinigameModel{
 				if (tutorialPlay) {
 					if (!set) {
 						getItems().removeAll(getItems());
-						getItems().add(new Seaweed(backgroundWidth, backgroundHeight - seaweedY, getCurrentItemSpeed()));
+						getItems().add(new Seaweed(backgroundWidth, backgroundHeight - SEAWEEDY, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 						set = true;
 					}
@@ -242,7 +240,7 @@ public class SCModel extends MinigameModel{
 
 				if (tutorialPlay) {
 					terry.move(me.getX(), me.getY());
-					if (terry.getY() < waterThreshold) {
+					if (terry.getY() < WATERTRESHOLD) {
 						terry.breathe();
 						gs = GameState.TUTORIAL;
 					} else {
@@ -278,14 +276,14 @@ public class SCModel extends MinigameModel{
 	public void addNewItem() {
 		int newMover = r.nextInt(10);
 		if (newMover < randSeaweedThreshold)  {
-			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, getCurrentItemSpeed());
+			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - SEAWEEDY, getCurrentItemSpeed());
 			getItems().add(s);
 		} else if (newMover < randFoodThreshold) {
-			int y =  new Random().nextInt((int) (backgroundHeight - waterThreshold));
+			int y =  new Random().nextInt((int) (backgroundHeight - WATERTRESHOLD));
 			Food f = new Food(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
 			getItems().add(f);
 		} else {
-			int y = new Random().nextInt((int) (backgroundHeight - waterThreshold));
+			int y = new Random().nextInt((int) (backgroundHeight - WATERTRESHOLD));
 			Trash t = new Trash(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
 			getItems().add(t);
 		}
