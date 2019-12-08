@@ -201,7 +201,7 @@ public class WSModel extends MinigameModel{
 					guessSubmit=true;
 				}
 			}
-			
+		
 			break;
 
 		default :
@@ -209,7 +209,7 @@ public class WSModel extends MinigameModel{
 		}
 		
 	}	
-		
+
 	
 		
 	/**
@@ -327,7 +327,7 @@ public class WSModel extends MinigameModel{
 					pHGuess+=0.5;
 				} else if (btnSourceId=="minus") {
 					pHGuess-=0.5;
-        }
+				}
         
 			} catch (ClassCastException e) {}
 		}
@@ -338,7 +338,8 @@ public class WSModel extends MinigameModel{
 	 * Sets score based on how close player's guess is to actual value of PH
 	 * 
 	 * @author AG
-
+	 */
+	
 	void calculatePHScore(){
 		if(pHGuess == pH) {
 			score+=500;
@@ -372,7 +373,7 @@ public class WSModel extends MinigameModel{
 		 * sets attribute pH of pHStrip object to given double
 		 * @param pH actual pH of the water
 		 */
-		void setpH(double pH) {
+		void setStripPH(double pH) {
 			this.pH=pH;
 		}
 		
