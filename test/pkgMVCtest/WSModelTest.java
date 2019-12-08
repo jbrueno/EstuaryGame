@@ -40,7 +40,7 @@ public class WSModelTest {
 		assertTrue(WSModel.getGameState() == GameState.WS_COLLECTTUTORIAL);
 		assertTrue(WSModel.getMovers().contains(Bottle) == true);
 		
-		WSModel.setGameState(GameState.WS_COLLECT);
+		
 		assertTrue(WSModel.getGame() == Game.WATERSAMPLING);
 		assertTrue(WSModel.getGameState() == GameState.WS_COLLECT);
 	}
