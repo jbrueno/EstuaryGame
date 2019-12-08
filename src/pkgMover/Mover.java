@@ -18,8 +18,8 @@ public abstract class Mover implements Serializable{
 	 
 	/**
 	 * Mover constructor that takes in an x,y for position; imageWidth/Height for collision detection;
-	 * and xIncr,yIncr for speed control. <code>value</code> is passed to constructor for <code>DataNode</code>
-	 * to be set as the <code>value</code> attribute.
+	 * and xIncr,yIncr for speed control. <code>value</code> is used for image lookup in MinigameView and 
+	 * equivalence testing.
 	 * 
 	 * @author Ryan Peters
 	 * 
