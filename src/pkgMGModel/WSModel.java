@@ -371,7 +371,7 @@ public class WSModel extends MinigameModel{
 
 		/**
 		 * sets attribute pH of pHStrip object to given double
-		 * @param pH actual pH of the water
+		 * @param pH actual pH of the water 
 		 */
 		void setStripPH(double pH) {
 			this.pH=pH;
