@@ -31,7 +31,7 @@ public class HSCView extends MinigameView {
 	private boolean lightingRemoved = false;
 	
 	//JAVAFX elements
-	Group lighting = new Group();
+	Group lighting = new Group(); 
 	Label info1 = new Label();
 	Label info2 = new Label();
 	Label info3 = new Label();
@@ -39,7 +39,13 @@ public class HSCView extends MinigameView {
 	Image imgHSC;
 	Image imgHSCTagged;
 	
-
+	/**
+	 * Constructor which saves local copies of GraphicsContext, Root, and Scene from <code>View</code> so that
+	 * graphics may be loaded upon them.  Adds the <code>lighting</code> Group and event handler.
+	 * @param gc	<code>GraphicsContext</code> from <code>View</code>
+	 * @param root	<code>root</code> from <code>View</code>
+	 * @param scene	<code>scene</code> from <code>View</code>
+	 */
 	public HSCView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.HSCCOUNT);
 		game = theGame;
@@ -54,17 +60,20 @@ public class HSCView extends MinigameView {
 		importImages();
 	}
 
+	/**
+	 * Update the view of HSC game based on the current GameState
+	 */
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 
 		switch (gs) {
 		case TUTORIAL:
 			createLightFX();
-			drawTutorial(1);
+			drawTutorial1();
 			break;
 		case TUTORIAL2:
 			createLightFX();
-			drawTutorial(2);
+			drawTutorial2();
 			break;
 		case INPROGRESS:
 			removeTutorialLabels();
@@ -74,19 +83,27 @@ public class HSCView extends MinigameView {
 			draw(movers);
 			break;
 		case FINISHED:
-			if (!lightingRemoved) {
-				lighting.getChildren().clear();
-				root.getChildren().remove(lighting);
-				backToMainButton();
-				createScoreLabel(score);
-				createTimer(time);
-				lightingRemoved = true;
-			}
+			removeLighting();
+			backToMainButton();
+			createScoreLabel(score);
+			createTimer(time);
 			drawGameOver();
 			break;
 
 		default:
 			break;
+		}
+	}
+	
+	/**
+	 * Checks if the Group lighting has been removed from root.  If not, lighting is cleared, then
+	 * removed from root and lightingRemoved is set to true.
+	 */
+	void removeLighting() {
+		if (!lightingRemoved) {
+			lighting.getChildren().clear();
+			root.getChildren().remove(lighting);
+			lightingRemoved = true;
 		}
 	}
 
@@ -124,61 +141,69 @@ public class HSCView extends MinigameView {
 
 	@Override
 	void drawTutorial(int step) {
-		switch (step) {
-		case 1:
-			gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-			gc.drawImage(imgHSC, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
 
-			info1.setLayoutX(220);
-			info1.setLayoutY(10);
-			info1.setFont(new Font("Arial", 30));
-			info1.setTextFill(Color.PEACHPUFF);
-			info1.setText("Move your flashlight around to find the horseshoe crab!");
-			info1.setStyle("-fx-font-weight: bold");
-			root.getChildren().remove(info1);
-			root.getChildren().add(info1);
-
-			info2.setLayoutX(backgroundWidth / 3.15);
-			info2.setLayoutY(50);
-			info2.setFont(new Font("Arial", 30));
-			info2.setTextFill(Color.PEACHPUFF);
-			info2.setText("Click the horseshoe crab to tag it!");
-			info2.setStyle("-fx-font-weight: bold");
-			root.getChildren().remove(info2);
-			root.getChildren().add(info2);
-
-			break;
-		case 2:
-			root.getChildren().remove(info1);
-			root.getChildren().remove(info2);
-			
-			gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
-			gc.drawImage(imgHSCTagged, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
-
-			info3.setLayoutX(150);
-			info3.setLayoutY(20);
-			info3.setFont(new Font("Arial", 30));
-			info3.setTextFill(Color.PEACHPUFF);
-			info3.setText("You have 30 seconds to tag as many horseshoe crabs as possible!");
-			info3.setStyle("-fx-font-weight: bold");
-			root.getChildren().remove(info3);
-			root.getChildren().add(info3);
-			
-			info4.setLayoutX(450);
-			info4.setLayoutY(60);
-			info4.setFont(new Font("Arial", 30));
-			info4.setTextFill(Color.PEACHPUFF);
-			info4.setText("Click anywhere to start!");
-			info4.setStyle("-fx-font-weight: bold");
-			root.getChildren().remove(info4);
-			root.getChildren().add(info4);
-
-			break;
-		default:
-			break;
-		}
 	}
 	
+	/**
+	 * Draws the HSC to be tagged during the tutorial and creates and adds two
+	 * labels prompting the user during the <code>TUTORIAL</code>
+	 */
+	void drawTutorial1() {
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(imgHSC, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
+
+		info1.setLayoutX(220);
+		info1.setLayoutY(10);
+		info1.setFont(new Font("Arial", 30));
+		info1.setTextFill(Color.PEACHPUFF);
+		info1.setText("Move your flashlight around to find the horseshoe crab!");
+		info1.setStyle("-fx-font-weight: bold");
+		root.getChildren().remove(info1);
+		root.getChildren().add(info1);
+
+		info2.setLayoutX(backgroundWidth / 3.15);
+		info2.setLayoutY(50);
+		info2.setFont(new Font("Arial", 30));
+		info2.setTextFill(Color.PEACHPUFF);
+		info2.setText("Click the horseshoe crab to tag it!");
+		info2.setStyle("-fx-font-weight: bold");
+		root.getChildren().remove(info2);
+		root.getChildren().add(info2);
+	}
+	
+	/**
+	 * Removes the labels <code>info1</code> and <code>info2</code>, draws the 
+	 * tagged HSC and adds two labels to direct the user during <code>TUTORIAL1</code>
+	 */
+	void drawTutorial2() {
+		root.getChildren().remove(info1);
+		root.getChildren().remove(info2);
+		
+		gc.drawImage(background, 0, 0, backgroundWidth, backgroundHeight);
+		gc.drawImage(imgHSCTagged, backgroundWidth / 2, backgroundHeight / 2, 200, 136);
+
+		info3.setLayoutX(150);
+		info3.setLayoutY(20);
+		info3.setFont(new Font("Arial", 30));
+		info3.setTextFill(Color.PEACHPUFF);
+		info3.setText("You have 30 seconds to tag as many horseshoe crabs as possible!");
+		info3.setStyle("-fx-font-weight: bold");
+		root.getChildren().remove(info3);
+		root.getChildren().add(info3);
+		
+		info4.setLayoutX(450);
+		info4.setLayoutY(60);
+		info4.setFont(new Font("Arial", 30));
+		info4.setTextFill(Color.PEACHPUFF);
+		info4.setText("Click anywhere to start!");
+		info4.setStyle("-fx-font-weight: bold");
+		root.getChildren().remove(info4);
+		root.getChildren().add(info4);
+	}
+	
+	/**
+	 * Removes the labels info1 and info2 from root
+	 */
 	void removeTutorialLabels() {
 		root.getChildren().remove(info3);
 		root.getChildren().remove(info4);
@@ -186,12 +211,7 @@ public class HSCView extends MinigameView {
 
 	@Override
 	void updateTutorialStep(MouseEvent me) {
-		/*if(me.getEventType() == MouseEvent.MOUSE_CLICKED) { // me.getEventType() == MouseEvent.MOUSE_PRESSED || 
-			if(me.getX() <= (backgroundWidth/2 + 200) && me.getX() > backgroundWidth/2
-					&& me.getY() >= backgroundHeight/2 && me.getY() <= (backgroundHeight/2 + 136)) {
-				step++;
-			}
-		}*/
+
 	}
 
 }

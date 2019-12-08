@@ -49,7 +49,7 @@ public class View implements Serializable{
 	private GraphicsContext gc;
 	private final int CANVAS_WIDTH = 1280;
 	private final int CANVAS_HEIGHT = 768;
-	private Game game;
+	private Game game; 
 	private Canvas canvas;
 		
 	public View(Stage theStage) {	

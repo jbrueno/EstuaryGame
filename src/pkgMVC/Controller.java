@@ -37,7 +37,7 @@ public class Controller extends Application implements Serializable{
 	//data fields hold Model and View
 	private Model model;
 	private View view;    
-	private Scene scene;
+	private Scene scene; 
 	
 	//paths for serializing
 	private final String VIEW_PATH = "Data/SavedView.txt";
