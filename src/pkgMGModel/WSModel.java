@@ -57,13 +57,26 @@ public class WSModel extends MinigameModel{
 	final int testTubeWaterLevel = testTubeImageHeight*2/5; // y-coord
 	final int testTubeBottom = testTubeY+testTubeImageHeight/2;
 	
+	
+	/**
+	 * Constructor - WSModel
+	 * Game g is updated to current game being played - Enum WATERSAMPLING
+	 * Gamestate gs is updated so that WS begins with a tutorial
+	 * addObjects is called, Gamestate gs is passed
+	 * 		Instances of objects related to WS tutorial are created
+	 */
 	public WSModel() {
 		g = Game.WATERSAMPLING;	
 		gs = GameState.WS_COLLECTTUTORIAL;
 		addObjects(gs);
 	}
 	
-	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+	
+	/**
+	 * Instances of objects are created depending on the current Gamestate gs
+	 * 		sets variable pH 
+	 * @param gs the current stage (GameState) of the WS Minigame, 4 Enums
+	 */
 	public void addObjects(GameState gs) {
 		
 		switch (gs) {
@@ -87,6 +100,12 @@ public class WSModel extends MinigameModel{
 		}
 	}
 	
+	
+	/**
+	 * Sets up environment when needed, updates x & y coordinates of objects
+	 * Examines MouseEvent to determine the appropriate changes that need to occur from user input
+	 * @param me latest MouseEvent to occur
+	 */
 	@Override
 	public void update(MouseEvent me) {		
 		buttonSelected(me);
@@ -95,17 +114,15 @@ public class WSModel extends MinigameModel{
 		case START :
 			gs = GameState.WS_COLLECTTUTORIAL;
 		case WS_COLLECTTUTORIAL:
-			//System.out.println(btnSourceId);
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Fill") {
 				System.out.println("FILLING BOTTLE");
 				fillBottle();
-			}
-			if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Play"){
+			} else if (filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Play"){
 				movers.remove(Bottle);
 				gs=GameState.WS_COLLECT;
-			}
+			} // WS_COLLECTTUTORIAL is finished, moving onto next GameState
 			
 			break;
 		case WS_COLLECT :
@@ -116,21 +133,19 @@ public class WSModel extends MinigameModel{
 				movers.add(Bottle);
 				collectSet=true;
 			}
-			//double startx, double starty, double endx, double endy)
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Fill") {
 				System.out.println("FILLING BOTTLE");
 				fillBottle();
-			}
-			if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Lab"){
+			} else if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId=="Lab"){
 				movers.remove(Bottle);
 				gs=GameState.WS_PHTUTORIAL;
-			}
+			} // Stage complete, moving to next tutorial
 			
 			break;
 		case WS_PHTUTORIAL :
-			if(!labSet) { // if lab is not set up
+			if(!labSet) { // if lab is not set up, add objects for this stage
 				addObjects(gs);
 				labSet = true;
 			}
@@ -147,7 +162,7 @@ public class WSModel extends MinigameModel{
 			
 			if(gotStrip && me.getEventType()==MouseEvent.MOUSE_PRESSED && btnSourceId=="Play") {
 				gs=GameState.WS_PH;
-			}
+			} // Finished tutorial, moving on to next stage
 			break;
 		case WS_PH :
 			
@@ -195,13 +210,10 @@ public class WSModel extends MinigameModel{
 	
 		
 	/**
-	 * Checks if bottle has been filled, adds new full bottle object to datanode list if so
-	 * 
 	 * @author AG
 	 * 
-	 * @return boolean true if bottle is full
+	 * fills bottle and calculates appropriate score added if not in tutorial
 	 */
-	
 	public void fillBottle() {
 		filled=true;
 		Bottle.setValue("fullBottle");
@@ -211,6 +223,11 @@ public class WSModel extends MinigameModel{
 		}
 	}
 	
+	
+	/**
+	 * Randomly sets pH within a range for user to guess
+	 * adds this value to Mover object pHStrip 
+	 */
 	public void setPH() {
 		Random random = new Random();
 		pH=random.nextInt((pHMax - pHMin) + 1) + pHMin;
@@ -224,12 +241,12 @@ public class WSModel extends MinigameModel{
 	}
 	
 	
-	/*
+	/**
 	 * Calculates the Collecting Water Score by mapping the Bottle's current height within the gradient image on the background.
 	 * The closer the bottle is to the middle, the more points you get, maximum being <code>MAX_COLLECT_POINTS</code>.
 	 * 
 	 * @author Ryan Peters
-	 * @returns	score
+	 * @returns	score to be added to user's total
 	 */
 	private int calculateCollectSore() {
 		if (Bottle.getY() < waterLevel) {return 0;}
@@ -242,6 +259,7 @@ public class WSModel extends MinigameModel{
 	 * @author Abrenner
 	 * logic for determining if pHStrip is within bounds of testtube and has been dipped in water
 	 * changes boolean isDipped to true upon meeting criteria
+	 * Updates the value of Mover object pHStrip to the appropriate pH
 	 */
 	public void dipStrip() {
 		// setting up logic for dipping pHStrip within testTube bounds
@@ -252,14 +270,23 @@ public class WSModel extends MinigameModel{
 						
 					isDipped = true;
 					changeColor(pH);
-		} // end if
+		}
 	}
 	
+	
+	/**
+	 * sets the value of Mover object pHStrip to the given pH to determine the appropriate image to use
+	 * @param ph actual pH of the water
+	 */
 	public void changeColor(int ph) {
 		pHStrip.setValue("pHStrip"+ph);
-		//System.out.println("ACTUAL PH:" + pH);
 	}
 	
+	
+	/**
+	 * Determines if a button has been selected, called in update(MouseEvent me)
+	 * @param me MouseEvent from user input
+	 */
 	public void buttonSelected(MouseEvent me) {
 
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
@@ -269,8 +296,12 @@ public class WSModel extends MinigameModel{
 		}
 	}
 	
+	
+	/**
+	 * Determines which button has been pressed to increment or decrement user's guess
+	 * @param me MouseEvent from user input
+	 */
 	public void checkGuess(MouseEvent me) {
-		//System.out.println(me.getEventType());
 		if (me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
 				btnSourceId = ((Button) me.getSource()).getId();
@@ -279,17 +310,18 @@ public class WSModel extends MinigameModel{
 					pHGuess+=0.5;
 				} else if (btnSourceId=="minus") {
 					pHGuess-=0.5;
-				}
-				
-				System.out.println("pHGuess is " + pHGuess);
-				
+				}				
 			} catch (ClassCastException e) {}
 		}
 	}
 	
+	
+	/**
+	 * Determines if user's guess was correct or not
+	 * If correct 500 points are added to the total score
+	 * If incorrect, amount of points added to score is dependent on how close user's guess was
+	 */
 	void calculatePHScore(){
-		System.out.println("PH:"+pH);
-		System.out.println("GUESS:"+pHGuess);
 		if(pHGuess == pH) {
 			score+=500;
 		} else {
@@ -297,8 +329,11 @@ public class WSModel extends MinigameModel{
 			}
 		}
 	
+	
+	
+	
+	
 	// Movers related to WS
-
 	class Bottle extends Mover {
 		private static final long serialVersionUID = 26L;
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
@@ -314,10 +349,18 @@ public class WSModel extends MinigameModel{
 			super(x, y, pHStripWidth, pHStripHeight, xIncr, yIncr, value);
 		}
 		
+		/**
+		 * sets attribute pH of pHStrip object to given double
+		 * @param pH actual pH of the water
+		 */
 		void setpH(double pH) {
 			this.pH=pH;
 		}
 		
+		/**
+		 * Returns the pH attribute of pHStrip object
+		 * @return pH
+		 */
 		public double getpH() {
 			return pH;
 		}
