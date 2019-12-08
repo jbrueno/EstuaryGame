@@ -40,7 +40,6 @@ public class WSModelTest {
 	@Before
 	public void setUp() throws Exception {
 		WSModel = new WSModel();
-		WSModel.
 		
 		parameterTypes = new Class[2];
 		parameterTypes[0] = pkgMover.Mover.class;
