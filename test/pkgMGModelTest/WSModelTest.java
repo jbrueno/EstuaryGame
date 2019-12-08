@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMGModel.WSModel;
+import pkgMGModel.WSModel.pHStrip;
 import pkgMGModel.MinigameModel;
 import pkgMover.Mover;
 
@@ -32,8 +33,6 @@ public class WSModelTest {
 	private static String ADD_OBJECTS = "addObjects";
 	private static String SET_PH = "setPH";
 	private static String FILL_BOTTLE = "fillBottle";
-
-	
 	
 	private Class<?>[] parameterTypes;
 	
@@ -41,6 +40,8 @@ public class WSModelTest {
 	@Before
 	public void setUp() throws Exception {
 		WSModel = new WSModel();
+		WSModel.
+		
 		parameterTypes = new Class[2];
 		parameterTypes[0] = pkgMover.Mover.class;
 		parameterTypes[1] = javafx.scene.input.MouseEvent.class;
@@ -70,8 +71,10 @@ public class WSModelTest {
 		WSModel.addObjects(GameState.WS_PH);
 		assertTrue(WSModel.getMovers().size() == 2);
 		
-	//	System.out.println(WSModel.getMovers());
-	//	System.out.println(WSModel.getMovers().get(0).getValue());
+		WSModel.addObjects(GameState.START); // default case, nothing new added
+		assertTrue(WSModel.getMovers().size() == 1);
+		
+	
 	}
 	
 	@Test
@@ -83,6 +86,7 @@ public class WSModelTest {
 	
 	@Test
 	public void setPH_test() {
+		System.out.println(WSModel.getMovers());
 		WSModel.setPH();
 		assertTrue(WSModel.getPH() >= 5);
 		assertTrue(WSModel.getPH() <= 9);
@@ -90,6 +94,8 @@ public class WSModelTest {
 	
 	@Test
 	public void update_test() {
+		 
+		WSModel.update(null);
 		 WSModel.getMovers().get(0).setY(750);
 		 MouseEvent me = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, 500, 0, 0, null, 0, false, false, false, false,
 					true, false, false, false, false, false, null);
