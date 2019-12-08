@@ -31,8 +31,8 @@ public class WSView extends MinigameView{
 	Button btnReturn;
 	Button btnFill;
 	String btnFillId="Fill";
-	final int btnFillX = backgroundWidth*9/10;
-	final int btnFillY = backgroundHeight/3;
+	final int btnFillX = 500;
+	final int btnFillY = 500;
 	
 	Button btnLab;
 	String btnLabId="Lab";
