@@ -102,6 +102,8 @@ public class SCModel extends MinigameModel{
 						itemsIt.remove();
 					} else {
 						m.move();
+						System.out.println(m);
+						System.out.println(terry);
 						if (isCollision(m, terry)) {
 							collisionOccured = true;
 							changeCurrentSpeed(m);
@@ -132,6 +134,8 @@ public class SCModel extends MinigameModel{
 				} 
 				
 				if (tutorialPlay) {
+					System.out.println(terry);
+					System.out.println(getItems().get(0));
 					if (isCollision(terry, getItems().get(0))) {
 						movers.remove(getItems().get(0));
 						getItems().remove(0);
@@ -139,8 +143,8 @@ public class SCModel extends MinigameModel{
 						gs = GameState.SC_TUTORIAL_TRASH;
 					} else if (getItems().get(0).getX() < 0) {
 						movers.removeAll(getItems());
-						getItems().clear();
-						getItems().add(new Food(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed()));
+						getItems().remove(0);
+						getItems().add(new Food(backgroundWidth, halfBackgroundHeight, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 					} else {
 						for (Mover m : getItems()) {
@@ -157,23 +161,25 @@ public class SCModel extends MinigameModel{
 
 				if (tutorialPlay) {
 					if (!set) {
-						getItems().add(new Trash(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed()));
+						getItems().add(new Trash(backgroundWidth, halfBackgroundHeight, getCurrentItemSpeed()));
 						movers.addAll(getItems());
 						set = true;
 					} else {
 						for (Mover m : getItems()) {
 							if (isCollision(terry, m)) {
-								movers.remove(m);
-								getItems().remove(m);
+								movers.removeAll(getItems());
+								getItems().clear();
 								Trash t = new Trash(backgroundWidth, backgroundHeight/2, getCurrentItemSpeed());
 								movers.add(t);
 								getItems().add(t);
+								break;
 							} else if (m.getX() < 0) {
 								movers.removeAll(getItems());
 								getItems().clear();
 								tutorialPlay = false;
 								gs = GameState.SC_TUTORIAL_SEAWEED;
 								set = false;
+								break;
 							} else {
 								m.move();
 								terry.move(me.getX(), me.getY());
@@ -225,6 +231,7 @@ public class SCModel extends MinigameModel{
 				}
 				break;
 			case TUTORIAL:
+				System.out.println("items size " + getItems().size());
 				if (getItems().size() <= 3) {
 					addNewItem();
 					movers.removeAll(getMovers());
@@ -234,6 +241,7 @@ public class SCModel extends MinigameModel{
 						m.move();
 					}
 				}
+				
 				if (me.getEventType() == MouseEvent.MOUSE_CLICKED){
 					gs = GameState.INPROGRESS;
 				}
@@ -292,5 +300,9 @@ public class SCModel extends MinigameModel{
 
 	public void setCurrentItemSpeed(int currentItemSpeed) {
 		this.currentItemSpeed = currentItemSpeed;
+	}
+	
+	public Terrapin getTerry() {
+		return terry;
 	}
 }
