@@ -11,7 +11,7 @@ public class Terrapin extends Mover {
 			airAmount = lungCapacity;
 			
 		}
-		
+		 
 		/**
 		 * breathe() resets the air that is held by the Terrapin to full. Is
 		 * called whenever the Terrapin is above a certain height

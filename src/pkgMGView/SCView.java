@@ -44,7 +44,7 @@ public class SCView extends MinigameView  {
 		super(Game.SIDESCROLLER);
 		game = theGame;
 		this.root = root;
-		this.scene = scene;
+		this.scene = scene; 
 		this.gc = gc;
 		importImages();
 		setUpListeners();

@@ -1,17 +1,11 @@
 package pkgMGModel;
-
+ 
 import java.util.Random;
 
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMGModel.AMModel.MatchingAnimal;
-import pkgMGModel.WSModel.pHStrip;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
@@ -66,8 +60,6 @@ public class WSModel extends MinigameModel{
 	public WSModel() {
 		g = Game.WATERSAMPLING;	
 		gs = GameState.WS_COLLECTTUTORIAL;
-		//gs= GameState.WS_PHTUTORIAL;
-		//gs = GameState.WS_PH; 
 		addObjects(gs);
 	}
 	
@@ -306,6 +298,7 @@ public class WSModel extends MinigameModel{
 		}
 	
 	// Movers related to WS
+
 	class Bottle extends Mover {
 		private static final long serialVersionUID = 26L;
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {

@@ -1,8 +1,5 @@
 package pkgMGModel;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 import pkgEnum.GameState;
@@ -15,7 +12,11 @@ public class HSCModel extends MinigameModel {
 	private final int MAX_HSC = 10;
 	private final int MAX_SPEED = 10;
 
-	public HSCModel() {
+	/**
+	 * Sets Game <code>g</code> to HSCCOUNT, the GameState to TUTORIAL, calls
+	 * <code>createHSCrabs()</code>, and initializes <code>time</code> to 30 seconds
+	 */
+	public HSCModel() { 
 		g = Game.HSCCOUNT;
 		gs = GameState.TUTORIAL;
 		createHSCrabs();
@@ -29,7 +30,6 @@ public class HSCModel extends MinigameModel {
 	 * ranges
 	 * 
 	 * @author Ryan Peters
-	 * 
 	 */
 	private void createHSCrabs() {
 		for (int i = 0; i < MAX_HSC; i++) {
@@ -72,6 +72,13 @@ public class HSCModel extends MinigameModel {
 		}
 	}
 
+	/**
+	 * Checks a mouse click/press generated during <code>TUTORIAL</code> to see if the HSC image
+	 * in the tutorial was clicked
+	 * 
+	 * @param me the MouseEvent generated during the GameState TUTORIAL
+	 * @return true if the HSC image was clicked, false otherwise
+	 */
 	private boolean tutorialHSCrabClicked(MouseEvent me) {
 		if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			if (me.getX() <= (backgroundWidth / 2 + HSC.hscWidth) && me.getX() > backgroundWidth / 2
@@ -83,12 +90,14 @@ public class HSCModel extends MinigameModel {
 	}
 
 	/**
-	 * For each horseshoe crab, move() based on xIncr,yIncr
-	 * 
-	 * @author Ryan Peters @
-	 * @return 
+	 * Based on the current GameState, update the game accordingly:
+	 * GameState.TUTORIAL: once the tutorial HSC has been clicked, change GameState to TUTORIAL2
+	 * GameState.TUTORIAL2: once the mouse is clicked, change the GameState to INPROGRESS
+	 * GameState.INPROGRESS: First sets up the timer and sets <code>timerSet</code> to true, and checks each mover with 
+	 * 						 </code>spawnHSCrabs(m)</code>.  Then checks the MouseEvent to detect if a HSC has been clicked
+	 * 						 and if so tags the HSC and increments </code>score</code>.  Finally the </ode>move()</code> 
+	 * 						 is called on the movers to update the position of the HSCrabs
 	 */
-
 	@Override
 	public void update(MouseEvent me) {
 
@@ -122,10 +131,18 @@ public class HSCModel extends MinigameModel {
 		}
 	}
 
+	/**
+	 * Returns the boolean value of <code>timerSet</code>
+	 * @return timerSet
+	 */
 	public boolean getTimerSet() {
 		return timerSet;
 	}
 	
+	/**
+	 * Set the boolean <code>timerSet</code> to the given value
+	 * @param timerSet boolean value to set
+	 */
 	public void setTimerSet(boolean timerSet) {
 		this.timerSet = timerSet;
 	}
@@ -137,29 +154,51 @@ public class HSCModel extends MinigameModel {
 		static final int hscHeight = 136;
 		final int DEFAULT_SPEED_INCREASE = 2;
 
+		/**
+		 * Creates a HSC using the Mover superclass constructor and sets <code>tagged</code> to false
+		 * 
+		 * @param x x-coordinate of HSC
+		 * @param y y-coordinate of HSC
+		 * @param xIncr speed for x movement
+		 * @param yIncr speed for y movement
+		 */
 		public HSC(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 200, 136, xIncr, yIncr, "HSC");
 			tagged = false;
 		}
 
+		/**
+		 * Returns the boolean </code>tagged</code> attribute of the HSC
+		 * @return the boolean <code>tagged</code>
+		 */
 		public boolean getTagged() {
 			return tagged;
 		}
 
+		/**
+		 * Sets the boolean <code>tagged</code> to true and the value of the HSC to "HSCTagged"
+		 */
 		public void tag() {
 			this.tagged = true;
 			super.setValue("HSCTagged");
 			increaseSpeed();
 		}
 
+		/**
+		 * Sets the boolean tagged to false and the value of the HSC to "HSC"
+		 */
 		public void unTag() {
 			this.tagged = false;
 			super.setValue("HSC");
 		}
 
+		/**
+		 *  First checks the xIncr of the HSC mover to check if it is positive or negative
+		 *  and increases/decreases its xIncr speed DEFAULT_SPEED_INCREASEaccordingly.  
+		 *  Then checks the yIncr for a positive/negative value and increases/decreases that 
+		 *  value by DEFAULT_SPEED_INCREASE as well.
+		 */
 		private void increaseSpeed() {
-			//System.out.println((int) (super.getXIncr() / 2.0));
-			//System.out.println((int) (super.getYIncr() / 2.0));
 			if (super.getXIncr() >= 0) {
 				super.setXIncr(
 						super.getXIncr() + r.nextInt((int) (1 + super.getXIncr() / 2.0)) + DEFAULT_SPEED_INCREASE);
