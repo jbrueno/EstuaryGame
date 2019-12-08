@@ -44,7 +44,7 @@ public class SCView extends MinigameView  {
 		super(Game.SIDESCROLLER);
 		game = theGame;
 		this.root = root;
-		this.scene = scene;
+		this.scene = scene; 
 		this.gc = gc;
 		importImages();
 		setUpListeners();
@@ -183,8 +183,6 @@ public class SCView extends MinigameView  {
 		scoreBox.setFill(Color.RED);
 		scoreBox.setText("0");
 		scoreBox.setFont(Font.font(null, FontWeight.BOLD, 32));
-		
-		System.out.println("score box made");
 	}
 
 	@Override

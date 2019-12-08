@@ -3,15 +3,16 @@ package pkgMover;
 public class Terrapin extends Mover {
 		private static final long serialVersionUID = 29L;
 		double airAmount;
-		private double lungCapacity = 100;
+		final private double LUNGCAPACITY = 100;
+		final double BREATHDECREASE = 0.5;
 
 		public Terrapin(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 120, 60, xIncr, yIncr,"Terrapin");
 			this.setXIncr(0);
-			airAmount = lungCapacity;
+			airAmount = LUNGCAPACITY;
 			
 		}
-		
+		 
 		/**
 		 * breathe() resets the air that is held by the Terrapin to full. Is
 		 * called whenever the Terrapin is above a certain height
@@ -19,7 +20,7 @@ public class Terrapin extends Mover {
 		 *  @author HM
 		 */
 		public void breathe() {
-			airAmount = lungCapacity;
+			airAmount = LUNGCAPACITY;
 		}
 		
 		/**
@@ -28,7 +29,7 @@ public class Terrapin extends Mover {
 		 * @author HM
 		 */
 		public void holdBreath() {
-			airAmount = airAmount - 0.5;
+			airAmount = airAmount - BREATHDECREASE;
 		}
 		
 
@@ -49,7 +50,6 @@ public class Terrapin extends Mover {
 			
 			setY(getY() + getYIncr());
 			setXIncr(0);
-			setX(200);
 		}
 
 		/**

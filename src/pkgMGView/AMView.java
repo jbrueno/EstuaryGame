@@ -48,10 +48,10 @@ import pkgMGModel.AMModel.MatchingAnimal;
  * @see MinigameView
  *
  */
-public class AMView extends MinigameView{
+public class AMView extends MinigameView{ 
 	private static final long serialVersionUID = 5L;
 	//main game attributes
-	final private int clueXBuffer = 300;
+	final private int clueXBuffer = 300; 
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
 	final private int clueHeight = 70;
