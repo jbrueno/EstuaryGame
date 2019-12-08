@@ -131,10 +131,10 @@ public class WSView extends MinigameView{
 	/**
 	 * Draws labels, buttons, Movers, and background if it hasn't been done already
 	 * Updates Movers location accordingly
-	 * @param movers
-	 * @param gs
-	 * @param score
-	 * @param time
+	 * @param movers ArrayList of Mover objects
+	 * @param gs current GameState
+	 * @param score users current score in this Minigame so far
+	 * @param time current amount of time left to be displayed on timer (not used in this game)
 	 */
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
@@ -258,6 +258,11 @@ public class WSView extends MinigameView{
 		draw(movers);
 	}
 	
+	
+	/**
+	 * 
+	 * If user has pressed mouse, Set sourceId to the button's source ID (if user has actually clicked a button)
+	 */
 	void setSourceId() {
 		if (me!=null && me.getEventType()==MouseEvent.MOUSE_PRESSED) {
 			try {
@@ -266,6 +271,11 @@ public class WSView extends MinigameView{
 		}
 	}
 
+	
+	/**
+	 * Creates two Buttons: "Fill" and "To the Lab!"
+	 * draws Fill button to screen
+	 */
 	void drawFillButton() {
 		btnFill = new Button("Fill");
 		btnFill.setId(btnFillId);
@@ -287,15 +297,28 @@ public class WSView extends MinigameView{
 		
 	}
 	
+	/**
+	 * Updates the text of prompt to inform user
+	 * calls super method to set up view for the tutorial
+	 */
 	public void setUpTutorial() {
 		super.setUpTutorial();
 		prompt.setText("We need to test the pH of the estuary's water!"
 				+ "\nPress Fill to fill up your Van Dorn bottle at the right depth!");
 	}
 	
+	
+	/**
+	 * implemented from MiniGameView
+	 * unused in this view
+	 */
 	public void updateTutorialStep(MouseEvent m) {
 	}
 	
+	/**
+	 * implemented from MiniGameView
+	 * unused in this view
+	 */
 	public void drawTutorial(int step) {
 	}
 	
