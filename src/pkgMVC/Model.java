@@ -1,5 +1,5 @@
 package pkgMVC;
-import pkgEnum.Direction;
+
 import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMGModel.*;
@@ -13,6 +13,7 @@ import pkgMGView.WSView;
 import pkgMover.Mover;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -29,7 +30,8 @@ import javafx.scene.input.MouseEvent;
  * @see View
  *
  */
-public class Model {
+public class Model implements Serializable{
+	private static final long serialVersionUID = 2L;
 	private ArrayList<MinigameModel> minigames;
 	private MinigameModel currGame;	
 	int totalScore; // sum of all minigame scores
@@ -52,6 +54,7 @@ public class Model {
 	 * @param me
 	 */
 	public void update(Game g, MouseEvent me) {
+
 		if (!isCurrGame(g)) {
 			currGame = minigames.get(g.ordinal());
 		} 
@@ -140,7 +143,4 @@ public class Model {
 	public int getTime() {
 		return currGame.getTime();
 	}
-	
-	
-	
 }

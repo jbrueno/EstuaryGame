@@ -1,5 +1,6 @@
 package pkgMGView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,9 +48,10 @@ import pkgMGModel.AMModel.MatchingAnimal;
  * @see MinigameView
  *
  */
-public class AMView extends MinigameView{
+public class AMView extends MinigameView{ 
+	private static final long serialVersionUID = 5L;
 	//main game attributes
-	final private int clueXBuffer = 300;
+	final private int clueXBuffer = 300; 
 	final private int clueYBuffer = 75;
 	final private int clueWidth = 250;
 	final private int clueHeight = 70;
@@ -525,7 +527,8 @@ public class AMView extends MinigameView{
 	 * @author Ryan Peters
 	 *
 	 */
-	private class ClueList {
+	private class ClueList implements Serializable{
+		private static final long serialVersionUID = 34L;
 		private String[] clues;
 		private InfiniteIterator infit = new InfiniteIterator();
 		ClueList(String value, String[] clues) {
@@ -541,7 +544,8 @@ public class AMView extends MinigameView{
 		 * @author Ryan Peters
 		 *
 		 */
-		private class InfiniteIterator implements Iterator{
+		private class InfiniteIterator implements Iterator<String>, Serializable{
+			private static final long serialVersionUID = 33L;
 			int cursor;
 			InfiniteIterator() {cursor = 0;}
 

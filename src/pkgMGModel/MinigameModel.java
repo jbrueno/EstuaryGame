@@ -3,19 +3,23 @@ package pkgMGModel;
 import pkgEnum.Game;
 import pkgMover.Mover;
 import pkgEnum.GameState;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.input.MouseEvent;
 
-public abstract class MinigameModel {
 
-	/**
-	 * Abstract class representing the minigame model, will be extended to the
-	 * models of all of the different views
-	 * 
-	 */
+/**
+ * Abstract class representing the minigame model, will be extended to the
+ * models of all of the different views
+ * 
+ */
+public abstract class MinigameModel implements Serializable{
+	private static final long serialVersionUID = 16L;
+
 
 	Game g;
 	int score = 0;  
@@ -25,7 +29,7 @@ public abstract class MinigameModel {
 	final int backgroundWidth = 1280;
 	ArrayList<Mover> movers = new ArrayList<Mover>();
 	Random r = new Random();
-	Timer timer = new Timer();
+	SerTimer timer = new SerTimer();
 	int time;
 
 	public abstract void update(MouseEvent me);
@@ -138,5 +142,9 @@ public abstract class MinigameModel {
 		return isCollision(m, me.getX(), me.getY());
 	}
 	
+	
+	public class SerTimer extends Timer implements Serializable {
+		private static final long serialVersionUID = 40L;
+	}
 }
 

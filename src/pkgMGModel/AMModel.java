@@ -16,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import pkgEnum.Game;
 
 public class AMModel extends MinigameModel {
-	
+	private static final long serialVersionUID = 12L;
 	//all possible MatchingAnimals to be chosen from
 	private ArrayList<MatchingAnimal> animals = new ArrayList<MatchingAnimal>();
 	
@@ -237,6 +237,7 @@ public class AMModel extends MinigameModel {
 	
 	
 	public class MatchingAnimal extends Mover {
+		private static final long serialVersionUID = 21L;
 		
 		String[] clues; // hints for user (more hints = more education :D)
 		boolean isMatched = false; // has the animal been mathed up already

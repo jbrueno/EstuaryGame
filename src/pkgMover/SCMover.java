@@ -8,6 +8,7 @@
 package pkgMover;
 
 public abstract class SCMover extends Mover {
+	private static final long serialVersionUID = 20L;
 	
 	int collisionSpeedChange;
 
@@ -34,20 +35,23 @@ public abstract class SCMover extends Mover {
 		return collisionSpeedChange;
 	}
 	
+	/**
+	 * Changes the current game score based on the need of the SCMover
+	 * 
+	 * @param  score  int that is the old score 
+	 * @return int    The new updated score
+	 */
 	public abstract int changeScore(int score);
 	
+	/**
+	 * Changes the xIncr to the new desired speed
+	 * 
+	 * @param speed int representing the new desired speed
+	 */
 	public void changeSpeed(int speed) {
 		setXIncr(speed);
 	}
 	
-	
-	/*public boolean collison(Mover m) {
-
-		boolean xCol = getX() < m.getX() + m.getImageWidth() && getX() > m.getX();
-		boolean yCol = getY() < m.getY() + m.getImageHeight() && getY() > m.getX();
-		return xCol && yCol;
-
-	}*/
 	
 	
 

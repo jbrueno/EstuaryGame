@@ -24,10 +24,9 @@ import pkgEnum.Game;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
-	
+	private static final long serialVersionUID = 10L;
 	// WS_COLLECT
 	Image bottle;
-	Image background; // used to switch between different backgrounds
 	Image background_collect;
 	Button btnReturn;
 	Button btnFill;
@@ -129,6 +128,7 @@ public class WSView extends MinigameView{
 					drawFillButton();
 					addButtons(buttonList);
 					setUpTutorial();
+					background = background_collect;
 					collectTutorialIsSetUp=true;
 				}
 				
@@ -147,6 +147,7 @@ public class WSView extends MinigameView{
 					root.getChildren().remove(tutorialLabel);
 					root.getChildren().remove(prompt);
 					root.getChildren().remove(btnPlay);
+					background = background_collect;
 					collectIsSetUp=true;
 				}
 				

@@ -1,6 +1,7 @@
 package pkgMGView;
 
 
+import java.io.Serializable;
 //testing branch
 //test
 import java.util.ArrayList;
@@ -35,17 +36,17 @@ import javafx.scene.control.Label;
 
 //import java.awt.Font;
 import javafx.scene.paint.Color;
-import pkgEnum.Direction;
 import pkgEnum.GameState;
 import pkgEnum.Game;
 import pkgMover.Mover;
 
-public abstract class MinigameView {
+public abstract class MinigameView implements Serializable{
+	private static final long serialVersionUID = 4L;
 	Image background;
 	int backgroundWidth = 1280;
 	int backgroundHeight = 768;
 
-	MouseEvent me;
+	MouseEvent me; 
 	Canvas c;
 	GraphicsContext gc;
 	Group root;
@@ -69,7 +70,7 @@ public abstract class MinigameView {
 	// **
 	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
 	int totalScore; // Overall score, sum of miniGameScores
-	Label scoreLabel = new Label();
+	Label scoreLabel = new Label(); 
 	int scoreLabelWidth = 150;
 	int scoreLabelHeight = 100;
 

@@ -10,11 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pkgEnum.Game;
 import pkgEnum.GameState;
-import pkgMGModel.AMModel.MatchingAnimal;
-import pkgMGModel.WSModel.pHStrip;
 import pkgMover.Mover;
 
 public class WSModel extends MinigameModel{
+	private static final long serialVersionUID = 18L;
 	// WS_COLLECTTUTORIAL
 	boolean collectSet=false;
 	String btnSourceId="";
@@ -303,13 +302,16 @@ public class WSModel extends MinigameModel{
 		}
 	
 	// Movers related to WS
-	public class Bottle extends Mover {
+
+	class Bottle extends Mover {
+		private static final long serialVersionUID = 26L;
 		public Bottle(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, bottleImageWidth, bottleImageHeight, xIncr, yIncr, value);
 		}
  	}
 	 
 	public class pHStrip extends Mover{
+		private static final long serialVersionUID = 25L;
 		double pH;
 
 		public pHStrip(int x, int y, int xIncr, int yIncr, String value) {
@@ -327,6 +329,7 @@ public class WSModel extends MinigameModel{
 	
 	
 	public class testTube extends Mover{
+		private static final long serialVersionUID = 24L;
 		public testTube(int x, int y, int xIncr, int yIncr, String value) {
 			super(x, y, testTubeImageWidth, testTubeImageHeight, xIncr, yIncr, value);
 		}

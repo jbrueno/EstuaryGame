@@ -1,8 +1,11 @@
 package pkgMover;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Mover {
+
+public abstract class Mover implements Serializable{
+	private static final long serialVersionUID = 19L;
 	private double y;
 	private double x;
 	private int imageWidth;
@@ -108,7 +111,7 @@ public abstract class Mover {
 	 */
 	public void move(double startx, double starty, double endx, double endy) {
 		this.move();
-		if( y>=endy && x>=endx|| y<=starty && y<=startx) {
+		if( y>=endy && x>=endx|| y<=starty && x<=startx) {
 			yIncr=yIncr*-1;
 			xIncr=xIncr*-1;
 		}
@@ -135,6 +138,7 @@ public abstract class Mover {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
 	public String toString() {
 		return getValue() + ": " + x + " " + y; 
 	}
