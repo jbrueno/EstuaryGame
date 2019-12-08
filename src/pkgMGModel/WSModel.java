@@ -101,7 +101,6 @@ public class WSModel extends MinigameModel{
 		case START :
 			gs = GameState.WS_COLLECTTUTORIAL;
 		case WS_COLLECTTUTORIAL:
-			//System.out.println(btnSourceId);
 			Bottle.move(bottleX, maxHeight, bottleX, maxDepth);
 			
 			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
@@ -137,7 +136,7 @@ public class WSModel extends MinigameModel{
 			
 			break;
 		case WS_PHTUTORIAL :
-			if(!pHTutorialSet) { // if lab is not set up
+			if(!pHTutorialSet) {
 				addObjects(gs);
 				pHTutorialSet = true;
 			}
@@ -232,6 +231,10 @@ public class WSModel extends MinigameModel{
 			}
 		}
 	}
+
+	public int getPH() {
+		return pH;
+	}
 	
 	
 	/**
@@ -256,7 +259,6 @@ public class WSModel extends MinigameModel{
 	 * 
 	 */
 	public void dipStrip() {
-		// setting up logic for dipping pHStrip within testTube bounds
 		if(pHStrip.getX() >= testTubeLeftSide &&
 			pHStrip.getX() <= testTubeRightSide &&
 			pHStrip.getY() >= testTubeWaterLevel &&
@@ -264,7 +266,7 @@ public class WSModel extends MinigameModel{
 						
 					isDipped = true;
 					changeColor(pH);
-		} // end if
+		}
 	}
 	
 	/**
