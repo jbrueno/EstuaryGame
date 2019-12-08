@@ -46,6 +46,7 @@ public class SCModel extends MinigameModel{
 	/**Constructor that will be given information on the Terrapins
 	 *  starting location, the movers and food currently onscreen
 	 *  and the water Y threshold Terry needs to breath
+	 *  
 	 *  @author HM
 	 * 
 	 */
@@ -69,8 +70,31 @@ public class SCModel extends MinigameModel{
 
 	
 	/**
-	 * Updates the game every tick depending on the gameState. 
+	 * Updates the game as a function of the gameState
 	 * 
+	 * First goes through the tutorial GameStates, 
+	 * 		SC_TUTORIAL_FOOD:
+	 * 			teaches the player consequences of interacting with food
+	 * 			player must collide with the on-screen food to continue to next state
+	 * 		SC_TUTORIAL_TRASH:
+	 * 			teaches the player the consequences of interacting with trash
+	 * 			player must avoid collision with the on-screen trash to continue
+	 * 		SC_TUTORIAL_SEAWEED:
+	 * 			teaches the player how to recognize seaweed
+	 * 			player can collide or not with the seaweed, does not affect gameplay
+	 * 		SC_TUTORIAL_BREATH:
+	 * 			teaches the player mechanisms for handling air level
+	 * 			player must direct terrapin above the water threshold in order to continue to next gameState
+	 * 		TUTORIAL:
+	 * 			sets up INPROGRESS gameplay, waits for players click to begin
+	 * 		INPROGRESS:
+	 * 			- checks if timer set up, and begins counting
+	 *			- assess air level of Terrapin, breathes if above water, changes gameState to finished if air
+	 *				falls below 0
+	 *			- moves terrapin based on ME input
+	 *			- checks Terry collision with all of the items, removing, adding more items and changing score as needed
+	 *
+	 * @param MouseEvent me clicks through tutorial steps, changes the direction of the terrapin 
 	 */
 	@Override
 	public void update(MouseEvent me) {
@@ -247,7 +271,10 @@ public class SCModel extends MinigameModel{
 
 	}
 
-	
+	/**
+	 * Randomly adds a new SCMover to the screen, starting at the end of the screen
+	 * 
+	 */
 	public void addNewItem() {
 		int newMover = r.nextInt(10);
 		if (newMover < randSeaweedThreshold)  {
@@ -266,6 +293,10 @@ public class SCModel extends MinigameModel{
 		
 	}
 
+	/**
+	 * Changes speed of all the SCMovers in items to match the currentItemSpeed, so that
+	 * all of the items are moving at a consistent rate  
+	 */
 	public void changeSpeeds() {
 		Iterator<SCMover> itemIt = getItems().iterator();
 		while (itemIt.hasNext()) {
@@ -274,6 +305,13 @@ public class SCModel extends MinigameModel{
 		}
 	}
 	
+	/**
+	 * Changes the currentItemSpeed based on collision with different types of SCMovers.
+	 * Collisions with food increase the absolute value of the speed (more-negative), while 
+	 * collisions with trash and seaweed decrease the absolute value of the speed
+	 *  
+	 * @param m SCMover that is the collider causing the speed change
+	 */
 	public void changeCurrentSpeed(SCMover m) {
 		setCurrentItemSpeed(getCurrentItemSpeed() + m.getCollisionSpeedChange());
 

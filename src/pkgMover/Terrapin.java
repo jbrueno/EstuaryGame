@@ -1,13 +1,14 @@
 package pkgMover;
 
 public class Terrapin extends Mover {
-	private static final long serialVersionUID = 29L;
+		private static final long serialVersionUID = 29L;
 		double airAmount;
+		private double lungCapacity = 100;
 
 		public Terrapin(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 120, 60, xIncr, yIncr,"Terrapin");
-			this.airAmount = 100;
 			this.setXIncr(0);
+			airAmount = lungCapacity;
 			
 		}
 		
@@ -18,7 +19,7 @@ public class Terrapin extends Mover {
 		 *  @author HM
 		 */
 		public void breathe() {
-			airAmount = 100;
+			airAmount = lungCapacity;
 		}
 		
 		/**
