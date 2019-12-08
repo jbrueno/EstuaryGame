@@ -11,6 +11,7 @@ public class Seaweed extends SCMover{
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		this.collisionSpeedChange = -5;
 		// TODO Auto-generated constructor stub
+
 	}
 	
 	/**
@@ -26,29 +27,11 @@ public class Seaweed extends SCMover{
 	}
 	
 	/**
-	 * Changes the value of the speed of the mover it collides with 
+	 * Seaweed just returns the current score, since collisions with seaweed have no effect on score
 	 * 
-	 * @return int by which the speed will be changed upon collision
 	 */
-	public int getSCSpeedChange() {
-		return speedChange;
-	}
-	
-	/**
-	 * Changes the score of the SC game after collision with this mover, which will be a 0 change in score
-	 * 
-	 * @return int by which the score will be changed upon collision with this mover
-	 */
-	public int getSCScoreChange() {
-		return scoreChange;
-	}
-
 	@Override
 	public int changeScore(int score) {
 		return score;
-	}
-
-	public void changeSpeed(int speed) {
-		setXIncr(speed);
 	}
 }
