@@ -99,6 +99,22 @@ public class WSView extends MinigameView{
 	
 	boolean click;
 	
+	// Locations of pop-up prompts
+	final double PROMPT_TEST_X = 0;
+	final double PROMPT_TEST_Y = phStripBoxY + 200;
+	final double PROMPT_MOVE_X = backgroundWidth * 1/3;
+	final double PROMPT_MOVE_Y = backgroundHeight / 8;
+	final double PROMPT_SUBMIT_X = backgroundWidth * 1/3;
+	final double PROMPT_SUBMIT_Y = backgroundHeight / 3;
+	
+	
+	/**
+	 * Constructor
+	 * sets game to current game (WATERSAMPLING), sets up scene, root, graphics context, and imports needed images
+	 * @param gc Graphics Context to be used in this view
+	 * @param root Group to be used in this view
+	 * @param scene Scene to be used in this view
+	 */
 	public WSView(GraphicsContext gc, Group root, Scene scene) {
 		super(Game.WATERSAMPLING);
 		game = theGame;
@@ -111,6 +127,15 @@ public class WSView extends MinigameView{
 		
 	} 
 	
+	
+	/**
+	 * Draws labels, buttons, Movers, and background if it hasn't been done already
+	 * Updates Movers location accordingly
+	 * @param movers
+	 * @param gs
+	 * @param score
+	 * @param time
+	 */
 	@Override
 	public void update(ArrayList<Mover> movers, GameState gs, int score, int time) {
 		if (!areButtonsMade) {
@@ -173,8 +198,8 @@ public class WSView extends MinigameView{
 				//TODO create separate function for set text + loc
 					prompt.setText("Now we need to test the water's pH."
 							+ "\nClick the box to get a pH strip!");
-					prompt.setLayoutX(0);
-					prompt.setLayoutY(phStripBoxY+200);
+					prompt.setLayoutX(PROMPT_TEST_X);
+					prompt.setLayoutY(PROMPT_TEST_Y);
 					
 					phTutorialIsSetUp = true;
 				}
@@ -183,8 +208,8 @@ public class WSView extends MinigameView{
 						sourceId == phStripBoxId) {
 					prompt.setText("Now move your mouse to dip the strip in the water. "
 							+ "\nMatch the pH with the scale above and enter your guess.");
-					prompt.setLayoutX(backgroundWidth*1/3);
-					prompt.setLayoutY(backgroundHeight/8);
+					prompt.setLayoutX(PROMPT_MOVE_X);
+					prompt.setLayoutY(PROMPT_MOVE_Y);
 					boxPressed=true;
 				}
 				
@@ -193,8 +218,8 @@ public class WSView extends MinigameView{
 						sourceId.equals("0.5") || sourceId.equals("-0.5")) {
 					
 						prompt.setText("Great! Now press submit!");
-						prompt.setLayoutX(backgroundWidth*1/3);
-						prompt.setLayoutY(backgroundHeight/3);	
+						prompt.setLayoutX(PROMPT_SUBMIT_X);
+						prompt.setLayoutY(PROMPT_SUBMIT_Y);	
 				}
 				
 				if(!submitPressed && sourceId==btnSubmitId) {
