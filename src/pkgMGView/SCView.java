@@ -183,8 +183,6 @@ public class SCView extends MinigameView  {
 		scoreBox.setFill(Color.RED);
 		scoreBox.setText("0");
 		scoreBox.setFont(Font.font(null, FontWeight.BOLD, 32));
-		
-		System.out.println("score box made");
 	}
 
 	@Override
