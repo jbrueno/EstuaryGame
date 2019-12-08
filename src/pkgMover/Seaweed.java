@@ -2,10 +2,9 @@ package pkgMover;
 
 public class Seaweed extends SCMover{
 	private static final long serialVersionUID = 28L;
-	int speedChange = 1;
+	private static final int SEAWEEDWIDTHHEIGHT = 0;
+	private static final int YINCR = 0;
 	int scoreChange = 0;
-	int imageHeight = 100;
-	int imageWidth = 100;
 	
 	public Seaweed(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
@@ -22,7 +21,7 @@ public class Seaweed extends SCMover{
 	 * @param canvasHeight to determine where the seaweed will be placed
 	 */
 	public Seaweed(int canvasWidth, int canvasHeight, int speed) {
-		super(canvasWidth, canvasHeight, 100, 100, speed, 0, "Seaweed");
+		super(canvasWidth, canvasHeight, SEAWEEDWIDTHHEIGHT, SEAWEEDWIDTHHEIGHT, speed, YINCR, "Seaweed");
 		this.collisionSpeedChange = 5;
 	}
 	
