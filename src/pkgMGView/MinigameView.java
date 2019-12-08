@@ -46,7 +46,7 @@ public abstract class MinigameView implements Serializable{
 	int backgroundWidth = 1280;
 	int backgroundHeight = 768;
 
-	MouseEvent me;
+	MouseEvent me; 
 	Canvas c;
 	GraphicsContext gc;
 	Group root;
@@ -70,7 +70,7 @@ public abstract class MinigameView implements Serializable{
 	// **
 	int currScore; // individual miniGameScore , may be easier to track by making individual attributes in each subclass
 	int totalScore; // Overall score, sum of miniGameScores
-	Label scoreLabel = new Label();
+	Label scoreLabel = new Label(); 
 	int scoreLabelWidth = 150;
 	int scoreLabelHeight = 100;
 
