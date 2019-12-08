@@ -47,6 +47,15 @@ public class Controller extends Application implements Serializable{
 		launch(args);
 	}
 	
+	
+	/**
+	 * Overridden start() method for an Application. Creates the necessary View and Model for an MVC design along with
+	 * a general event handler for serializing (saving/loading) the game ("S" to Save, "L" to load).
+	 * <p>
+	 * The tick handler
+	 * 
+	 * @author Ryan Peters
+	 */
 	@Override
 	public void start(Stage theStage) {
 		theStage.setFullScreen(true);
@@ -81,6 +90,11 @@ public class Controller extends Application implements Serializable{
 		theStage.show();
 	}
 	
+	/**
+	 * Serializes the Model <code>model</code> to MODEL_PATH file. 
+	 * 
+	 * @author Ryan Peters
+	 */
 	private void saveGame() {
 		try {
 			File f = new File(MODEL_PATH);
@@ -98,6 +112,17 @@ public class Controller extends Application implements Serializable{
 		} catch (IOException e) {e.printStackTrace();}
 	}
 	
+	/**
+	 * Loads the Model <code>model</code> from MODEL_PATH file to the current model.
+	 * <p>
+	 * Due to late implementation of serialization into the structure of the code, a previous model will only be 
+	 * loaded in when you are in the same MinigameModel as the model. This is due to the fast that in our design, View 
+	 * was used to mainly handle the GameState and model the Game. Since we are "unable" to serialize the View (JavaFX unserializable
+	 * and not enough time to solve that problem), the model obtains the current Game from View even when you load in the saved model, and 
+	 * the model immediately switches to that game as the first call in the tick.
+	 * 
+	 * @author Ryan Peters
+	 */
 	private void loadSavedGame() {
 		try {
 			FileInputStream fis = new FileInputStream(new File(MODEL_PATH));
