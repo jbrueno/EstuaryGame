@@ -102,8 +102,6 @@ public class SCModel extends MinigameModel{
 						itemsIt.remove();
 					} else {
 						m.move();
-						System.out.println(m);
-						System.out.println(terry);
 						if (isCollision(m, terry)) {
 							collisionOccured = true;
 							changeCurrentSpeed(m);
@@ -134,8 +132,6 @@ public class SCModel extends MinigameModel{
 				} 
 				
 				if (tutorialPlay) {
-					System.out.println(terry);
-					System.out.println(getItems().get(0));
 					if (isCollision(terry, getItems().get(0))) {
 						movers.remove(getItems().get(0));
 						getItems().remove(0);
@@ -231,7 +227,6 @@ public class SCModel extends MinigameModel{
 				}
 				break;
 			case TUTORIAL:
-				System.out.println("items size " + getItems().size());
 				if (getItems().size() <= 3) {
 					addNewItem();
 					movers.removeAll(getMovers());
@@ -257,21 +252,18 @@ public class SCModel extends MinigameModel{
 		int newMover = r.nextInt(10);
 		if (newMover < randSeaweedThreshold)  {
 			Seaweed s = new Seaweed(backgroundWidth, backgroundHeight - seaweedY, getCurrentItemSpeed());
-			System.out.println("seaweed added");
 			getItems().add(s);
 		} else if (newMover < randFoodThreshold) {
 			int y =  new Random().nextInt((int) (backgroundHeight - waterThreshold));
 			Food f = new Food(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
-			System.out.println("food added");
 			getItems().add(f);
 		} else {
 			int y = new Random().nextInt((int) (backgroundHeight - waterThreshold));
 			Trash t = new Trash(backgroundWidth, backgroundHeight - y, getCurrentItemSpeed());
-			System.out.println("trashed added");
 			getItems().add(t);
 		}
 		
-		System.out.println("items size " + items.size());
+		
 	}
 
 	public void changeSpeeds() {
@@ -284,7 +276,7 @@ public class SCModel extends MinigameModel{
 	
 	public void changeCurrentSpeed(SCMover m) {
 		setCurrentItemSpeed(getCurrentItemSpeed() + m.getCollisionSpeedChange());
-		System.out.println(currentItemSpeed);
+
 	}
 
 
