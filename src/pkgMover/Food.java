@@ -1,7 +1,7 @@
 package pkgMover;
 
 public class Food extends SCMover {
-
+	private static final long serialVersionUID = 27L;
 	public Food(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		// TODO Auto-generated constructor stub

@@ -20,7 +20,7 @@ import pkgMover.Mover;
 import pkgMover.Terrapin;
 
 public class SCView extends MinigameView  {
-	
+	private static final long serialVersionUID = 9L;
 	//1-tick booleans
 	boolean tutorialSet = false;
 	boolean okButton = false;

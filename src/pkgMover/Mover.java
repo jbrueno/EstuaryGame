@@ -1,9 +1,11 @@
 package pkgMover;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public abstract class Mover {
+public abstract class Mover implements Serializable{
+	private static final long serialVersionUID = 19L;
 	private double y;
 	private double x;
 	private int imageWidth;

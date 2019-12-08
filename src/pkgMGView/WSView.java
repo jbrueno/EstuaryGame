@@ -24,7 +24,7 @@ import pkgEnum.Game;
 import pkgMover.Mover;
 
 public class WSView extends MinigameView{
-	
+	private static final long serialVersionUID = 10L;
 	// WS_COLLECT
 	Image bottle;
 	Image background_collect;

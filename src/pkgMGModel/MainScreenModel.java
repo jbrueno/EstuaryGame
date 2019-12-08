@@ -8,7 +8,7 @@ import pkgMVC.Model;
 import pkgMover.Mover;
 
 public class MainScreenModel extends MinigameModel{
-	
+	private static final long serialVersionUID = 15L;
 	public MainScreenModel() {
 		movers = new ArrayList<Mover>();
 		g = Game.MAINSCREEN;

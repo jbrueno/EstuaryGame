@@ -32,7 +32,7 @@ import pkgMover.Mover;
  *
  */
 public class LeaderboardView extends MinigameView{
-	
+	private static final long serialVersionUID = 7L;
 	//one-tick booleans
 	private boolean isLeaderBoardMade = false;
 	private boolean scoreSaved = false;
@@ -317,10 +317,10 @@ public class LeaderboardView extends MinigameView{
 		return words;
 	}
 	
-	private class LongerThan3Exception extends Exception {}
-	private class IsCurseWordException extends Exception {}
-	private class IsNotLetterException extends Exception {}
-	private class ScoreAlreadySavedException extends Exception {}
+	private class LongerThan3Exception extends Exception {private static final long serialVersionUID = 30L;}
+	private class IsCurseWordException extends Exception {private static final long serialVersionUID = 31L;}
+	private class IsNotLetterException extends Exception {private static final long serialVersionUID = 32L;}
+	private class ScoreAlreadySavedException extends Exception {private static final long serialVersionUID = 33L;}
 	
 
 	//unused inherited methods from MinigameView

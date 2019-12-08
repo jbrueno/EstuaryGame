@@ -9,6 +9,7 @@ import pkgEnum.GameState;
 import pkgMover.Mover;
 
 public class HSCModel extends MinigameModel {
+	private static final long serialVersionUID = 13L;
 	private int points = 50;
 	private boolean timerSet = false;
 	private final int MAX_HSC = 10;
@@ -130,6 +131,7 @@ public class HSCModel extends MinigameModel {
 	}
 	
 	public class HSC extends Mover {
+		private static final long serialVersionUID = 22L;
 		boolean tagged;
 		static final int hscWidth = 200;
 		static final int hscHeight = 136;
