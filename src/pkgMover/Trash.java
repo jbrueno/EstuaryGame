@@ -22,6 +22,12 @@ public class Trash extends SCMover{
 		
 	}
 
+	/**
+	 * Overridden change score method subtracts instead of adding, since collisions with trash cause
+	 * score loss
+	 * 
+	 * @return int the new updated score
+	 */
 	@Override
 	public int changeScore(int score) {
 		return score - scoreChange;

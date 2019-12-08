@@ -1,13 +1,14 @@
 package pkgMover;
 
 public class Terrapin extends Mover {
-	private static final long serialVersionUID = 29L;
+		private static final long serialVersionUID = 29L;
 		double airAmount;
+		private double lungCapacity = 100;
 
 		public Terrapin(int x, int y, int xIncr, int yIncr) {
 			super(x, y, 120, 60, xIncr, yIncr,"Terrapin");
-			this.airAmount = 100;
 			this.setXIncr(0);
+			airAmount = lungCapacity;
 			
 		}
 		
@@ -18,8 +19,7 @@ public class Terrapin extends Mover {
 		 *  @author HM
 		 */
 		public void breathe() {
-			airAmount = 100;
-			System.out.println("breath taken");
+			airAmount = lungCapacity;
 		}
 		
 		/**
@@ -29,7 +29,6 @@ public class Terrapin extends Mover {
 		 */
 		public void holdBreath() {
 			airAmount = airAmount - 0.5;
-			System.out.println("Terrapin breath level: " + airAmount);
 		}
 		
 
@@ -42,20 +41,15 @@ public class Terrapin extends Mover {
 		 */
 		@Override
 		public void move(double targetX, double targetY) {
-			System.out.println(getY());
-			System.out.println(targetY > getY());
-			System.out.println(getYIncr() < 0);
 			if (targetY < getY() && getYIncr() > 0) {
 				setYIncr(-1 * getYIncr());
 			} else if (targetY > getY() && getYIncr() < 0) {
 				setYIncr(-1 * getYIncr());
 			}
 			
-			System.out.println("X INCREASE: " + getXIncr());
-			
 			setY(getY() + getYIncr());
 			setXIncr(0);
-			setX(0);
+			setX(200);
 		}
 
 		/**
