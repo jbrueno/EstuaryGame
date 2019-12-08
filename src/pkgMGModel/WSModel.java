@@ -63,7 +63,13 @@ public class WSModel extends MinigameModel{
 		addObjects(gs);
 	}
 	
-	//public Mover(int x, int y, int imageWidth, int imageHeight, int xIncr, int yIncr, String value) {
+	/**
+	 * Adds appropriate objects dependent on the current gamestate. When called during update, ensures that objects are only added once
+	 * and certain functions ( see <CODE>setPH()<CODE> ) are not called multiple times.
+	 * 
+	 * @author AG
+	 * @param gs current gamestate
+	 */
 	public void addObjects(GameState gs) {
 		
 		switch (gs) {
@@ -307,6 +313,11 @@ public class WSModel extends MinigameModel{
 		}
 	}
 	
+	/**
+	 * Sets score based on how close player's guess is to actual value of PH
+	 * 
+	 * @author AG
+	 */
 	void calculatePHScore(){
 		if(pHGuess == pH) {
 			score+=500;
