@@ -1,4 +1,4 @@
-package pkgMVCtest;
+package pkgMGModelTest;
 
 public class WSModelTest {
 
