@@ -98,7 +98,7 @@ public class WSView extends MinigameView{
 	Label displaypH;
 	
 	boolean click;
-	//
+	
 	// Locations of pop-up prompts
 	final double PROMPT_TEST_X = 0;
 	final double PROMPT_TEST_Y = phStripBoxY + 200;
