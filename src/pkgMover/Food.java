@@ -6,6 +6,7 @@ public class Food extends SCMover {
 		super(x, y, imageWidth, imageHeight, xIncr, yIncr, value);
 		// TODO Auto-generated constructor stub
 		this.collisionSpeedChange = -3;
+		this.scoreChange = 100;
 	}
 	
 	/**
