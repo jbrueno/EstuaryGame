@@ -118,11 +118,10 @@ public class WSModel extends MinigameModel{
 		case WS_COLLECTTUTORIAL:
 			Bottle.move(BOTTLE_X, MAX_HEIGHT, BOTTLE_X, MAX_DEPTH);
 			
-			if(!filled && Bottle.getY()> WATER_LEVEL && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
+			if(!filled && Bottle.getY() > WATER_LEVEL && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
 				System.out.println("FILLING BOTTLE");
 				fillBottle();
-			}
-			if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Play")){
+			} else if(filled && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Play")){
 				movers.remove(Bottle);
 				gs=GameState.WS_COLLECT;
 			} // WS_COLLECTTUTORIAL is finished, moving onto next GameState
