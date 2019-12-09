@@ -339,7 +339,7 @@ public class WSModel extends MinigameModel{
 	 * @author AG
 	 */
 	
-	void calculatePHScore(){
+	private void calculatePHScore(){
 		if(pHGuess == pH) {
 			score+=500;
 		} else {
@@ -372,7 +372,7 @@ public class WSModel extends MinigameModel{
 		 * sets attribute pH of pHStrip object to given double
 		 * @param pH actual pH of the water 
 		 */
-		void setStripPH(double pH) {
+		public void setStripPH(double pH) {
 			this.pH=pH;
 		}
 		
