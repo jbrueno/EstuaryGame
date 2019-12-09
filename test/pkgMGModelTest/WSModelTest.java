@@ -38,14 +38,14 @@ public class WSModelTest {
 	private static String FILL_BOTTLE = "fillBottle";
 	
 	private Class<?>[] parameterTypes;
-	Class<? extends WSModel> c;
+	Class<? extends MinigameModel> c;
 	
 	
 	@Before
 	public void setUp() throws Exception {
 		WSModel = new WSModel();
 		
-		c = WSModel.getClass();
+		c = (Class<? extends MinigameModel>) WSModel.getClass().getSuperclass();
 		
 		
 
@@ -101,9 +101,7 @@ public class WSModelTest {
 	}
 	
 	@Test
-	public void update_test() {
-		 
-		WSModel.update(null);
+	public void update_test() throws Exception{
 		Field f = c.getDeclaredField("gs");
 		f.setAccessible(true);
 		f.set(WSModel, GameState.START);
