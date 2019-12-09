@@ -36,6 +36,8 @@ public class WSModelTest {
 	private static String ADD_OBJECTS = "addObjects";
 	private static String SET_PH = "setPH";
 	private static String FILL_BOTTLE = "fillBottle";
+	private static String CALCULATE_PH_SCORE = "calculatePHScore";
+	
 	
 	private Class<?>[] parameterTypes;
 	Class<? extends MinigameModel> c;
@@ -55,12 +57,19 @@ public class WSModelTest {
 		parameterTypes = new Class[2];
 		parameterTypes[0] = pkgMover.Mover.class;
 		parameterTypes[1] = javafx.scene.input.MouseEvent.class;
+
+		
 		
 		fillBottle = WSModel.getClass().getDeclaredMethod(FILL_BOTTLE, (Class<?>[]) null); 
 		fillBottle.setAccessible(true);
 		
 		setPH= WSModel.getClass().getDeclaredMethod(SET_PH, (Class<?>[]) null); 
 		setPH.setAccessible(true);
+		
+		calculatePHScore= WSModel.getClass().getDeclaredMethod(CALCULATE_PH_SCORE, parameterTypes[1]);
+		//calculatePHScore= WSModel.getClass().getDeclaredMethod(CALCULATE_PH_SCORE, (Class<?>[]) null); 
+
+		calculatePHScore.setAccessible(true);
 	}
 	
 	@Test
@@ -104,6 +113,18 @@ public class WSModelTest {
 		assertTrue(WSModel.getPH() <= 9);
 	}
 	
+	
+	@Test
+	public void calculatePHScore() {
+		WSModel.getMovers().get(0).setY(0);
+		WSModel.calculatePHScore();
+	}
+	
+	
+	
+	
+	
+	
 	@Test
 	public void update_test() throws Exception{
 		WSModel.getMovers().get(0).setY(750);
@@ -146,11 +167,57 @@ public class WSModelTest {
 		
 		// GameState WS_COLLECT
 		WSModel.update(me);
+		f = cc.getDeclaredField("filled");
+		f.setAccessible(true);
+		f.set(WSModel, true);
+		WSModel.update(me);
+		f.set(WSModel, false);
+		WSModel.update(me2);
+		f = cc.getDeclaredField("btnSourceId");
+		f.setAccessible(true);
+		f.set(WSModel, "Fill");
+		WSModel.getMovers().get(0).setY(0);
+		WSModel.update(me);
+		WSModel.getMovers().get(0).setY(500);
+		WSModel.update(me);
+		WSModel.update(me2);
+		f.set(WSModel, "Lab");
+		WSModel.update(me);
 		
+		// GameState WS_PHTUTORIAL
+		WSModel.update(me);
+		WSModel.update(me);
+		WSModel.update(me2);
+		f.set(WSModel, "phStripBox");
+		WSModel.update(me2);
+		f = cc.getDeclaredField("gotStrip");
+		f.setAccessible(true);
+		f.set(WSModel, true);
+		WSModel.update(me);
+		f.set(WSModel, false);
+		WSModel.update(me);
+		WSModel.update(me2);
 		
+		f = cc.getDeclaredField("btnSourceId");
+		f.setAccessible(true);
+		f.set(WSModel, "Play");
+		WSModel.update(me);
 		
-		
+		//GameState WS_PH
+		WSModel.update(me);
+		WSModel.update(me2);
+		f = cc.getDeclaredField("btnSourceId");
+		f.setAccessible(true);
+		f.set(WSModel, "phStripBox");
+		WSModel.update(me2);
+		WSModel.update(me);
+		WSModel.update(me);
+		f = cc.getDeclaredField("btnSourceId");
+		f.setAccessible(true);
+		f.set(WSModel, "Submit");
+		WSModel.update(me2);
+		WSModel.update(me);
+		WSModel.update(me);
 
-//	assertTrue(WSModel.getGameState() == GameState.WS_COLLECT);
 	}
 }
