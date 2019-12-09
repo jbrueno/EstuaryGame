@@ -248,9 +248,6 @@ public class WSView extends MinigameView{
 				
 				updatepHDisplay();
 				break;
-			case WS_TEMP :
-				background = background_lab;
-				break;	
 			default:
 				break;
 		}
