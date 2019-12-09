@@ -109,6 +109,8 @@ public class WSModelTest {
 		WSModel.getMovers().get(0).setY(750);
 		 MouseEvent me = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, 500, 0, 0, null, 0, false, false, false, false,
 					true, false, false, false, false, false, null);
+		 MouseEvent me2 = new MouseEvent(MouseEvent.MOUSE_RELEASED, 500, 500, 0, 0, null, 0, false, false, false, false,
+					true, false, false, false, false, false, null);
 		
 		Field f = c.getDeclaredField("gs");
 		f.setAccessible(true);
@@ -118,14 +120,34 @@ public class WSModelTest {
 		f.set(WSModel, GameState.START);
 		WSModel.update(me);
 		assertTrue(WSModel.getGameState() == GameState.WS_COLLECTTUTORIAL);
-		
-		
+		WSModel.getMovers().get(0).setY(0);
+		WSModel.update(me);
+		f = cc.getDeclaredField("filled");
+		f.setAccessible(true);
+		f.set(WSModel, true); 
+		WSModel.update(me);
+		WSModel.update(me2);
+		WSModel.getMovers().get(0).setY(0);
+		WSModel.update(me);
+		WSModel.update(me2);
+		f.set(WSModel, false);
+		WSModel.getMovers().get(0).setY(500);
+		WSModel.update(me);
+
+
 		f = cc.getDeclaredField("btnSourceId");
 		f.setAccessible(true);
 		f.set(WSModel, "Fill");
+		WSModel.update(me2);
 		WSModel.update(me);
+		
 		f.set(WSModel, "Play");
 		WSModel.update(me);
+		
+		// GameState WS_COLLECT
+		WSModel.update(me);
+		
+		
 		
 		
 
