@@ -66,7 +66,7 @@ public class WSModelTest {
 		setPH= WSModel.getClass().getDeclaredMethod(SET_PH, (Class<?>[]) null); 
 		setPH.setAccessible(true);
 		
-		calculatePHScore= WSModel.getClass().getDeclaredMethod(CALCULATE_PH_SCORE);
+		calculatePHScore= WSModel.getClass().getDeclaredMethod(CALCULATE_PH_SCORE, (Class<?>[]) null);
 		//calculatePHScore= WSModel.getClass().getDeclaredMethod(CALCULATE_PH_SCORE, (Class<?>[]) null); 
 
 		calculatePHScore.setAccessible(true);
@@ -116,6 +116,7 @@ public class WSModelTest {
 	
 	@Test
 	public void calculatePHScore() {
+		//calculatePHScore.invoke(WSModel, (Object[]) null);
 		WSModel.getMovers().get(0).setY(0);
 		//WSModel.calculatePHScore();
 		//
