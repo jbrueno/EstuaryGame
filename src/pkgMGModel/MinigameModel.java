@@ -133,16 +133,41 @@ public abstract class MinigameModel implements Serializable{
 		return dist < 1;
 	}
 	
+	/**
+	 * Checks if Mover <code>m2</code> is within Mover <code>m1</code>.
+	 * See isCollision(Mover m, double x, double y) for more explanation on collision detection
+	 * 
+	 * @author  	Ryan Peters
+	 * @param m1	the Mover that acts as the ellipse
+	 * @param m2	the Mover that gets its X,Y checked inside the ellipse
+	 * @return		true if collision, false if not
+	 * @see 		isCollision(Mover m, double x, double y)
+	 */
 	public boolean isCollision(Mover m1, Mover m2) {
 		return isCollision(m1, m2.getX(), m2.getY());
 	}
 	
-
+	
+	/**
+	 * Checks if MouseEvent <code>me</code> is within Mover <code>m1</code>.
+	 * See isCollision(Mover m, double x, double y) for more explanation on collision detection
+	 * 
+	 * @author 		Ryan Peters
+	 * @param m		the Mover that acts as the ellipse
+	 * @param me	the MouseEvent that gets its X,Y checked to see if its in the ellipse
+	 * @return		true if collision, false if not
+	 */
 	public boolean isCollision(Mover m, MouseEvent me) {
 		return isCollision(m, me.getX(), me.getY());
 	}
 	
 	
+	/**
+	 * Subclass of Timer that serves as a Serializable version ONLY
+	 * 
+	 * @author Ryan Peters
+	 *
+	 */
 	public class SerTimer extends Timer implements Serializable {
 		private static final long serialVersionUID = 40L;
 	}
