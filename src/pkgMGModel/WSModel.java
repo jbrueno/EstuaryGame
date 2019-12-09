@@ -25,7 +25,7 @@ public class WSModel extends MinigameModel{
 	final int MAX_HEIGHT = BOTTLE_IMAGE_HEIGHT;
 	final int MAX_DEPTH = backgroundHeight-BOTTLE_IMAGE_HEIGHT-100;
 	
-	int waterLevel = backgroundHeight/2;
+	final int WATER_LEVEL = backgroundHeight/2;
 	final private int CORRECT_LEVEL = 395; //center of the gradient guide
 	final private int MAX_COLLECT_POINTS = 200;
 	boolean filled = false;
@@ -118,7 +118,7 @@ public class WSModel extends MinigameModel{
 		case WS_COLLECTTUTORIAL:
 			Bottle.move(BOTTLE_X, MAX_HEIGHT, BOTTLE_X, MAX_DEPTH);
 			
-			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
+			if(!filled && Bottle.getY()> WATER_LEVEL && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
 				System.out.println("FILLING BOTTLE");
 				fillBottle();
 			}
@@ -139,7 +139,7 @@ public class WSModel extends MinigameModel{
 
 			Bottle.move(BOTTLE_X, MAX_HEIGHT, BOTTLE_X, MAX_DEPTH);
 			
-			if(!filled && Bottle.getY()> waterLevel && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
+			if(!filled && Bottle.getY()> WATER_LEVEL && me.getEventType() == MouseEvent.MOUSE_PRESSED && btnSourceId.equals("Fill")) {
 				System.out.println("FILLING BOTTLE");
 				fillBottle();
 
@@ -259,7 +259,7 @@ public class WSModel extends MinigameModel{
 	 * @returns	score to be added to user's total
 	 */
 	private int calculateCollectSore() {
-		if (Bottle.getY() < waterLevel) {return 0;}
+		if (Bottle.getY() < WATER_LEVEL) {return 0;}
 		int cScore = (int) (MAX_COLLECT_POINTS -  (2 * Math.abs(CORRECT_LEVEL - Bottle.getY())));
 		return (cScore < 0) ? 0 : cScore;
 	}
