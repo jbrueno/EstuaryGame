@@ -157,7 +157,6 @@ public class AMModel extends MinigameModel {
 			flag = true;
 			for (Mover m : movers) {
 				MatchingAnimal ma = (MatchingAnimal) m;
-				
 				if (isCollision(ma, me)) {
 					System.out.println("COLLISION between " + m.getValue() + " and " + btnSourceID );
 					if (!ma.isMatched && ma.isMatch()) {
@@ -210,9 +209,10 @@ public class AMModel extends MinigameModel {
 			flag = true; //checking if all ma's are matched
 			for (Mover m : movers) {
 				MatchingAnimal ma = (MatchingAnimal) m;
-				
+				System.out.println(me.getX() + " " + me.getY() + " " + m.getX() + " " + m.getY());
 				if (isCollision(ma, me)) {
 					if (ma.isMatch()) {
+						
 						gs = GameState.TRANSITION1;
 					}
 				}
