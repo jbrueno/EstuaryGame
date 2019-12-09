@@ -45,7 +45,7 @@ public class LeaderboardModel extends MinigameModel{
 		
 		if (me != null) {
 			if (me.getEventType() == MouseEvent.MOUSE_CLICKED || me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-				try {
+				try { 
 					Button b = ((Button) me.getSource());
 					if (!resultSaved) {
 						addNewResult(new ResultMover(b.getId()));

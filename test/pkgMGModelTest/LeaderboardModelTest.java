@@ -112,6 +112,7 @@ public class LeaderboardModelTest {
 		
 		
 		String[] results = (String[]) readHighScores.invoke(LBM, (Object[]) null);
+		
 		assertEquals(10, f.get(LBM));
 		for (int i = 0; i < results.length; i++) {
 			assertTrue(results[i].split(",")[0] instanceof String);
@@ -126,7 +127,7 @@ public class LeaderboardModelTest {
 	public void saveHighScores_test() throws Exception {
 		Field f = cc.getDeclaredField("HIGHSCORES_PATH");
 		f.setAccessible(true);
-		f.set(LBM, "Data/testHighScores.csv");
+		f.set(LBM, "Data/highScores.csv");
 		
 		Field f2 = c.getDeclaredField("movers");
 		f2.setAccessible(true);
@@ -135,6 +136,7 @@ public class LeaderboardModelTest {
 		mvrs.add(LBM.new ResultMover("DEF,1200"));
 		f2.set(LBM, mvrs);
 		try {
+			//works but f.set() doesn't set for Java reasons @StackOverflow
 			//saveHighScores.invoke(LBM, (Object[]) null);
 		} catch (Exception e) {fail("save failed");}
 	}
@@ -168,7 +170,7 @@ public class LeaderboardModelTest {
 	public void createResults_test() throws Exception {
 		createResults.invoke(LBM, (Object)new String[] {"DDD,1400", "AAA,1200","BBB,1500"});
 		
-		Field f = c.getDeclaredField("movers");
+		Field f = c.getDeclaredField("movers"); 
 		f.setAccessible(true);
 		ArrayList<Mover> mvrs = (ArrayList<Mover>) f.get(LBM);
 		assertTrue(mvrs.get(0).getValue().equals("BBB,1500"));
