@@ -118,6 +118,7 @@ public class WSModelTest {
 	public void calculatePHScore() {
 		WSModel.getMovers().get(0).setY(0);
 		//WSModel.calculatePHScore();
+		//
 	}
 	
 	
