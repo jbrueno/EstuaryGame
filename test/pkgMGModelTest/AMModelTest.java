@@ -16,6 +16,7 @@ import pkgEnum.Game;
 import pkgEnum.GameState;
 import pkgMGModel.AMModel;
 import pkgMGModel.AMModel.MatchingAnimal;
+import pkgMGModel.MinigameModel;
 import pkgMover.Mover;
 
 
@@ -26,7 +27,8 @@ public class AMModelTest {
 
 	private AMModel AMModel;
 	private MatchingAnimal ma;
-	Class<? extends AMModel> c;
+	Class<? extends MinigameModel> c;
+	Class<? extends AMModel> cc;
 	
 	private Method reduceUntil;
 	private Method inProgressUpdate;
@@ -48,8 +50,9 @@ public class AMModelTest {
 	@Before
 	public void setUp() throws Exception {
 		AMModel = new AMModel();
-		c = AMModel.getClass();
-		ma = AMModel.new MatchingAnimal(100, 100, 5, 5, "generic", new String[]{"Clue 1", "Clue 2", "Clue 3"});
+		c = (Class<? extends MinigameModel>) AMModel.getClass().getSuperclass();
+		cc = AMModel.getClass();
+		ma = AMModel.new MatchingAnimal(500, 500, 50, 50, "generic", new String[]{"Clue 1", "Clue 2", "Clue 3"});
 
 		parameterTypes = new Class[4];
 		parameterTypes[0] = javafx.scene.input.MouseEvent.class;
@@ -83,12 +86,12 @@ public class AMModelTest {
 	
 	@Test
 	public void MAConstructor_test() {
-		assertTrue(ma.getX() == 100);
-		assertTrue(ma.getY() == 100);
+		assertTrue(ma.getX() == 500);
+		assertTrue(ma.getY() == 500);
 		assertTrue(ma.getXIncr() == 0);
 		assertTrue(ma.getYIncr() == 0);
-		assertTrue(ma.getImageWidth() == 5);
-		assertTrue(ma.getImageHeight() == 5);
+		assertTrue(ma.getImageWidth() == 50);
+		assertTrue(ma.getImageHeight() == 50);
 		String[] ss = {"Clue 1", "Clue 2", "Clue 3"};
 		for (int i = 0; i < ss.length; i++) {
 			assertTrue(ss[i] == ma.getClues()[i]);
@@ -97,7 +100,7 @@ public class AMModelTest {
 	
 	@Test 
 	public void MAmatch_test() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-		Field f = c.getDeclaredField("btnSourceID");
+		Field f = cc.getDeclaredField("btnSourceID");
 		f.setAccessible(true);
 		f.set(AMModel, new String("generic"));
 		
@@ -113,8 +116,7 @@ public class AMModelTest {
 	public void MAunMatch_test() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		ma.unMatch();
 		assertFalse(ma.getIsMatched());
-		
-		Field f = c.getDeclaredField("btnSourceID");
+		Field f = cc.getDeclaredField("btnSourceID");
 		f.setAccessible(true);
 		f.set(AMModel, new String("generic"));
 		
@@ -139,7 +141,7 @@ public class AMModelTest {
 	
 	@Test
 	public void createAnimals_test() throws Exception{
-		Field f = c.getDeclaredField("animals");
+		Field f = cc.getDeclaredField("animals");
 		f.setAccessible(true);
 		f.set(AMModel, new ArrayList<MatchingAnimal>());
 		
@@ -171,22 +173,56 @@ public class AMModelTest {
 		sourceID = (String) f.get(AMModel);
 		assertFalse(sourceID.equals("not set"));
 		
-		
+		*/
 		Field f2 = c.getDeclaredField("movers");
+		f2.setAccessible(true);
+		ArrayList<Mover> mvrs2 = new ArrayList<Mover>();
+		mvrs2.add(ma);
+		f2.set(AMModel, mvrs2);
+		
+		Field f = cc.getDeclaredField("btnSourceID");
 		f.setAccessible(true);
-		f2.set(AMModel, (new ArrayList<Mover>()).add(ma));
-		b.setId("generic");
-		MouseEvent me3 = new MouseEvent(b, null, MouseEvent.MOUSE_ENTERED_TARGET, 500, 500, 0, 0, null, 0, false, false, false, false,
+		f.set(AMModel, "generic");
+
+		MouseEvent me3 = new MouseEvent(MouseEvent.MOUSE_ENTERED_TARGET, 500, 500, 0, 0, null, 0, false, false, false, false,
 				true, false, false, false, false, false, null);
 		inProgressUpdate.invoke(AMModel, me3);
 		assertTrue(((MatchingAnimal) AMModel.getMovers().get(0)).getIsMatched());
 		
-		f2.set(AMModel, (new ArrayList<Mover>()).add(ma));
-		MouseEvent me4 = new MouseEvent(b, null, MouseEvent.MOUSE_ENTERED_TARGET, 400, 400, 0, 0, null, 0, false, false, false, false,
+		mvrs2.clear();
+		ma.unMatch();
+		mvrs2.add(ma);
+		f2.set(AMModel, mvrs2);
+		MouseEvent me4 = new MouseEvent(MouseEvent.MOUSE_ENTERED_TARGET, 400, 400, 0, 0, null, 0, false, false, false, false,
 				true, false, false, false, false, false, null);
 		inProgressUpdate.invoke(AMModel, me4);
 		assertFalse(((MatchingAnimal) AMModel.getMovers().get(0)).getIsMatched());
-		*/
+		
+	}
+	
+	@Test
+	public void tutorialUpdate_test() throws Exception {
+		Field f = cc.getDeclaredField("btnSourceID");
+		f.setAccessible(true);
+		f.set(AMModel, "generic");
+		
+		Field f2 = c.getDeclaredField("movers");
+		f2.setAccessible(true);
+		ArrayList<Mover> mvrs2 = new ArrayList<Mover>();
+		MatchingAnimal ma2 = AMModel.new MatchingAnimal(500, 500, 50, 50, "generic",new String[] {"a"});
+
+		mvrs2.add(ma2);
+		f2.set(AMModel, mvrs2);
+		System.out.println(f2.get(AMModel));
+		
+		Field f3 = cc.getDeclaredField("isTutorialSetUp");
+		f3.setAccessible(true);
+		f3.setBoolean(AMModel, true);
+		
+		MouseEvent me = new MouseEvent(MouseEvent.MOUSE_ENTERED_TARGET, 500, 500, 0, 0, null, 0, false, false, false, false,
+				true, false, false, false, false, false, null);
+		tutorialUpdate.invoke(AMModel, me);
+		assertTrue(AMModel.getGameState() == GameState.TRANSITION1);
 	}
 
 }
